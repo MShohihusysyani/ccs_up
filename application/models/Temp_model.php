@@ -15,10 +15,10 @@ class Temp_model extends CI_Model
     public function getTiketTemp1()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id');
-        $query = "SELECT user.nama,tiket_temp.id_temp,  tiket_temp.no_tiket, tiket_temp.perihal, tiket_temp.file, user.id
+        $user_id = $this->session->userdata('id_user');
+        $query = "SELECT user.nama_user,tiket_temp.id_temp,  tiket_temp.no_tiket, tiket_temp.perihal, tiket_temp.file, user.id_user
                     FROM tiket_temp JOIN user
-                    ON tiket_temp.user_id = user.id
+                    ON tiket_temp.user_id = user.id_user
                     WHERE user_id = $user_id";
         return $this->db->query($query)->result_array();
     }

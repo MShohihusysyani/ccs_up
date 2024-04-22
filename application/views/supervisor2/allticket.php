@@ -183,7 +183,7 @@
     <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -191,7 +191,7 @@
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/edit_pelaporan') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         

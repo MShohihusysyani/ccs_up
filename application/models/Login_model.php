@@ -11,7 +11,7 @@ class Login_model extends CI_Model
     }
     public function getLoginData($user, $pass)
     {
-        date_default_timezone_set("ASIA/JAKARTA");
+      
         $u  = $user;
         $p = MD5($pass);
 

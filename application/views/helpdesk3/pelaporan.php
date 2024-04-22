@@ -100,7 +100,7 @@
                                             <td>
                                             <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"> <i
+                                                    data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">launch</i> <span
                                                         class="icon-name">finish</span>
                                                 </div>
@@ -109,7 +109,7 @@
                                             <br>
                                             <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#ForwardModal<?= $dp['id']; ?>"> <i
+                                                    data-target="#ForwardModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">forward</i> <span
                                                         class="icon-name">Forward</span>
                                                 </div>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('helpdesk3/finish') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         
@@ -253,7 +253,7 @@
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('helpdesk3/forwardtoImplementator') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         

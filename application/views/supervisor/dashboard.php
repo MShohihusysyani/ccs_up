@@ -25,7 +25,7 @@
                          <h5><b>DATA PELAPORAN</b></h5>
                         <br>
                          <?php
-                               $totalp = $this->db->query("SELECT count(id) as totalp FROM pelaporan where status_ccs = 'ADDED'");
+                               $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'ADDED'");
 
                             foreach ($totalp->result() as $total) {
                             ?>
@@ -47,7 +47,7 @@
                              <?php } ?>
 
                              <?php
-                                    $totalp = $this->db->query("SELECT count(id) as totalp FROM pelaporan where status_ccs = 'HANDLE'");
+                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>
@@ -67,7 +67,7 @@
                              <?php } ?>
 
                              <?php
-                                   $totalp = $this->db->query("SELECT count(id) as totalp FROM pelaporan where status_ccs = 'CLOSE'");
+                                   $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'CLOSE'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>
@@ -87,7 +87,7 @@
                              <?php } ?>
 
                              <?php
-                                    $totalp = $this->db->query("SELECT count(id) as totalp FROM pelaporan where status_ccs = 'FINISH'");
+                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'FINISH'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>

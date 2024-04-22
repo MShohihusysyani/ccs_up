@@ -4,7 +4,7 @@ class Pelaporan_model extends CI_Model
     public function add_pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id');
+        $user_id = $this->session->userdata('id_user');
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d');
 
@@ -23,7 +23,7 @@ class Pelaporan_model extends CI_Model
     public function delete_pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id');
+        $user_id = $this->session->userdata('id_user');
 
         $query = "DELETE FROM tiket_temp where user_id = $user_id
                     ";
@@ -31,64 +31,64 @@ class Pelaporan_model extends CI_Model
         $this->db->query($query);
     }
 
-    function updateCP($id, $data)
+    function updateCP($id_pelaporan, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id_pelaporan);
         $this->db->update('pelaporan', $data);
     }
 
     // update finish HELPDESK
     function updateHD1($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
     function updateHD2($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
     function updateHD3($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
     function updateHD4($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
     // APPROVE SPV
     function approveSPV($id, $data){
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
     // REJECT HD1
     function rejecthd1($id, $data){
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
      // REJECT HD2
      function rejecthd2($id, $data){
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
      // REJECT HD3
      function rejecthd3($id, $data){
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
      // REJECT HD4
      function rejecthd4($id, $data){
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
@@ -96,32 +96,32 @@ class Pelaporan_model extends CI_Model
     
     function updateForward($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
     //FINISH IMPLEMENTATOR
     function updateImplementator($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
     }
 
     //LAPORAN status
     public function getAll()
     {
-        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id, pelaporan.kategori , pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.nama, pelaporan.user_id, user.nama
+        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori , pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.nama, pelaporan.user_id, user.nama_user
         FROM pelaporan
        
       
-       left JOIN user ON pelaporan.user_id = user.id
+       left JOIN user ON pelaporan.user_id = user.id_user
                     WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC ";
         return $this->db->query($query)->result_array();
     }
 
     public function getDate($tgla, $tglb, $status_ccs, $nama_klien)
     {
-        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id, pelaporan.kategori, pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.keterangan, pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id
+        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori, pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.keterangan, pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id
         FROM pelaporan
       
         where waktu_pelaporan BETWEEN '$tgla' AND '$tglb' AND status_ccs = '$status_ccs' AND nama = '$nama_klien'

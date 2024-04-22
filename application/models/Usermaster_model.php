@@ -13,13 +13,13 @@ class Usermaster_model extends CI_Model
 
     public function hapus($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_user', $id);
         $this->db->delete('user');
     }
 
     function updateUser($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_user', $id);
         $this->db->update('user', $data);
     }
 

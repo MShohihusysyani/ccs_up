@@ -72,7 +72,7 @@
                                             <td><?= $no++ ?></td>
                                         
                                             <td> <a
-                                                href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
+                                                href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
                                             </td>
                                             <!-- <td><?= $dp['no_tiket']; ?></td> -->
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
@@ -139,7 +139,7 @@
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
-                                                    <a href="javascript:;" data-id="<?= $dp['id']; ?>"
+                                                    <a href="javascript:;" data-id="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
                                                         data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
                                                         data-nama="<?= $dp['nama']; ?>"
@@ -268,22 +268,20 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
-                                <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
                                     <?php
-                                    foreach ($namahd as $nah): ?>
-                                    <option>
-                                    <?php echo $nah['nama']; ?>
+                                        foreach ($namahd as $nah): ?>
+                                    <option value="<?php echo $nah['nama_user']; ?>">
+                                    <?php echo $nah['nama_user']; ?>
                                     </option>
                                     <?php endforeach; ?>
-                                    <input type="hidden"  >
                                 </select>
                             </div>
-                        </div> -->
+                        </div>
 
-                        <label for="kategori">Helpdesk</label>
+                        <!-- <label for="kategori">Helpdesk</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
@@ -291,7 +289,7 @@
                                     class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
                                 <input type="hidden" id="id" name="id" value="">
                             </div>
-                        </div>
+                        </div> -->
                         
                         <!-- <label for="kategori">Category</label>
                         <div class="form-group">
@@ -462,7 +460,7 @@
             var modal = $(this)
 
             // Isi nilai pada field
-            modal.find('#id').attr("value", div.data('id'));
+            modal.find('#id').attr("value", div.data('id_pelaporan'));
             modal.find('#no_tiket').attr("value", div.data('no_tiket'));
             modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
             modal.find('#nama').attr("value", div.data('nama'));

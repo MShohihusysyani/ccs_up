@@ -117,7 +117,7 @@
                                             <td>
                                             <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"> <i
+                                                    data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">launch</i> <span
                                                         class="icon-name">Approve</span>
                                                 </div>
@@ -126,7 +126,7 @@
                                             <br>
                                             <div class="btn btn-sm btn-danger">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject<?= $dp['id']; ?>"> <i
+                                                    data-target="#editModalReject<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">cancel</i> <span
                                                         class="icon-name">Reject 1</span>
                                                 </div>
@@ -135,7 +135,7 @@
                                             <br>
                                             <div class="btn btn-sm btn-danger">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject2<?= $dp['id']; ?>"> <i
+                                                    data-target="#editModalReject2<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">close</i> <span
                                                         class="icon-name">Reject 2</span>
                                                 </div>
@@ -145,7 +145,7 @@
                                             <br>
                                             <div class="btn btn-sm btn-danger">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject3<?= $dp['id']; ?>"> <i
+                                                    data-target="#editModalReject3<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">cancel</i> <span
                                                         class="icon-name">Reject 3</span>
                                                 </div>
@@ -155,7 +155,7 @@
                                             <br>
                                             <div class="btn btn-sm btn-danger">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject4<?= $dp['id']; ?>"> <i
+                                                    data-target="#editModalReject4<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">close</i> <span
                                                         class="icon-name">Reject 4</span>
                                                 </div>
@@ -203,7 +203,7 @@ $('#tombol-tambah').on('click', function(e) {
     <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -211,7 +211,7 @@ $('#tombol-tambah').on('click', function(e) {
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/approve') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         
@@ -276,7 +276,7 @@ $('#tombol-tambah').on('click', function(e) {
     <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModalReject<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -284,7 +284,7 @@ $('#tombol-tambah').on('click', function(e) {
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/reject') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         
@@ -358,7 +358,7 @@ $('#tombol-tambah').on('click', function(e) {
     <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject2<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModalReject2<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -366,7 +366,7 @@ $('#tombol-tambah').on('click', function(e) {
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/reject2') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         
@@ -439,7 +439,7 @@ $('#tombol-tambah').on('click', function(e) {
     <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject3<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModalReject3<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -447,7 +447,7 @@ $('#tombol-tambah').on('click', function(e) {
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/reject3') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         
@@ -520,7 +520,7 @@ $('#tombol-tambah').on('click', function(e) {
      <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject4<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModalReject4<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -528,7 +528,7 @@ $('#tombol-tambah').on('click', function(e) {
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/reject4') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         

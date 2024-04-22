@@ -40,10 +40,10 @@ class Auth extends CI_Controller
 
                 foreach ($cek->result() as $ck) {
                     $sess_data['username'] = $ck->username;
-                    $sess_data['nama']     = $ck->nama;
+                    $sess_data['nama_user']     = $ck->nama_user;
                     $sess_data['divisi']   = $ck->divisi;
                     $sess_data['role']     = $ck->role;
-                    $sess_data['id']       = $ck->id;
+                    $sess_data['id_user']       = $ck->id_user;
                     $sess_data['active']   = $ck->active;
                    
 
@@ -130,7 +130,7 @@ class Auth extends CI_Controller
     {
         
         $this->session->unset_userdata('username');
-        $this->session->unset_userdata('id');
+        $this->session->unset_userdata('id_user');
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role');
         $this->session->set_flashdata('pesan', 'Success Logout!');

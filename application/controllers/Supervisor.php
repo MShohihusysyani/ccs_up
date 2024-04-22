@@ -151,7 +151,7 @@ class Supervisor extends CI_Controller
     public function tambah_user()
     {
         $data['divisi']   = $this->db->get('user')->result_array();
-        $data['nama']     = $this->db->get('user')->result_array();
+        $data['nama_user']     = $this->db->get('user')->result_array();
         $data['username'] = $this->db->get('user')->result_array();
         $data['password'] = $this->db->get('user')->result_array();
         $data['role']     = $this->db->get('user')->result_array();
@@ -164,7 +164,7 @@ class Supervisor extends CI_Controller
         $password = md5($this->input->post('password'));
         $data = [
             'divisi'   => $this->input->post('divisi'),
-            'nama'     => $this->input->post('nama'),
+            'nama_user'     => $this->input->post('nama_user'),
             'username' => $this->input->post('username'),
             'password' => $password,
             'role'     => $this->input->post('role'),
@@ -178,16 +178,16 @@ class Supervisor extends CI_Controller
 
     public function edit_user()
     {
-        $id       = $this->input->post('id');
+        $id       = $this->input->post('id_user');
         $divisi   = $this->input->post('divisi');
-        $nama     = $this->input->post('nama');
+        $nama     = $this->input->post('nama_user');
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $role     = $this->input->post('role');
         $active   = $this->input->post('active');
         $ArrUpdate = array(
             'divisi'   => $divisi,
-            'nama'     => $nama,
+            'nama_user'     => $nama,
             'username' => $username,
             'password' => $password,
             'role'     => $role,
@@ -330,7 +330,7 @@ class Supervisor extends CI_Controller
       
 
         // $data['category'] = $this->db->get_where('category', ['nama_kategori' => $this->input->post('kategori')])->row_array();
-        $id = $this->input->post('id');
+        $id = $this->input->post('id_pelaporan');
         $no_tiket = $this->input->post('no_tiket');
         $perihal = $this->input->post('perihal');
         $status = $this->input->post('status');
@@ -379,7 +379,7 @@ class Supervisor extends CI_Controller
 
     public function edit_pelaporan()
     {
-        $id         = $this->input->post('id');
+        $id_pelaporan         = $this->input->post('id_pelaporan');
         $no_tiket   = $this->input->post('no_tiket');
         $perihal    = $this->input->post('perihal');
         $status     = $this->input->post('status');
@@ -398,7 +398,7 @@ class Supervisor extends CI_Controller
             'maxday'     => $maxday
 
         );
-        $this->pelaporan_model->updateCP($id, $ArrUpdate);
+        $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Success Edited!');
         Redirect(base_url('supervisor/added'));
     }
@@ -427,12 +427,12 @@ class Supervisor extends CI_Controller
     // }
 
     // Forward To SPV2
-    public function forwardtospv2($id)
+    public function forwardtospv2($id_pelaporan)
     {
         
 
 
-         $sql = "UPDATE pelaporan SET status_ccs='HANDLE 1', status='Forward SPV 2' WHERE id=$id";
+         $sql = "UPDATE pelaporan SET status_ccs='HANDLE 1', status='Forward SPV 2' WHERE id_pelaporan=$id_pelaporan";
          $this->db->query($sql);
          $this->session->set_flashdata('pesan', 'Forward Success!');
         
@@ -450,7 +450,7 @@ class Supervisor extends CI_Controller
          # add your city to set local time zone
 
 
-         $sql = "UPDATE pelaporan SET status_ccs='HANDLE', status='Forward To SPV 2' WHERE id=$id";
+         $sql = "UPDATE pelaporan SET status_ccs='HANDLE', status='Forward To SPV 2' WHERE id_pelaporan=$id";
          $this->db->query($sql);
          $this->session->set_flashdata('pesan', 'Forward Success!');
         //  $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">  Data Telah Disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -508,7 +508,7 @@ class Supervisor extends CI_Controller
            $now = date('Y-m-d');
   
   
-           $id         = $this->input->post('id');
+           $id         = $this->input->post('id_pelaporan');
            $no_tiket   = $this->input->post('no_tiket');
         //    $waktu_pelaporan = $this->input->post('waktu_pelaporan');
            $nama       = $this->input->post('nama');
@@ -539,7 +539,7 @@ class Supervisor extends CI_Controller
             # add your city to set local time zone
    
    
-            $id              = $this->input->post('id');
+            $id              = $this->input->post('id_pelaporan');
             $no_tiket        = $this->input->post('no_tiket');
             $waktu_pelaporan = $this->input->post('waktu_pelaporan');
             $nama            = $this->input->post('nama');
@@ -572,7 +572,7 @@ class Supervisor extends CI_Controller
             // date_default_timezone_set('Asia/Jakarta');
              # add your city to set local time zone
     
-             $id              = $this->input->post('id');
+             $id              = $this->input->post('id_pelaporan');
              $no_tiket        = $this->input->post('no_tiket');
              $waktu_pelaporan = $this->input->post('waktu_pelaporan');
              $nama            = $this->input->post('nama');
@@ -604,7 +604,7 @@ class Supervisor extends CI_Controller
          {
              // date_default_timezone_set('Asia/Jakarta');
               # add your city to set local time zone
-              $id              = $this->input->post('id');
+              $id              = $this->input->post('id_pelaporan');
               $no_tiket        = $this->input->post('no_tiket');
               $waktu_pelaporan = $this->input->post('waktu_pelaporan');
               $nama            = $this->input->post('nama');
@@ -636,7 +636,7 @@ class Supervisor extends CI_Controller
          {
              // date_default_timezone_set('Asia/Jakarta');
               # add your city to set local time zone
-              $id              = $this->input->post('id');
+              $id              = $this->input->post('id_pelaporan');
               $no_tiket        = $this->input->post('no_tiket');
               $waktu_pelaporan = $this->input->post('waktu_pelaporan');
               $nama            = $this->input->post('nama');

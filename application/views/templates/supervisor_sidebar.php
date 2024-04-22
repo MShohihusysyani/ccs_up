@@ -175,13 +175,13 @@
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?= $this->session->userdata('nama'); ?></div>
+                        <?= $this->session->userdata('nama_user'); ?></div>
                     <div class="email"><?= $this->session->userdata('divisi'); ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="<?= base_url() ?>user/profile_supervisor/<?= $this->session->userdata('id'); ?>"><i
+                            <li><a href="<?= base_url() ?>user/profile_supervisor/<?= $this->session->userdata('id_user'); ?>"><i
                                         class="material-icons">person</i>Profile</a>
                             </li>
 

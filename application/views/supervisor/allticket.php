@@ -66,9 +66,7 @@
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
                                             <td><?= $no++?></td>
-                                            <!-- <td><a
-                                                href="<?= base_url() ?>admin/ruangan_isi/<?= $rgn['id_ruangan']; ?>"><?= $rgn['kode_bangunan']; ?>.<?= $rgn['kode_ruangan']; ?>'</a>
-                                            </td> -->
+                                        
                                             <!-- <td> <a
                                                 href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
                                             </td> -->
@@ -191,7 +189,7 @@
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/edit_pelaporan') ?>
-                    <input type="hidden" name="id" value="<?= $dp['id']; ?>">
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         

@@ -169,7 +169,7 @@
                          <h5><b>DATA PELAPORAN</b></h5>
                         <br>
                          <?php
-                               $totalp = $this->db->query("SELECT count(id) as totalp FROM pelaporan where status_ccs = 'HANDLE' AND status='Forward To Helpdesk 4'");
+                               $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE' AND status='Forward To Helpdesk 4'");
 
                             foreach ($totalp->result() as $total) {
                             ?>
@@ -191,7 +191,7 @@
                              <?php } ?>
 
                              <?php
-                                    $totalp = $this->db->query("SELECT count(id) as totalp FROM pelaporan where status_ccs = 'FINISH' AND status='Solved by HD4'");
+                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'FINISH' AND status='Solved by HD4'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>

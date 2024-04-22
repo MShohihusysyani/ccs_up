@@ -70,7 +70,7 @@
                                             <td><?= $no++ ?></td>
 <!--                                          
                                             <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
+                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
                                             </td> -->
                                             <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
@@ -137,7 +137,7 @@
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
-                                                    <a href="javascript:;" data-id="<?= $dp['id']; ?>"
+                                                    <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
                                                         data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
                                                         data-nama="<?= $dp['nama']; ?>"
@@ -161,32 +161,13 @@
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD/<?= $dp['id']; ?>"><i
+                                                    href="<?= base_url() ?>supervisor/forwardtoHD/<?= $dp['id_pelaporan']; ?>"><i
                                                         class="material-icons">forward</i> <span class="icon-name"></span>
                                                     Forward To SPV2</a>
                                                 <br>
                                                 <br>
 
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD2/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward 2</a>
-                                                <br>
-                                                <br>
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD3/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward 3</a>
-
-                                                <br>
-                                                <br>
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD4/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward 4</a> -->
+                                               
 
                                             </td>
                                         </tr>
@@ -213,7 +194,7 @@
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor/edit_pelaporan') ?>
-                <input type="hidden" name="id" id="id" value="">
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
                 <div class="body">
                     <form class="form-horizontal">
                                                     
@@ -410,7 +391,7 @@
             var modal = $(this)
 
             // Isi nilai pada field
-            modal.find('#id').attr("value", div.data('id'));
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
             modal.find('#no_tiket').attr("value", div.data('no_tiket'));
             modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
             modal.find('#nama').attr("value", div.data('nama'));

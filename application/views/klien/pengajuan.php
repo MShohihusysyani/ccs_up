@@ -79,8 +79,8 @@
                             </div>
                         </div>
                      
-                        <input type="hidden" name="user_id" id="user_id" value="<?= $user['id']; ?>">
-                        <input type="hidden" name="nama" id="nama" value="<?= $user['nama']?>">
+                        <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
+                        <input type="hidden" name="nama" id="nama" value="<?= $user['nama_user']?>">
                         <!-- <input type="hidden" name="no_urut" id="no_urut" value="<?= $user['no_urut']?>"> -->
                         
                     

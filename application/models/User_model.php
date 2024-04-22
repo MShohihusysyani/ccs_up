@@ -6,7 +6,7 @@ class User_model extends CI_Model
     public function getUser()
     {
         $this->session->userdata('username');
-        $query = "SELECT id, divisi, nama_klien
+        $query = "SELECT id_user, divisi, nama_klien
                     FROM user
                     WHERE username= 'username'
                     ";
@@ -26,26 +26,26 @@ class User_model extends CI_Model
 
         $query = "SELECT *
                     FROM user
-                    WHERE id= '$id'
+                    WHERE id_user= '$id'
                     ";
         return $this->db->query($query)->result_array();
     }
 
     public function getNamaUser(){
 
-        $query = "SELECT id, nama FROM user WHERE divisi='Helpdesk 1' OR divisi='Helpdesk 2' OR divisi='Helpdesk 3' OR divisi='Helpdesk 4' ";
+        $query = "SELECT id_user, nama_user FROM user WHERE divisi='Helpdesk 1' OR divisi='Helpdesk 2' OR divisi='Helpdesk 3' OR divisi='Helpdesk 4' ORDER by nama_user ASC";
         return $this->db->query($query)->result_array();
     }
 
     function updateUser($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_user', $id);
         $this->db->update('user', $data);
     }
 
     public function deleteUser($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_user', $id);
         $this->db->delete('user');
     }
 }

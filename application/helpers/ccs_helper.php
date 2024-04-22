@@ -107,7 +107,7 @@ function noTiket()
 function total_high()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totalh FROM pelaporan where status_ccs='FINISH' AND priority='High'";
+    $query = "SELECT count(id_pelaporan) as totalh FROM pelaporan where status_ccs='FINISH' AND priority='High'";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totalh'];
     $kodeBaru = $total;
@@ -117,7 +117,7 @@ function total_high()
 function total_medium()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totalm FROM pelaporan where status_ccs='FINISH' AND priority='Medium'";
+    $query = "SELECT count(id_pelaporan) as totalm FROM pelaporan where status_ccs='FINISH' AND priority='Medium'";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totalm'];
     $kodeBaru = $total;
@@ -127,7 +127,7 @@ function total_medium()
 function total_low()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totall FROM pelaporan where status_ccs='FINISH' AND priority='Low'";
+    $query = "SELECT count(id_pelaporan) as totall FROM pelaporan where status_ccs='FINISH' AND priority='Low'";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totall'];
     $kodeBaru = $total;
@@ -138,7 +138,7 @@ function total_low()
 function total_today()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totald FROM pelaporan where waktu_pelaporan = CURDATE()";
+    $query = "SELECT count(id_pelaporan) as totald FROM pelaporan where waktu_pelaporan = CURDATE()";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totald'];
     $kodeBaru = $total;
@@ -148,7 +148,7 @@ function total_today()
 function total_yesterday()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totaly FROM pelaporan where waktu_pelaporan = CURDATE() - INTERVAL 1 DAY";
+    $query = "SELECT count(id_pelaporan) as totaly FROM pelaporan where waktu_pelaporan = CURDATE() - INTERVAL 1 DAY";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totaly'];
     $kodeBaru = $total;
@@ -158,7 +158,7 @@ function total_yesterday()
 function total_lastweek()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totallw FROM pelaporan where waktu_pelaporan  BETWEEN CURDATE() - INTERVAL 1 WEEK AND CURDATE() - INTERVAL 1 DAY";
+    $query = "SELECT count(id_pelaporan) as totallw FROM pelaporan where waktu_pelaporan  BETWEEN CURDATE() - INTERVAL 1 WEEK AND CURDATE() - INTERVAL 1 DAY";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totallw'];
     $kodeBaru = $total;
@@ -168,7 +168,7 @@ function total_lastweek()
 function total_thismonth()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totaltm FROM pelaporan where MONTH(waktu_pelaporan) = MONTH(CURDATE()) AND YEAR(waktu_pelaporan) = YEAR(CURDATE())";
+    $query = "SELECT count(id_pelaporan) as totaltm FROM pelaporan where MONTH(waktu_pelaporan) = MONTH(CURDATE()) AND YEAR(waktu_pelaporan) = YEAR(CURDATE())";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totaltm'];
     $kodeBaru = $total;
@@ -179,7 +179,7 @@ function total_thismonth()
 function total_lastmonth()
 {
     $ci = get_instance();
-    $query = "SELECT count(id) as totallm FROM pelaporan where MONTH(waktu_pelaporan) = MONTH(CURDATE() - INTERVAL 1 MONTH) 
+    $query = "SELECT count(id_pelaporan) as totallm FROM pelaporan where MONTH(waktu_pelaporan) = MONTH(CURDATE() - INTERVAL 1 MONTH) 
               AND YEAR(waktu_pelaporan) = YEAR(CURDATE() - INTERVAL 1 MONTH)";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totallm'];

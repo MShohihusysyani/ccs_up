@@ -175,7 +175,7 @@
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?= $this->session->userdata('nama'); ?></div>
+                        <?= $this->session->userdata('nama_user'); ?></div>
                     <div class="email"><?= $this->session->userdata('divisi'); ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"

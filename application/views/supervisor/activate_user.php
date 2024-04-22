@@ -43,7 +43,7 @@
                                     foreach ($user as $u) : ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?= $u['nama']; ?></td>
+                                        <td><?= $u['nama_user']; ?></td>
                                         <td><?= $u['divisi']; ?></td>
                                         <!-- <td><?= $u['active']; ?></td> -->
                                         <td> <?php if ($u['active'] == 'N') : ?>
@@ -61,14 +61,14 @@
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <?php if ($u['active'] == 'N') : ?>
                                                 <a class="btn btn-sm btn-success tombol-aktif"
-                                                    href="<?= base_url() ?>user/active/<?= $u['id']; ?>"><span
+                                                    href="<?= base_url() ?>user/active/<?= $u['id_user']; ?>"><span
                                                         class="fa fa-trash"></span>
                                                     Active</a>
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
 
                                                 <?php elseif ($u['active'] == 'Y') : ?>
                                                 <a class="btn btn-sm btn-danger tombol-nonaktif"
-                                                    href="<?= base_url() ?>user/inactive/<?= $u['id']; ?>"><span
+                                                    href="<?= base_url() ?>user/inactive/<?= $u['id_user']; ?>"><span
                                                         class="fa fa-trash"></span>
                                                     Inactive</a>
 

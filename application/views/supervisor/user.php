@@ -59,26 +59,22 @@
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $u['divisi'];?></td>
-                                        <td><?= $u['nama']; ?></td>
+                                        <td><?= $u['nama_user']; ?></td>
                                         <td><?= $u['active'];?></td>
 
                                         <td>
                                             <div class="btn btn-sm btn-warning">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $u['id']; ?>"> <i
+                                                    data-target="#editModal<?= $u['id_user']; ?>"> <i
                                                         class="material-icons">edit</i> <span
                                                         class="icon-name"></span>
                                                 </div>
                                             </div>
-                                            <!-- <a class="btn btn-sm btn-danger waves-effect " data-type="success"
-                                                href="<?= base_url() ?>supervisor/hapus_user/<?= $u['id']; ?>"><i
-                                                        class="material-icons">delete</i> <span
-                                                        class="icon-name"></span>
-                                            </a> -->
+                                          
 
                                             <a class="btn btn-sm btn-danger waves-effect tombol-hapus"
                                                     data-type="success"
-                                                    href="<?= base_url() ?>supervisor/hapus_user/<?= $u['id']; ?>"><i
+                                                    href="<?= base_url() ?>supervisor/hapus_user/<?= $u['id_user']; ?>"><i
                                                         class="material-icons">delete</i><span
                                                         class="fa fa-trash"></span>
                                                     </a>
@@ -130,7 +126,7 @@ $('#tombol-tambah').on('click', function(e) {
     <?php
     $no = 0;
     foreach ($user as $u) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $u['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModal<?= $u['id_user']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -138,7 +134,7 @@ $('#tombol-tambah').on('click', function(e) {
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/edit_user') ?>
-                    <input type="hidden" name="id" value="<?= $u['id']; ?>">
+                    <input type="hidden" name="id_user" value="<?= $u['id_user']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                         <div class="form-group form-float">
@@ -158,7 +154,7 @@ $('#tombol-tambah').on('click', function(e) {
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input value="<?= $u['nama']; ?>" type="text" id="nama" name="nama" class="form-control">
+                                <input value="<?= $u['nama_user']; ?>" type="text" id="nama_user" name="nama_user" class="form-control">
                                 <label class="form-label">Nama</label>
                             </div>
                         </div>
@@ -252,7 +248,7 @@ $('#tombol-tambah').on('click', function(e) {
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" id="nama" name="nama" class="form-control">
+                                <input type="text" id="nama_user" name="nama_user" class="form-control">
                                 <label class="form-label">Nama</label>
                             </div>
                         </div>
@@ -279,7 +275,7 @@ $('#tombol-tambah').on('click', function(e) {
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" id="password" name="password" class="form-control">
+                                <input type="password" id="password" name="password" class="form-control" readonly>
                                 <label class="form-label">password</label>
                             </div>
                         </div>

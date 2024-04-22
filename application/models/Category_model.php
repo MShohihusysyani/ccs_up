@@ -6,7 +6,7 @@ class Category_model extends CI_Model
     public function getCategory()
     {
         $query = "SELECT *
-                    FROM category
+                    FROM category ORDER BY nama_kategori ASC
                     ";
         return $this->db->query($query)->result_array();
     }

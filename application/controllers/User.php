@@ -186,7 +186,7 @@ class User extends CI_Controller
     public function active($id)
     {
         // $this->_sendEmail($id, 'active');
-        $sql = "UPDATE user SET active='Y' WHERE id=$id";
+        $sql = "UPDATE user SET active='Y' WHERE id_user=$id";
         $this->db->query($sql);
         $this->session->set_flashdata('pesan', 'Success Active!');
         // $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User Activated<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -197,7 +197,7 @@ class User extends CI_Controller
     public function inactive($id)
     {
         // $this->_sendEmail($id, 'nonactive');
-        $sql = "UPDATE user SET active='N' WHERE id=$id";
+        $sql = "UPDATE user SET active='N' WHERE id_user=$id";
         $this->db->query($sql);
         $this->session->set_flashdata('pesan', 'Success Inactive!');
         
@@ -216,7 +216,7 @@ class User extends CI_Controller
  
          $this->db->set('nama', $nama);
          $this->db->set('username', $username);
-         $this->db->where('id', $id);
+         $this->db->where('id_user', $id);
          $this->db->update('user');
          $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data User Edited!</div>');
          $referred_from = $this->session->userdata('referred_from');
@@ -229,7 +229,7 @@ class User extends CI_Controller
   #EDIT PASSWORD
   public function changepassword()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -253,7 +253,7 @@ class User extends CI_Controller
               redirect('user/changepassword');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
 
 
@@ -266,7 +266,7 @@ class User extends CI_Controller
 
   public function changepassword_klien()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -290,7 +290,7 @@ class User extends CI_Controller
               redirect('user/changepassword_klien');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_klien');
@@ -300,7 +300,7 @@ class User extends CI_Controller
 
   public function changepassword_hd1()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -324,7 +324,7 @@ class User extends CI_Controller
               redirect('user/changepassword_hd1');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_hd1');
@@ -334,7 +334,7 @@ class User extends CI_Controller
 
   public function changepassword_hd2()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -358,7 +358,7 @@ class User extends CI_Controller
               redirect('user/changepassword_hd2');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_hd2');
@@ -368,7 +368,7 @@ class User extends CI_Controller
 
   public function changepassword_hd3()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -392,7 +392,7 @@ class User extends CI_Controller
               redirect('user/changepassword_hd3');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_hd3');
@@ -402,7 +402,7 @@ class User extends CI_Controller
 
   public function changepassword_hd4()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -426,7 +426,7 @@ class User extends CI_Controller
               redirect('user/changepassword_hd4');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_hd4');
@@ -436,7 +436,7 @@ class User extends CI_Controller
 
   public function changepassword_implementator()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -460,7 +460,7 @@ class User extends CI_Controller
               redirect('user/changepassword_implementator');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_implementator');
@@ -470,7 +470,7 @@ class User extends CI_Controller
 
   public function changepassword_support()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -494,7 +494,7 @@ class User extends CI_Controller
               redirect('user/changepassword_support');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_support');
@@ -504,7 +504,7 @@ class User extends CI_Controller
 
   public function changepassword_dbs()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -528,7 +528,7 @@ class User extends CI_Controller
               redirect('user/changepassword_dbs');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_dbs');
@@ -538,7 +538,7 @@ class User extends CI_Controller
 
   public function changepassword_crd()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -562,7 +562,7 @@ class User extends CI_Controller
               redirect('user/changepassword_crd');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_crd');
@@ -572,7 +572,7 @@ class User extends CI_Controller
 
   public function changepassword_development()
   {
-      $data['user'] = $this->db->get_where('user', ['id' => $this->session->userdata('id')])->row_array();
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
       $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
@@ -596,7 +596,7 @@ class User extends CI_Controller
               redirect('user/changepassword_development');
           } else {
               $this->db->set('password', $new_password);
-              $this->db->where('id', $this->session->userdata('id'));
+              $this->db->where('id_user', $this->session->userdata('id_user'));
               $this->db->update('user');
               $this->session->set_flashdata('pesan', 'Password Changed!');
               redirect('user/changepassword_development');
