@@ -212,7 +212,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">Select Helpdesk</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor2/edit_pelaporan') ?>
+                <?= form_open_multipart('supervisor2/fungsi_forward') ?>
                 <input type="hidden" name="id" id="id" value="">
                 <div class="body">
                     <form class="form-horizontal">
@@ -291,6 +291,21 @@
                             </div>
                         </div>
 
+                        <!-- <div class="form-group">
+                            <div class="form-line">
+                                <select name="namahd" id="namahd" class="form-control">
+                                <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
+                                    <?php
+                                    foreach ($namahd as $nah): ?>
+                                    <option>
+                                    <?php echo $nah['nama']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                    <input type="hidden"  >
+                                </select>
+                            </div>
+                        </div> -->
+
                         <label for="kategori">Helpdesk</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -311,18 +326,13 @@
                             </div>
                         </div> -->
 
-                        <!-- <div class="modal-footer">
+                        <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
                                 CHANGES</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
-                        </div> -->
-                        <form method="post" action="<?= base_url('supervisor2/forward') ?>">
-                                <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button> -->
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </form>
+                        </div>
+                    
                 </div>
                 <?php echo form_close() ?>
             </div>
@@ -488,6 +498,7 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#namahd option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));

@@ -28,8 +28,7 @@ class Spv2_model extends CI_Model {
 
 
 
-        $query = "INSERT INTO forward ( user_id,pelaporan_id) 
-                    where user_id = $user_id 
+        $query = "INSERT INTO forward(user_id, pelaporan_id) where user_id = $user_id
                     ";
         // $query2 = "DELETE FROM barang_temp where user_id = $user_id";
 
