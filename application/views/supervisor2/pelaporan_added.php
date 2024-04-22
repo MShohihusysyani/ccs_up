@@ -135,7 +135,7 @@
                                                 </div>
                                             </div> -->
 
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id="<?= $dp['id']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -149,15 +149,15 @@
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Edit</span></a>
-                                                </div> -->
+                                                </div>
 
-                                                <a class="btn btn-sm btn-info"
+                                                <!-- <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
                                                     class="material-icons"></i> <span class="icon-name"></span>
                                                 edit</a>
 
                                                 <br>
-                                                <br>
+                                                <br> -->
 
                                                 <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <a class="btn btn-sm btn-info tombol-usulkan"
@@ -311,12 +311,18 @@
                             </div>
                         </div> -->
 
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
                                 CHANGES</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
-                        </div>
+                        </div> -->
+                        <form method="post" action="<?= base_url('supervisor2/forward') ?>">
+                                <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button> -->
+                                <button type="submit" class="btn btn-link waves-effect">SAVE
+                                CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </form>
                 </div>
                 <?php echo form_close() ?>
             </div>
@@ -369,6 +375,55 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL CARI HELPDESK -->
+<div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                        width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Helpdesk</th>
+                                <th class="hide">ID</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            <?php foreach ($namahd  as $nah) : ?>
+
+                            <tr>
+                                <td style="text-align:center;" scope="row">
+                                    <?= $i; ?>
+                                </td>
+                                <td><?= $nah['nama']; ?></td>
+                                <td class="hide"><?= $div['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih3"
+                                        data-nama-divisi="<?= $nah['nama']; ?>"
+                                        data-id-divisi="<?= $nah['id']; ?>">
+                                        Pilih</button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        <?php echo form_close() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 
@@ -447,4 +502,16 @@
         });
 
     });
+</script>
+
+<script>
+$(document).ready(function() {
+    $(document).on('click', '#pilih3', function() {
+        var nama_klas = $(this).data('nama-divisi');
+        var id = $(this).data('id-divisi');
+        $('#namahd').val(nama_klas);
+        $('#id').val(id);
+        $('#defaultModalNamaDivisi').modal('hide');
+    })
+});
 </script>

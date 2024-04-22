@@ -46,6 +46,9 @@ class Supervisor2 extends CI_Controller
         $data['user']          = $this->user_model->getDataUser();
         $data['dataAdded'] = $this->spv2_model->getKlienPelaporanAdd();
 
+        $this->load->model('User_model', 'user_model');
+        $data['namahd'] = $this->user_model->getNamaUser();
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/pelaporan_added', $data);
@@ -157,5 +160,12 @@ class Supervisor2 extends CI_Controller
         $this->db->where('id');
         $this->db->update('pelaporan');
         Redirect(base_url('supervisor2/added'));
+    }
+
+    public function fungsi_forward()
+    {
+        $this->spv2_model->add_forward();
+        $this->session->set_flashdata('pesan', 'Success!');
+        Redirect(Base_url('supervisor2/added'));
     }
 }

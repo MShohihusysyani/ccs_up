@@ -19,6 +19,24 @@ class Spv2_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+    public function add_forward()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id');
+        // date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        // $now = date('Y-m-d');
+
+
+
+        $query = "INSERT INTO forward ( user_id,pelaporan_id) 
+                    where user_id = $user_id 
+                    ";
+        // $query2 = "DELETE FROM barang_temp where user_id = $user_id";
+
+        $this->db->query($query);
+        // $this->db->delete($query2);
+    }
+
 
 }
 

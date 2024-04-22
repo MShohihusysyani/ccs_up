@@ -47,6 +47,18 @@ class User extends CI_Controller
     }
 
     
+    public function profile_supervisor2($id)
+    {
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getUserDetail($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor2_sidebar');
+        $this->load->view('profile/profile', $data);
+        $this->load->view('templates/footer');
+    }
+
+    
     public function profile_hd1($id)
     {
         $this->load->model('User_model', 'user_model');
