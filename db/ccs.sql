@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Apr 2024 pada 05.37
+-- Waktu pembuatan: 22 Apr 2024 pada 10.37
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -136,7 +136,7 @@ INSERT INTO `klien` (`id`, `no_urut`, `nama_klien`) VALUES
 --
 
 CREATE TABLE `pelaporan` (
-  `id` int(11) NOT NULL,
+  `id_pelaporan` int(11) NOT NULL,
   `no_tiket` varchar(100) NOT NULL,
   `user_id` int(11) NOT NULL,
   `kategori` varchar(255) DEFAULT NULL,
@@ -157,13 +157,14 @@ CREATE TABLE `pelaporan` (
 -- Dumping data untuk tabel `pelaporan`
 --
 
-INSERT INTO `pelaporan` (`id`, `no_tiket`, `user_id`, `kategori`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `file`, `nama`, `handle_by`, `keterangan`, `waktu_approve`) VALUES
+INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `file`, `nama`, `handle_by`, `keterangan`, `waktu_approve`) VALUES
 (69, 'TIC2024040001', 33, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', '2024-04-18', 'Solved by HD4', 'FINISH', 'Medium', 60, '<p>Permintaan Backdate</p>', '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Nita', '', '2024-04-19'),
 (70, 'TIC2024040002', 28, 'Kredit - Agunan', '2024-04-18', 'Forward To SPV 2', 'HANDLE', 'Low', 90, '<p>Permintaan Perbaikan nilai wajar pada data agunan</p>', 'CCS_Customer_Care_System.xlsx', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL),
 (71, 'TIC2024040003', 20, 'Kredit - PPAP Kredit', '2024-04-18', 'proses', 'ADDED', 'Medium', 60, '<p>Perbaikan PPAP Kredit</p>', 'CCS_Customer_Care_System.pdf', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
 (72, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi ', '2024-04-18', 'Forward To SPV 2', 'HANDLE', 'High', 7, '<p>tes</p>', 'CCS_Customer_Care_System_(1).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
 (73, 'TIC2024040005', 20, 'Proses - Proses Ulang', '2024-04-18', 'Forward To SPV 2', 'HANDLE', 'Medium', 60, '<p>tes2</p>', 'CCS_Customer_Care_System_(2).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
-(74, 'TIC2024040006', 33, 'Kredit - PPAP Kredit', '2024-04-18', 'Forward To SPV 2', 'HANDLE', 'Low', 90, '<p>tes3</p>', 'Pertemuan_13.pdf', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL);
+(74, 'TIC2024040006', 33, 'Kredit - PPAP Kredit', '2024-04-18', 'Forward To SPV 2', 'HANDLE', 'Low', 90, '<p>tes3</p>', 'Pertemuan_13.pdf', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL),
+(77, 'TIC2024040007', 33, 'Backdate - Backdate Transaksi', '2024-04-22', 'Forward To SPV 2', 'HANDLE', 'Medium', 60, '<p>tes 4</p>', '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -188,9 +189,9 @@ CREATE TABLE `tiket_temp` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `divisi` varchar(30) NOT NULL,
-  `nama` varchar(50) NOT NULL,
+  `nama_user` varchar(50) NOT NULL,
   `username` varchar(15) NOT NULL,
   `password` varchar(50) NOT NULL,
   `role` int(11) NOT NULL,
@@ -201,7 +202,7 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id`, `divisi`, `nama`, `username`, `password`, `role`, `active`) VALUES
+INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `role`, `active`) VALUES
 (3, 'Supervisor', 'Supervisor PT MSO Purwokerto', 'supervisor', '5f4dcc3b5aa765d61d8327deb882cf99', 3, 'Y'),
 (4, 'Helpdesk 1', 'Ajeng', 'ajeng', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
 (8, 'Support', 'Support PT MSO', 'support', '5f4dcc3b5aa765d61d8327deb882cf99', 5, 'Y'),
@@ -218,7 +219,7 @@ INSERT INTO `user` (`id`, `divisi`, `nama`, `username`, `password`, `role`, `act
 (29, 'Helpdesk 2', 'Chintya', 'chintya', '5f4dcc3b5aa765d61d8327deb882cf99', 9, 'Y'),
 (30, 'Helpdesk 3', 'Ina', 'ina', '5f4dcc3b5aa765d61d8327deb882cf99', 10, 'Y'),
 (31, 'Helpdesk 4', 'Luthfi', 'luthfi', '5f4dcc3b5aa765d61d8327deb882cf99', 11, 'Y'),
-(32, 'Helpdesk 4', 'Nita', 'nita', '482c811da5d5b4bc6d497ffa98491e38', 11, 'Y'),
+(32, 'Helpdesk 4', 'Nita', 'nita', '5f4dcc3b5aa765d61d8327deb882cf99', 11, 'Y'),
 (33, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Y'),
 (39, 'Supervisor 2', 'SPV 2', 'spv2', '5f4dcc3b5aa765d61d8327deb882cf99', 12, 'Y');
 
@@ -254,7 +255,7 @@ ALTER TABLE `klien`
 -- Indeks untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_pelaporan`);
 
 --
 -- Indeks untuk tabel `tiket_temp`
@@ -266,7 +267,7 @@ ALTER TABLE `tiket_temp`
 -- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -294,19 +295,19 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
