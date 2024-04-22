@@ -190,7 +190,7 @@
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor2/fungsi_forward') ?>
-                <input type="hidden" name="id" id="id" value="">
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
                 <div class="body">
                     <form class="form-horizontal">
                                                     
@@ -271,12 +271,12 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
+                                <option value="<?= $dp['nama_user']; ?> "><?= $dp['nama_user']; ?></option>
                                     <?php
                                         foreach ($namahd as $nah): ?>
-                                    <option value="<?php echo $nah['nama_user']; ?>">
-                                    <?php echo $nah['nama_user']; ?>
-                                    </option>
+                                    <option value="<?= $nah['nama_user']; ?>"><?= $nah['nama_user']; ?></option>
                                     <?php endforeach; ?>
+                                    <input type="hidden" name="id_user" id="id_user">
                                 </select>
                             </div>
                         </div>
