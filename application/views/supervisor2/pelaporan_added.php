@@ -42,6 +42,7 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Status</th>
+                                        <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -58,6 +59,7 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Status</th>
+                                        <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -124,7 +126,7 @@
 
                                             </td>
                                             <td><?= $dp['status']; ?></td>
-
+                                            <td><?= $dp['handle_by'];?></td>
 
                                             <td>
                                                 <!-- <div class="btn btn-sm btn-warning">
@@ -159,34 +161,9 @@
                                                 <br>
                                                 <br> -->
 
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward 1</a>
-                                                <br>
-                                                <br> -->
+                                               
 
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD2/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward 2</a>
-                                                <br>
-                                                <br>
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD3/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward 3</a>
-
-                                                <br>
-                                                <br>
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD4/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward 4</a> -->
+                                            
 
                                             </td>
                                         </tr>
