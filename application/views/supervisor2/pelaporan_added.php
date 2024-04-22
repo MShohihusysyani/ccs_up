@@ -275,11 +275,14 @@
                                     <?php
                                         foreach ($namahd as $nah): ?>
                                     <option value="<?= $nah['nama_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                   
                                     <?php endforeach; ?>
                                     <input type="hidden" name="id_user" id="id_user">
                                 </select>
                             </div>
                         </div>
+
+                        <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="<?= $dp['id_pelaporan'];?>">
 
                         <!-- <label for="kategori">Helpdesk</label>
                         <div class="form-group">
