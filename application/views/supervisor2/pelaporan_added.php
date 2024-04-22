@@ -150,7 +150,7 @@
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
-                                                            class="icon-name">Edit</span></a>
+                                                            class="icon-name">Forward</span></a>
                                                 </div>
 
                                                 <!-- <a class="btn btn-sm btn-info"
