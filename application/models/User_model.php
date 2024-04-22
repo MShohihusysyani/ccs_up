@@ -33,7 +33,7 @@ class User_model extends CI_Model
 
     public function getNamaUser(){
 
-        $query = "SELECT id, nama FROM user WHERE divisi='Helpdesk 1' OR divisi='Helpdeks 2' OR divisi='Helpdesk 3' OR divisi='Helpdesk 4' ";
+        $query = "SELECT id, nama FROM user WHERE divisi='Helpdesk 1' OR divisi='Helpdesk 2' OR divisi='Helpdesk 3' OR divisi='Helpdesk 4' ";
         return $this->db->query($query)->result_array();
     }
 
