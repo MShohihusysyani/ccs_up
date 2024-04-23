@@ -22,8 +22,8 @@
                     <?php echo form_open_multipart('supervisor/fungsi_edit_ccs') ?>
                     <form>
                         <?php foreach ($datapelaporan as $dp) : ?>
-                        <!-- <input type="hidden" id="id" name="id" class="form-control"
-                            value="<?= $dp['id']; ?>"> -->
+                        <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control"
+                            value="<?= $dp['id_pelaporan']; ?>">
 
                             <label for="nama_tiket">No Tiket</label>
                         <div class="form-group">
@@ -132,7 +132,26 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select name="namahd" id="namahd" class="form-control">
+                                
+                                    <?php
+                                        foreach ($namahd as $nah): ?>
+                                        <option value="<?= $nah['nama_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                    <?php endforeach; ?>
+                                    <input type="hidden" id="id_user" name="id_user" value="<?= $nah['id_user'];?>">
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="pelaporan_id" id="pelaporan_id" value="<?= $dp['id_pelaporan']; ?>">
+                        <input type="hidden" id="user_id" name="user_id" value="<?= $nah['id_user'];?>">
+
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">EDIT</button>
+                        <!-- <form method="post" action="<?= base_url('supervisor/add_forward') ?>">
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button>
+                            </form> -->
                         <?php endforeach; ?>
                     </form>
 
@@ -142,8 +161,9 @@
         </div>
     </div>
 
+   
     
-    <!-- MODAL ADD JENIS BARANG -->
+    <!-- MODAL CARI KATEGORI -->
     <div class="modal fade" id="defaultModalNamaKategori" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

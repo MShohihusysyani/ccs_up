@@ -151,21 +151,37 @@
                                                             class="icon-name">Edit</span></a>
                                                 </div>
 
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor/updateccs/<?= $dp['id']; ?>"><i
+                                               
+                                                <br>
+                                                <br>
+                                                <a class="btn btn-sm btn-info"
+                                                href="<?= base_url() ?>supervisor/updateccs/<?= $dp['id_pelaporan']; ?>"><i
                                                     class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a> -->
+                                                Forward</a>
+                                                
+                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <div class="btn btn-sm btn-info">
+                                                    <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
+                                                        data-no_tiket="<?= $dp['no_tiket']; ?>"
+                                                        data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
+                                                        data-nama="<?= $dp['nama']; ?>"
+                                                        data-perihal="<?= $dp['perihal']; ?>"
+                                                        data-status="<?= $dp['status']; ?>"
+                                                        data-status_ccs="<?= $dp['status_ccs']; ?>"
+                                                        data-kategory="<?= $dp['kategori']; ?>"
+                                                        data-priority="<?= $dp['priority']; ?>"
+                                                        data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
+                                                        data-target="#forwardModal"> <i class="material-icons">edit</i> <span
+                                                            class="icon-name">Forward</span></a>
+                                                </div> -->
 
-                                                <br>
-                                                <br>
-
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <a class="btn btn-sm btn-info tombol-usulkan"
                                                     href="<?= base_url() ?>supervisor/forwardtoHD/<?= $dp['id_pelaporan']; ?>"><i
                                                         class="material-icons">forward</i> <span class="icon-name"></span>
                                                     Forward To SPV2</a>
                                                 <br>
-                                                <br>
+                                                <br> -->
 
                                                
 
@@ -267,6 +283,128 @@
                                     <option value="<?php echo $cat['nama_kategori']; ?>">
                                     <?php echo $cat['nama_kategori']; ?>
                                     </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- <label for="kategori">Category</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
+                                    name="kategori" id="kategori" placeholder=""
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
+                                <input type="hidden" id="id" name="id">
+                            </div>
+                        </div> -->
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE
+                                CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+
+                        </div>
+                </div>
+                <?php echo form_close() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL FORWARD -->
+<div class="modal fade" id="forwardModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Forward Modal</h4>
+            </div>
+            <div class="modal-body">
+                <?= form_open_multipart('supervisor/edit_pelaporan') ?>
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
+                <div class="body">
+                    <form class="form-horizontal">
+                                                    
+                        <label for="no_tiket">No Tiket</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                            </div>
+                        </div> 
+
+                        <label for="waktu_pelaporan">Tanggal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <label for="perihal">Perihal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <label for="status">Status</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="status" name="status" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="status_ccs">Status CCS</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select id="priority" name="priority" class="form-control">
+                                    <option value="">-- Please select Priority--</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="maxday">Max Day</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="<?= $dp['maxday'];?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select name="kategori" id="kategori" class="form-control">
+                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
+                                    <?php
+                                    foreach ($category as $cat): ?>
+                                    <option value="<?php echo $cat['nama_kategori']; ?>">
+                                    <?php echo $cat['nama_kategori']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select name="namahd" id="namahd" class="form-control">
+                                
+                                    <?php
+                                        foreach ($namahd as $nah): ?>
+                                        <option value="<?= $nah['nama_user']; ?>"><?= $nah['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -404,6 +542,7 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('namahd option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));

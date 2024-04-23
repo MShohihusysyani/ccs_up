@@ -173,7 +173,7 @@ class Klienpelaporan_model extends CI_Model
 
     public function ambil_id_pelaporan($id)
     { 
-        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status, status_ccs, kategori, priority, maxday  FROM pelaporan WHERE id='$id'";
+        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status, status_ccs, kategori, priority, maxday  FROM pelaporan WHERE id_pelaporan='$id'";
         return $this->db->query($query)->result_array();
     }
 

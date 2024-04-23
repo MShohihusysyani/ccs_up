@@ -317,6 +317,10 @@ class Supervisor extends CI_Controller
         $this->load->model('Category_model', 'category_model');
         $data['category']      = $this->category_model->getCategory();
         
+
+        $this->load->model('User_model', 'user_model');
+        $data['namahd'] = $this->user_model->getNamaUser();
+        
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/edit_ccs', $data);
@@ -370,23 +374,32 @@ class Supervisor extends CI_Controller
         $this->db->set('priority', $priority);
         $this->db->set('kategori', $kategori);
         $this->db->set('maxday', $maxday);
-        $this->db->where('id', $id);
+        $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan');
-
-        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Edited!</div>');
+        $this->session->set_flashdata('pesan', 'Success!');
         Redirect(base_url('supervisor/added'));
     }
 
+    // public function fungsi_pelaporan()
+    // {
+    //     $this->supervisor_model->add_forward();
+    //     $this->session->set_flashdata('pesan', 'Pelaporan Success!');
+    //     $this->pelaporan_model->delete_pelaporan();
+    //     Redirect(Base_url('supervisor/added'));
+    // }
+
     public function edit_pelaporan()
     {
-        $id_pelaporan         = $this->input->post('id_pelaporan');
-        $no_tiket   = $this->input->post('no_tiket');
-        $perihal    = $this->input->post('perihal');
-        $status     = $this->input->post('status');
-        $status_ccs = $this->input->post('status_ccs');
-        $kategori   = $this->input->post('kategori');
-        $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday');
+        
+
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $no_tiket     = $this->input->post('no_tiket');
+        $perihal      = $this->input->post('perihal');
+        $status       = $this->input->post('status');
+        $status_ccs   = $this->input->post('status_ccs');
+        $kategori     = $this->input->post('kategori');
+        $priority     = $this->input->post('priority');
+        $maxday       = $this->input->post('maxday');
       
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
@@ -429,9 +442,6 @@ class Supervisor extends CI_Controller
     // Forward To SPV2
     public function forwardtospv2($id_pelaporan)
     {
-        
-
-
          $sql = "UPDATE pelaporan SET status_ccs='HANDLE 1', status='Forward SPV 2' WHERE id_pelaporan=$id_pelaporan";
          $this->db->query($sql);
          $this->session->set_flashdata('pesan', 'Forward Success!');

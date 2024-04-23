@@ -22,12 +22,17 @@ class Spv2_model extends CI_Model {
     public function add_forward()
     {
         $user_id = $this->session->userdata('id_user');
-        $query = "INSERT INTO forward(user_id, pelaporan_id) select user_id, id_pelaporan from pelaporan where user_id = $user_id ";
+        $query = "INSERT INTO forward(user_id, pelaporan_id) where user_id = $user_id ";
 
         $this->db->query($query);
 
     }
 
+    function updateForward($id, $data)
+    {
+        $this->db->where('id_pelaporan', $id);
+        $this->db->update('pelaporan', $data);
+    }
 
 }
 

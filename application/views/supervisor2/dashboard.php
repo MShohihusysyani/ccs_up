@@ -165,7 +165,7 @@
                                 </li>
                                 
                                 <li>
-                                    ALL
+                                    ALL 
                                     <span class="pull-right"><b><?= total_all()?></b> <medium>TICKETS</medium></span>
                                 </li>
                             </ul>

@@ -17,6 +17,15 @@ class Supervisor_model extends CI_Model {
         
     }
 
+    public function add_forward()
+    {
+        $user_id = $this->session->userdata('id_user');
+        $query = "INSERT INTO forward(user_id, pelaporan_id) select user_id, pelaporan_id FROM forward where user_id = $user_id " ;
+
+        $this->db->query($query);
+
+    }
+
 
 }
 

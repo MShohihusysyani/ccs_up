@@ -109,8 +109,7 @@ class Supervisor2 extends CI_Controller
         $status_ccs = $this->input->post('status_ccs');
         $kategori   = $this->input->post('kategori');
         $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday');
-      
+        $maxday     = $this->input->post('maxday'); 
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
             'perihal'    => $perihal,
@@ -157,7 +156,7 @@ class Supervisor2 extends CI_Controller
 
         
     
-        $this->db->where('id');
+        $this->db->where('id_pelaporan');
         $this->db->update('pelaporan');
         Redirect(base_url('supervisor2/added'));
     }
