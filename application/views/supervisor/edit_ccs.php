@@ -135,7 +135,7 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
-                                
+                                <option value="">-- Choose Helpdesk --</option>
                                     <?php
                                         foreach ($namahd as $nah): ?>
                                         <option value="<?= $nah['nama_user']; ?>"><?= $nah['nama_user']; ?></option>
