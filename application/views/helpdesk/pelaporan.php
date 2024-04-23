@@ -35,8 +35,7 @@
                                             <th>Category</th>
                                             <th>Priority</th>
                                             <th>Status CCS</th>
-                                            <th>Status</th>
-                                            <th>Keterangan Reject</th>
+                                            <!-- <th>Keterangan Reject</th> -->
                                             <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -92,8 +91,8 @@
                                                 <?php endif; ?>
                                             
                                             </td>
-                                            <td><?= $dp['status'];?></td>
-                                            <td><?= $dp['keterangan'];?></td>
+                                            
+                                            <!-- <td><?= $dp['keterangan'];?></td> -->
                                             <td>
                                             <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
@@ -139,7 +138,7 @@
     <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -179,13 +178,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                <label class="form-label">Status</label>
-                            </div>
-                        </div>
-
                         <!-- <div class="form-group form-float">
                             <div class="form-line">
                                 <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
@@ -202,20 +194,20 @@
                                         <option value="FINISH">Finish</option>
                                </select> 
                         </div>
-
+<!-- 
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input value="<?= $dp['handle_by']; ?>" type="text" id="handle_by" name="handle_by" class="form-control" >
                                 <label class="form-label">Handle By</label>
                             </div>
-                        </div>
-
+                        </div> -->
+<!-- 
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control" >
                                 <label class="form-label">Keterangan</label>
                             </div>
-                        </div>
+                        </div> -->
 
 
                             <div class="modal-footer">
@@ -237,7 +229,7 @@
     <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="ForwardModal<?= $dp['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="ForwardModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -277,12 +269,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                <label class="form-label">Status</label>
-                            </div>
-                        </div>
 
                         <!-- <div class="form-group form-float">
                             <div class="form-line">
@@ -301,19 +287,19 @@
                                </select> 
                         </div>
 
-                        <div class="form-group form-float">
+                        <!-- <div class="form-group form-float">
                             <div class="form-line">
                                 <input value="<?= $dp['handle_by']; ?>" type="text" id="handle_by" name="handle_by" class="form-control" >
                                 <label class="form-label">Handle By</label>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="form-group form-float">
+                        <!-- <div class="form-group form-float">
                             <div class="form-line">
                                 <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control" >
                                 <label class="form-label">Keterangan</label>
                             </div>
-                        </div>
+                        </div> -->
 
 
                             <div class="modal-footer">

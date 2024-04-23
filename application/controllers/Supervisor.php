@@ -259,6 +259,9 @@ class Supervisor extends CI_Controller
         $data['user']          = $this->user_model->getDataUser();
         $data['dataAdded'] = $this->klienpelaporan_model->getKlienPelaporanAdd();
 
+        $this->load->model('User_model', 'user_model');
+        $data['namahd'] = $this->user_model->getNamaUser();
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/pelaporan_added', $data);
@@ -470,44 +473,6 @@ class Supervisor extends CI_Controller
         redirect('supervisor/onprogress');
      }
 
-
-     public function forwardtoHD2($id)
-     {
-         // date_default_timezone_set('Asia/Jakarta');
-          # add your city to set local time zone
- 
- 
-          $sql = "UPDATE pelaporan SET status_ccs='HANDLE', status='Forward To Helpdesk 2' WHERE id=$id";
-          $this->db->query($sql);
-          $this->session->set_flashdata('pesan', 'Forward Success!');
-
-         redirect('supervisor/onprogress');
-      }
-
-      public function forwardtoHD3($id)
-     {
-         // date_default_timezone_set('Asia/Jakarta');
-          # add your city to set local time zone
- 
- 
-          $sql = "UPDATE pelaporan SET status_ccs='HANDLE', status='Forward To Helpdesk 3' WHERE id=$id";
-          $this->db->query($sql);
-          $this->session->set_flashdata('pesan', 'Forward Success!');
-        redirect('supervisor/onprogress');
-      }
-
-      public function forwardtoHD4($id)
-      {
-          // date_default_timezone_set('Asia/Jakarta');
-           # add your city to set local time zone
-  
-  
-           $sql = "UPDATE pelaporan SET status_ccs='HANDLE', status='Forward To Helpdesk 4' WHERE id=$id";
-           $this->db->query($sql);
-           $this->session->set_flashdata('pesan', 'Forward Success!');
-
-        redirect('supervisor/onprogress');
-       }
 
     //   Approve supervisor
       public function approve()
@@ -807,6 +772,21 @@ class Supervisor extends CI_Controller
             $this->load->view('supervisor/rekap_progres', $data);
             $this->load->view('templates/footer');
         }
+
+        //DISTRIBUSI TO HELPDESK
+        public function fungsi_forward()
+    {
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $data = [
+            'pelaporan_id' => $this->input->post('id_pelaporan'),
+            'user_id' => $this->input->post('namahd')
+        ];
+   
+        $this->db->insert('forward', $data);
+        $this->session->set_flashdata('pesan', 'Success Forward!');
+        Redirect(Base_url('supervisor/added'));
+    }
 
      
 }

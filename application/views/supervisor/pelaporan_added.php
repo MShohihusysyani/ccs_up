@@ -42,6 +42,7 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Status</th>
+                                        <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -58,6 +59,7 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Status</th>
+                                        <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -68,11 +70,11 @@
                                     foreach ($dataAdded as $dp): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-<!--                                          
+                                        
                                             <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
-                                            <td><?= $dp['no_tiket']; ?></td>
+                                                href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
+                                            </td>
+                                            <!-- <td><?= $dp['no_tiket']; ?></td> -->
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
                                             <td><?= $dp['perihal']; ?></td>
@@ -124,7 +126,7 @@
 
                                             </td>
                                             <td><?= $dp['status']; ?></td>
-
+                                            <td><?= $dp['handle_by'];?></td>
 
                                             <td>
                                                 <!-- <div class="btn btn-sm btn-warning">
@@ -135,7 +137,7 @@
                                                 </div>
                                             </div> -->
 
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -150,16 +152,10 @@
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Edit</span></a>
                                                 </div>
+                                                <br>
+                                                <br>
 
-                                               
-                                                <br>
-                                                <br>
-                                                <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor/updateccs/<?= $dp['id_pelaporan']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                Forward</a>
-                                                
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-info">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -173,17 +169,20 @@
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#forwardModal"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Forward</span></a>
-                                                </div> -->
+                                                </div>
+                                                
 
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD/<?= $dp['id_pelaporan']; ?>"><i
-                                                        class="material-icons">forward</i> <span class="icon-name"></span>
-                                                    Forward To SPV2</a>
+                                                <!-- <a class="btn btn-sm btn-info"
+                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
+                                                    class="material-icons"></i> <span class="icon-name"></span>
+                                                edit</a>
+
                                                 <br>
                                                 <br> -->
 
                                                
+
+                                            
 
                                             </td>
                                         </tr>
@@ -199,7 +198,6 @@
     </div>
     <!-- Button trigger modal -->
 </section>
-
 
 <!-- MODAL EDIT -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
@@ -316,11 +314,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Forward Modal</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Select Helpdesk</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor/edit_pelaporan') ?>
-                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
+                <?= form_open_multipart('supervisor/fungsi_forward') ?>
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
                                                     
@@ -380,7 +378,7 @@
                         <label for="maxday">Max Day</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="<?= $dp['maxday'];?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -401,14 +399,26 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
-                                
+                                <option value=""> -- Pilih Helpdesk -- </option>
                                     <?php
                                         foreach ($namahd as $nah): ?>
-                                        <option value="<?= $nah['nama_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                        <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
+                        
+                       
+
+                        <!-- <label for="kategori">Helpdesk</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
+                                    name="namahd" id="namahd" placeholder="Pilih Helpdesk"
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
+                                <input type="hidden" id="id" name="id" value="">
+                            </div>
+                        </div> -->
                         
                         <!-- <label for="kategori">Category</label>
                         <div class="form-group">
@@ -426,12 +436,15 @@
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
                         </div>
+                    
                 </div>
                 <?php echo form_close() ?>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!-- modal cari kategori -->
 <div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
@@ -479,6 +492,54 @@
     </div>
 </div>
 
+<!-- MODAL CARI HELPDESK -->
+<div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                        width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Helpdesk</th>
+                                <th class="hide">ID</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            <?php foreach ($namahd  as $nah) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row">
+                                    <?= $i; ?>
+                                </td>
+                                <td><?= $nah['nama']; ?></td>
+                                <td class="hide"><?= $div['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih3"
+                                        data-nama-divisi="<?= $nah['nama']; ?>"
+                                        data-id-divisi="<?= $nah['id']; ?>">
+                                        Pilih</button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        <?php echo form_close() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 
 <script type="text/javascript">
@@ -502,6 +563,8 @@
 
     });
 </script>
+
+
 
 
 
@@ -542,7 +605,7 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#kategori option:selected').text(div.data('kategori'));
-            modal.find('namahd option:selected').text(div.data('nama'));
+            modal.find('#namauser option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));
@@ -557,4 +620,55 @@
         });
 
     });
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        // Untuk sunting
+        $('#forwardModal').on('show.bs.modal', function (event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
+            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
+            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
+            modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#perihal').attr("value", div.data('perihal'));
+            modal.find('#status').attr("value", div.data('status'));
+            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
+            // modal.find('#priority').attr("value", div.data('priority'));
+            modal.find('#priority').value = div.data('priority');
+            // modal.find('#priority option:selected').text(div.data('priority'));
+            modal.find('#maxday').attr("value", div.data('maxday'));
+            // modal.find('#kategori').attr("value", div.data('kategori'));
+            modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#namauser option:selected').text(div.data('nama'));
+            // modal.find('#bprnama').attr("value", div.data('bprnama'));
+            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
+            // modal.find('#judul').attr("value", div.data('judul'));
+            // modal.find('#headline').attr("value", div.data('headline'));
+            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
+            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
+            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
+            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
+            // modal.find('#linkberita').val(div.data('linkberita'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+
+        });
+
+    });
+</script>
+
+<script>
+$(document).ready(function() {
+    $(document).on('click', '#pilih3', function() {
+        var nama_klas = $(this).data('nama-divisi');
+        var id = $(this).data('id-divisi');
+        $('#namahd').val(nama_klas);
+        $('#id').val(id);
+        $('#defaultModalNamaDivisi').modal('hide');
+    })
+});
 </script>

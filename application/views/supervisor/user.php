@@ -168,7 +168,7 @@ $('#tombol-tambah').on('click', function(e) {
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" value="<?= $u['password']; ?>" id="password" name="password" class="form-control">
+                                <input type="password" value="<?= $u['password']; ?>" id="password" name="password" class="form-control" readonly>
                                 <label class="form-label">password</label>
                             </div>
                         </div>
@@ -213,7 +213,7 @@ $('#tombol-tambah').on('click', function(e) {
     </div>
     <?php endforeach ?>
 
-    <!-- MODAL ADD -->
+
     <!-- MODAL ADD -->
 <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -275,7 +275,7 @@ $('#tombol-tambah').on('click', function(e) {
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" id="password" name="password" class="form-control" readonly>
+                                <input type="password" id="password" name="password" class="form-control">
                                 <label class="form-label">password</label>
                             </div>
                         </div>
@@ -291,10 +291,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="6">6-Dbs</option>
                                         <option value="7">7-Crd</option>
                                         <option value="8">8-Development</option>
-                                        <option value="9">9-Helpdesk 2</option>
-                                        <option value="10">10-Helpdesk 3</option>
-                                        <option value="11">11-Helpdesk 4</option>
-                                        <option value="12">12-Supervisor 2</option>
+                                        <option value="9">12-Supervisor 2</option>
                                </select> 
                         </div>
 

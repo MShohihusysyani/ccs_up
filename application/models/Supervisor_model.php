@@ -26,6 +26,13 @@ class Supervisor_model extends CI_Model {
 
     }
 
+    public function updateForward(){
+
+        $query = "UPDATE pelaporan SET status='Forward To Helpdesk' " ;
+
+        return $this->db->query($query)->result_array();
+    }
+
 
 }
 

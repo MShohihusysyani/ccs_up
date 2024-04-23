@@ -163,8 +163,13 @@ class Supervisor2 extends CI_Controller
 
     public function fungsi_forward()
     {
-        $this->spv2_model->add_forward();
-        $this->session->set_flashdata('pesan', 'Success!');
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $data = [
+            'pelaporan_id' => $this->input->post('id_pelaporan'),
+            'user_id' => $this->input->post('namahd')
+        ];
+        $this->db->insert('forward', $data);
         Redirect(Base_url('supervisor2/added'));
     }
 }

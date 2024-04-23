@@ -84,18 +84,6 @@ class Auth extends CI_Controller
 
                     } elseif ($sess_data['role'] == '9') {
                         $this->session->set_flashdata('pesan', 'Success Login!');
-                        redirect('helpdesk2');
-
-                    } elseif ($sess_data['role'] == '10') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
-                        redirect('helpdesk3');
-
-                    } elseif ($sess_data['role'] == '11') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
-                        redirect('helpdesk4');
-
-                    } elseif ($sess_data['role'] == '12') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
                         redirect('supervisor2');
                         
                     } else {

@@ -139,7 +139,7 @@
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
-                                                    <a href="javascript:;" data-id="<?= $dp['id_pelaporan']; ?>"
+                                                    <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
                                                         data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
                                                         data-nama="<?= $dp['nama']; ?>"
@@ -190,7 +190,7 @@
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor2/fungsi_forward') ?>
-                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="<?= $dp['id_pelaporan'];?>">
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
                                                     
@@ -271,15 +271,15 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
-                                <option value="<?= $dp['nama_user']; ?> "><?= $dp['nama_user']; ?></option>
+                                <option value=""> -- Pilih Helpdesk -- </option>
                                     <?php
                                         foreach ($namahd as $nah): ?>
-                                        <option value="<?= $nah['nama_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                        <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
-
+                        
                        
 
                         <!-- <label for="kategori">Helpdesk</label>
@@ -462,7 +462,7 @@
             var modal = $(this)
 
             // Isi nilai pada field
-            modal.find('#id').attr("value", div.data('id_pelaporan'));
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
             modal.find('#no_tiket').attr("value", div.data('no_tiket'));
             modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
             modal.find('#nama').attr("value", div.data('nama'));
@@ -475,7 +475,7 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#kategori option:selected').text(div.data('kategori'));
-            modal.find('#namahd option:selected').text(div.data('nama'));
+            modal.find('#namauser option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));
