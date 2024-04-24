@@ -277,6 +277,10 @@ class Supervisor extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanOP();
 
+        $this->load->model('User_model', 'user_model');
+        $data['namahd'] = $this->user_model->getNamaUser();
+
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/pelaporan_onprogress', $data);
@@ -797,5 +801,54 @@ class Supervisor extends CI_Controller
         $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Success Forward!');
         Redirect(Base_url('supervisor/added'));
+    }
+
+    public function fungsi_edit()
+    {
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namahd');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
+        ];
+
+        // cari nama user berdasarkan id 
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
+        $this->db->update('forward', $data);
+        $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
+        $this->session->set_flashdata('pesan', 'Success Forward!');
+        Redirect(Base_url('supervisor/onprogress'));
+    }
+
+    public function fungsi_edit2()
+    {
+        
+
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namahd');
+      
+        $ArrUpdate = array(
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
+
+        );
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
+        $this->supervisor_model->updateCP($id_pelaporan, $ArrUpdate, $nama_user);
+        $this->session->set_flashdata('pesan', 'Success Edited!');
+        Redirect(base_url('supervisor/onprogress'));
     }
 }

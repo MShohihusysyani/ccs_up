@@ -150,16 +150,33 @@ class Helpdesk extends CI_Controller
             Redirect(base_url('helpdesk/pelaporan'));
         }
 
+        // public function fungsi_forward()
+        // {
+        //     $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        //     $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        //     $data = [
+        //         'pelaporan_id' => $this->input->post('id_pelaporan'),
+        //         'user_id' => $this->input->post('namaspv')
+        //     ];
+       
+        //     $this->db->insert('forward', $data);
+        //     $this->session->set_flashdata('pesan', 'Success Forward!');
+        //     Redirect(Base_url('helpdesk/pelaporan'));
+        // }
+
         public function fungsi_forward()
         {
             $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
             $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namaspv');
             $data = [
-                'pelaporan_id' => $this->input->post('id_pelaporan'),
-                'user_id' => $this->input->post('namaspv')
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
             ];
-       
+
             $this->db->insert('forward', $data);
+            $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
             $this->session->set_flashdata('pesan', 'Success Forward!');
             Redirect(Base_url('helpdesk/pelaporan'));
         }

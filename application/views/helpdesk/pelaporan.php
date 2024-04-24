@@ -8,7 +8,10 @@
             </h2>
         </div>
         <!-- Basic Examples -->
-        <?= $this->session->flashdata('message'); ?>
+        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
+         <?php if ($this->session->flashdata('pesan')) { ?>
+
+         <?php } ?>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">

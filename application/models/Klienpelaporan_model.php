@@ -48,7 +48,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by  FROM pelaporan WHERE status_ccs='HANDLE' ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by  FROM pelaporan WHERE status_ccs='HANDLE'  ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -80,29 +80,7 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function getKlienPelaporanHD2()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, keterangan  FROM pelaporan WHERE status_ccs='HANDLE' AND status='Forward To Helpdesk 2' ORDER BY waktu_pelaporan DESC";
-        return $this->db->query($query)->result_array();
-    }
-
-    public function getKlienPelaporanHD3()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, keterangan  FROM pelaporan WHERE status_ccs='HANDLE' AND status='Forward To Helpdesk 3' ORDER BY waktu_pelaporan DESC";
-        return $this->db->query($query)->result_array();
-    }
-
-    public function getKlienPelaporanHD4()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, keterangan  FROM pelaporan WHERE status_ccs='HANDLE' AND status='Forward To Helpdesk 4' ORDER BY waktu_pelaporan DESC";
-        return $this->db->query($query)->result_array();
-    }
+   
 
     //VIEW FORWARD IMPLEMENTATOR
     public function getKlienPelaporanImplementator()
@@ -178,6 +156,15 @@ class Klienpelaporan_model extends CI_Model
     { 
         $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status, status_ccs, kategori, priority, maxday  FROM pelaporan WHERE id_pelaporan='$id'";
         return $this->db->query($query)->result_array();
+    }
+
+    //FUNGSI FORWARD KE SUPERVISOR 2
+    public function updateForward($id_pelaporan){
+
+  
+        $query = "UPDATE pelaporan SET status='Forward To Supervisor 2' WHERE id_pelaporan=$id_pelaporan" ;
+
+        return $this->db->query($query);
     }
 
 
