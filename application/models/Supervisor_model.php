@@ -26,9 +26,9 @@ class Supervisor_model extends CI_Model {
 
     }
 
-    public function updateForward(){
+    public function updateForward($id){
 
-        $query = "UPDATE pelaporan SET status='Forward To Helpdesk' " ;
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE'  WHERE id_pelaporan=$id" ;
 
         return $this->db->query($query)->result_array();
     }

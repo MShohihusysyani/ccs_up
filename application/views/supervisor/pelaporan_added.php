@@ -492,53 +492,28 @@
     </div>
 </div>
 
-<!-- MODAL CARI HELPDESK -->
-<div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                        width="100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Helpdesk</th>
-                                <th class="hide">ID</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($namahd  as $nah) : ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
-                                <td><?= $nah['nama']; ?></td>
-                                <td class="hide"><?= $div['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3"
-                                        data-nama-divisi="<?= $nah['nama']; ?>"
-                                        data-id-divisi="<?= $nah['id']; ?>">
-                                        Pilih</button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
 
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        <?php echo form_close() ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
+
+
+
+<!-- Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '#pilihKategori', function () {
+            var nama_klas = $(this).data('nama-kategori');
+            var id = $(this).data('id-kategori');
+            $('#kategori').val(nama_klas);
+            $('#id').val(id);
+            $('#modalPilihKategori').modal('hide');
+        })
+    });
+</script>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 
@@ -560,64 +535,6 @@
             input.value = "";
 
         }
-
-    });
-</script>
-
-
-
-
-
-<!-- Script -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- jQuery UI -->
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '#pilihKategori', function () {
-            var nama_klas = $(this).data('nama-kategori');
-            var id = $(this).data('id-kategori');
-            $('#kategori').val(nama_klas);
-            $('#id').val(id);
-            $('#modalPilihKategori').modal('hide');
-        })
-    });
-</script>
-<script>
-    $(document).ready(function () {
-
-        // Untuk sunting
-        $('#editModalCP').on('show.bs.modal', function (event) {
-            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
-            var modal = $(this)
-
-            // Isi nilai pada field
-            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
-            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
-            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
-            modal.find('#nama').attr("value", div.data('nama'));
-            modal.find('#perihal').attr("value", div.data('perihal'));
-            modal.find('#status').attr("value", div.data('status'));
-            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
-            // modal.find('#priority option:selected').text(div.data('priority'));
-            modal.find('#maxday').attr("value", div.data('maxday'));
-            // modal.find('#kategori').attr("value", div.data('kategori'));
-            modal.find('#kategori option:selected').text(div.data('kategori'));
-            modal.find('#namauser option:selected').text(div.data('nama'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-
-        });
 
     });
 </script>
@@ -660,6 +577,47 @@
 
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+
+        // Untuk sunting
+        $('#editModalCP').on('show.bs.modal', function (event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
+            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
+            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
+            modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#perihal').attr("value", div.data('perihal'));
+            modal.find('#status').attr("value", div.data('status'));
+            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
+            // modal.find('#priority').attr("value", div.data('priority'));
+            modal.find('#priority').value = div.data('priority');
+            // modal.find('#priority option:selected').text(div.data('priority'));
+            modal.find('#maxday').attr("value", div.data('maxday'));
+            // modal.find('#kategori').attr("value", div.data('kategori'));
+            modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#namauser option:selected').text(div.data('nama'));
+            // modal.find('#bprnama').attr("value", div.data('bprnama'));
+            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
+            // modal.find('#judul').attr("value", div.data('judul'));
+            // modal.find('#headline').attr("value", div.data('headline'));
+            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
+            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
+            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
+            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
+            // modal.find('#linkberita').val(div.data('linkberita'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+
+        });
+
+    });
+</script>
+
+
 
 <script>
 $(document).ready(function() {
