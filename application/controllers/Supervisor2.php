@@ -47,7 +47,7 @@ class Supervisor2 extends CI_Controller
         $data['dataAdded'] = $this->spv2_model->getKlienPelaporanAdd();
 
         $this->load->model('User_model', 'user_model');
-        $data['namahd'] = $this->user_model->getNamaUser();
+        $data['namateknisi'] = $this->user_model->getNamaTeknisi();
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
@@ -62,7 +62,7 @@ class Supervisor2 extends CI_Controller
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanOP();
+        $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanOP();
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');

@@ -143,7 +143,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="Klien">Klien</option>
                                         <option value="Helpdesk">Helpdesk</option>
                                         <option value="Supervisor">Supervisor</option>
-                                        <option value="Impelementator">Implementator</option>
+                                        <option value="Implementator">Implementator</option>
                                         <option value="Support">Support</option>
                                         <option value="DBS">DBS</option>
                                         <option value="CRD">CRD</option>

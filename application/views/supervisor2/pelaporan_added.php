@@ -118,6 +118,9 @@
                                                 <?php elseif ($dp['status_ccs'] == 'HANDLE'): ?>
                                                     <span class="label label-info">HANDLE</span>
 
+                                                <?php elseif ($dp['status_ccs'] == 'HANDLE 2'): ?>
+                                                    <span class="label label-info">HANDLE 2</span>
+
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
                                                     <span class="label label-primary">ADDED</span>
 
@@ -186,7 +189,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Select Helpdesk</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Pilih Teknisi</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor2/fungsi_forward') ?>
@@ -270,11 +273,11 @@
 
                         <div class="form-group">
                             <div class="form-line">
-                                <select name="namahd" id="namahd" class="form-control">
-                                <option value=""> -- Pilih Helpdesk -- </option>
+                                <select name="namateknisi" id="namateknisi" class="form-control">
+                                <option value=""> -- Pilih Teknisi -- </option>
                                     <?php
-                                        foreach ($namahd as $nah): ?>
-                                        <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                        foreach ($namateknisi as $nat): ?>
+                                        <option value="<?= $nat['id_user']; ?>"><?= $nat['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -362,53 +365,6 @@
     </div>
 </div>
 
-<!-- MODAL CARI HELPDESK -->
-<div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                        width="100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Helpdesk</th>
-                                <th class="hide">ID</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($namahd  as $nah) : ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
-                                <td><?= $nah['nama']; ?></td>
-                                <td class="hide"><?= $div['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3"
-                                        data-nama-divisi="<?= $nah['nama']; ?>"
-                                        data-id-divisi="<?= $nah['id']; ?>">
-                                        Pilih</button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        <?php echo form_close() ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 
@@ -475,7 +431,7 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#kategori option:selected').text(div.data('kategori'));
-            modal.find('#namauser option:selected').text(div.data('nama'));
+            modal.find('#namahd option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));

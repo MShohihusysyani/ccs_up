@@ -43,6 +43,12 @@ class User_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function getNamaTeknisi(){
+
+        $query = "SELECT id_user, nama_user FROM user WHERE divisi='Support' OR divisi='Implementator' ORDER by nama_user ASC";
+        return $this->db->query($query)->result_array();
+    }
+
     function updateUser($id, $data)
     {
         $this->db->where('id_user', $id);

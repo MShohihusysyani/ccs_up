@@ -76,7 +76,7 @@ class Klienpelaporan_model extends CI_Model
         $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
         FROM forward
         LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        WHERE forward.user_id=$user_id";
+        WHERE forward.user_id=$user_id AND status_ccs='HANDLE'";
         return $this->db->query($query)->result_array();
     }
 
@@ -162,7 +162,7 @@ class Klienpelaporan_model extends CI_Model
     public function updateForward($id_pelaporan){
 
   
-        $query = "UPDATE pelaporan SET status='Forward To Supervisor 2' WHERE id_pelaporan=$id_pelaporan" ;
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', status='Forward To Supervisor 2' WHERE id_pelaporan=$id_pelaporan" ;
 
         return $this->db->query($query);
     }

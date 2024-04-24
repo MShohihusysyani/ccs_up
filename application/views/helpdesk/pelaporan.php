@@ -289,7 +289,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">Forward To Supervisor 2</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor2/fungsi_forward') ?>
+                <?= form_open_multipart('helpdesk/fungsi_forward') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
