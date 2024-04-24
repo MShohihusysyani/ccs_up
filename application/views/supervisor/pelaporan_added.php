@@ -42,7 +42,6 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Status</th>
-                                        <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -59,7 +58,6 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Status</th>
-                                        <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -126,8 +124,6 @@
 
                                             </td>
                                             <td><?= $dp['status']; ?></td>
-                                            <td><?= $dp['handle_by'];?></td>
-
                                             <td>
                                                 <!-- <div class="btn btn-sm btn-warning">
                                                 <div class="demo-google-material-icon" data-toggle="modal"

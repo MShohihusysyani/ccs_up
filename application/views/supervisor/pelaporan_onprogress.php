@@ -39,6 +39,7 @@
                                             <th>Priority</th>
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
+                                            <th>Handle By</th>
                                             <th>Status</th>
                                           
                                     </tr>
@@ -55,6 +56,7 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
+                                        <th>Handle By</th>
                                         <th>Status</th>
                                     </tr>
                                 </tfoot>
@@ -128,6 +130,7 @@
                                                 <?php endif; ?>
                                             
                                             </td>
+                                            <td><?= $dp['handle_by'];?></td>
                                             <td><?= $dp['status'];?></td>
                                            
                                     

@@ -778,15 +778,24 @@ class Supervisor extends CI_Controller
     {
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
         $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namahd');
         $data = [
-            'pelaporan_id' => $this->input->post('id_pelaporan'),
-            'user_id' => $this->input->post('namahd')
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
         ];
 
+        // cari nama user berdasarkan id 
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
         $this->db->insert('forward', $data);
+        $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Success Forward!');
         Redirect(Base_url('supervisor/added'));
     }
-
-     
 }
