@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 23 Apr 2024 pada 11.17
+-- Waktu pembuatan: 24 Apr 2024 pada 03.33
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -106,7 +106,8 @@ CREATE TABLE `forward` (
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
 (1, 70, 4),
-(2, 78, 4);
+(2, 78, 4),
+(4, 78, 39);
 
 -- --------------------------------------------------------
 
@@ -298,7 +299,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
