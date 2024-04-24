@@ -44,7 +44,7 @@ class Helpdesk extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        // $data['category'] = $this->category_model->getNamakategori();
+        $data['category'] = $this->category_model->getNamakategori();
 
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();

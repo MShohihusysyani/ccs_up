@@ -823,32 +823,10 @@ class Supervisor extends CI_Controller
         $nama_user = $user->nama_user;
 
         $this->db->update('forward', $data);
-        $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
+        $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Success Forward!');
         Redirect(Base_url('supervisor/onprogress'));
     }
 
-    public function fungsi_edit2()
-    {
-        
-
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namahd');
-      
-        $ArrUpdate = array(
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-
-        );
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-        $user = $query->row();
-        $nama_user = $user->nama_user;
-
-        $this->supervisor_model->updateCP($id_pelaporan, $ArrUpdate, $nama_user);
-        $this->session->set_flashdata('pesan', 'Success Edited!');
-        Redirect(base_url('supervisor/onprogress'));
-    }
+    
 }
