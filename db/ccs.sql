@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Apr 2024 pada 07.23
+-- Waktu pembuatan: 24 Apr 2024 pada 11.03
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -105,7 +105,8 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
-(40, 78, 4);
+(45, 78, 25),
+(46, 78, 39);
 
 -- --------------------------------------------------------
 
@@ -171,8 +172,8 @@ INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `wak
 (72, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes</p>', NULL, 'CCS_Customer_Care_System_(1).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
 (73, 'TIC2024040005', 20, 'Proses - Proses Ulang', '2024-04-18', 'proses', 'ADDED', 'Low', 90, '<p>tes2</p>', 'kritikal', 'CCS_Customer_Care_System_(2).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
 (74, 'TIC2024040006', 33, 'Kredit - PPAP Kredit ', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes3</p>', NULL, 'Pertemuan_13.pdf', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL),
-(77, 'TIC2024040007', 33, 'Kredit - PPAP Kredit ', '2024-04-22', 'proses', 'ADDED', 'High', 7, '<p>tes 4</p>', NULL, '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL),
-(78, 'TIC2024040008', 20, 'Kredit - PPAP Kredit ', '2024-04-23', 'Forward To Helpdesk', 'HANDLE', 'Medium', 60, '<p>tes5</p>', 'material', 'CCS_Customer_Care_System_(3).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', 'Ajeng', NULL, NULL);
+(77, 'TIC2024040007', 33, 'Kredit - PPAP Kredit ', '2024-04-22', 'Forward To Helpdesk', 'HANDLE', 'High', 7, '<p>tes 4</p>', 'kritikal', '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Chintya', NULL, NULL),
+(78, 'TIC2024040008', 20, 'Kredit - PPAP Kredit ', '2024-04-23', 'Forward To Supervisor 2', 'HANDLE 2', 'Medium', 60, '<p>tes5</p>', 'kritikal', 'CCS_Customer_Care_System_(3).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', 'Eva', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -219,7 +220,7 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (11, 'Development', 'Development PT MSO', 'development', '5f4dcc3b5aa765d61d8327deb882cf99', 8, 'Y'),
 (20, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Y'),
 (23, 'Helpdesk 2', 'Ayu', 'ayu', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
-(24, 'Impelementator', 'implementator PT MSO', 'implementator', '5f4dcc3b5aa765d61d8327deb882cf99', 4, 'Y'),
+(24, 'Implementator', 'Implementator PT MSO', 'implementator', '5f4dcc3b5aa765d61d8327deb882cf99', 4, 'Y'),
 (25, 'Helpdesk 3', 'Eva', 'eva', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
 (26, 'Helpdesk 4', 'Khabibah', 'Khabibah', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
 (27, 'Helpdesk 1', 'Novi', 'novi', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
@@ -229,7 +230,8 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (31, 'Helpdesk 4', 'Luthfi', 'luthfi', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
 (32, 'Helpdesk 4', 'Nita', 'nita', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
 (33, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Y'),
-(39, 'Supervisor 2', 'SPV 2', 'spv2', '5f4dcc3b5aa765d61d8327deb882cf99', 9, 'Y');
+(39, 'Supervisor 2', 'Supervisor PT MSO Purwokerto', 'spv2', '5f4dcc3b5aa765d61d8327deb882cf99', 9, 'Y'),
+(42, 'Support', 'Rijal Amri', 'rijal', '5f4dcc3b5aa765d61d8327deb882cf99', 5, 'Y');
 
 --
 -- Indexes for dumped tables
@@ -297,7 +299,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -321,7 +323,7 @@ ALTER TABLE `tiket_temp`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
