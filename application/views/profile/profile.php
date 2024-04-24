@@ -32,7 +32,7 @@
                                                         <a><?= $this->session->userdata('username'); ?></a>
                                                     </h4>
                                                   
-                                                    <li>Nama Lengkap : <a><?= $u['nama']; ?></a></li>
+                                                    <li>Nama Lengkap : <a><?= $u['nama_user']; ?></a></li>
                                                     <li>Divisi : <a><?= $u['divisi']; ?></a></li>
                                                     
 
@@ -49,7 +49,7 @@
                                 foreach ($user as $u) : ?>
                                 <div role="tabpanel" class="tab-pane fade in" id="profile_settings">
                                     <form class="form-horizontal"
-                                        action="<?= base_url() ?>user/fungsi_edit/<?= $u['id']; ?>" method="post"
+                                        action="<?= base_url() ?>user/fungsi_edit/<?= $u['id_user']; ?>" method="post"
                                         enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="NameSurname" class="col-sm-2 control-label">Divisi</label>
@@ -76,8 +76,8 @@
                                             <label for="Nama" class="col-sm-2 control-label">Nama Lengkap</label>
                                             <div class="col-sm-10">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" id="nama" name="nama"
-                                                        placeholder="Nama Lengkap" value="<?= $u['nama']; ?>" required>
+                                                    <input type="text" class="form-control" id="nama_user" name="nama_user"
+                                                        placeholder="Nama Lengkap" value="<?= $u['nama_user']; ?>" required>
                                                 </div>
                                             </div>
                                         </div>

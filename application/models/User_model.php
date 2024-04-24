@@ -37,6 +37,12 @@ class User_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function getNamaSpv(){
+
+        $query = "SELECT id_user, nama_user FROM user WHERE divisi='Supervisor 2' ORDER by nama_user ASC";
+        return $this->db->query($query)->result_array();
+    }
+
     function updateUser($id, $data)
     {
         $this->db->where('id_user', $id);

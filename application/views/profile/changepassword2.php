@@ -1,6 +1,15 @@
 <section class="content">
     <div class="container-fluid">
-        <?= $this->session->flashdata('message'); ?>
+    <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
+            <?php if ($this->session->flashdata('pesan')) { ?>
+
+            <?php } ?>
+            <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>">
+                <?php if ($this->session->flashdata('pesan')) { ?>
+
+                <?php } ?>
+                <?= validation_errors(); ?>
+                <?= $this->session->flashdata('message'); ?>
         <div class="row clearfix">
 
             <div class="col-xs-12 col-sm-9">

@@ -181,7 +181,7 @@
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="<?= base_url() ?>user/profile_supervisor2/<?= $this->session->userdata('id'); ?>"><i
+                            <li><a href="<?= base_url() ?>user/profile_supervisor2/<?= $this->session->userdata('id_user'); ?>"><i
                                         class="material-icons">person</i>Profile</a>
                             </li>
 

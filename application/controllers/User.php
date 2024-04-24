@@ -264,6 +264,43 @@ class User extends CI_Controller
       }
   }
 
+  public function changepassword2()
+  {
+      $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+      $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
+      $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
+      $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
+
+      if ($this->form_validation->run() == false) {
+          $this->load->view('templates/header');
+          $this->load->view('templates/supervisor2_sidebar');
+          $this->load->view('profile/changepassword2', $data);
+          $this->load->view('templates/footer');
+      } else {
+          $current_passwordmd5 = $this->input->post('current_password');
+          $new_passwordmd5     = $this->input->post('new_password1');
+          $current_password    = MD5($current_passwordmd5);
+          $new_password        = MD5($new_passwordmd5);
+          if ($current_password != $data['user']['password']) {
+            $this->session->set_flashdata('alert', 'Wrong current password!');
+              redirect('user/changepassword2');
+          } else if ($current_password == $new_password) {
+            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+              redirect('user/changepassword2');
+          } else {
+              $this->db->set('password', $new_password);
+              $this->db->where('id_user', $this->session->userdata('id_user'));
+              $this->db->update('user');
+
+
+              $this->session->set_flashdata('pesan', 'Password Changed!');
+         
+              redirect('user/changepassword2');
+          }
+      }
+  }
+
   public function changepassword_klien()
   {
       $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
