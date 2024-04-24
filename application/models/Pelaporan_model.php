@@ -37,6 +37,12 @@ class Pelaporan_model extends CI_Model
         $this->db->update('pelaporan', $data);
     }
 
+    function updateImpact($id_pelaporan, $data)
+    {
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        $this->db->update('pelaporan', $data);
+    }
+
     // update finish HELPDESK
     function updateHD1($id, $data)
     {
