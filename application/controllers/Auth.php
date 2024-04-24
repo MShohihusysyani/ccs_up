@@ -92,12 +92,11 @@ class Auth extends CI_Controller
                     }
                 } else {
                     
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User is not activated, Please contact Supervisor!</div>');
+                    $this->session->set_flashdata('alert', 'Inactive User, Please Contact Supervisor!');
                     redirect('auth');
                 }
             } else {
                 $this->session->set_flashdata('alert', 'Wrong Username or Password!');
-                //  $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Wrong Username/Password</div>');
                 redirect('auth');
             }
           
