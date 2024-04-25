@@ -185,7 +185,7 @@ class Supervisor2 extends CI_Controller
 
         $this->db->update('forward', $data);
         $this->spv2_model->updateForward($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Success Forward!');
+        $this->session->set_flashdata('pesan', 'Successfully Forward!');
         Redirect(Base_url('supervisor2/added'));
     }
 
@@ -211,7 +211,7 @@ class Supervisor2 extends CI_Controller
 
         $this->db->update('forward', $data);
         $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Success Forward!');
+        $this->session->set_flashdata('pesan', 'Teknisi has been update!');
         Redirect(Base_url('supervisor2/onprogress'));
     }
 }
