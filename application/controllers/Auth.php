@@ -51,39 +51,39 @@ class Auth extends CI_Controller
                 }
                 if ($sess_data['active'] == 'Y') {
                     if ($sess_data['role'] == '1') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('klien');
 
                     } elseif ($sess_data['role'] == '2') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('helpdesk');
 
                     } elseif ($sess_data['role'] == '3') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('supervisor');
 
                     } elseif ($sess_data['role'] == '4') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('implementator');
                     
                     } elseif ($sess_data['role'] == '5') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('support');
 
                     } elseif ($sess_data['role'] == '6') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('dbs');
                     
                     } elseif ($sess_data['role'] == '7') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('crd');
                         
                     } elseif ($sess_data['role'] == '8') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('development');
 
                     } elseif ($sess_data['role'] == '9') {
-                        $this->session->set_flashdata('pesan', 'Success Login!');
+                        $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('supervisor2');
                         
                     } else {
@@ -120,19 +120,9 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id_user');
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role');
-        $this->session->set_flashdata('pesan', 'Success Logout!');
+        $this->session->set_flashdata('pesan', 'Successfully Logout!');
         // $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been logout!</div>');
         redirect('auth');
-    }
-
-    public function logout2(){
-
-   
-    $id = $this->session->userdata('id');
-    $this ->auth_model->logout($date, $id);
-    $this->session->sess_destroy();
-    $this->session->set_flashdata('pesan', 'Success Logout!');
-    redirect('auth');
     }
 
     public function resetPassword()
