@@ -44,7 +44,7 @@ class Supervisor extends CI_Controller
             'nama_kategori' => $this->input->post('nama_kategori')
         ];
         $this->db->insert('category', $data);
-        $this->session->set_flashdata('pesan', 'Success Added!');
+        $this->session->set_flashdata('pesan', 'Successfully Added!');
         // $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissable" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Category added!</div>');
         redirect('supervisor/category');
     }
@@ -52,7 +52,7 @@ class Supervisor extends CI_Controller
     public function hapus_kategori($id)
     {
         $this->category_model->hapus($id);
-        $this->session->set_flashdata('pesan', 'Success Deleted!');
+        $this->session->set_flashdata('pesan', 'Successfully Deleted!');
         // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Category Deleted!</div>');
         Redirect(Base_url('supervisor/category'));
     }
@@ -65,7 +65,7 @@ class Supervisor extends CI_Controller
             'nama_kategori' => $nama_kategori
         );
         $this->category_model->updateKategori($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Success Edited!');
+        $this->session->set_flashdata('pesan', 'Successfully Edited!');
         
         Redirect(base_url('supervisor/category'));
     }
@@ -99,7 +99,7 @@ class Supervisor extends CI_Controller
             'nama_klien' => $this->input->post('nama_klien')
         ];
         $this->db->insert('klien', $data);
-        $this->session->set_flashdata('pesan', 'Success Added!');
+        $this->session->set_flashdata('pesan', 'Successfully Added!');
         // $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissable" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Client added!</div>');
         redirect('supervisor/client');
     }
@@ -107,7 +107,7 @@ class Supervisor extends CI_Controller
     public function hapus_klien($id)
     {
         $this->client_model->hapus($id);
-        $this->session->set_flashdata('pesan', 'Success Deleted!');
+        $this->session->set_flashdata('pesan', 'Successfully Deleted!');
         // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Client Deleted!</div>');
         Redirect(Base_url('supervisor/client'));
     }
@@ -122,7 +122,7 @@ class Supervisor extends CI_Controller
             'nama_klien' => $nama_klien
         );
         $this->client_model->updateKlien($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Success Edited!');
+        $this->session->set_flashdata('pesan', 'Successfully Edited!');
         // $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Category Edited!</div>');
         Redirect(base_url('supervisor/client'));
     }
@@ -171,7 +171,7 @@ class Supervisor extends CI_Controller
             'active'   => $this->input->post('active')
         ];
         $this->db->insert('user', $data);
-        $this->session->set_flashdata('pesan', 'Success Added!');
+        $this->session->set_flashdata('pesan', 'Successfully Added!');
         // $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissable" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User added!</div>');
         redirect('supervisor/user');
     }
@@ -195,7 +195,7 @@ class Supervisor extends CI_Controller
 
         );
         $this->usermaster_model->updateUser($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Success Edited!');
+        $this->session->set_flashdata('pesan', 'Successfully Edited!');
         // $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User Edited!</div>');
         Redirect(base_url('supervisor/user'));
     }
@@ -203,7 +203,7 @@ class Supervisor extends CI_Controller
     public function hapus_user($id)
     {
         $this->usermaster_model->hapus($id);
-        $this->session->set_flashdata('pesan', 'Success Deleted!');
+        $this->session->set_flashdata('pesan', 'Successfully Deleted!');
         // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User Deleted!</div>');
         Redirect(Base_url('supervisor/user'));
     }
@@ -475,7 +475,7 @@ class Supervisor extends CI_Controller
     
             );
             $this->pelaporan_model->rejecthd1($id, $ArrUpdate);
-            $this->session->set_flashdata('pesan', 'Successfully Approve!');
+            $this->session->set_flashdata('pesan', 'Successfully Reject!');
             $referred_from = $this->session->userdata('referred_from');
             redirect($referred_from, 'refresh');
  
@@ -638,7 +638,7 @@ class Supervisor extends CI_Controller
 
         $this->db->insert('forward', $data);
         $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Success Forward!');
+        $this->session->set_flashdata('pesan', 'Successfully Forward!');
         Redirect(Base_url('supervisor/added'));
     }
 
@@ -664,7 +664,7 @@ class Supervisor extends CI_Controller
 
         $this->db->update('forward', $data);
         $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Success Forward!');
+        $this->session->set_flashdata('pesan', 'Helpdesk has been update!');
         Redirect(Base_url('supervisor/onprogress'));
     }
 
