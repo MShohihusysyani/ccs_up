@@ -47,21 +47,15 @@ class Implementator extends CI_Controller
          $waktu_pelaporan = $this->input->post('waktu_pelaporan');
          $nama            = $this->input->post('nama');
          $perihal         = $this->input->post('perihal');
-         $status          = 'Forwad To Helpdesk 1';
-         $status_ccs      = 'HANDLE';
-         $handle_by       = $this->input->post('handle_by');
-         $keterangan      = $this->input->post('keterangan');
+         $status          = 'Solved';
+         $status_ccs      = 'CLOSES';
          $ArrUpdate       = array(
  
              'no_tiket'        => $no_tiket,
              'waktu_pelaporan' => $waktu_pelaporan,
              'nama'            => $nama,
              'perihal'         => $perihal,
-             'status'          => $status,
-             'status_ccs'      => $status_ccs,
-             'handle_by'       => $handle_by,
-             'keterangan'      => $keterangan
- 
+             'status_ccs'      => $status_ccs
          );
          $this->pelaporan_model->updateImplementator($id, $ArrUpdate);
          redirect('implementator/pelaporan');

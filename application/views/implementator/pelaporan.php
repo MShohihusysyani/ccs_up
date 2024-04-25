@@ -140,13 +140,13 @@
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
+                                                        class="icon-name">Finish</span>
                                                 </div>
                                             </div>
                                             <br>
                                             <br>
 
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -160,7 +160,7 @@
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Forward</span></a>
-                                                </div>
+                                                </div> -->
 
                                                 <!-- <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
@@ -193,10 +193,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Add Impact</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">Finish</h4>
                 </div>
                 <div class="modal-body">
-                    <?= form_open_multipart('helpdesk/edit_pelaporan') ?>
+                    <?= form_open_multipart('implementator/finish') ?>
                     <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
@@ -236,7 +236,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select id="impact" name="impact" class="form-control">
                                     <option value="">-- Choose Impact--</option>
@@ -244,7 +244,7 @@
                                     <option value="material">Material</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         
                         
