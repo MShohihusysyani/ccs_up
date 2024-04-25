@@ -23,7 +23,7 @@
                         <h2>
                             Data Client
                         </h2>
-
+                        <br>
                         
                         <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal"
                             data-target="#defaultModal"> <i class="material-icons">add</i> <span

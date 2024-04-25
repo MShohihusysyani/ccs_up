@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Data User
+                           Aktivasi User
                         </h2>
 
                     </div>

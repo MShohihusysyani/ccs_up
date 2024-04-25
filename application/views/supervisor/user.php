@@ -24,7 +24,7 @@
                         <h2>
                             Data User
                         </h2>
-
+                        <br>
                         
                         <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal"
                             data-target="#defaultModal"> <i class="material-icons">add</i> <span
