@@ -38,6 +38,19 @@ class Spv2_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+    
+    public function updateForward($id_pelaporan, $nama_user){
+
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2',  handle_by = '$nama_user', status='Forward To Teknisi' WHERE id_pelaporan=$id_pelaporan" ;
+        return $this->db->query($query);
+    }
+
+    public function updateTeknisi($id_pelaporan, $nama_user){
+
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by = '$nama_user'  WHERE id_pelaporan=$id_pelaporan" ;
+        return $this->db->query($query);
+    }
+
 
 }
 

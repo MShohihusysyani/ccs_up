@@ -64,6 +64,9 @@ class Supervisor2 extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanOP();
 
+        $this->load->model('User_model', 'user_model');
+        $data['namateknisi'] = $this->user_model->getNamaTeknisi();
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/pelaporan_onprogress', $data);
@@ -165,11 +168,49 @@ class Supervisor2 extends CI_Controller
     {
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
         $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namateknisi');
         $data = [
-            'pelaporan_id' => $this->input->post('id_pelaporan'),
-            'user_id' => $this->input->post('namahd')
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
         ];
-        $this->db->insert('forward', $data);
+
+        // cari nama user berdasarkan id 
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
+        $this->db->update('forward', $data);
+        $this->spv2_model->updateForward($id_pelaporan, $nama_user);
+        $this->session->set_flashdata('pesan', 'Success Forward!');
         Redirect(Base_url('supervisor2/added'));
+    }
+
+    public function fungsi_edit()
+    {
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namateknisi');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
+        ];
+
+        // cari nama user berdasarkan id 
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
+        $this->db->update('forward', $data);
+        $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
+        $this->session->set_flashdata('pesan', 'Success Forward!');
+        Redirect(Base_url('supervisor2/onprogress'));
     }
 }

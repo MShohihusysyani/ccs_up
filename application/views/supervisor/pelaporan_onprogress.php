@@ -121,6 +121,10 @@
                                                 <?php elseif ($dp['status_ccs'] == 'HANDLE'): ?>
                                                     <span class="label label-info">HANDLE</span>
 
+                                                <?php elseif ($dp['status_ccs'] == 'HANDLE 2'): ?>
+                                                    <span class="label label-info">HANDLE 2</span>
+
+
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
                                                     <span class="label label-primary">ADDED</span>
 
