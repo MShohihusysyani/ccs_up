@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Apr 2024 pada 11.03
+-- Waktu pembuatan: 25 Apr 2024 pada 10.39
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -105,8 +105,7 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
-(45, 78, 25),
-(46, 78, 39);
+(51, 78, 24);
 
 -- --------------------------------------------------------
 
@@ -158,6 +157,7 @@ CREATE TABLE `pelaporan` (
   `file` varchar(100) DEFAULT NULL,
   `nama` varchar(100) NOT NULL,
   `handle_by` varchar(100) DEFAULT NULL,
+  `handle_by2` varchar(100) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT NULL,
   `waktu_approve` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -166,14 +166,14 @@ CREATE TABLE `pelaporan` (
 -- Dumping data untuk tabel `pelaporan`
 --
 
-INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `nama`, `handle_by`, `keterangan`, `waktu_approve`) VALUES
-(69, 'TIC2024040001', 33, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', '2024-04-18', 'Solved by HD4', 'FINISH', 'Medium', 60, '<p>Permintaan Backdate</p>', NULL, '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Nita', '', '2024-04-19'),
-(71, 'TIC2024040003', 20, 'Kredit - PPAP Kredit ', '2024-04-18', 'proses', 'ADDED', 'Medium', 60, '<p>Perbaikan PPAP Kredit</p>', NULL, 'CCS_Customer_Care_System.pdf', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
-(72, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes</p>', NULL, 'CCS_Customer_Care_System_(1).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
-(73, 'TIC2024040005', 20, 'Proses - Proses Ulang', '2024-04-18', 'proses', 'ADDED', 'Low', 90, '<p>tes2</p>', 'kritikal', 'CCS_Customer_Care_System_(2).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL),
-(74, 'TIC2024040006', 33, 'Kredit - PPAP Kredit ', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes3</p>', NULL, 'Pertemuan_13.pdf', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL),
-(77, 'TIC2024040007', 33, 'Kredit - PPAP Kredit ', '2024-04-22', 'Forward To Helpdesk', 'HANDLE', 'High', 7, '<p>tes 4</p>', 'kritikal', '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Chintya', NULL, NULL),
-(78, 'TIC2024040008', 20, 'Kredit - PPAP Kredit ', '2024-04-23', 'Forward To Supervisor 2', 'HANDLE 2', 'Medium', 60, '<p>tes5</p>', 'kritikal', 'CCS_Customer_Care_System_(3).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', 'Eva', NULL, NULL);
+INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `nama`, `handle_by`, `handle_by2`, `keterangan`, `waktu_approve`) VALUES
+(69, 'TIC2024040001', 33, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', '2024-04-18', 'Solved by HD4', 'FINISH', 'Medium', 60, '<p>Permintaan Backdate</p>', NULL, '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Nita', NULL, '', '2024-04-19'),
+(71, 'TIC2024040003', 20, 'Kredit - PPAP Kredit ', '2024-04-18', 'proses', 'ADDED', 'Medium', 60, '<p>Perbaikan PPAP Kredit</p>', NULL, 'CCS_Customer_Care_System.pdf', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL),
+(72, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes</p>', NULL, 'CCS_Customer_Care_System_(1).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL),
+(73, 'TIC2024040005', 20, 'Proses - Proses Ulang', '2024-04-18', 'proses', 'ADDED', 'Low', 90, '<p>tes2</p>', 'kritikal', 'CCS_Customer_Care_System_(2).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL),
+(74, 'TIC2024040006', 33, 'Kredit - PPAP Kredit ', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes3</p>', NULL, 'Pertemuan_13.pdf', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, NULL),
+(77, 'TIC2024040007', 33, 'Kredit - PPAP Kredit ', '2024-04-22', 'proses', 'ADDED', 'High', 7, '<p>tes 4</p>', 'kritikal', '1702018237376.png', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, NULL),
+(78, 'TIC2024040008', 20, 'Kredit - PPAP Kredit ', '2024-04-23', 'Solved', 'FINISH', 'Medium', 60, '<p>tes5</p>', 'material', 'CCS_Customer_Care_System_(3).xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', 'Ajeng', 'Implementator PT MSO', NULL, '2024-04-25');
 
 -- --------------------------------------------------------
 
@@ -202,7 +202,7 @@ CREATE TABLE `user` (
   `divisi` varchar(30) NOT NULL,
   `nama_user` varchar(50) NOT NULL,
   `username` varchar(15) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `role` int(11) NOT NULL,
   `active` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -299,7 +299,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -323,7 +323,7 @@ ALTER TABLE `tiket_temp`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
