@@ -50,23 +50,6 @@ class Pelaporan_model extends CI_Model
         $this->db->update('pelaporan', $data);
     }
 
-    function updateHD2($id, $data)
-    {
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan', $data);
-    }
-
-    function updateHD3($id, $data)
-    {
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan', $data);
-    }
-
-    function updateHD4($id, $data)
-    {
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan', $data);
-    }
 
     // APPROVE SPV
     function approveSPV($id, $data){
@@ -80,23 +63,7 @@ class Pelaporan_model extends CI_Model
         $this->db->update('pelaporan', $data);
     }
 
-     // REJECT HD2
-     function rejecthd2($id, $data){
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan', $data);
-    }
 
-     // REJECT HD3
-     function rejecthd3($id, $data){
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan', $data);
-    }
-
-     // REJECT HD4
-     function rejecthd4($id, $data){
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan', $data);
-    }
 
     // forward to implementator
     
