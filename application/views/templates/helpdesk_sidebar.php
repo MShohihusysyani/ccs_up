@@ -80,11 +80,11 @@
                             aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a
-                                    href="<?= base_url() ?>user/profile_hd1/<?= $this->session->userdata('id_user'); ?>"><i
+                                    href="<?= base_url() ?>user/profile_hd/<?= $this->session->userdata('id_user'); ?>"><i
                                         class="material-icons">person</i>Profile</a>
                             </li>
-                            <li class="<?= $this->uri->segment(2) == 'changepassword2' ? 'active' : ' ' ?>"><a
-                                    href="<?= base_url('user/changepassword_hd1') ?>"><i
+                            <li class="<?= $this->uri->segment(2) == 'changepassword_hd' ? 'active' : ' ' ?>"><a
+                                    href="<?= base_url('user/changepassword_hd') ?>"><i
                                         class="material-icons">lock</i>Change Password</a>
                             </li>
                             <li role="separator" class="divider"></li>
