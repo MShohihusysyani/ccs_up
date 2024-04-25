@@ -70,7 +70,6 @@ class Helpdesk extends CI_Controller
            $perihal         = $this->input->post('perihal');
            $status          = 'Solved';
            $status_ccs      = 'CLOSE';
-           $handle_by       = $this->input->post('handle_by');
            $ArrUpdate       = array(
    
                'no_tiket'        => $no_tiket,
