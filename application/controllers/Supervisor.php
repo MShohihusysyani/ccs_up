@@ -387,14 +387,6 @@ class Supervisor extends CI_Controller
         Redirect(base_url('supervisor/added'));
     }
 
-    // public function fungsi_pelaporan()
-    // {
-    //     $this->supervisor_model->add_forward();
-    //     $this->session->set_flashdata('pesan', 'Pelaporan Success!');
-    //     $this->pelaporan_model->delete_pelaporan();
-    //     Redirect(Base_url('supervisor/added'));
-    // }
-
     public function edit_pelaporan()
     {
         
@@ -419,64 +411,9 @@ class Supervisor extends CI_Controller
 
         );
         $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Success Edited!');
+        $this->session->set_flashdata('pesan', 'Successfully Edited!');
         Redirect(base_url('supervisor/added'));
     }
-
-    
-    // public function edit_pelaporan()
-    // {
-    //     $id = $this->input->post('id');
-    //     $ArrUpdate = array(
-    //         'no_tiket' => $this->input->post('no_tiket'),
-    //         'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
-    //         'nama' => $this->input->post('nama'),
-    //         'perihal' => $this->input->post('perihal'),
-    //         'status' => $this->input->post('status'),
-    //         'status_ccs' => $this->input->post('status_ccs'),
-    //         'priority' => $this->input->post('priority'),
-    //         'maxday' => $this->input->post('maxday'),
-    //         'kategori' => $this->input->post('kategori')
-
-  
-    //     );
-    //     $this->pelaporan_model->updateCP($id, $ArrUpdate);
-    //      $this->session->set_flashdata('pesan', 'Success Edited!');
-    //     $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Priority and Category Updated</div>');
-    //     Redirect(base_url('supervisor/added'));
-    // }
-
-    // Forward To SPV2
-    public function forwardtospv2($id_pelaporan)
-    {
-         $sql = "UPDATE pelaporan SET status_ccs='HANDLE 1', status='Forward SPV 2' WHERE id_pelaporan=$id_pelaporan";
-         $this->db->query($sql);
-         $this->session->set_flashdata('pesan', 'Forward Success!');
-        
-        //  $referred_from = $this->session->userdata('referred_from');
-        //  redirect($referred_from, 'refresh');
-
-        redirect('supervisor/onprogress');
-     }
-
-    
-    //FORWARD TO HELPDESK
-    public function forwardtoHD($id)
-    {
-        // date_default_timezone_set('Asia/Jakarta');
-         # add your city to set local time zone
-
-
-         $sql = "UPDATE pelaporan SET status_ccs='HANDLE', status='Forward To SPV 2' WHERE id_pelaporan=$id";
-         $this->db->query($sql);
-         $this->session->set_flashdata('pesan', 'Forward Success!');
-        //  $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">  Data Telah Disetujui<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        //  $referred_from = $this->session->userdata('referred_from');
-        //  redirect($referred_from, 'refresh');
-
-        redirect('supervisor/onprogress');
-     }
-
 
     //   Approve supervisor
       public function approve()
@@ -505,13 +442,13 @@ class Supervisor extends CI_Controller
    
            );
            $this->pelaporan_model->approveSPV($id, $ArrUpdate);
-    
+           $this->session->set_flashdata('pesan', 'Successfully Approve!');
            redirect('supervisor/finish');
 
            
        }
 
-    //    REJECT HELPDESK
+    // REJECT HELPDESK
        public function reject()
        {
            // date_default_timezone_set('Asia/Jakarta');
@@ -539,110 +476,13 @@ class Supervisor extends CI_Controller
             );
             $this->pelaporan_model->rejecthd1($id, $ArrUpdate);
             $this->session->set_flashdata('pesan', 'Successfully Approve!');
-            
             $referred_from = $this->session->userdata('referred_from');
             redirect($referred_from, 'refresh');
  
             
         }
 
-        public function reject2()
-        {
-            // date_default_timezone_set('Asia/Jakarta');
-             # add your city to set local time zone
-    
-             $id              = $this->input->post('id_pelaporan');
-             $no_tiket        = $this->input->post('no_tiket');
-             $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-             $nama            = $this->input->post('nama');
-             $perihal         = $this->input->post('perihal');
-             $status          = 'Forward To Helpdesk 2';
-             $status_ccs      = 'HANDLE';
-             $keterangan      = $this->input->post('keterangan');
-             $ArrUpdate       = array(
-     
-                 'no_tiket'        => $no_tiket,
-                 'waktu_pelaporan' => $waktu_pelaporan,
-                 'nama'            => $nama,
-                 'perihal'         => $perihal,
-                 'status'          => $status,
-                 'status_ccs'      => $status_ccs,
-                 'keterangan'      => $keterangan
-     
-             );
-             $this->pelaporan_model->rejecthd2($id, $ArrUpdate);
-             $this->session->set_flashdata('pesan', 'Successfully Approve!');
-             $referred_from = $this->session->userdata('referred_from');
-
-             redirect($referred_from, 'refresh');
-  
-             
-         }
-
-         public function reject3()
-         {
-             // date_default_timezone_set('Asia/Jakarta');
-              # add your city to set local time zone
-              $id              = $this->input->post('id_pelaporan');
-              $no_tiket        = $this->input->post('no_tiket');
-              $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-              $nama            = $this->input->post('nama');
-              $perihal         = $this->input->post('perihal');
-              $status          = 'Forward To Helpdesk 3';
-              $status_ccs      = 'HANDLE';
-              $keterangan      = $this->input->post('keterangan');
-              $ArrUpdate       = array(
-      
-                  'no_tiket'        => $no_tiket,
-                  'waktu_pelaporan' => $waktu_pelaporan,
-                  'nama'            => $nama,
-                  'perihal'         => $perihal,
-                  'status'          => $status,
-                  'status_ccs'      => $status_ccs,
-                  'keterangan'      => $keterangan
-      
-              );
-              $this->pelaporan_model->rejecthd3($id, $ArrUpdate);
-              $this->session->set_flashdata('pesan', 'Successfully Approve!');
-              $referred_from = $this->session->userdata('referred_from');
-              redirect($referred_from, 'refresh');
-   
-              
-          }
-
-          
-         public function reject4()
-         {
-             // date_default_timezone_set('Asia/Jakarta');
-              # add your city to set local time zone
-              $id              = $this->input->post('id_pelaporan');
-              $no_tiket        = $this->input->post('no_tiket');
-              $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-              $nama            = $this->input->post('nama');
-              $perihal         = $this->input->post('perihal');
-              $status          = 'Forward To Helpdesk 4';
-              $status_ccs      = 'HANDLE';
-              $keterangan      = $this->input->post('keterangan');
-              $ArrUpdate       = array(
-      
-                  'no_tiket'        => $no_tiket,
-                  'waktu_pelaporan' => $waktu_pelaporan,
-                  'nama'            => $nama,
-                  'perihal'         => $perihal,
-                  'status'          => $status,
-                  'status_ccs'      => $status_ccs,
-                  'keterangan'      => $keterangan
-      
-              );
-              $this->pelaporan_model->rejecthd4($id, $ArrUpdate);
-              $this->session->set_flashdata('pesan', 'Successfully Approve!');
-              $referred_from = $this->session->userdata('referred_from');
-              redirect($referred_from, 'refresh');
-   
-              
-          }
-
-        //   laporan filter
+        //   FILTER LAPORAN
         public function rekapPelaporan()
         {
             $this->load->model('Client_model', 'client_model');
@@ -675,7 +515,6 @@ class Supervisor extends CI_Controller
         }
 
         //LAPORAN FILTER KATEGORI
-
         public function rekapKategori()
         {
             $this->load->model('Category_model', 'category_model');

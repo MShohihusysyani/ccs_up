@@ -8,7 +8,10 @@
             </h2>
         </div>
         <!-- Basic Examples -->
-        <?= $this->session->flashdata('message'); ?>
+        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
+         <?php if ($this->session->flashdata('pesan')) { ?>
+
+         <?php } ?>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -32,12 +35,12 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Perihal</th>
-                                            <!-- <th>Attachment</th> -->
+                                            <th>Impact</th>
                                             <th>Category</th>
                                             <th>Priority</th>
+                                            <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <!-- <th>Status</th> -->
                                             <th>Tanggal Approve</th>
                                         
                                     </tr>
@@ -49,8 +52,10 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
+                                        <th>Impact</th>
                                         <th>Category</th>
                                         <th>Priority</th>
+                                        <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
                                         <th>Tanggal Approve</th>
@@ -63,19 +68,11 @@
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
                                             <td><?= $no++?></td>
-                                            <!-- <td><a
-                                                href="<?= base_url() ?>admin/ruangan_isi/<?= $rgn['id_ruangan']; ?>"><?= $rgn['kode_bangunan']; ?>.<?= $rgn['kode_ruangan']; ?>'</a>
-                                            </td> -->
-                                            <!-- <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
                                             <td><?= $dp['no_tiket'];?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama'];?></td>
                                             <td><?= $dp['perihal'];?></td>
-                                            <!-- <td> <a
-                                                href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                            </td> -->
+                                            <td><?= $dp['impact'];?></td>
                                             <td><?= $dp['kategori'];?></td>
                                             <td>
                                                 <?php if ($dp['priority'] == 'Low') : ?>
@@ -86,6 +83,21 @@
 
                                                 <?php elseif ($dp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
+                                               
+
+                                                <?php else : ?>
+
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($dp['maxday'] == '90') : ?>
+                                                    <span class="label label-info">90</span>
+
+                                                <?php elseif ($dp['maxday'] == '60') : ?>
+                                                    <span class="label label-warning">60</span>
+
+                                                <?php elseif ($dp['maxday'] == '7') : ?>
+                                                    <span class="label label-danger">7</span>
                                                
 
                                                 <?php else : ?>
@@ -111,10 +123,8 @@
                                             
                                             </td>
                                             
-                                            <td><?= $dp['handle_by'];?></td>
-                                            <!-- <td><?= $dp['status'];?></td> -->
+                                            <td><?= $dp['handle_by'];?> , <?=$dp['handle_by2'];?></td>
                                             <td><?= tanggal_indo($dp['waktu_approve']);?></td>
-                                           
                                         </tr>
                                         <?php endforeach; ?>
                                 </tbody>

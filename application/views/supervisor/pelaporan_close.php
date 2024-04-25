@@ -7,7 +7,10 @@
             </h2>
         </div>
         <!-- Basic Examples -->
-        <?= $this->session->flashdata('message'); ?>
+        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
+         <?php if ($this->session->flashdata('pesan')) { ?>
+
+         <?php } ?>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -30,13 +33,14 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Perihal </th>
+                                            <th>Impact</th>
                                             <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Priority</th>
+                                            <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <th>Status</th>
-                                            <th>Keterangan</th>
+                                            <!-- <th>Status</th> -->
                                             <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -47,13 +51,14 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
+                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
+                                        <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
-                                        <th>Status</th>
-                                        <th>Keterangan</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -64,16 +69,12 @@
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
                                             <td><?= $no++?></td>
-                                            <!-- <td><a
-                                                href="<?= base_url() ?>admin/ruangan_isi/<?= $rgn['id_ruangan']; ?>"><?= $rgn['kode_bangunan']; ?>.<?= $rgn['kode_ruangan']; ?>'</a>
-                                            </td> -->
-                                            <!-- <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
+
                                             <td><?= $dp['no_tiket'];?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama'];?></td>
                                             <td><?= $dp['perihal'];?></td>
+                                            <td><?= $dp['impact'];?></td>
                                             <td> <a
                                                 href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                             </td>
@@ -87,6 +88,21 @@
 
                                                 <?php elseif ($dp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
+                                               
+
+                                                <?php else : ?>
+
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($dp['maxday'] == '90') : ?>
+                                                    <span class="label label-info">90</span>
+
+                                                <?php elseif ($dp['maxday'] == '60') : ?>
+                                                    <span class="label label-warning">60</span>
+
+                                                <?php elseif ($dp['maxday'] == '7') : ?>
+                                                    <span class="label label-danger">7</span>
                                                
 
                                                 <?php else : ?>
@@ -111,9 +127,8 @@
                                                 <?php endif; ?>
                                             
                                             </td>
-                                            <td><?= $dp['handle_by'];?></td>
-                                            <td><?= $dp['status'];?></td>
-                                            <td><?= $dp['keterangan'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
+                                            <!-- <td><?= $dp['status'];?></td> -->
                                             <td>
                                             <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
@@ -122,49 +137,8 @@
                                                         class="icon-name">Approve</span>
                                                 </div>
                                             </div>
-                                            <br>
-                                            <br>
-                                            <div class="btn btn-sm btn-danger">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">cancel</i> <span
-                                                        class="icon-name">Reject 1</span>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <br>
-                                            <div class="btn btn-sm btn-danger">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject2<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">close</i> <span
-                                                        class="icon-name">Reject 2</span>
-                                                </div>
-                                            </div>
-
-                                            <br>
-                                            <br>
-                                            <div class="btn btn-sm btn-danger">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject3<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">cancel</i> <span
-                                                        class="icon-name">Reject 3</span>
-                                                </div>
-                                            </div>
-
-                                            <br>
-                                            <br>
-                                            <div class="btn btn-sm btn-danger">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModalReject4<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">close</i> <span
-                                                        class="icon-name">Reject 4</span>
-                                                </div>
-                                            </div>
-                                            
                                             
                                             </td>
-
-
                                         </tr>
                                         <?php endforeach; ?>
                                 </tbody>
@@ -271,331 +245,5 @@ $('#tombol-tambah').on('click', function(e) {
         </div>
     </div>
     <?php endforeach ?>
-
-    <!-- MODAL REJECT HD1-->
-    <?php
-    $no = 0;
-    foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Approve</h4>
-                </div>
-                <div class="modal-body">
-                    <?= form_open_multipart('supervisor/reject') ?>
-                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                    <div class="body">
-                        <form class="form-horizontal">
-                        
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                <label class="form-label">No tiket</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                <label class="form-label">Waktu Pelaporan</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                <label class="form-label">Nama Klien</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
-                                <label class="form-label">Perihal</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                <label class="form-label">Status</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                <label class="form-label">Status CCS</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control">
-                                <label class="form-label">Alasan Reject</label>
-                            </div>
-                        </div>
-                     
-
-                        
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
-                                <button type="button" class="btn btn-link waves-effect"
-                                    data-dismiss="modal">CLOSE</button>
-                                <?php echo form_close() ?>
-
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php endforeach ?>
-
-    <!-- MODAL REJECT HD2-->
-    <?php
-    $no = 0;
-    foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject2<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Approve</h4>
-                </div>
-                <div class="modal-body">
-                    <?= form_open_multipart('supervisor/reject2') ?>
-                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                    <div class="body">
-                        <form class="form-horizontal">
-                        
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                <label class="form-label">No tiket</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                <label class="form-label">Waktu Pelaporan</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                <label class="form-label">Nama Klien</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
-                                <label class="form-label">Perihal</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                <label class="form-label">Status</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                <label class="form-label">Status CCS</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control">
-                                <label class="form-label">Alasan Reject</label>
-                            </div>
-                        </div>
-                     
-                        
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
-                                <button type="button" class="btn btn-link waves-effect"
-                                    data-dismiss="modal">CLOSE</button>
-                                <?php echo form_close() ?>
-
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php endforeach ?>
-
-    <!-- MODAL REJECT HD3-->
-    <?php
-    $no = 0;
-    foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject3<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Approve</h4>
-                </div>
-                <div class="modal-body">
-                    <?= form_open_multipart('supervisor/reject3') ?>
-                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                    <div class="body">
-                        <form class="form-horizontal">
-                        
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                <label class="form-label">No tiket</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                <label class="form-label">Waktu Pelaporan</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                <label class="form-label">Nama Klien</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
-                                <label class="form-label">Perihal</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                <label class="form-label">Status</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                <label class="form-label">Status CCS</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control">
-                                <label class="form-label">Alasan Reject</label>
-                            </div>
-                        </div>
-                     
-                        
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
-                                <button type="button" class="btn btn-link waves-effect"
-                                    data-dismiss="modal">CLOSE</button>
-                                <?php echo form_close() ?>
-
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php endforeach ?>
-
-     <!-- MODAL REJECT HD4-->
-     <?php
-    $no = 0;
-    foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModalReject4<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Approve</h4>
-                </div>
-                <div class="modal-body">
-                    <?= form_open_multipart('supervisor/reject4') ?>
-                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                    <div class="body">
-                        <form class="form-horizontal">
-                        
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                <label class="form-label">No tiket</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                <label class="form-label">Waktu Pelaporan</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                <label class="form-label">Nama Klien</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
-                                <label class="form-label">Perihal</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                <label class="form-label">Status</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                <label class="form-label">Status CCS</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control">
-                                <label class="form-label">Alasan Reject</label>
-                            </div>
-                        </div>
-                     
-                        
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
-                                <button type="button" class="btn btn-link waves-effect"
-                                    data-dismiss="modal">CLOSE</button>
-                                <?php echo form_close() ?>
-
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php endforeach ?>
-
 
 

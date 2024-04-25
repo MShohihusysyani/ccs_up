@@ -41,119 +41,25 @@ class Implementator extends CI_Controller
         // date_default_timezone_set('Asia/Jakarta');
          # add your city to set local time zone
 
-
-         $id              = $this->input->post('id');
+         $id              = $this->input->post('id_pelaporan');
          $no_tiket        = $this->input->post('no_tiket');
          $waktu_pelaporan = $this->input->post('waktu_pelaporan');
          $nama            = $this->input->post('nama');
          $perihal         = $this->input->post('perihal');
          $status          = 'Solved';
-         $status_ccs      = 'CLOSES';
+         $status_ccs      = 'CLOSE';
          $ArrUpdate       = array(
  
              'no_tiket'        => $no_tiket,
              'waktu_pelaporan' => $waktu_pelaporan,
              'nama'            => $nama,
              'perihal'         => $perihal,
+             'status'          => $status,
              'status_ccs'      => $status_ccs
          );
          $this->pelaporan_model->updateImplementator($id, $ArrUpdate);
+         $this->session->set_flashdata('pesan', 'Successfully Finish!');
          redirect('implementator/pelaporan');
      }
 
-     public function finish2()
-     {
-         // date_default_timezone_set('Asia/Jakarta');
-          # add your city to set local time zone
- 
- 
-          $id              = $this->input->post('id');
-          $no_tiket        = $this->input->post('no_tiket');
-          $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-          $nama            = $this->input->post('nama');
-          $perihal         = $this->input->post('perihal');
-          $status          = 'Forward To Helpdesk 2';
-          $status_ccs      = 'HANDLE';
-          $handle_by       = $this->input->post('handle_by');
-          $keterangan      = $this->input->post('keterangan');
-          $ArrUpdate       = array(
-  
-              'no_tiket'        => $no_tiket,
-              'waktu_pelaporan' => $waktu_pelaporan,
-              'nama'            => $nama,
-              'perihal'         => $perihal,
-              'status'          => $status,
-              'status_ccs'      => $status_ccs,
-              'handle_by'       => $handle_by,
-              'keterangan'      => $keterangan
-  
-          );
-          $this->pelaporan_model->updateImplementator($id, $ArrUpdate);
-          redirect('implementator/pelaporanhd2');
-      }
-
-      public function finish3()
-      {
-          // date_default_timezone_set('Asia/Jakarta');
-           # add your city to set local time zone
-  
-  
-           $id              = $this->input->post('id');
-           $no_tiket        = $this->input->post('no_tiket');
-           $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-           $nama            = $this->input->post('nama');
-           $perihal         = $this->input->post('perihal');
-           $status          = 'Forward To Helpdesk 3';
-           $status_ccs      = 'HANDLE';
-           $handle_by       = $this->input->post('handle_by');
-           $keterangan      = $this->input->post('keterangan');
-           $ArrUpdate       = array(
-   
-               'no_tiket'        => $no_tiket,
-               'waktu_pelaporan' => $waktu_pelaporan,
-               'nama'            => $nama,
-               'perihal'         => $perihal,
-               'status'          => $status,
-               'status_ccs'      => $status_ccs,
-               'handle_by'       => $handle_by,
-               'keterangan'      => $keterangan
-   
-           );
-           $this->pelaporan_model->updateImplementator($id, $ArrUpdate);
-           redirect('implementator/pelaporanhd3');
-       }
-
-       public function finish4()
-      {
-          // date_default_timezone_set('Asia/Jakarta');
-           # add your city to set local time zone
-  
-  
-           $id              = $this->input->post('id');
-           $no_tiket        = $this->input->post('no_tiket');
-           $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-           $nama            = $this->input->post('nama');
-           $perihal         = $this->input->post('perihal');
-           $status          = 'Forward To Helpdesk 4';
-           $status_ccs      = 'HANDLE';
-           $handle_by       = $this->input->post('handle_by');
-           $keterangan      = $this->input->post('keterangan');
-           $ArrUpdate       = array(
-   
-               'no_tiket'        => $no_tiket,
-               'waktu_pelaporan' => $waktu_pelaporan,
-               'nama'            => $nama,
-               'perihal'         => $perihal,
-               'status'          => $status,
-               'status_ccs'      => $status_ccs,
-               'handle_by'       => $handle_by,
-               'keterangan'      => $keterangan
-   
-           );
-           $this->pelaporan_model->updateImplementator($id, $ArrUpdate);
-           redirect('implementator/pelaporanhd4');
-       }
-     
-     
-    
 }
