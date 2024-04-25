@@ -803,6 +803,7 @@ class Supervisor extends CI_Controller
         Redirect(Base_url('supervisor/added'));
     }
 
+    // EDIT HELPDESK
     public function fungsi_edit()
     {
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');

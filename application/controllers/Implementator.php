@@ -36,60 +36,6 @@ class Implementator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function pelaporanhd2()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        // $data['category'] = $this->category_model->getNamakategori();
-
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanImplementatorHD2();
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/implementator_sidebar');
-        $this->load->view('implementator/pelaporanhd2', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function pelaporanhd3()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        // $data['category'] = $this->category_model->getNamakategori();
-
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanImplementatorHD3();
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/implementator_sidebar');
-        $this->load->view('implementator/pelaporanhd3', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function pelaporanhd4()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        // $data['category'] = $this->category_model->getNamakategori();
-
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanImplementatorHD4();
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/implementator_sidebar');
-        $this->load->view('implementator/pelaporanhd4', $data);
-        $this->load->view('templates/footer');
-    }
-
     public function finish()
     {
         // date_default_timezone_set('Asia/Jakarta');

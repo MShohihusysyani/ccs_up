@@ -37,7 +37,7 @@
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="<?php echo base_url('klien') ?>">CCS | IMPLEMENTATOR</a>
+                <a class="navbar-brand" href="<?php echo base_url('implementator') ?>">CCS | IMPLEMENTATOR</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -83,7 +83,7 @@
                                     href="<?= base_url() ?>user/profile_implementator/<?= $this->session->userdata('id_user'); ?>"><i
                                         class="material-icons">person</i>Profile</a>
                             </li>
-                            <li class="<?= $this->uri->segment(2) == 'changepassword2' ? 'active' : ' ' ?>"><a
+                            <li class="<?= $this->uri->segment(2) == 'changepassword_hd' ? 'active' : ' ' ?>"><a
                                     href="<?= base_url('user/changepassword_implementator') ?>"><i
                                         class="material-icons">lock</i>Change Password</a>
                             </li>
@@ -108,31 +108,20 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">storage</i>
+                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                        <a href="<?php echo base_url('implementator/pelaporan') ?>">
+                            <i class="material-icons">view_list</i>
                             <span>Kelola Pelaporan</span>
                         </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="<?php echo base_url('implementator/pelaporan') ?>">Helpdesk 1</a>
-                            </li>  
-
-                            <li>
-                                <a href="<?php echo base_url('implementator/pelaporanhd2') ?>">Helpdesk 2</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo base_url('implementator/pelaporanhd3') ?>">Helpdesk 3</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo base_url('implementator/pelaporanhd4') ?>">Helpdesk 4</a>
-                            </li>
-                             
-                        </ul>
-
                     </li>
 
+                    <li>
+                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                        <a href="<?php echo base_url('implementator/data_pelaporan') ?>">
+                            <i class="material-icons">view_list</i>
+                            <span>Data Pelaporan</span>
+                        </a>
+                    </li>
 
 
                     <li class="header">LABELS</li>

@@ -105,6 +105,9 @@
                                                 <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
                                                     <span class="label label-info">HANDLE</span>
 
+                                                <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
+                                                    <span class="label label-info">HANDLE 2</span>
+
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                     <span class="label label-primary">ADDED</span>
 
@@ -113,7 +116,7 @@
                                                 <?php endif; ?>
                                             
                                             </td>
-                                            <td><?= $dp['handle_by'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
                                             <!-- <td><?= $dp['status'];?></td> -->
                                             
 <!--                                            

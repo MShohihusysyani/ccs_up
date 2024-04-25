@@ -189,6 +189,7 @@ class Supervisor2 extends CI_Controller
         Redirect(Base_url('supervisor2/added'));
     }
 
+    //EDIT TEKNISI
     public function fungsi_edit()
     {
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');

@@ -7,7 +7,7 @@ class Spv2_model extends CI_Model {
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by  FROM pelaporan ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, handle_by2  FROM pelaporan ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -34,20 +34,20 @@ class Spv2_model extends CI_Model {
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by  FROM pelaporan WHERE status_ccs='HANDLE 2'  ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by, handle_by2  FROM pelaporan WHERE status_ccs='HANDLE 2'  ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
     
     public function updateForward($id_pelaporan, $nama_user){
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2',  handle_by = '$nama_user', status='Forward To Teknisi' WHERE id_pelaporan=$id_pelaporan" ;
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2',  handle_by2 = '$nama_user', status='Forward To Teknisi' WHERE id_pelaporan=$id_pelaporan" ;
         return $this->db->query($query);
     }
 
     public function updateTeknisi($id_pelaporan, $nama_user){
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by = '$nama_user'  WHERE id_pelaporan=$id_pelaporan" ;
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by2 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan" ;
         return $this->db->query($query);
     }
 
