@@ -127,44 +127,12 @@ class Auth extends CI_Controller
 
     public function logout2(){
 
-    date_default_timezone_set("ASIA/JAKARTA");
-    $date = array('last_login' => date('Y-m-d H:i:s'));
+   
     $id = $this->session->userdata('id');
     $this ->auth_model->logout($date, $id);
     $this->session->sess_destroy();
     $this->session->set_flashdata('pesan', 'Success Logout!');
     redirect('auth');
-    }
-
-    public function forgot_password()
-    {
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/auth_header');
-            $this->load->view('auth/forgot_password');
-            $this->load->view('templates/auth_footer');
-        } else {
-            $email = $this->input->post('email');
-            $user = $this->db->get_where('user', ['email' => $email, 'active' => 'Y'])->row_array();
-
-            if ($user) {
-                $token = base64_encode(random_bytes(32));
-                $user_token = [
-                    'email' => $email,
-                    'token' => $token,
-                    'date_created' => time()
-                ];
-
-                $this->db->insert('user_token', $user_token);
-                $this->_sendEmail($token, 'forgot');
-
-                $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Please Check Email or Spam!</div>');
-                redirect('auth');
-            } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email Not Registered!</div>');
-                redirect('auth/forgot_password');
-            }
-        }
     }
 
     public function resetPassword()
