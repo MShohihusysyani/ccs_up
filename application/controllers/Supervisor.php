@@ -45,7 +45,6 @@ class Supervisor extends CI_Controller
         ];
         $this->db->insert('category', $data);
         $this->session->set_flashdata('pesan', 'Successfully Added!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissable" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Category added!</div>');
         redirect('supervisor/category');
     }
 
@@ -53,7 +52,6 @@ class Supervisor extends CI_Controller
     {
         $this->category_model->hapus($id);
         $this->session->set_flashdata('pesan', 'Successfully Deleted!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Category Deleted!</div>');
         Redirect(Base_url('supervisor/category'));
     }
 
@@ -100,7 +98,6 @@ class Supervisor extends CI_Controller
         ];
         $this->db->insert('klien', $data);
         $this->session->set_flashdata('pesan', 'Successfully Added!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissable" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Client added!</div>');
         redirect('supervisor/client');
     }
 
@@ -108,7 +105,6 @@ class Supervisor extends CI_Controller
     {
         $this->client_model->hapus($id);
         $this->session->set_flashdata('pesan', 'Successfully Deleted!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Client Deleted!</div>');
         Redirect(Base_url('supervisor/client'));
     }
 
@@ -123,7 +119,6 @@ class Supervisor extends CI_Controller
         );
         $this->client_model->updateKlien($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Category Edited!</div>');
         Redirect(base_url('supervisor/client'));
     }
 
@@ -172,7 +167,6 @@ class Supervisor extends CI_Controller
         ];
         $this->db->insert('user', $data);
         $this->session->set_flashdata('pesan', 'Successfully Added!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissable" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User added!</div>');
         redirect('supervisor/user');
     }
 
@@ -196,7 +190,6 @@ class Supervisor extends CI_Controller
         );
         $this->usermaster_model->updateUser($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User Edited!</div>');
         Redirect(base_url('supervisor/user'));
     }
 
@@ -204,7 +197,6 @@ class Supervisor extends CI_Controller
     {
         $this->usermaster_model->hapus($id);
         $this->session->set_flashdata('pesan', 'Successfully Deleted!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User Deleted!</div>');
         Redirect(Base_url('supervisor/user'));
     }
 
@@ -451,10 +443,6 @@ class Supervisor extends CI_Controller
     // REJECT HELPDESK
        public function reject()
        {
-           // date_default_timezone_set('Asia/Jakarta');
-            # add your city to set local time zone
-   
-   
             $id              = $this->input->post('id_pelaporan');
             $no_tiket        = $this->input->post('no_tiket');
             $waktu_pelaporan = $this->input->post('waktu_pelaporan');
@@ -668,5 +656,4 @@ class Supervisor extends CI_Controller
         Redirect(Base_url('supervisor/onprogress'));
     }
 
-    
 }
