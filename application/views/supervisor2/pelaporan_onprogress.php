@@ -152,7 +152,7 @@
                                                         data-kategory="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
-                                                        data-target="#editModalCP"> <i class="material-icons">edit</i> <span
+                                                        data-target="#editModalCP"> <i class="material-icons">forward</i> <span
                                                             class="icon-name">Forward</span></a>
                                                 </div>
 
