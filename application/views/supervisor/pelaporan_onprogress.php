@@ -36,6 +36,7 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
+                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
@@ -53,6 +54,7 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
+                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
@@ -71,13 +73,14 @@
                                         <tr>
                                             <td><?= $no++ ?></td>
                                         
-                                            <td> <a
+                                            <!-- <td> <a
                                                 href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td>
-                                            <!-- <td><?= $dp['no_tiket']; ?></td> -->
+                                            </td> -->
+                                            <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
                                             <td><?= $dp['perihal']; ?></td>
+                                            <td><?= $dp['impact'];?></td>
                                             <td> <a
                                                     href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                             </td>
@@ -150,21 +153,8 @@
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
-                                                            class="icon-name">Forward</span></a>
+                                                            class="icon-name">Edit</span></a>
                                                 </div>
-
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a>
-
-                                                <br>
-                                                <br> -->
-
-                                               
-
-                                            
-
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -280,8 +270,6 @@
                             </div>
                         </div>
                         
-                       
-
                         <!-- <label for="kategori">Helpdesk</label>
                         <div class="form-group">
                             <div class="form-line">

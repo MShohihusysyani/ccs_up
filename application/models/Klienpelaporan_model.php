@@ -32,7 +32,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, impact  FROM pelaporan ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, impact, maxday  FROM pelaporan ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -48,7 +48,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by  FROM pelaporan WHERE status_ccs='HANDLE'  ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by, impact  FROM pelaporan WHERE status_ccs='HANDLE'  ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
