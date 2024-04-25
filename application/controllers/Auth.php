@@ -87,7 +87,7 @@ class Auth extends CI_Controller
                         redirect('supervisor2');
                         
                     } else {
-                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong Role!</div>');
+                        $this->session->set_flashdata('alert', 'Incorrect Roles!');
                         redirect('auth');
                     }
                 } else {
@@ -96,7 +96,7 @@ class Auth extends CI_Controller
                     redirect('auth');
                 }
             } else {
-                $this->session->set_flashdata('alert', 'Wrong Username or Password!');
+                $this->session->set_flashdata('alert', 'Incorrect Username or Password!');
                 redirect('auth');
             }
           
