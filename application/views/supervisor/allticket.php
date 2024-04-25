@@ -134,7 +134,7 @@
                                                 <?php endif; ?>
                                             
                                             </td>
-                                            <td><?= $dp['handle_by'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
                                         
                                         </tr>
                                         <?php endforeach; ?>
