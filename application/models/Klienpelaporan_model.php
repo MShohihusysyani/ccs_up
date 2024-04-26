@@ -132,8 +132,3 @@ class Klienpelaporan_model extends CI_Model
 
 
 }
-
-
-
-
-    
