@@ -72,7 +72,6 @@ class Helpdesk extends CI_Controller
         $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanHD();
 
 
-
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
         $this->load->view('helpdesk/data_pelaporan', $data);
