@@ -145,7 +145,7 @@ class Klien extends CI_Controller
         $status = $this->input->post('status');
        
 
-        //jika ada gambar
+        //jika FILE
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
