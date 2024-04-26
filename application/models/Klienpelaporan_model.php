@@ -20,7 +20,7 @@ class Klienpelaporan_model extends CI_Model
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT   category.nama_kategori, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.deskripsi_masalah, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority
+        $query = "SELECT category.nama_kategori, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.deskripsi_masalah, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority
         FROM pelaporan 
         LEFT JOIN category ON pelaporan.category_id=category.id
         LEFT JOIN user ON pelaporan.user_id = user.id
