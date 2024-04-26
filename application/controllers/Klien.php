@@ -116,4 +116,67 @@ class Klien extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    // EDIT PELAPORAN
+    public function edit_pelaporan($id){
+
+        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
+
+        $this->load->model('Category_model', 'category_model');
+        $data['category'] = $this->category_model->getNamaKategori();
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/klien_sidebar');
+        $this->load->view('klien/edit_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_edit_pelaporan()
+    {
+        $this->load->model('Category_model', 'category_model');
+        $data['category'] = $this->category_model->getNamaKategori();
+
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $waktu_pelaporan = $this->input->post('waktu_pelaporan');
+        $nama = $this->input->post('nama');
+        $perihal = $this->input->post('perihal');
+        $perihal = $this->input->post('perihal');
+        $status = $this->input->post('status');
+       
+
+        //jika ada gambar
+        $photo = $_FILES['file']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png|docx|pdf|xlsx';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/files/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file')) {
+                $old_image = $data['pelaporan']['file'];
+                if ($old_image != '') {
+                    unlink(FCPATH . 'assets/files/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('file', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('klien/edit_pelaporan');
+            }
+        }
+
+        $this->db->set('waktu_pelaporan', $waktu_pelaporan);
+        $this->db->set('nama', $nama);
+        $this->db->set('perihal', $perihal);
+        $this->db->set('status', $status);
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        $this->db->update('pelaporan');
+        $this->session->set_flashdata('pesan', 'Data Edited!');
+        Redirect(base_url('klien/datapelaporan'));
+    }
+
 }

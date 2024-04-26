@@ -99,6 +99,11 @@
                                         <td>
 
                                             
+                                        <a class="btn btn-xs btn-info"
+                                                href="<?= base_url() ?>klien/edit_pelaporan/<?= $divp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>
+                                                Detail</a>
 
                                         </td>
 

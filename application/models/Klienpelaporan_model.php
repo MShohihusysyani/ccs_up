@@ -9,7 +9,7 @@ class Klienpelaporan_model extends CI_Model
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT   pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.perihal, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority, pelaporan.maxday, pelaporan.kategori
+        $query = "SELECT   pelaporan.id_pelaporan, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.perihal, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority, pelaporan.maxday, pelaporan.kategori
         FROM pelaporan 
         where user_id = $user_id ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
@@ -117,7 +117,7 @@ class Klienpelaporan_model extends CI_Model
 
     public function ambil_id_pelaporan($id)
     { 
-        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status, status_ccs, kategori, priority, maxday  FROM pelaporan WHERE id_pelaporan='$id'";
+        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status, status_ccs, kategori, priority, maxday, file  FROM pelaporan WHERE id_pelaporan='$id'";
         return $this->db->query($query)->result_array();
     }
 
