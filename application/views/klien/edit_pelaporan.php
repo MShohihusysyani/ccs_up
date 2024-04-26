@@ -120,7 +120,9 @@
                                 </select>
                             </div>
                         </div> -->
-
+                        <a href="<?= base_url('klien/datapelaporan') ?>" type="button"
+                            class="btn btn-primary m-t-15 waves-effect">Kembali</a>
+                            
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">EDIT</button>
                         <?php endforeach; ?>
                     </form>
