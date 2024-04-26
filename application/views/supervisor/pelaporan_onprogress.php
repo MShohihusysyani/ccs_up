@@ -136,14 +136,6 @@
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
 
                                             <td>
-                                                <!-- <div class="btn btn-sm btn-warning">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"><i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
-                                                </div>
-                                            </div> -->
-
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
@@ -157,7 +149,7 @@
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
-                                                            class="icon-name">Edit</span></a>
+                                                        class="icon-name">Edit</span></a>
                                                 </div>
                                             </td>
                                         </tr>

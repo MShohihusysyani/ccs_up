@@ -80,7 +80,18 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-   
+    public function getKlienPelaporanHDReject()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
+        FROM forward
+        LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
+        WHERE forward.user_id=$user_id AND status_ccs='REJECT'";
+        return $this->db->query($query)->result_array();
+    }
+
+
 
     //VIEW FORWARD IMPLEMENTATOR
     public function getKlienPelaporanImplementator()

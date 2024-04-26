@@ -288,6 +288,11 @@ class Supervisor extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanClose();
 
+
+        $this->load->model('User_model', 'user_model');
+        $data['namahd'] = $this->user_model->getNamaUser();
+
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/pelaporan_close', $data);
@@ -439,36 +444,6 @@ class Supervisor extends CI_Controller
 
            
        }
-
-    // REJECT HELPDESK
-       public function reject()
-       {
-            $id              = $this->input->post('id_pelaporan');
-            $no_tiket        = $this->input->post('no_tiket');
-            $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-            $nama            = $this->input->post('nama');
-            $perihal         = $this->input->post('perihal');
-            $status          = 'Forward To Helpdesk 1';
-            $status_ccs      = 'HANDLE';
-            $keterangan      = $this->input->post('keterangan');
-            $ArrUpdate       = array(
-    
-                'no_tiket'        => $no_tiket,
-                'waktu_pelaporan' => $waktu_pelaporan,
-                'nama'            => $nama,
-                'perihal'         => $perihal,
-                'status'          => $status,
-                'status_ccs'      => $status_ccs,
-                'keterangan'      => $keterangan
-    
-            );
-            $this->pelaporan_model->rejecthd1($id, $ArrUpdate);
-            $this->session->set_flashdata('pesan', 'Successfully Reject!');
-            $referred_from = $this->session->userdata('referred_from');
-            redirect($referred_from, 'refresh');
- 
-            
-        }
 
         //   FILTER LAPORAN
         public function rekapPelaporan()
@@ -654,6 +629,32 @@ class Supervisor extends CI_Controller
         $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Helpdesk has been update!');
         Redirect(Base_url('supervisor/onprogress'));
+    }
+
+    // FUNGSI REJECT
+    public function fungsi_reject()
+    {
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namahd');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
+        ];
+
+        // cari nama user berdasarkan id 
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
+        $this->db->update('forward', $data);
+        $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
+        $this->session->set_flashdata('pesan', 'Successfully Reject!');
+        Redirect(Base_url('supervisor/close'));
     }
 
 }

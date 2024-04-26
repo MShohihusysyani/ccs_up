@@ -107,12 +107,30 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li>
-                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                    <!-- <li>
+                        <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>
                         <a href="<?php echo base_url('helpdesk/pelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Kelola Pelaporan</span>
                         </a>
+                    </li> -->
+
+                    
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">drafts</i>
+                            <span>Kelola Pelaporan</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="<?php echo base_url('helpdesk/pelaporan') ?>">Added</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('helpdesk/reject') ?>">Reject</a>
+                            </li> 
+
+                        </ul>
                     </li>
 
                     <li>

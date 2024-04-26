@@ -39,6 +39,28 @@ class Helpdesk extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function reject()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        // $data['handle_by'] = $this->db->get_where('user', ['handle_by' => $this->session->userdata('handle_by')])->row_array();
+        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
+        // $data['category'] = $this->category_model->getNamakategori();
+
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanHDReject();
+
+        $this->load->model('User_model', 'user_model');
+        $data['namaspv'] = $this->user_model->getNamaSpv();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/reject', $data);
+        $this->load->view('templates/footer');
+    }
+
+
     public function data_pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -62,8 +84,7 @@ class Helpdesk extends CI_Controller
           // date_default_timezone_set('Asia/Jakarta');
            # add your city to set local time zone
   
-  
-           $id              = $this->input->post('id');
+           $id              = $this->input->post('id_pelaporan');
            $no_tiket        = $this->input->post('no_tiket');
            $waktu_pelaporan = $this->input->post('waktu_pelaporan');
            $nama            = $this->input->post('nama');
@@ -79,9 +100,9 @@ class Helpdesk extends CI_Controller
                'status'          => $status,
                'status_ccs'      => $status_ccs
            );
-           $this->pelaporan_model->updateHD1($id, $ArrUpdate);
+           $this->pelaporan_model->updateHD($id, $ArrUpdate);
            $this->session->set_flashdata('pesan', 'Successfully Finish!');
-        redirect('helpdesk/data_pelaporan');
+           redirect('helpdesk/data_pelaporan');
        }
 
         public function edit_pelaporan()
@@ -134,7 +155,7 @@ class Helpdesk extends CI_Controller
                 'user_id' => $id_user
             ];
 
-            $this->db->insert('forward', $data);
+            $this->db->update('forward', $data);
             $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
             Redirect(Base_url('helpdesk/pelaporan'));
