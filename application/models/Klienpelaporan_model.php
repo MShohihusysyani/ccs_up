@@ -111,7 +111,7 @@ class Klienpelaporan_model extends CI_Model
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         // $data['handle_by'] = $this->db->get_where('user', ['handle_by' => $this->sessions->userdata['handle_by']])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, keterangan  FROM pelaporan WHERE status_ccs='CLOSE' OR status='Solved by HD1' ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, keterangan  FROM pelaporan WHERE status_ccs='FINISH'  ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
