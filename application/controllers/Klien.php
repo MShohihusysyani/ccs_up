@@ -48,8 +48,8 @@ class Klien extends CI_Controller
             'file'     => $photo,
             'user_id'  => $this->input->post('user_id'),
             'nama'     => $this->input->post('nama'),
-            'kategori' => $this->input->post('kategori')
-
+            'kategori' => $this->input->post('kategori'),
+            'tags'     => $this->input->post('tags')
         ];
         $this->db->insert('tiket_temp', $data);
         $this->session->set_flashdata('pesan', 'Pelaporan Added!');

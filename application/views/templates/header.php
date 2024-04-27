@@ -31,6 +31,9 @@
     <!-- Animation Css -->
     <!-- <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/animate-css/animate.css" rel="stylesheet" /> -->
 
+    <!-- Bootstrap Tagsinput Css -->
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/');?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+
     <!-- Sweetalert Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 

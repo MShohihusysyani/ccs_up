@@ -10,7 +10,7 @@ class Pelaporan_model extends CI_Model
 
 
 
-        $query = "INSERT INTO pelaporan ( user_id,waktu_pelaporan, perihal, file, nama, no_tiket, kategori) select  user_id, '$now',perihal, file, nama, no_tiket, kategori
+        $query = "INSERT INTO pelaporan ( user_id,waktu_pelaporan, perihal, file, nama, no_tiket, kategori, tags) select  user_id, '$now',perihal, file, nama, no_tiket, kategori, tags
                     from tiket_temp 
                     where user_id = $user_id 
                     ";

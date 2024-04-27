@@ -78,6 +78,14 @@
                                 <input type="hidden" id="id" name="id">
                             </div>
                         </div>
+
+                        <label for="jenis_barang">Tags</label>
+                            <div class="form-group demo-tagsinput-area">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" data-role="tagsinput" value="" id="tags" name="tags">
+                                </div>
+                            </div>
+                    
                      
                         <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
                         <input type="hidden" name="nama" id="nama" value="<?= $user['nama_user']?>">
