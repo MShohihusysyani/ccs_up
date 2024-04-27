@@ -2,10 +2,10 @@
 <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>
+                <!-- <h2>
                     FORM WIZARD
                     <small>Taken from <a href="https://github.com/rstaib/jquery-steps" target="_blank">github.com/rstaib/jquery-steps</a> & <a href="https://jqueryvalidation.org/" target="_blank">jqueryvalidation.org</a></small>
-                </h2>
+                </h2> -->
             </div>
             <!-- Basic Example | Horizontal Layout -->
             <div class="row clearfix">
