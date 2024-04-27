@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Apr 2024 pada 08.58
+-- Waktu pembuatan: 27 Apr 2024 pada 07.53
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -71,6 +71,19 @@ INSERT INTO `category` (`id`, `nama_kategori`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `comment`
+--
+
+CREATE TABLE `comment` (
+  `id_comment` int(11) NOT NULL,
+  `pelaporan_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `body` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `divisi`
 --
 
@@ -105,7 +118,9 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
-(55, 71, 24);
+(64, 79, 4),
+(65, 79, 39),
+(66, 79, 24);
 
 -- --------------------------------------------------------
 
@@ -147,6 +162,7 @@ CREATE TABLE `pelaporan` (
   `no_tiket` varchar(100) NOT NULL,
   `user_id` int(11) NOT NULL,
   `kategori` varchar(255) DEFAULT NULL,
+  `tags` varchar(100) DEFAULT NULL,
   `waktu_pelaporan` date NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'proses',
   `status_ccs` varchar(20) DEFAULT 'ADDED',
@@ -156,8 +172,10 @@ CREATE TABLE `pelaporan` (
   `impact` varchar(30) DEFAULT NULL,
   `file` varchar(100) DEFAULT NULL,
   `nama` varchar(100) NOT NULL,
+  `subtask` text DEFAULT NULL,
   `handle_by` varchar(100) DEFAULT NULL,
   `handle_by2` varchar(100) DEFAULT NULL,
+  `handle_by3` varchar(100) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT NULL,
   `waktu_approve` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -166,11 +184,10 @@ CREATE TABLE `pelaporan` (
 -- Dumping data untuk tabel `pelaporan`
 --
 
-INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `nama`, `handle_by`, `handle_by2`, `keterangan`, `waktu_approve`) VALUES
-(71, 'TIC2024040003', 20, 'Kredit - PPAP Kredit ', '2024-04-18', 'Solved', 'FINISH', 'Medium', 60, '<p>Perbaikan PPAP Kredit</p>', 'material', 'CCS_Customer_Care_System.pdf', 'PT BPR BKK Banjarharjo(Perseroda)', 'Ajeng', 'Implementator PT MSO', NULL, '2024-04-26'),
-(72, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes</p>', NULL, 'CCS_Customer_Care_System.xlsx', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL),
-(73, 'TIC2024040005', 20, 'Proses - Proses Ulang', '2024-04-18', 'proses', 'ADDED', 'Low', 90, '<p>tes2</p>', 'kritikal', '17020182373761.png', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL),
-(74, 'TIC2024040006', 33, 'Kredit - PPAP Kredit ', '2024-04-18', 'proses', 'ADDED', 'High', 7, '<p>tes3</p>', NULL, 'Pertemuan_13.pdf', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, NULL);
+INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `nama`, `subtask`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`) VALUES
+(80, 'TIC2024040001', 20, 'Backdate - Backdate Transaksi ', 'tabungan,transaksi,Admin', '2024-04-27', 'proses', 'ADDED', 'Medium', 60, '<p>coba tags</p>', NULL, 'CCS_Customer_Care_System.pdf', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 'TIC2024040002', 33, 'Tabungan - Data Tabungan ', 'Tabungan,Transaksi,Data Tabungan', '2024-04-27', 'proses', 'ADDED', 'Low', 90, '<p>coba Tags</p>', NULL, 'CCS_Customer_Care_System.xlsx', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
+(82, 'TIC2024040003', 28, 'Kredit - Tarik Nominatif', 'Kredit,nominatif', '2024-04-27', 'proses', 'ADDED', NULL, NULL, '<p>coba Tags</p>', NULL, '1702018237376.png', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -185,7 +202,8 @@ CREATE TABLE `tiket_temp` (
   `perihal` varchar(255) NOT NULL,
   `file` varchar(255) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `kategori` varchar(100) DEFAULT NULL
+  `kategori` varchar(100) DEFAULT NULL,
+  `tags` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -241,6 +259,12 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id_comment`);
+
+--
 -- Indeks untuk tabel `divisi`
 --
 ALTER TABLE `divisi`
@@ -287,6 +311,12 @@ ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
+-- AUTO_INCREMENT untuk tabel `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `divisi`
 --
 ALTER TABLE `divisi`
@@ -296,7 +326,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -308,13 +338,13 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
