@@ -152,6 +152,17 @@ class Helpdesk extends CI_Controller
             Redirect(base_url('helpdesk/pelaporan'));
         }
 
+        public function detail_pelaporan($id)
+        {
+    
+            $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+            $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
+            $this->load->view('templates/header');
+            $this->load->view('templates/helpdesk_sidebar');
+            $this->load->view('helpdesk/detail_pelaporan', $data);
+            $this->load->view('templates/footer');
+        }
+
         // public function fungsi_forward()
         // {
         //     $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
@@ -177,7 +188,7 @@ class Helpdesk extends CI_Controller
                 'user_id' => $id_user
             ];
 
-            $this->db->update('forward', $data);
+            $this->db->insert('forward', $data);
             $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
             Redirect(Base_url('helpdesk/pelaporan'));

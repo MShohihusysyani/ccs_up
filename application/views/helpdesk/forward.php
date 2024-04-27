@@ -135,8 +135,12 @@
                                             <td><?= $dp['handle_by'];?></td>
 
                                             <td>
-                                                
-                                            <div class="btn btn-sm btn-info">
+                                            <a class="btn btn-xs btn-info"
+                                                href="<?= base_url() ?>helpdesk/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>
+                                                Detail</a>
+                                            <!-- <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">edit</i> <span
@@ -160,7 +164,7 @@
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Forward</span></a>
-                                                </div>
+                                                </div> -->
 
                                                 <!-- <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
