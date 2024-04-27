@@ -26,6 +26,8 @@
                                         <th>Tanggal Pelaporan</th>
                                         <th>Perihal</th>
                                         <th>Attachment</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
@@ -45,6 +47,10 @@
                                         <td><?= $divp['perihal']; ?></td>
                                         <td> <a
                                                 href="<?= base_url('assets/files/' . $divp['file']); ?>"><?= $divp['file']; ?></a>
+                                        </td>
+                                        <td><?= $divp['kategori'];?></td>
+                                        <td>
+                                            <span class="label label-info"><?= $divp['tags'];?></span>
                                         </td>
                                         <td>
                                                 <?php if ($divp['priority'] == 'Low') : ?>
