@@ -10,6 +10,12 @@
 <!-- Slimscroll Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
+ <!-- Jquery Validation Plugin Css -->
+ <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-validation/jquery.validate.js"></script>
+
+<!-- JQuery Steps Plugin Js -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-steps/jquery.steps.js"></script>
+
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-notify/bootstrap-notify.js"></script>
 
 <!-- Waves Effect Plugin Js -->

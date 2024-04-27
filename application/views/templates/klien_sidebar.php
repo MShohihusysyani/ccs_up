@@ -132,11 +132,13 @@
                                     <span>Data Pelaporan</span>
                                 </a>
                             </li>
-                            <!-- <li class="<?= $this->uri->segment(2) == 'rekap' ? 'active' : ' ' ?>">
-                                <a href="<?php echo base_url('divisi/rekap') ?>">
-                                    <span>Rekap Pengajuan</span>
+
+                            <li>
+                                <a href="<?php echo base_url('klien/bank_knowlage') ?>">
+                                    <span>Bank Know Lage</span>
                                 </a>
-                            </li> -->
+                            </li>
+                            
                         </ul>
 
                     </li>

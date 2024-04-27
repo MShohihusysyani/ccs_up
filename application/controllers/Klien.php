@@ -116,6 +116,18 @@ class Klien extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function bank_knowlage()
+    {
+        // $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        // // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
+        // $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanTemp();
+        
+        $this->load->view('templates/header');
+        $this->load->view('templates/klien_sidebar');
+        $this->load->view('klien/bank_knowlage');
+        $this->load->view('templates/footer');
+    }
+
     // EDIT PELAPORAN
     public function edit_pelaporan($id){
 
