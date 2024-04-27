@@ -92,8 +92,14 @@
                                                 <?php elseif ($divp['status_ccs'] == 'HANDLE') : ?>
                                                     <span class="label label-info">HANDLE</span>
 
+                                                <?php elseif ($divp['status_ccs'] == 'HANDLE 2') : ?>
+                                                    <span class="label label-info">HANDLE 2</span>
+
                                                 <?php elseif ($divp['status_ccs'] == 'ADDED') : ?>
                                                     <span class="label label-primary">ADDED</span>
+                                                
+                                                <?php elseif ($divp['status_ccs'] == 'ADDED 2') : ?>
+                                                    <span class="label label-primary">ADDED 2</span> 
 
                                                 <?php else : ?>
 
