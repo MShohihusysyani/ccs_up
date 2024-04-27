@@ -128,7 +128,11 @@
 
                             <li>
                                 <a href="<?php echo base_url('helpdesk/reject') ?>">Reject</a>
-                            </li> 
+                            </li>
+                            
+                            <li>
+                                <a href="<?php echo base_url('helpdesk/forward') ?>">Forward</a>
+                            </li>
 
                         </ul>
                     </li>

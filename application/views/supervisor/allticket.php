@@ -129,6 +129,9 @@
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                     <span class="label label-primary">ADDED</span>
 
+                                                <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
+                                                    <span class="label label-primary">ADDED 2</span>
+
                                                 <?php else : ?>
 
                                                 <?php endif; ?>

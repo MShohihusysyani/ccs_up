@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            ADDED
+                            FORWARD
                         </h2>
 
                     </div>
@@ -36,13 +36,13 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impact</th>
+                                        <th>Impactd</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <th>Status</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -60,7 +60,7 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <th>Status</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -69,14 +69,14 @@
 
                                     <?php
                                     $no = 1;
-                                    foreach ($dataAdded as $dp): ?>
+                                    foreach ($datapelaporan as $dp): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
                                         
-                                            <td> <a
+                                            <!-- <td> <a
                                                 href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td>
-                                            <!-- <td><?= $dp['no_tiket']; ?></td> -->
+                                            </td> -->
+                                            <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
                                             <td><?= $dp['perihal']; ?></td>
@@ -121,9 +121,6 @@
                                                 <?php elseif ($dp['status_ccs'] == 'HANDLE'): ?>
                                                     <span class="label label-info">HANDLE</span>
 
-                                                <?php elseif ($dp['status_ccs'] == 'HANDLE 2'): ?>
-                                                    <span class="label label-info">HANDLE 2</span>
-
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
                                                     <span class="label label-primary">ADDED</span>
 
@@ -134,17 +131,20 @@
                                                 <?php endif; ?>
 
                                             </td>
-                                            <td><?= $dp['status']; ?></td>
+                                            <!-- <td><?= $dp['status']; ?></td> -->
                                             <td><?= $dp['handle_by'];?></td>
 
                                             <td>
-                                                <!-- <div class="btn btn-sm btn-warning">
+                                                
+                                            <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"><i
+                                                    data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">edit</i> <span
                                                         class="icon-name">Edit</span>
                                                 </div>
-                                            </div> -->
+                                            </div>
+                                            <br>
+                                            <br>
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
@@ -158,7 +158,7 @@
                                                         data-kategory="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
-                                                        data-target="#editModalCP"> <i class="material-icons">forward</i> <span
+                                                        data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Forward</span></a>
                                                 </div>
 
@@ -189,16 +189,110 @@
     <!-- Button trigger modal -->
 </section>
 
+ <!-- MODAL EDIT -->
+ <?php
+    $no = 0;
+    foreach ($datapelaporan as $dp) : $no++; ?>
+    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Add Impact</h4>
+                </div>
+                <div class="modal-body">
+                    <?= form_open_multipart('helpdesk/edit_pelaporan') ?>
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
+                    <div class="body">
+                        <form class="form-horizontal">
+                        
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                                <label class="form-label">No tiket</label>
+                            </div>
+                        </div>
 
-<!-- MODAL EDIT -->
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                                <label class="form-label">Waktu Pelaporan</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
+                                <label class="form-label">Nama Klien</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                                <label class="form-label">Perihal</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                                <label class="form-label">Status CCS</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select id="impact" name="impact" class="form-control">
+                                    <option value="">-- Choose Impact--</option>
+                                    <option value="kritikal">Kritikal</option>
+                                    <option value="material">Material</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        
+                        
+<!-- 
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['handle_by']; ?>" type="text" id="handle_by" name="handle_by" class="form-control" >
+                                <label class="form-label">Handle By</label>
+                            </div>
+                        </div> -->
+<!-- 
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control" >
+                                <label class="form-label">Keterangan</label>
+                            </div>
+                        </div> -->
+
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-link waves-effect">SAVE
+                                    CHANGES</button>
+                                <button type="button" class="btn btn-link waves-effect"
+                                    data-dismiss="modal">CLOSE</button>
+                                <?php echo form_close() ?>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach ?>
+
+
+<!-- MODAL FORWARD TO SPV 2 -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Pilih Teknisi</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Forward To Supervisor 2</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor2/fungsi_forward') ?>
+                <?= form_open_multipart('helpdesk/fungsi_forward') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
@@ -245,7 +339,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select id="priority" name="priority" class="form-control">
                                     <option value="">-- Please select Priority--</option>
@@ -254,16 +348,16 @@
                                     <option value="High">High</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <label for="maxday">Max Day</label>
+                        <!-- <label for="maxday">Max Day</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select name="kategori" id="kategori" class="form-control">
                                     <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
@@ -275,15 +369,15 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <div class="form-line">
-                                <select name="namateknisi" id="namateknisi" class="form-control">
-                                <option value=""> -- Pilih Teknisi -- </option>
+                                <select name="namaspv" id="namaspv" class="form-control">
+                                <option value=""> -- Pilih Supervisor -- </option>
                                     <?php
-                                        foreach ($namateknisi as $nat): ?>
-                                        <option value="<?= $nat['id_user']; ?>"><?= $nat['nama_user']; ?></option>
+                                        foreach ($namaspv as $nas): ?>
+                                        <option value="<?= $nas['id_user']; ?>"><?= $nas['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -437,7 +531,7 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#kategori option:selected').text(div.data('kategori'));
-            modal.find('#namahd option:selected').text(div.data('nama'));
+            modal.find('#namauser option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));
