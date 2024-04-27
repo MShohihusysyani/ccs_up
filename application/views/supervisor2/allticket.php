@@ -36,6 +36,7 @@
                                             <th>Perihal</th>
                                             <th>Attachment</th>
                                             <th>Category</th>
+                                            <th>Tags</th>
                                             <th>Priority</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
@@ -52,6 +53,7 @@
                                             <th>Perihal</th>
                                             <th>Attachment</th>
                                             <th>Category</th>
+                                            <th>Tags</th>
                                             <th>Priority</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
@@ -80,6 +82,11 @@
                                                 href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                             </td>
                                             <td><?= $dp['kategori'];?></td>
+                                            <td>
+                                                <span class="label label-info">
+                                                    <?= $dp['tags'];?>
+                                                </span>
+                                            </td>
                                             <td>
                                                 <?php if ($dp['priority'] == 'Low') : ?>
                                                     <span class="label label-info">Low</span>
@@ -110,6 +117,9 @@
 
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                     <span class="label label-primary">ADDED</span>
+                                                
+                                                <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
+                                                    <span class="label label-primary">ADDED 2</span>   
 
                                                 <?php else : ?>
 

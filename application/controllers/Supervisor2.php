@@ -183,7 +183,7 @@ class Supervisor2 extends CI_Controller
         $user = $query->row();
         $nama_user = $user->nama_user;
 
-        $this->db->update('forward', $data);
+        $this->db->insert('forward', $data);
         $this->spv2_model->updateForward($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Successfully Forward!');
         Redirect(Base_url('supervisor2/added'));

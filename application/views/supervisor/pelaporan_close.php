@@ -39,6 +39,7 @@
                                         <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
+                                        <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
@@ -56,6 +57,7 @@
                                         <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
+                                        <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
@@ -79,6 +81,11 @@
                                                     href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                             </td>
                                             <td><?= $dp['kategori']; ?></td>
+                                            <td>
+                                                <span class="label label-info">
+                                                    <?= $dp['tags'];?>
+                                                </span>
+                                            </td>
                                             <td>
                                                 <?php if ($dp['priority'] == 'Low'): ?>
                                                     <span class="label label-info">Low</span>
