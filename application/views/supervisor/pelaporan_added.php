@@ -94,7 +94,7 @@
 
                                                 <?php elseif ($dp['priority'] == 'High'): ?>
                                                     <span class="label label-danger">High</span>
-
+                                                    
                                                 <?php else: ?>
                                                 <?php endif; ?>
                                             </td>
@@ -172,19 +172,13 @@
                                                             class="icon-name">Forward</span></a>
                                                 </div>
                                                 
-
                                                 <!-- <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
                                                     class="material-icons"></i> <span class="icon-name"></span>
                                                 edit</a>
-
                                                 <br>
                                                 <br> -->
-
-                                               
-
                                             
-
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -433,8 +427,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- modal cari kategori -->
 <div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">

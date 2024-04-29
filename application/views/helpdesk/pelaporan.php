@@ -126,7 +126,7 @@
 
                                             <td>
                                                 
-                                            <div class="btn btn-sm btn-info">
+                                            <div class="btn btn-sm btn-warning">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">edit</i> <span
@@ -148,7 +148,7 @@
                                                         data-kategory="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
-                                                        data-target="#editModalCP"> <i class="material-icons">edit</i> <span
+                                                        data-target="#editModalCP"> <i class="material-icons">forward</i> <span
                                                             class="icon-name">Forward</span></a>
                                                 </div>
                                                 <br>
