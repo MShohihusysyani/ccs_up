@@ -132,5 +132,38 @@
                 </div>
             </div>
         </div>
+
+        <!-- comment -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        Input Komentar</h2>
+                </div>
+                <div class="body">
+                    <textarea id="editor" class="form-control" name="body" id="body">
+                                
+                    </textarea>
+                    <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
+                    <input type="hidden" name="nama" id="nama" value="<?= $user['nama_user']?>">
+                    
+                   <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button>
+                 
+                </div>
+            </div>
+        </div>
+
+        <!-- end comment -->
     </div>
 </section>
+
+
+
+<script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
