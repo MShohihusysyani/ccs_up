@@ -31,7 +31,6 @@
                                                     <h4 class="media-heading">
                                                         <a><?= $this->session->userdata('username'); ?></a>
                                                     </h4>
-                                                  
                                                     <li>Nama Lengkap : <a><?= $u['nama_user']; ?></a></li>
                                                     <li>Divisi : <a><?= $u['divisi']; ?></a></li>
                                                     

@@ -7,12 +7,11 @@
 
             </h2>
         </div>
-         <!-- jQuery UI CSS -->
+        <!-- jQuery UI CSS -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-          
-        <!-- Basic Examples -->
+     
         
-        <!-- #END# Basic Examples -->
+    
         <!-- Exportable Table -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -97,10 +96,8 @@
 
                                                 <?php elseif ($dp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
-                                               
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -112,10 +109,8 @@
 
                                                 <?php elseif ($dp['maxday'] == '7') : ?>
                                                     <span class="label label-danger">7</span>
-                                               
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -138,7 +133,6 @@
                                                     <span class="label label-primary">ADDED 2</span>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             
                                             </td>

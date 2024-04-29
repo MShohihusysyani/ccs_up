@@ -85,10 +85,7 @@ class Pelaporan_model extends CI_Model
     {
         $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori , pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.nama, pelaporan.user_id, user.nama_user
         FROM pelaporan
-       
-      
-       left JOIN user ON pelaporan.user_id = user.id_user
-                    WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC ";
+        left JOIN user ON pelaporan.user_id = user.id_user WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC ";
         return $this->db->query($query)->result_array();
     }
 
@@ -96,9 +93,7 @@ class Pelaporan_model extends CI_Model
     {
         $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori, pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.keterangan, pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id
         FROM pelaporan
-      
-        where waktu_pelaporan BETWEEN '$tgla' AND '$tglb' AND status_ccs = '$status_ccs' AND nama = '$nama_klien'
-                    ";
+        where waktu_pelaporan BETWEEN '$tgla' AND '$tglb' AND status_ccs = '$status_ccs' AND nama = '$nama_klien'";
         return $this->db->query($query)->result_array();
     }
 
@@ -106,8 +101,8 @@ class Pelaporan_model extends CI_Model
 
     public function getAllCategory()
     {
-       $query = "SELECT kategori, COUNT(*) AS 'total', waktu_pelaporan FROM pelaporan WHERE status_ccs='FINISH' GROUP BY kategori";
-       return $this->db->query($query)->result_array();
+        $query = "SELECT kategori, COUNT(*) AS 'total', waktu_pelaporan FROM pelaporan WHERE status_ccs='FINISH' GROUP BY kategori";
+        return $this->db->query($query)->result_array();
     }
 
     public function getDateKategori($tgla, $tglb)

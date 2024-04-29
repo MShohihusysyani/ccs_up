@@ -45,7 +45,6 @@ class Auth extends CI_Controller
                     $sess_data['role']     = $ck->role;
                     $sess_data['id_user']       = $ck->id_user;
                     $sess_data['active']   = $ck->active;
-                   
 
                     $this->session->set_userdata($sess_data);
                 }

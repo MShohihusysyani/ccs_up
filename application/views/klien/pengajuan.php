@@ -2,9 +2,9 @@
     <div class="container-fluid">
         <div class="block-header">
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-         <?php if ($this->session->flashdata('pesan')) { ?>
+        <?php if ($this->session->flashdata('pesan')) { ?>
 
-         <?php } ?>
+        <?php } ?>
             <!-- <?= $this->session->flashdata('message'); ?> -->
         </div>
 
@@ -86,7 +86,6 @@
                                 </div>
                             </div>
                     
-                     
                         <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
                         <input type="hidden" name="nama" id="nama" value="<?= $user['nama_user']?>">
                         <!-- <input type="hidden" name="no_urut" id="no_urut" value="<?= $user['no_urut']?>"> -->
@@ -152,8 +151,6 @@
 
                                     <?php endforeach; ?>
                                 </tbody>
-
-                               
                             </table>
                             <form method="post" action="<?= base_url('klien/fungsi_pengajuan') ?>">
                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button>
@@ -174,7 +171,6 @@
     
 </section>
 
- 
     <!-- modal cari kategori -->
     <div class="modal fade" id="defaultModalNamaKategori" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

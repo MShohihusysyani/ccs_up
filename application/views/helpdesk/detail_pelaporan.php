@@ -9,8 +9,6 @@
         <link rel="stylesheet"
             href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
-        <!-- #END# Basic Examples -->
-        <!-- Exportable Table -->
         <?= $this->session->flashdata('message'); ?>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="card">
@@ -72,23 +70,6 @@
                             </div>
                         </div>
 
-                        <!-- <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="500"
-                                    height="500" class="img-thumbnail">
-                                <div class="form-group">
-                                    <label for="exampleInputFile"></label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="file"
-                                                name="file">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
                         <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -115,7 +96,7 @@
                         <a href="<?= base_url('helpdesk/forward') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">Kembali</a>
                             
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">EDIT</button>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD</button>
                         <?php endforeach; ?>
                     </form>
 

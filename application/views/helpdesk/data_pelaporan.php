@@ -36,7 +36,6 @@
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
                                             <!-- <th>Attachment</th> -->
-                                          
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +65,6 @@
 
                                                 <?php elseif ($dp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
-                                               
 
                                                 <?php else : ?>
 
@@ -108,5 +106,3 @@
     </div>
     <!-- Button trigger modal -->
 </section>
-            
-           

@@ -11,12 +11,9 @@ class Login_model extends CI_Model
     }
     public function getLoginData($user, $pass)
     {
-      
         $u  = $user;
         $p = MD5($pass);
-
         $query_cekLogin = $this->db->get_where('user', array('username' => $u, 'password' => $p));
-       
 
         if (count($query_cekLogin->result()) > 0) {
             foreach ($query_cekLogin->result() as $qck) {
@@ -28,7 +25,6 @@ class Login_model extends CI_Model
                     $sess_data['role']      = $ck->role;
                     
                     $this->session->set_userdata($sess_data);
-                   
                     
                     
                 }

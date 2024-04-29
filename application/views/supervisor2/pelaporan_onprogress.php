@@ -11,9 +11,9 @@
 
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-         <?php if ($this->session->flashdata('pesan')) { ?>
+        <?php if ($this->session->flashdata('pesan')) { ?>
 
-         <?php } ?>
+        <?php } ?>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -180,10 +180,6 @@
 
                                                 <br>
                                                 <br> -->
-
-                                               
-
-                                            
 
                                             </td>
                                         </tr>

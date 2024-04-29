@@ -168,7 +168,6 @@
                                                 <?php endif; ?>
                                             
                                             </td>
-                                         
                                             <!-- <td><?= $pd['handle_by'];?></td> -->
 
                                 </tr>

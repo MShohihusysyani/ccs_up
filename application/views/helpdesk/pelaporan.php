@@ -11,9 +11,9 @@
 
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-         <?php if ($this->session->flashdata('pesan')) { ?>
+        <?php if ($this->session->flashdata('pesan')) { ?>
 
-         <?php } ?>
+        <?php } ?>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -169,11 +169,6 @@
 
                                                 <br>
                                                 <br> -->
-
-                                               
-
-                                            
-
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -189,8 +184,8 @@
     <!-- Button trigger modal -->
 </section>
 
- <!-- MODAL EDIT -->
- <?php
+<!-- MODAL EDIT -->
+<?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
     <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
@@ -382,8 +377,6 @@
                                 </select>
                             </div>
                         </div>
-                        
-                       
 
                         <!-- <label for="kategori">Helpdesk</label>
                         <div class="form-group">

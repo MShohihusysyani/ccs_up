@@ -130,12 +130,6 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function ambil_id_comment($id)
-    { 
-        $query = "SELECT  id_comment, pelaporan_id, user_id, body FROM comment WHERE id_comment='$id'";
-        return $this->db->query($query)->result_array();
-    }
-
 
     //FUNGSI FORWARD KE SUPERVISOR 2
     public function updateForward($id_pelaporan){

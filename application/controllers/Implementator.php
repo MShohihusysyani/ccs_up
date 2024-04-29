@@ -39,27 +39,27 @@ class Implementator extends CI_Controller
     public function finish()
     {
         // date_default_timezone_set('Asia/Jakarta');
-         # add your city to set local time zone
+        # add your city to set local time zone
 
-         $id              = $this->input->post('id_pelaporan');
-         $no_tiket        = $this->input->post('no_tiket');
-         $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-         $nama            = $this->input->post('nama');
-         $perihal         = $this->input->post('perihal');
-         $status          = 'Solved';
-         $status_ccs      = 'CLOSE';
-         $ArrUpdate       = array(
- 
-             'no_tiket'        => $no_tiket,
-             'waktu_pelaporan' => $waktu_pelaporan,
-             'nama'            => $nama,
-             'perihal'         => $perihal,
-             'status'          => $status,
-             'status_ccs'      => $status_ccs
-         );
-         $this->pelaporan_model->updateImplementator($id, $ArrUpdate);
-         $this->session->set_flashdata('pesan', 'Successfully Finish!');
-         redirect('implementator/pelaporan');
-     }
+        $id              = $this->input->post('id_pelaporan');
+        $no_tiket        = $this->input->post('no_tiket');
+        $waktu_pelaporan = $this->input->post('waktu_pelaporan');
+        $nama            = $this->input->post('nama');
+        $perihal         = $this->input->post('perihal');
+        $status          = 'Solved';
+        $status_ccs      = 'CLOSE';
+        $ArrUpdate       = array(
+
+            'no_tiket'        => $no_tiket,
+            'waktu_pelaporan' => $waktu_pelaporan,
+            'nama'            => $nama,
+            'perihal'         => $perihal,
+            'status'          => $status,
+            'status_ccs'      => $status_ccs
+        );
+        $this->pelaporan_model->updateImplementator($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Finish!');
+        redirect('implementator/pelaporan');
+    }
 
 }

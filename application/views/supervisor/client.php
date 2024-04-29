@@ -57,7 +57,6 @@
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $cln['no_urut'];?></td>
                                         <td><?= $cln['nama_klien']; ?></td>
-                                      
 
                                         <td>
                                             <div class="btn btn-sm btn-warning">

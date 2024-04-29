@@ -34,26 +34,23 @@ class Client_model extends CI_Model
     }
 
       // GENERATE KODE OTOMATIS
-      public function getkodeticket()
-      {
-          $query = $this->db->query("select max(no_tiket) as max_code FROM pelaporan");
-  
-          $row = $query->row_array();
+    public function getkodeticket()
+    {
+        $query = $this->db->query("select max(no_tiket) as max_code FROM pelaporan");
 
-          $max_id = $row['max_code'];
-          $max_fix = (int) substr($max_id, 9, 4);
-  
-          $max_nik = $max_fix + 1;
-  
+        $row = $query->row_array();
+
+        $max_id = $row['max_code'];
+        $max_fix = (int) substr($max_id, 9, 4);
+        $max_nik = $max_fix + 1;
+
           // $tanggal = $time = date("d");
-          $bulan = $time = date("m");
-          $tahun = $time = date("Y");
-          
-  
-          $nik = "TIC".$tahun.$bulan.sprintf("%04s", $max_nik);
-          return $nik;
-      }
-      
+        $bulan = $time = date("m");
+        $tahun = $time = date("Y"); 
+
+        $nik = "TIC".$tahun.$bulan.sprintf("%04s", $max_nik);
+        return $nik;
+    }
 
     // public function buat_tiket(){
     //     $this->db->select('RIGHT(tiket_temp.no_tiket) as tiket', FALSE);
@@ -75,7 +72,5 @@ class Client_model extends CI_Model
 
     // }
 
-  
-    
 
 }

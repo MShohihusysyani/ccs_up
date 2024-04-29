@@ -13,7 +13,7 @@ class M_Klien extends CI_Model {
         $this->db->order_by("id", "DESC");
         return $this->db->get();
     }
-   
+
 
 }
 

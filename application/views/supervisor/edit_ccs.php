@@ -97,7 +97,7 @@
                                         <option value="Low">Low</option>
                                         <option value="Medium">Medium</option>
                                         <option value="High">High</option>
-                               </select> 
+                            </select> 
                         </div>
 
                         <label for="maxday">Max Day</label>
@@ -161,7 +161,6 @@
         </div>
     </div>
 
-   
     
     <!-- MODAL CARI KATEGORI -->
     <div class="modal fade" id="defaultModalNamaKategori" tabindex="-1" role="dialog">

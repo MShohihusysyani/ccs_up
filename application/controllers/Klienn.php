@@ -23,7 +23,6 @@ class Klienn extends CI_Controller
 
             $response[] = array(
                 'nama_klien' => $hasil->nama_klien
-                       
             );
 
         }
@@ -36,7 +35,6 @@ class Klienn extends CI_Controller
                 'data'    => $response  
             )
         );
-   
 }
 
 }

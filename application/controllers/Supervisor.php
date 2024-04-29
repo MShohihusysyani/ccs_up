@@ -396,7 +396,6 @@ class Supervisor extends CI_Controller
         $kategori     = $this->input->post('kategori');
         $priority     = $this->input->post('priority');
         $maxday       = $this->input->post('maxday');
-      
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
             'perihal'    => $perihal,
@@ -413,37 +412,36 @@ class Supervisor extends CI_Controller
     }
 
     //   Approve supervisor
-      public function approve()
-      {
-          // date_default_timezone_set('Asia/Jakarta');
-           # add your city to set local time zone
-           date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-           $now = date('Y-m-d');
-  
-  
-           $id         = $this->input->post('id_pelaporan');
-           $no_tiket   = $this->input->post('no_tiket');
-        //    $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-           $nama       = $this->input->post('nama');
-           $perihal    = $this->input->post('perihal');
-           $status_ccs ='FINISH';
-           $waktu      = date('Y-m-d');
-           $ArrUpdate  = array(
-   
-               'no_tiket'       => $no_tiket,
-            //    'waktu_pelaporan' => $waktu_pelaporan,
-               'nama'           => $nama,
-               'perihal'        => $perihal,
-               'status_ccs'     => $status_ccs,
-               'waktu_approve'  =>$waktu
-   
-           );
-           $this->pelaporan_model->approveSPV($id, $ArrUpdate);
-           $this->session->set_flashdata('pesan', 'Successfully Approve!');
-           redirect('supervisor/finish');
+    public function approve()
+    {
+        // date_default_timezone_set('Asia/Jakarta');
+        # add your city to set local time zone
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d');
 
-           
-       }
+
+        $id         = $this->input->post('id_pelaporan');
+        $no_tiket   = $this->input->post('no_tiket');
+        //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
+        $nama       = $this->input->post('nama');
+        $perihal    = $this->input->post('perihal');
+        $status_ccs ='FINISH';
+        $waktu      = date('Y-m-d');
+        $ArrUpdate  = array(
+
+            'no_tiket'       => $no_tiket,
+            //    'waktu_pelaporan' => $waktu_pelaporan,
+            'nama'           => $nama,
+            'perihal'        => $perihal,
+            'status_ccs'     => $status_ccs,
+            'waktu_approve'  =>$waktu
+
+        );
+        $this->pelaporan_model->approveSPV($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Approve!');
+        redirect('supervisor/finish');
+
+    }
 
         //   FILTER LAPORAN
         public function rekapPelaporan()

@@ -89,31 +89,31 @@ class Helpdesk extends CI_Controller
 
 
       //FINISH HELPDESK
-      public function finish()
-      {
-          // date_default_timezone_set('Asia/Jakarta');
-           # add your city to set local time zone
+    public function finish()
+    {
+        // date_default_timezone_set('Asia/Jakarta');
+        # add your city to set local time zone
   
-           $id              = $this->input->post('id_pelaporan');
-           $no_tiket        = $this->input->post('no_tiket');
-           $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-           $nama            = $this->input->post('nama');
-           $perihal         = $this->input->post('perihal');
-           $status          = 'Solved';
-           $status_ccs      = 'CLOSE';
-           $ArrUpdate       = array(
+        $id              = $this->input->post('id_pelaporan');
+        $no_tiket        = $this->input->post('no_tiket');
+        $waktu_pelaporan = $this->input->post('waktu_pelaporan');
+        $nama            = $this->input->post('nama');
+        $perihal         = $this->input->post('perihal');
+        $status          = 'Solved';
+        $status_ccs      = 'CLOSE';
+        $ArrUpdate       = array(
    
-               'no_tiket'        => $no_tiket,
-               'waktu_pelaporan' => $waktu_pelaporan,
-               'nama'            => $nama,
-               'perihal'         => $perihal,
-               'status'          => $status,
-               'status_ccs'      => $status_ccs
-           );
-           $this->pelaporan_model->updateHD($id, $ArrUpdate);
-           $this->session->set_flashdata('pesan', 'Successfully Finish!');
-           redirect('helpdesk/data_pelaporan');
-       }
+            'no_tiket'        => $no_tiket,
+            'waktu_pelaporan' => $waktu_pelaporan,
+            'nama'            => $nama,
+            'perihal'         => $perihal,
+            'status'          => $status,
+            'status_ccs'      => $status_ccs
+        );
+        $this->pelaporan_model->updateHD($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Finish!');
+        redirect('helpdesk/data_pelaporan');
+    }
 
         public function edit_pelaporan()
         {
@@ -126,7 +126,7 @@ class Helpdesk extends CI_Controller
             $status_ccs   = $this->input->post('status_ccs');
             $impact       = $this->input->post('impact');
 
-          
+        
             $ArrUpdate = array(
                 'no_tiket'   => $no_tiket,
                 'perihal'    => $perihal,
@@ -145,7 +145,6 @@ class Helpdesk extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
             $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-            $data['datacomment'] = $this->klienpelaporan_model->ambil_id_comment($id);
             $this->load->view('templates/header');
             $this->load->view('templates/helpdesk_sidebar');
             $this->load->view('helpdesk/detail_pelaporan', $data);

@@ -9,9 +9,9 @@
         </div>
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-         <?php if ($this->session->flashdata('pesan')) { ?>
+        <?php if ($this->session->flashdata('pesan')) { ?>
 
-         <?php } ?>
+        <?php } ?>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -90,10 +90,8 @@
 
                                                 <?php elseif ($dp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
-                                               
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -105,10 +103,8 @@
 
                                                 <?php elseif ($dp['maxday'] == '7') : ?>
                                                     <span class="label label-danger">7</span>
-                                               
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -125,7 +121,6 @@
                                                     <span class="label label-primary">ADDED</span>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             
                                             </td>

@@ -7,9 +7,9 @@
 
             </h2>
         </div>
-         <!-- jQuery UI CSS -->
+    <!-- jQuery UI CSS -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-          
+
         <!-- Basic Examples -->
         
         <!-- #END# Basic Examples -->
@@ -96,7 +96,6 @@
 
                                                 <?php elseif ($dp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
-                                               
 
                                                 <?php else : ?>
 
@@ -138,7 +137,6 @@
                                                         class="icon-name">Edit</span>
                                                 </div>
                                             </div>
-                                           
                                             
                                             <br>
                                             <br>

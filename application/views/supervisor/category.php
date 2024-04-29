@@ -11,7 +11,6 @@
             <?php } ?>
             <?= $this->session->flashdata('message'); ?>
         </div>
-       
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">

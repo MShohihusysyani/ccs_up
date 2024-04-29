@@ -70,7 +70,6 @@
                                                         class="icon-name"></span>
                                                 </div>
                                             </div>
-                                          
 
                                             <a class="btn btn-sm btn-danger waves-effect tombol-hapus"
                                                     data-type="success"

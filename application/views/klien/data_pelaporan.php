@@ -2,10 +2,10 @@
     <div class="container-fluid">
         <div class="block-header">
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-         <?php if ($this->session->flashdata('pesan')) { ?>
+        <?php if ($this->session->flashdata('pesan')) { ?>
 
-         <?php } ?>
-           
+        <?php } ?>
+
         </div>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -61,7 +61,6 @@
 
                                                 <?php elseif ($divp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
-                                               
 
                                                 <?php else : ?>
 
@@ -76,7 +75,6 @@
 
                                                 <?php elseif ($divp['maxday'] == '7') : ?>
                                                     <span class="label label-danger">7</span>
-                                               
 
                                                 <?php else : ?>
 
