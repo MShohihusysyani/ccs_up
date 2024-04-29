@@ -185,7 +185,7 @@ class Helpdesk extends CI_Controller
 
             $this->db->insert('comment', $data);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
-            Redirect(Base_url('helpdesk/forward'));
+            Redirect(Base_url('helpdesk/detail_pelaporan'));
         }
 
         
