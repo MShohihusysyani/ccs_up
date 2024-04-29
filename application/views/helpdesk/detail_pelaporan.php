@@ -95,7 +95,6 @@
                         
                         <a href="<?= base_url('helpdesk/forward') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">Kembali</a>
-                            
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD</button>
                         <?php endforeach; ?>
                     </form>
@@ -113,10 +112,9 @@
                         Input Komentar</h2>
                 </div>
                 <div class="body">
-            
-                    <form>
-                        <textarea id="editor2" class="form-control" name="body" id="body">
-                                
+                    <form> 
+                        <textarea id="editor2" class="form-control" name="body" id="body" >
+
                         </textarea>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button>
                         
@@ -124,7 +122,6 @@
                 </div>
             </div>
         </div>
-
         <!-- end comment -->
     </div>
 </section>
