@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Apr 2024 pada 07.53
+-- Waktu pembuatan: 29 Apr 2024 pada 11.31
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -81,6 +81,13 @@ CREATE TABLE `comment` (
   `body` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `comment`
+--
+
+INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
+(3, 80, 4, '<p>body</p>');
+
 -- --------------------------------------------------------
 
 --
@@ -110,17 +117,22 @@ INSERT INTO `divisi` (`id_divisi`, `nama_divisi`, `nama_pegawai`) VALUES
 CREATE TABLE `forward` (
   `id_forward` int(11) NOT NULL,
   `pelaporan_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `subtask` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `forward`
 --
 
-INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
-(64, 79, 4),
-(65, 79, 39),
-(66, 79, 24);
+INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
+(67, 80, 4, ''),
+(68, 80, 39, ''),
+(72, 80, 24, 'tags'),
+(73, 80, 45, 'task'),
+(74, 81, 23, NULL),
+(75, 81, 39, NULL),
+(76, 81, 24, NULL);
 
 -- --------------------------------------------------------
 
@@ -185,9 +197,9 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `nama`, `subtask`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`) VALUES
-(80, 'TIC2024040001', 20, 'Backdate - Backdate Transaksi ', 'tabungan,transaksi,Admin', '2024-04-27', 'proses', 'ADDED', 'Medium', 60, '<p>coba tags</p>', NULL, 'CCS_Customer_Care_System.pdf', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
-(81, 'TIC2024040002', 33, 'Tabungan - Data Tabungan ', 'Tabungan,Transaksi,Data Tabungan', '2024-04-27', 'proses', 'ADDED', 'Low', 90, '<p>coba Tags</p>', NULL, 'CCS_Customer_Care_System.xlsx', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
-(82, 'TIC2024040003', 28, 'Kredit - Tarik Nominatif', 'Kredit,nominatif', '2024-04-27', 'proses', 'ADDED', NULL, NULL, '<p>coba Tags</p>', NULL, '1702018237376.png', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL);
+(80, 'TIC2024040001', 20, 'Backdate - Backdate Transaksi ', 'tabungan,transaksi,Admin', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>coba tags</p>', 'kritikal', 'CCS_Customer_Care_System.pdf', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, 'Ajeng', 'Implementator PT MSO', 'shohi', NULL, NULL),
+(81, 'TIC2024040002', 33, 'Tabungan - Data Tabungan ', 'Tabungan,Transaksi,Data Tabungan', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Low', 90, '<p>coba Tags</p>', 'material', 'CCS_Customer_Care_System.xlsx', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, 'Ayu', 'Implementator PT MSO', NULL, NULL, NULL),
+(82, 'TIC2024040003', 28, 'Kredit - Tarik Nominatif ', 'Kredit,nominatif', '2024-04-27', 'proses', 'ADDED', 'High', 7, '<p>coba Tags</p>', NULL, '1702018237376.png', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -246,7 +258,8 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (32, 'Helpdesk 4', 'Nita', 'nita', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
 (33, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Y'),
 (39, 'Supervisor 2', 'Supervisor 2 PT MSO Purwokerto', 'spv2', '5f4dcc3b5aa765d61d8327deb882cf99', 9, 'Y'),
-(42, 'Support', 'Rijal Amri', 'rijal', '5f4dcc3b5aa765d61d8327deb882cf99', 5, 'Y');
+(42, 'Support', 'Rijal Amri', 'rijal', '5f4dcc3b5aa765d61d8327deb882cf99', 5, 'Y'),
+(45, 'Implementator', 'shohi', 'shohi', '5f4dcc3b5aa765d61d8327deb882cf99', 4, 'Y');
 
 --
 -- Indexes for dumped tables
@@ -314,7 +327,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
@@ -326,7 +339,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -338,7 +351,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
@@ -350,7 +363,7 @@ ALTER TABLE `tiket_temp`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
