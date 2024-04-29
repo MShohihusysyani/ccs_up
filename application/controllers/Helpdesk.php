@@ -164,19 +164,6 @@ class Helpdesk extends CI_Controller
             $this->load->view('templates/footer');
         }
 
-        // public function fungsi_forward()
-        // {
-        //     $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        //     $this->form_validation->set_rules('namahd','Helpdesk', 'required');
-        //     $data = [
-        //         'pelaporan_id' => $this->input->post('id_pelaporan'),
-        //         'user_id' => $this->input->post('namaspv')
-        //     ];
-       
-        //     $this->db->insert('forward', $data);
-        //     $this->session->set_flashdata('pesan', 'Success Forward!');
-        //     Redirect(Base_url('helpdesk/pelaporan'));
-        // }
 
         public function fungsi_forward()
         {
@@ -212,6 +199,21 @@ class Helpdesk extends CI_Controller
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
             Redirect(Base_url('helpdesk/forward'));
         }
+
+        
+        // public function fungsi_forward()
+        // {
+        //     $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        //     $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        //     $data = [
+        //         'pelaporan_id' => $this->input->post('id_pelaporan'),
+        //         'user_id' => $this->input->post('namaspv')
+        //     ];
+       
+        //     $this->db->insert('forward', $data);
+        //     $this->session->set_flashdata('pesan', 'Success Forward!');
+        //     Redirect(Base_url('helpdesk/pelaporan'));
+        // }
 
       
 }
