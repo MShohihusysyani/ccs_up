@@ -62,8 +62,8 @@
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <div class="info-box bg-blue hover-expand-effect">
                                         <div class="icon">
-                                            <a href="<?php echo base_url('supervisor/added') ?>">
-                                                <i class="material-icons">playlist_add_check</i>
+                                            <a href="<?php echo base_url('helpdesk/pelaporan') ?>">
+                                                <i class="material-icons">assignment_turned_in</i>
                                             </a>
                                         </div>
                                             <div class="content">
@@ -73,21 +73,21 @@
                                     </div>
                             </div>
                         <?php } ?>
-                    
+
                             <?php
                                     $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'FINISH'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                <div class="info-box bg-cyan hover-expand-effect">
+                                <div class="info-box bg-light-green hover-expand-effect">
                                     <div class="icon">
-                                        <a href="<?php echo base_url('supervisor/finish') ?>">
-                                            <i class="material-icons">assignment_turned_in</i>
+                                        <a href="<?php echo base_url('helpdesk/finish') ?>">
+                                            <i class="material-icons">done_all</i>
                                         </a>
                                     </div>
                                     <div class="content">
-                                        <div class="text">HANDLE</div>
+                                        <div class="text">FINISH</div>
                                         <div class="number"><?php echo $total->totalp ?></div>
                                     </div>
                                 </div>
@@ -98,9 +98,7 @@
                 </div>
             </div>
 
-
             <div class="row clearfix">
-
             </div>
 
         </div>
