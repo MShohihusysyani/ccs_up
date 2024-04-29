@@ -20,9 +20,7 @@
                     <?php echo form_open_multipart('helpdesk/add_comment') ?>
                     <form>
                         <?php foreach ($datapelaporan as $dp) : ?>
-                        <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control"
-                            value="<?= $dp['id_pelaporan']; ?>">
-
+                        <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control" value="<?= $dp['id_pelaporan']; ?>">
                         <label for="nama_tiket">No Tiket</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -142,6 +140,6 @@
             .catch( error => {
                 console.error( error );
             } );
-    </script>
+</script>
 
 
