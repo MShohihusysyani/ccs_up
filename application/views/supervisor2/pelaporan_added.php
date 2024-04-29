@@ -289,18 +289,6 @@
                             </div>
                         </div>
                         
-                       
-
-                        <!-- <label for="kategori">Helpdesk</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
-                                    name="namahd" id="namahd" placeholder="Pilih Helpdesk"
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id" value="">
-                            </div>
-                        </div> -->
-                        
                         <!-- <label for="kategori">Category</label>
                         <div class="form-group">
                             <div class="form-line">

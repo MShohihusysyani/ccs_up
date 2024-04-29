@@ -36,13 +36,12 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impactd</th>
+                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -60,7 +59,6 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -72,10 +70,6 @@
                                     foreach ($datapelaporan as $dp): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                        
-                                            <!-- <td> <a
-                                                href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
                                             <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
@@ -120,6 +114,9 @@
 
                                                 <?php elseif ($dp['status_ccs'] == 'HANDLE'): ?>
                                                     <span class="label label-info">HANDLE</span>
+
+                                                <?php elseif ($dp['status_ccs'] == 'HANDLE 2'): ?>
+                                                    <span class="label label-info">HANDLE 2</span>
 
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
                                                     <span class="label label-primary">ADDED</span>

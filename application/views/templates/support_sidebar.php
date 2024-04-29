@@ -102,7 +102,7 @@
                     <li class="header">MAIN MENU</li>
                     <li
                         class="active">
-                        <a href="<?php echo base_url('klien') ?>">
+                        <a href="<?php echo base_url('support') ?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>

@@ -100,7 +100,7 @@ class Klienpelaporan_model extends CI_Model
         $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
         FROM forward
         LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        WHERE forward.user_id=$user_id AND status_ccs='ADDED 2'";
+        WHERE forward.user_id=$user_id AND  status_ccs='HANDLE 2'";
         return $this->db->query($query)->result_array();
     }
     //VIEW FORWARD IMPLEMENTATOR
@@ -108,7 +108,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.handle_by2
+        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.handle_by2, forward.subtask
         FROM forward
         LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
         WHERE forward.user_id=$user_id AND status_ccs='HANDLE 2'";

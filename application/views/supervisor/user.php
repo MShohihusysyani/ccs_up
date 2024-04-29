@@ -235,16 +235,15 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="Klien">Klien</option>
                                         <option value="Helpdesk">Helpdesk</option>
                                         <option value="Supervisor">Supervisor</option>
-                                        <option value="Impelementator">Implementator</option>
+                                        <option value="Implementator">Implementator</option>
                                         <option value="Support">Support</option>
                                         <option value="DBS">DBS</option>
                                         <option value="CRD">CRD</option>
                                         <option value="Development">Development</option>
                                         <option value="Supervisor 2">Supervisor 2</option>
-                               </select> 
+                                </select> 
                         </div>
 
-                      
 
                         <div class="form-group form-float">
                             <div class="form-line">
@@ -292,7 +291,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="7">7-Crd</option>
                                         <option value="8">8-Development</option>
                                         <option value="9">12-Supervisor 2</option>
-                               </select> 
+                                </select> 
                         </div>
 
                         <div class="form-group form-float">

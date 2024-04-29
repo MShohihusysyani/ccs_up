@@ -36,13 +36,12 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impactd</th>
+                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -60,23 +59,17 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-
                                     <?php
                                     $no = 1;
                                     foreach ($datapelaporan as $dp): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                        
-                                            <td> <a
-                                                href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td>
-                                            <!-- <td><?= $dp['no_tiket']; ?></td> -->
+                                            <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
                                             <td><?= $dp['perihal']; ?></td>
@@ -126,11 +119,8 @@
 
                                                 <?php else: ?>
                                                 <?php endif; ?>
-
                                             </td>
-                                            <!-- <td><?= $dp['status']; ?></td> -->
                                             <td><?= $dp['handle_by'];?></td>
-
                                             <td>
                                                 
                                             <div class="btn btn-sm btn-info">
@@ -158,19 +148,6 @@
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Forward</span></a>
                                                 </div>
-
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a>
-
-                                                <br>
-                                                <br> -->
-
-                                               
-
-                                            
-
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -246,24 +223,6 @@
                                 </select>
                             </div>
                         </div>
-
-                        
-                        
-<!-- 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['handle_by']; ?>" type="text" id="handle_by" name="handle_by" class="form-control" >
-                                <label class="form-label">Handle By</label>
-                            </div>
-                        </div> -->
-<!-- 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control" >
-                                <label class="form-label">Keterangan</label>
-                            </div>
-                        </div> -->
-
 
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-link waves-effect">SAVE

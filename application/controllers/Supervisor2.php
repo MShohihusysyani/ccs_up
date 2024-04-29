@@ -196,9 +196,11 @@ class Supervisor2 extends CI_Controller
         $this->form_validation->set_rules('namahd','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namateknisi');
+        $subtask = $this->input->post('subtask');
         $data = [
             'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
+            'user_id' => $id_user,
+            'subtask' => $subtask
         ];
 
         // cari nama user berdasarkan id 
@@ -209,8 +211,38 @@ class Supervisor2 extends CI_Controller
         $user = $query->row();
         $nama_user = $user->nama_user;
 
+        
         $this->db->insert('forward', $data);
         $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
+        $this->session->set_flashdata('pesan', 'Teknisi has been update!');
+        Redirect(Base_url('supervisor2/onprogress'));
+    }
+
+    //TAMBAH TEKNISI
+    public function fungsi_edit2()
+    {
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namateknisi');
+        $subtask = $this->input->post('subtask');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user,
+            'subtask' => $subtask
+        ];
+
+        // cari nama user berdasarkan id 
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
+        
+        $this->db->insert('forward', $data);
+        $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Teknisi has been update!');
         Redirect(Base_url('supervisor2/onprogress'));
     }

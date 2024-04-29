@@ -42,8 +42,8 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
+                                        <th>Subtask</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -60,8 +60,8 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
+                                        <th>Subtask</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -131,8 +131,8 @@
                                                 <?php endif; ?>
 
                                             </td>
-                                            <!-- <td><?= $dp['status']; ?></td> -->
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
+                                            <td><?= $dp['subtask'];?></td>
 
                                             <td>
                                                 

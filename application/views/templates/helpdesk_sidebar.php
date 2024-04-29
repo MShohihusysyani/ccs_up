@@ -125,18 +125,17 @@
                             <li>
                                 <a href="<?php echo base_url('helpdesk/pelaporan') ?>">Added</a>
                             </li>
-
-                            <li>
-                                <a href="<?php echo base_url('helpdesk/reject') ?>">Reject</a>
-                            </li>
                             
                             <li>
                                 <a href="<?php echo base_url('helpdesk/forward') ?>">Forward</a>
                             </li>
 
+                            <li>
+                                <a href="<?php echo base_url('helpdesk/reject') ?>">Reject</a>
+                            </li>
+
                         </ul>
                     </li>
-
                     <li>
                         <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
                         <a href="<?php echo base_url('helpdesk/data_pelaporan') ?>">
