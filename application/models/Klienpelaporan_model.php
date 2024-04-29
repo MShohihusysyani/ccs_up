@@ -140,9 +140,7 @@ class Klienpelaporan_model extends CI_Model
     //FUNGSI FORWARD KE SUPERVISOR 2
     public function updateForward($id_pelaporan){
 
-  
         $query = "UPDATE pelaporan SET status_ccs='ADDED 2', status='Forward To Supervisor 2' WHERE id_pelaporan=$id_pelaporan" ;
-
         return $this->db->query($query);
     }
 

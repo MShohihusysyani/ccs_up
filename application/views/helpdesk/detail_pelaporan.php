@@ -112,7 +112,7 @@
                 <div class="body">
                     <form> 
                         <textarea id="editor2" class="form-control" name="body" id="body" >
-
+                            <?= 'body';?>
                         </textarea>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button>
                         
@@ -123,7 +123,6 @@
         <!-- end comment -->
     </div>
 </section>
-
 
 
 <script>
