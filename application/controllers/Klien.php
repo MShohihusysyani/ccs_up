@@ -190,5 +190,6 @@ class Klien extends CI_Controller
         $this->session->set_flashdata('pesan', 'Data Edited!');
         Redirect(base_url('klien/datapelaporan'));
     }
+    
 
 }
