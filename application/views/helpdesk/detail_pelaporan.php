@@ -20,7 +20,7 @@
                 </div>
                 <div class="body">
                     <?php echo form_open_multipart('helpdesk/add_comment') ?>
-                    <form enctype="multipart/form-data">
+                    <form>
                         <?php foreach ($datapelaporan as $dp) : ?>
                         <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control"
                             value="<?= $dp['id_pelaporan']; ?>">
@@ -111,20 +111,6 @@
                                 
                         </textarea>
                         <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
-
-                        <!-- <div class="form-group">
-                            <div class="form-line">
-                                <select name="kategori" id="kategori" class="form-control">
-                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
-                                    <?php
-                                    foreach ($category as $cat): ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                    <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div> -->
                         
                         <a href="<?= base_url('helpdesk/forward') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">Kembali</a>
@@ -146,17 +132,14 @@
                         Input Komentar</h2>
                 </div>
                 <div class="body">
-                <?php echo form_open_multipart('helpdesk/add_comment') ?>
+            
                     <form>
-                        <textarea id="editor" class="form-control" name="body" id="body">
+                        <textarea id="editor2" class="form-control" name="body" id="body">
                                 
                         </textarea>
-                        <!-- <input type="hidden" name="id_pelaporan" id="id_pelaporan">
-                        <input type="hidden" name="user_id" id="user_id"> -->
-                            
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button>
+                        
                     </form>
-                <?php echo form_close() ?>
                 </div>
             </div>
         </div>
@@ -174,4 +157,13 @@
                 console.error( error );
             } );
     </script>
+
+<script>
+        ClassicEditor
+            .create( document.querySelector( '#editor2' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
 
