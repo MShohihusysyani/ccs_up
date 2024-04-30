@@ -266,7 +266,7 @@
                         </ul>
 
                     </li>
-
+<!-- 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">archive</i>
@@ -291,7 +291,7 @@
                              
                         </ul>
 
-                    </li>
+                    </li> -->
 
                     <li class="header">LABELS</li>
                     <li>
