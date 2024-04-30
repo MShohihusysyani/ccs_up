@@ -36,7 +36,7 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impactd</th>
+                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
