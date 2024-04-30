@@ -22,8 +22,8 @@
                     <?php echo form_open_multipart('supervisor2/fungsi_edit_helpdesk') ?>
                     <form>
                         <?php foreach ($datapelaporan as $dp) : ?>
-                        <input type="hidden" id="id" name="id" class="form-control"
-                            value="<?= $dp['id']; ?>">
+                        <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control"
+                            value="<?= $dp['id_pelaporan']; ?>">
 
                             <label for="nama_tiket">No Tiket</label>
                         <div class="form-group">
@@ -114,7 +114,7 @@
                                 <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
                                     name="namahd" id="namahd" placeholder="Pilih Helpdesk"
                                     class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id" value="">
+                                <input type="hidden" id="id_user" name="id_user" value="">
                             </div>
                         </div>
 
@@ -169,12 +169,12 @@
                                 <td style="text-align:center;" scope="row">
                                     <?= $i; ?>
                                 </td>
-                                <td><?= $nah['nama']; ?></td>
-                                <td class="hide"><?= $div['id']; ?></td>
+                                <td><?= $nah['nama_user']; ?></td>
+                                <td class="hide"><?= $div['id_pelaporan']; ?></td>
                                 <td style="text-align:center;">
                                     <button class="btn btn-sm btn-info" id="pilih3"
-                                        data-nama-divisi="<?= $nah['nama']; ?>"
-                                        data-id-divisi="<?= $nah['id']; ?>">
+                                        data-nama-divisi="<?= $nah['nama_user']; ?>"
+                                        data-id-divisi="<?= $nah['id_user']; ?>">
                                         Pilih</button>
                                 </td>
                             </tr>

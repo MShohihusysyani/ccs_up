@@ -70,11 +70,7 @@
                                     foreach ($datapelaporan as $dp): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                        
-                                            <td> <a
-                                                href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td>
-                                            <!-- <td><?= $dp['no_tiket']; ?></td> -->
+                                            <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
                                             <td><?= $dp['perihal']; ?></td>
