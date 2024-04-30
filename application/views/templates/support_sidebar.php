@@ -107,55 +107,18 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <!-- <li
-                        class="<?= $this->uri->segment(2) == 'rekap' || $this->uri->segment(2) == 'divpengajuan' || $this->uri->segment(2) == 'pengajuan' || $this->uri->segment(2) == 'pengajuan2' || $this->uri->segment(2) == 'pengajuan3' || $this->uri->segment(2) == 'pengajuan4' ? 'active' : ' ' ?>">
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">view_list</i>
-                            <span>Kelola Data</span>
+                            <i class="material-icons">drafts</i>
+                            <span>Kelola Pelaporan</span>
                         </a>
                         <ul class="ml-menu">
-                            <li
-                                class="<?= $this->uri->segment(2) == 'pengajuan' || $this->uri->segment(2) == 'pengajuan2' || $this->uri->segment(2) == 'pengajuan3' || $this->uri->segment(2) == 'pengajuan4' ? 'active' : ' ' ?>">
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <span>Pengajuan</span>
-                                </a>
-                                <ul class="ml-menu">
-                                    <li class="<?= $this->uri->segment(2) == 'pengajuan' ? 'active' : ' ' ?>">
-                                        <a href="<?php echo base_url('divisi/pengajuan') ?>">
-                                            <span>Minggu ke 1</span>
-                                        </a>
-                                    </li>
-                                    <li class="<?= $this->uri->segment(2) == 'pengajuan2' ? 'active' : ' ' ?>">
-                                        <a href="<?php echo base_url('divisi/pengajuan2') ?>">
-                                            <span>Minggu ke 2</span>
-                                        </a>
-                                    </li>
-                                    <li class="<?= $this->uri->segment(2) == 'pengajuan3' ? 'active' : ' ' ?>">
-                                        <a href="<?php echo base_url('divisi/pengajuan3') ?>">
-                                            <span>Minggu ke 3</span>
-                                        </a>
-                                    </li>
-                                    <li class="<?= $this->uri->segment(2) == 'pengajuan4' ? 'active' : ' ' ?>">
-                                        <a href="<?php echo base_url('divisi/pengajuan4') ?>">
-                                            <span>Minggu ke 4</span>
-                                        </a>
-                                    </li>
+                            <li>
+                                <a href="<?php echo base_url('support/pelaporan') ?>">Added</a>
+                            </li>
 
-                                </ul>
-                            </li>
-                            <li class="<?= $this->uri->segment(2) == 'divpengajuan' ? 'active' : ' ' ?>">
-                                <a href="<?php echo base_url('divisi/divpengajuan') ?>">
-                                    <span>Data Pengajuan</span>
-                                </a>
-                            </li>
-                            <li class="<?= $this->uri->segment(2) == 'rekap' ? 'active' : ' ' ?>">
-                                <a href="<?php echo base_url('divisi/rekap') ?>">
-                                    <span>Rekap Pengajuan</span>
-                                </a>
-                            </li>
                         </ul>
-
-                    </li> -->
+                    </li>
                     <li class="header">LABELS</li>
                     <li>
                         <a href="javascript:void(0);">
