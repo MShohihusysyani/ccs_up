@@ -35,7 +35,6 @@
                                             <th>Priority</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <!-- <th>Attachment</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,12 +44,6 @@
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
                                             <td><?= $no++?></td>
-                                            <!-- <td><a
-                                                href="<?= base_url() ?>admin/ruangan_isi/<?= $rgn['id_ruangan']; ?>"><?= $rgn['kode_bangunan']; ?>.<?= $rgn['kode_ruangan']; ?>'</a>
-                                            </td>
-                                            <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['no_tiket'];?></td>
                                             <td><?= $dp['nama'];?></td>

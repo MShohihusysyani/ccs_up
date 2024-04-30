@@ -66,26 +66,12 @@
                                                         class="icon-name"></span>
                                                 </div>
                                             </div>
-                                            <!-- <a class="btn btn-sm btn-danger waves-effect " data-type="success"
-                                                href="<?= base_url() ?>supervisor/hapus_klien/<?= $cln['id']; ?>"><i
-                                                        class="material-icons">delete</i> <span
-                                                        class="icon-name"></span>
-                                            </a> -->
                                             <a class="btn btn-sm btn-danger waves-effect tombol-hapus"
                                                     data-type="success"
                                                     href="<?= base_url() ?>supervisor/hapus_klien/<?= $cln['id']; ?>"><i
                                                         class="material-icons">delete</i><span
                                                         class="fa fa-trash"></span>
                                                     </a>
-
-                                            <!-- <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                <p>A warning message, with a function attached to the <b>Confirm</b>
-                                                    button...</p>
-                                                <button class="btn btn-primary waves-effect" data-type="confirm">CLICK
-                                                    ME</button>
-                                            </div> -->
-
-
                                         </td>
 
                                     </tr>

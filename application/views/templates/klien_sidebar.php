@@ -88,10 +88,9 @@
                                 <a href="<?= base_url('user/changepassword_klien') ?>"><i
                                         class="material-icons">lock</i>Change Password</a>
                             </li>
-                           <!-- <a
+                                    <!-- <a
                                     href="<?= base_url('user/changepassword') ?>"><i
                                         class="material-icons">lock</i>Change Password</a> -->
-                         
                             <li role="separator" class="divider"></li>
                             <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i
                                         class="material-icons">input</i>Sign Out</a>
@@ -132,7 +131,17 @@
                                     <span>Data Pelaporan</span>
                                 </a>
                             </li>
+                            
+                        </ul>
 
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">view_list</i>
+                            <span>Bank Knowlage</span>
+                        </a>
+                        <ul class="ml-menu">
                             <li>
                                 <a href="<?php echo base_url('klien/bank_knowlage') ?>">
                                     <span>Bank Know Lage</span>
@@ -142,8 +151,6 @@
                         </ul>
 
                     </li>
-
-
 
                     <li class="header">LABELS</li>
                     <li>

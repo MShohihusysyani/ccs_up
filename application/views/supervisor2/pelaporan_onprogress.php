@@ -280,6 +280,17 @@
                             </div>
                         </div>
 
+                        <!-- <label for="kategori">Category</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
+                                    name="kategori" id="kategori" placeholder=""
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
+                                <input type="hidden" id="id" name="id">
+                            </div>
+                        </div> -->
+
+
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namateknisi" id="namateknisi" class="form-control">
@@ -298,27 +309,7 @@
                                 <input value="" type="text" id="subtask" name="subtask" class="form-control">
                             </div>
                         </div>
-
-                        <!-- <label for="kategori">Helpdesk</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
-                                    name="namahd" id="namahd" placeholder="Pilih Helpdesk"
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id" value="">
-                            </div>
-                        </div> -->
-                        
-                        <!-- <label for="kategori">Category</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
-                                    name="kategori" id="kategori" placeholder=""
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id">
-                            </div>
-                        </div> -->
-
+                    
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
                                 CHANGES</button>
@@ -439,16 +430,6 @@
                                 <input value="" type="text" id="subtask" name="subtask" class="form-control">
                             </div>
                         </div>
-
-                        <!-- <label for="kategori">Helpdesk</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
-                                    name="namahd" id="namahd" placeholder="Pilih Helpdesk"
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id" value="">
-                            </div>
-                        </div> -->
                         
                         <!-- <label for="kategori">Category</label>
                         <div class="form-group">
@@ -544,9 +525,6 @@
 
     });
 </script>
-
-
-
 
 
 <!-- Script -->

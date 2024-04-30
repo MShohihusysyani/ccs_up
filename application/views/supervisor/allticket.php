@@ -41,8 +41,6 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <!-- <th>Status</th>
-                                            <th>Aksi</th> -->
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -60,8 +58,6 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <!-- <th>Status</th>
-                                            <th>Aksi</th> -->
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -71,10 +67,6 @@
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
                                             <td><?= $no++?></td>
-                                        
-                                            <!-- <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
                                             <td><?= $dp['no_tiket'];?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama'];?></td>
@@ -136,7 +128,7 @@
                                                 <?php endif; ?>
                                             
                                             </td>
-                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
                                         
                                         </tr>
                                         <?php endforeach; ?>

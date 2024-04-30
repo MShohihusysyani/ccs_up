@@ -9,7 +9,7 @@ class Klienpelaporan_model extends CI_Model
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT   pelaporan.id_pelaporan, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.perihal, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority, pelaporan.maxday, pelaporan.kategori, pelaporan.tags
+        $query = "SELECT   pelaporan.id_pelaporan, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.perihal, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority, pelaporan.maxday, pelaporan.kategori, pelaporan.tags, pelaporan.no_tiket, pelaporan.rating
         FROM pelaporan 
         where user_id = $user_id ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
@@ -32,7 +32,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, impact, maxday, handle_by2, tags  FROM pelaporan ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, impact, maxday, handle_by2, handle_by3, tags  FROM pelaporan ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -120,7 +120,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.handle_by2, forward.subtask
+        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.handle_by2, forward.subtask, pelaporan.tags
         FROM forward
         LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
         WHERE forward.user_id=$user_id AND status_ccs='HANDLE 2'";
@@ -154,6 +154,13 @@ class Klienpelaporan_model extends CI_Model
 
         $query = "UPDATE pelaporan SET status_ccs='ADDED 2', status='Forward To Supervisor 2' WHERE id_pelaporan=$id_pelaporan" ;
         return $this->db->query($query);
+    }
+
+    // RATING KLIEN
+    public function insert_rating(){
+
+        $query = "INSERT INTO pelaporan(rating)";
+        $this->db->query($query);
     }
 
 

@@ -7,6 +7,8 @@ class Klien extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        
+        $this->load->model('klienpelaporan_model');
        
     }
 
@@ -190,6 +192,19 @@ class Klien extends CI_Controller
         $this->session->set_flashdata('pesan', 'Data Edited!');
         Redirect(base_url('klien/datapelaporan'));
     }
-    
 
+
+    public function rate_item() {
+            $rating = $this->input->post('rating');
+
+            $this->klienpelaporan_model->insert_rating( $rating);
+    }
+
+    public function insert_rating($rating) {
+        $data = array(
+            'rating' => $rating
+        );
+        $this->db->insert('pelaporan', $data);
+    
+    }
 }

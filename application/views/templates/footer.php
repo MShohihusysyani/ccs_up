@@ -16,6 +16,7 @@
 <!-- JQuery Steps Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-steps/jquery.steps.js"></script>
 
+<!-- bootstrap notify -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-notify/bootstrap-notify.js"></script>
 
 <!-- Waves Effect Plugin Js -->
@@ -51,8 +52,8 @@
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
- <!-- Bootstrap Tags Input Plugin Js -->
- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+<!-- Bootstrap Tags Input Plugin Js -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
 <!-- SweetAlert Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/sweetalert/sweetalert.min.js"></script>
@@ -65,7 +66,6 @@
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>js/pages/tables/jquery-datatable.js"></script>
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>js/pages/ui/dialogs.js"></script>
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>js/pages/index.js"></script>
-
 
 
 <script src="<?= base_url('assets/'); ?>js/sweetalert2.all.min.js"></script>
@@ -81,12 +81,12 @@
 <!-- Demo Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>js/demo.js"></script>
 
- <!-- Ckeditor -->
- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/ckeditor/ckeditor.js"></script>
-  <!-- TinyMCE -->
-  <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/tinymce/tinymce.js"></script>
+<!-- Ckeditor -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/ckeditor/ckeditor.js"></script>
+<!-- TinyMCE -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/tinymce/tinymce.js"></script>
 
- 
+
 </body>
 
 </html>

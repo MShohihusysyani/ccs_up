@@ -1,3 +1,18 @@
+<style>
+    .stars {
+    font-size: 24px;
+}
+
+.star {
+    cursor: pointer;
+    color: #ccc;
+}
+
+.star.active {
+    color: #ffdd00;
+}
+
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -5,6 +20,7 @@
         <?php if ($this->session->flashdata('pesan')) { ?>
 
         <?php } ?>
+        
 
         </div>
         <div class="row clearfix">
@@ -24,6 +40,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tanggal Pelaporan</th>
+                                        <th>No Tiket</th>
                                         <th>Perihal</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
@@ -32,6 +49,7 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Aksi</th>
+                                        <th>Rating</th>
                                     </tr>
                                 </thead>
 
@@ -43,7 +61,7 @@
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?= tanggal_indo($divp['waktu_pelaporan']); ?></td>
-                                        <!-- <td><?= $divp['status']; ?></td> -->
+                                        <td><?= $divp['no_tiket'];?></td>
                                         <td><?= $divp['perihal']; ?></td>
                                         <td> <a
                                                 href="<?= base_url('assets/files/' . $divp['file']); ?>"><?= $divp['file']; ?></a>
@@ -115,6 +133,20 @@
                                                     class="icon-name"></span>
                                                 Detail</a>
 
+
+                                        </td>
+                                        <td>
+                                                <div id="ratingForm">
+                                                    <input type="hidden" id="id_pelaporan" value="<?= $divp['id_pelaporan'];?>">
+                                                        <div class="stars" id="rating" name="rating">
+                                                                <span class="star" data-value="1">&#9733;</span>
+                                                                <span class="star" data-value="2">&#9733;</span>
+                                                                <span class="star" data-value="3">&#9733;</span>
+                                                                <span class="star" data-value="4">&#9733;</span>
+                                                                <span class="star" data-value="5">&#9733;</span>
+                                                        </div>
+                                                </div>
+                                                <div id="message"></div>
                                         </td>
 
                                     </tr>
@@ -136,52 +168,37 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#nama_brg').autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: '<?= base_url() ?>admin/barangList',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    search: request.term
-                },
-                success: function(data) {
-                    response(data);
-                }
-            });
-        },
-        select: function(event, ui) {
-            $('#nama_brg').val(ui.item.label);
-            $('#id').val(ui.item.value);
 
-            return false;
-        }
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.star').on('click', function() {
+        var id_pelaporan = $('#id_pelaporan').val();
+        var rating = $(this).attr('data-value');
+        
+        $.ajax({
+            url: '<?= base_url('klien/insert_rating') ?>',
+            type: 'POST',
+            data: {
+                id_pelaporan : id_pelaporan,
+                rating: rating
+            },
+            success: function(response) {
+                $('#message').html('Rating saved successfully!');
+                // Optionally, you can update the UI here to reflect the new rating
+            },
+            error: function(xhr, status, error) {
+                $('#message').html('Error saving rating: ' + error);
+            }
+        });
+    });
+
+    // Highlight stars on hover
+    $('.star').hover(function() {
+        $(this).prevAll().addBack().addClass('active');
+    }, function() {
+        $(this).prevAll().addBack().removeClass('active');
     });
 });
-</script>
-<script>
-$(document).ready(function() {
-    $(document).on('click', '#pilih', function() {
-        var nama_barang = $(this).data('barang');
-        var id = $(this).data('id');
-        $('#nama_brg').val(nama_barang);
-        $('#barang_id').val(id);
-        $('#defaultModal').modal('hide');
-    })
-});
+
 </script>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $("#jumlah, #harga").keyup(function() {
-        var harga = $("#harga").val();
-        var jumlah = $("#jumlah").val();
-
-        var total = parseInt(harga) * parseInt(jumlah);
-        $("#total").val(total);
-    });
-});
-</script>

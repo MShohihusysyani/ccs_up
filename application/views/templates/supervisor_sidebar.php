@@ -160,8 +160,6 @@
         </div>
 
         </div>
-        
-        
     </nav>
     
     <!-- #Top Bar -->
@@ -232,7 +230,6 @@
                             <li>
                                 <a href="<?php echo base_url('user/getDataUser') ?>">Aktivasi User</a>
                             </li>
-                             
                         </ul>
 
                     </li>
@@ -262,7 +259,6 @@
                             <li>
                                 <a href="<?php echo base_url('supervisor/finish') ?>">Finish</a>
                             </li>
-                             
                         </ul>
 
                     </li>
@@ -288,7 +284,6 @@
                             <li>
                                 <a href="<?php echo base_url('supervisor/rekapProgres') ?>">Rekap Progres</a>
                             </li>
-                             
                         </ul>
 
                     </li>

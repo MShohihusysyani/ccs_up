@@ -70,10 +70,6 @@
                                     foreach ($dataAdded as $dp): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                        
-                                            <!-- <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
                                             <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
@@ -267,7 +263,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select name="kategori" id="kategori" class="form-control">
                                     <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
@@ -279,9 +275,9 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         
-                        <!-- <label for="kategori">Category</label>
+                        <label for="kategori">Category</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
@@ -289,7 +285,7 @@
                                     class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
                                 <input type="hidden" id="id" name="id">
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE

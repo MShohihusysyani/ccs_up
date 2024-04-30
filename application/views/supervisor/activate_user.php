@@ -45,59 +45,31 @@
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $u['nama_user']; ?></td>
                                         <td><?= $u['divisi']; ?></td>
-                                        <!-- <td><?= $u['active']; ?></td> -->
                                         <td> <?php if ($u['active'] == 'N') : ?>
                                                 <i class="material-icons">clear</i>
 
                                                 <?php elseif ($u['active'] == 'Y') : ?>
-                                                <i class="material-icons">check</i>
-
+                                                    <i class="material-icons">verified_us</i>
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
                                             <td>
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <?php if ($u['active'] == 'N') : ?>
-                                                <a class="btn btn-sm btn-success tombol-aktif"
-                                                    href="<?= base_url() ?>user/active/<?= $u['id_user']; ?>"><span
-                                                        class="fa fa-trash"></span>
+                                                <a class="btn btn-sm btn-success waves-effect tombol-aktif"
+                                                    href="<?= base_url() ?>user/active/<?= $u['id_user']; ?>"><i class="material-icons">check</i>
                                                     Active</a>
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
 
                                                 <?php elseif ($u['active'] == 'Y') : ?>
                                                 <a class="btn btn-sm btn-danger tombol-nonaktif"
-                                                    href="<?= base_url() ?>user/inactive/<?= $u['id_user']; ?>"><span
-                                                        class="fa fa-trash"></span>
+                                                    href="<?= base_url() ?>user/inactive/<?= $u['id_user']; ?>"><i class="material-icons">close</i>
                                                     Inactive</a>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
-                                        <!-- <td>
-
-                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                            <?php if ($u['active'] == 'N') : ?>
-                                            <a class="btn btn-sm btn-success"
-                                                href="<?= base_url() ?>user/active/<?= $u['id']; ?>"><span
-                                                    class="fa fa-trash"></span>
-                                                Active</a>
-                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
-
-                                            <?php elseif ($u['active'] == 'Y') : ?>
-                                            <a class="btn btn-sm btn-danger"
-                                                href="<?= base_url() ?>user/inactive/<?= $u['id']; ?>"><span
-                                                    class="fa fa-trash"></span>
-                                                Inactive</a>
-
-                                            <?php else : ?>
-
-                                            <?php endif; ?>
-                                        </td> -->
-
-
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
