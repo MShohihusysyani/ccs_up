@@ -32,7 +32,7 @@
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/morrisjs/morris.js"></script>
 
 <!-- ChartJs -->
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/chartjs/Chart.bundle.js"></script>
+<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/chartjs/Chart.bundle.js"></script> -->
 
 <!-- Flot Charts Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.js"></script>

@@ -53,7 +53,7 @@
                         </div>
                         <div class="body">
                         <?php
-                            $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'ADDED'");
+                            $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE '");
 
                             foreach ($totalp->result() as $total) {
                             ?>
@@ -93,6 +93,7 @@
                                 </div>
                             </div>
                             <?php } ?>
+                            
                         </div>
                     </div>
                 </div>

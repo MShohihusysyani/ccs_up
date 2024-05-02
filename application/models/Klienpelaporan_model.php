@@ -157,10 +157,16 @@ class Klienpelaporan_model extends CI_Model
     }
 
     // RATING KLIEN
-    public function insert_rating(){
+    public function tambah_rating(){
 
         $query = "INSERT INTO pelaporan(rating)";
         $this->db->query($query);
+    }
+
+    public function updateRate($id_pelaporan, $rating){
+
+        $query = "UPDATE pelaporan SET rating = '$rating'  WHERE id_pelaporan=$id_pelaporan" ;
+        return $this->db->query($query);
     }
 
 

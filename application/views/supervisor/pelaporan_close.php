@@ -36,11 +36,11 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Tags</th>
                                         <th>Priority</th>
+                                        <th>Impact</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
@@ -54,11 +54,11 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Tags</th>
                                         <th>Priority</th>
+                                        <th>Impact</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
@@ -76,7 +76,6 @@
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
                                             <td><?= $dp['perihal']; ?></td>
-                                            <td><?= $dp['impact'];?></td>
                                             <td> <a
                                                     href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                             </td>
@@ -99,6 +98,7 @@
                                                 <?php else: ?>
                                                 <?php endif; ?>
                                             </td>
+                                            <td><?= $dp['impact'];?></td>
                                             <td>
                                                 <?php if ($dp['maxday'] == '90'): ?>
                                                     <span class="label label-info">90</span>

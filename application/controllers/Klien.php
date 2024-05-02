@@ -108,6 +108,7 @@ class Klien extends CI_Controller
     #data pelaporan
     public function datapelaporan()
     {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanTemp();
@@ -195,16 +196,43 @@ class Klien extends CI_Controller
 
 
     public function rate_item() {
-            $rating = $this->input->post('rating');
 
-            $this->klienpelaporan_model->insert_rating( $rating);
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $rating = $this->input->post('rating');
+        $data = [
+            'rating'    => $rating
+        ];
+        $this->db->update('rating', $data);
+        $this->klienpelaporan_model->updateRate($id_pelaporan, $rating);
     }
 
-    public function insert_rating($rating) {
-        $data = array(
-            'rating' => $rating
-        );
-        $this->db->insert('pelaporan', $data);
+    public function insert_rating() {
+
+        $data['rating_name']    = $this->db->get('rating')->result_array();
+
+        $this->form_validation->set_rules('rating_name', 'Rating', 'required');
+        $data = [
+            'rating_name'    => $this->input->post('rating_name')
+        ];
+        $this->db->insert('rating', $data);
+    
+    }
+
+    public function insert_rating2() {
+
+        // $data['rating']    = $this->db->get('pelaporan')->result_array();
+        // $data['id_pelaporan']    = $this->db->get('pelaporan')->result_array();
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $rating = $this->input->post('rating');
+
+        $this->form_validation->set_rules('rating', 'Rating', 'required');
+        $data = [
+            'rating'    => $rating
+        ];
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        $this->db->update('pelaporan', $data);
+        // $this->klienpelaporan_model->updateRate($id_pelaporan, $rating);
+ 
     
     }
 }

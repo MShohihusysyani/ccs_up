@@ -21,7 +21,6 @@
 
         <?php } ?>
         
-
         </div>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -52,7 +51,6 @@
                                         <th>Rating</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
                                     
                                     <?php
@@ -81,7 +79,6 @@
                                                     <span class="label label-danger">High</span>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -95,7 +92,6 @@
                                                     <span class="label label-danger">7</span>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -118,37 +114,31 @@
                                                     <span class="label label-primary">ADDED 2</span> 
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             
                                             </td>
                                         
                                         <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?> -->
                                         <td>
-
-                                            
                                         <a class="btn btn-xs btn-info"
                                                 href="<?= base_url() ?>klien/edit_pelaporan/<?= $divp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span
-                                                    class="icon-name"></span>
-                                                Detail</a>
-
-
+                                                    class="icon-name"></span>Detail</a>
                                         </td>
                                         <td>
                                                 <div id="ratingForm">
-                                                    <input type="hidden" id="id_pelaporan" value="<?= $divp['id_pelaporan'];?>">
+                                                    <input type="hidden" id="id_pelaporan" name="id_pelaporan" value="<?= $divp['id_pelaporan'];?>">
+                                                    <!-- <input type="hidden" id="user_id" name="user_id" value="<?= $user['id_user'];?>"> -->
                                                         <div class="stars" id="rating" name="rating">
-                                                                <span class="star" data-value="1">&#9733;</span>
-                                                                <span class="star" data-value="2">&#9733;</span>
-                                                                <span class="star" data-value="3">&#9733;</span>
-                                                                <span class="star" data-value="4">&#9733;</span>
-                                                                <span class="star" data-value="5">&#9733;</span>
+                                                                <span class="star" data-value="kecewa">&#9733;</span>
+                                                                <span class="star" data-value="cukup">&#9733;</span>
+                                                                <span class="star" data-value="cukup">&#9733;</span>
+                                                                <span class="star" data-value="bagus">&#9733;</span>
+                                                                <span class="star" data-value="bagus">&#9733;</span>
                                                         </div>
                                                 </div>
                                                 <div id="message"></div>
                                         </td>
-
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -172,14 +162,15 @@
 <script type="text/javascript">
     $(document).ready(function() {
     $('.star').on('click', function() {
+        // var rating = $('#rating').val();
         var id_pelaporan = $('#id_pelaporan').val();
         var rating = $(this).attr('data-value');
         
         $.ajax({
-            url: '<?= base_url('klien/insert_rating') ?>',
+            url: '<?= base_url('klien/insert_rating2') ?>',
             type: 'POST',
             data: {
-                id_pelaporan : id_pelaporan,
+                id_pelaporan: id_pelaporan,
                 rating: rating
             },
             success: function(response) {
@@ -199,6 +190,5 @@
         $(this).prevAll().addBack().removeClass('active');
     });
 });
-
 </script>
 

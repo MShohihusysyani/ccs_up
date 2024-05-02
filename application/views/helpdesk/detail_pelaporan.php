@@ -86,6 +86,7 @@
                             </div>
                         </div>
 
+                        <label for="comment">Comment</label>
                         <textarea id="editor" class="form-control" name="body" id="body">
                                 
                         </textarea>
@@ -107,7 +108,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Input Komentar</h2>
+                        Komentar</h2>
                 </div>
                 <div class="body">
                     <form> 
