@@ -236,7 +236,7 @@ class Klien extends CI_Controller
     
     }
 
-    function update()
+    public function update()
 {
     	$id_pelaporan = $this->input->post('id_pelaporan');
 		$data = array(
