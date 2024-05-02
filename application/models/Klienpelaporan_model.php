@@ -4,6 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Klienpelaporan_model extends CI_Model
 {
+    public $table = 'pelaporan';
+
     public function getKlienPelaporanTemp()
     {
 
@@ -167,6 +169,12 @@ class Klienpelaporan_model extends CI_Model
 
         $query = "UPDATE pelaporan SET rating = '$rating'  WHERE id_pelaporan=$id_pelaporan" ;
         return $this->db->query($query);
+    }
+
+    public function update_data($table,$data,$id_pelaporan)
+	{
+		$this->db->where('id_pelaporan', $id_pelaporan);
+		return $this->db->update($table, $data);
     }
 
 

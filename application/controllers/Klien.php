@@ -235,4 +235,13 @@ class Klien extends CI_Controller
  
     
     }
+
+    function update()
+{
+    	$id_pelaporan = $this->input->post('id_pelaporan');
+		$data = array(
+	        'rating' => $this->input->post('rating')
+		);
+        $this->klienpelaporan_model->update_data('pelaporan',$data,$id_pelaporan);
+    }
 }

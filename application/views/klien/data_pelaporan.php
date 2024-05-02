@@ -126,18 +126,17 @@
                                                     class="icon-name"></span>Detail</a>
                                         </td>
                                         <td>
-                                                <div id="ratingForm">
-                                                    <input type="hidden" id="id_pelaporan" name="id_pelaporan" value="<?= $divp['id_pelaporan'];?>">
-                                                    <!-- <input type="hidden" id="user_id" name="user_id" value="<?= $user['id_user'];?>"> -->
-                                                        <div class="stars" id="rating" name="rating">
-                                                                <span class="star" data-value="kecewa">&#9733;</span>
-                                                                <span class="star" data-value="cukup">&#9733;</span>
-                                                                <span class="star" data-value="cukup">&#9733;</span>
-                                                                <span class="star" data-value="bagus">&#9733;</span>
-                                                                <span class="star" data-value="bagus">&#9733;</span>
-                                                        </div>
-                                                </div>
-                                                <div id="message"></div>
+                                            <div id="ratingForm">
+                                                    <div class="stars" id="rating" name="rating">
+                                                        <span class="star" data-value="kecewa">&#9733;</span>
+                                                        <span class="star" data-value="cukup">&#9733;</span>
+                                                        <span class="star" data-value="cukup">&#9733;</span>
+                                                        <span class="star" data-value="bagus">&#9733;</span>
+                                                        <span class="star" data-value="bagus">&#9733;</span>
+                                                    </div>
+                                            </div>
+                                            <div id="message"></div>
+                                                <input type="hidden" id="id_pelaporan" name="id_pelaporan" value="<?= $divp['id_pelaporan'];?>">
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -167,7 +166,7 @@
         var rating = $(this).attr('data-value');
         
         $.ajax({
-            url: '<?= base_url('klien/insert_rating2') ?>',
+            url: '<?= base_url('klien/update') ?>',
             type: 'POST',
             data: {
                 id_pelaporan: id_pelaporan,
