@@ -211,31 +211,30 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">storage</i>
                             <span>Kelola Data</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo base_url('supervisor/category') ?>">Data Kategori</a>
+                                <a href="<?php echo base_url('supervisor2/category') ?>">Data Kategori</a>
                             </li>  
 
                             <li>
-                                <a href="<?php echo base_url('supervisor/client') ?>">Data BPR</a>
+                                <a href="<?php echo base_url('supervisor2/client') ?>">Data BPR</a>
                             </li>
 
                             <li>
-                                <a href="<?php echo base_url('supervisor/user') ?>">Data User</a>
+                                <a href="<?php echo base_url('supervisor2/user') ?>">Data User</a>
                             </li>
 
                             <li>
                                 <a href="<?php echo base_url('user/getDataUser') ?>">Aktivasi User</a>
                             </li>
-                             
                         </ul>
 
-                    </li>
+                    </li> -->
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
