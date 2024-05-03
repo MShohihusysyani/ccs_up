@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Bulan Mei 2024 pada 11.00
+-- Waktu pembuatan: 03 Bulan Mei 2024 pada 11.08
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -133,7 +133,9 @@ INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUE
 (74, 81, 23, NULL),
 (75, 81, 39, NULL),
 (76, 81, 24, 'coba task'),
-(77, 81, 42, 'coba task');
+(77, 81, 42, 'coba task'),
+(78, 92, 30, NULL),
+(79, 92, 39, NULL);
 
 -- --------------------------------------------------------
 
@@ -202,7 +204,8 @@ INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tag
 (82, 'TIC2024040003', 28, 'Kredit - Kolektibilitas', 'Kredit,nominatif', '2024-04-27', 'proses', 'ADDED', 'High', 7, '<p>coba Tags</p>', NULL, '1702018237376.png', 'bagus', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL),
 (85, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', 'Backdate,Transaksi', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating</p>', NULL, 'CCS_Customer_Care_System1.pdf', 'cukup', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
 (86, 'TIC2024040005', 20, 'Kredit - Agunan', 'Agunan', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating 2</p>', NULL, '17020182373761.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(91, 'TIC2024050006', 28, 'Kredit - Agunan', 'agunan ,admin', '2024-05-02', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating&nbsp;</p>', NULL, 'CCS_Customer_Care_System_(2).pdf', 'cukup', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL);
+(91, 'TIC2024050006', 28, 'Kredit - Agunan', 'agunan ,admin', '2024-05-02', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating&nbsp;</p>', NULL, 'CCS_Customer_Care_System_(2).pdf', 'cukup', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL),
+(92, 'TIC2024050007', 33, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', 'agunan ,kredit', '2024-05-03', 'Forward To Supervisor 2', 'ADDED 2', 'Medium', 60, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System_(3).xlsx', NULL, 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ina', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -361,7 +364,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -373,7 +376,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -385,7 +388,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
