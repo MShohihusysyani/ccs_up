@@ -137,6 +137,7 @@
                                             </div>
                                             <div id="message"></div>
                                                 <input type="hidden" id="id_pelaporan" name="id_pelaporan" value="<?= $divp['id_pelaporan'];?>">
+
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -161,6 +162,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
     $('.star').on('click', function() {
+        
         // var rating = $('#rating').val();
         var id_pelaporan = $('#id_pelaporan').val();
         var rating = $(this).attr('data-value');
@@ -182,12 +184,23 @@
         });
     });
 
-    // Highlight stars on hover
+    //Highlight stars on hover
     $('.star').hover(function() {
         $(this).prevAll().addBack().addClass('active');
     }, function() {
         $(this).prevAll().addBack().removeClass('active');
     });
+
 });
 </script>
+
+<!-- <script>
+        $('.stars a').on('click', function() {
+            $('.stars span, .stars a').removeClass('active');
+
+            $(this).addClass('active');
+            $('.stars span').addClass('active');
+            alert($(this).text());
+        });
+    </script> -->
 
