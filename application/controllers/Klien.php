@@ -99,6 +99,7 @@ class Klien extends CI_Controller
         $data['category'] = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTemp1();
 
+
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
         $this->load->view('klien/pengajuan', $data);
@@ -112,6 +113,7 @@ class Klien extends CI_Controller
         $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanTemp();
+        
         
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
