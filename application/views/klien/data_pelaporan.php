@@ -117,7 +117,6 @@
                                                 <?php endif; ?>
                                             
                                             </td>
-                                        
                                         <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?> -->
                                         <td>
                                         <a class="btn btn-xs btn-info"
