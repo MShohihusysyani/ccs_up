@@ -232,7 +232,7 @@ class Klien extends CI_Controller
         $this->db->where('id_pelaporan', $id_pelaporan);
         $this->db->update('pelaporan', $data);
         // $this->klienpelaporan_model->updateRate($id_pelaporan, $rating);
- 
+
     
     }
 
