@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Bulan Mei 2024 pada 02.56
+-- Waktu pembuatan: 03 Bulan Mei 2024 pada 04.02
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -86,7 +86,6 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
-(6, 80, 4, '<p>Tes Komen</p>'),
 (7, 80, 4, '<p>Tes Komen 2</p>');
 
 -- --------------------------------------------------------
