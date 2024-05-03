@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Bulan Mei 2024 pada 04.02
+-- Waktu pembuatan: 03 Bulan Mei 2024 pada 11.00
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -202,7 +202,7 @@ INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tag
 (82, 'TIC2024040003', 28, 'Kredit - Kolektibilitas', 'Kredit,nominatif', '2024-04-27', 'proses', 'ADDED', 'High', 7, '<p>coba Tags</p>', NULL, '1702018237376.png', 'bagus', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL),
 (85, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', 'Backdate,Transaksi', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating</p>', NULL, 'CCS_Customer_Care_System1.pdf', 'cukup', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
 (86, 'TIC2024040005', 20, 'Kredit - Agunan', 'Agunan', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating 2</p>', NULL, '17020182373761.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(91, 'TIC2024050006', 28, 'Kredit - Agunan', 'agunan ,admin', '2024-05-02', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating&nbsp;</p>', NULL, 'CCS_Customer_Care_System_(2).pdf', 'bagus', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL);
+(91, 'TIC2024050006', 28, 'Kredit - Agunan', 'agunan ,admin', '2024-05-02', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating&nbsp;</p>', NULL, 'CCS_Customer_Care_System_(2).pdf', 'cukup', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
