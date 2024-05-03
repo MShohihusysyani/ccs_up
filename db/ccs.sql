@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Apr 2024 pada 10.58
+-- Waktu pembuatan: 03 Bulan Mei 2024 pada 02.56
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -86,7 +86,8 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
-(3, 80, 4, '<p>body</p>');
+(6, 80, 4, '<p>Tes Komen</p>'),
+(7, 80, 4, '<p>Tes Komen 2</p>');
 
 -- --------------------------------------------------------
 
@@ -161,8 +162,7 @@ INSERT INTO `klien` (`id`, `no_urut`, `nama_klien`) VALUES
 (15, 9, 'PT BPR Mentari Terang'),
 (16, 10, 'PT BPR Sinar Garuda Prima'),
 (17, 11, 'PT BPR Wirosari Ijo'),
-(18, 12, 'PT BPR BKK Blora (Perseroda)'),
-(21, 13, 'PT BPR BKK PWT');
+(18, 12, 'PT BPR BKK Blora (Perseroda)');
 
 -- --------------------------------------------------------
 
@@ -198,11 +198,25 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`) VALUES
-(80, 'TIC2024040001', 20, 'Backdate - Backdate Transaksi ', 'tabungan,transaksi,Admin', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>coba tags</p>', 'kritikal', 'CCS_Customer_Care_System.pdf', '', 'PT BPR BKK Banjarharjo(Perseroda)', 'Ajeng', 'Implementator PT MSO', 'shohi', NULL, NULL),
-(81, 'TIC2024040002', 33, 'Kredit - Agunan', 'Tabungan,Transaksi,Data Tabungan', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>coba Tags</p>', 'material', 'CCS_Customer_Care_System.xlsx', '', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ayu', 'Implementator PT MSO', 'Rijal Amri', NULL, NULL),
-(82, 'TIC2024040003', 28, 'Kredit - Kolektibilitas', 'Kredit,nominatif', '2024-04-27', 'proses', 'ADDED', 'High', 7, '<p>coba Tags</p>', NULL, '1702018237376.png', '', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(85, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', 'Backdate,Transaksi', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating</p>', NULL, 'CCS_Customer_Care_System1.pdf', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(86, 'TIC2024040005', 20, 'Kredit - Agunan', 'Agunan', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating 2</p>', NULL, '17020182373761.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL);
+(80, 'TIC2024040001', 20, 'Backdate - Backdate Transaksi ', 'tabungan,transaksi,Admin', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>coba tags</p>', 'kritikal', 'CCS_Customer_Care_System.pdf', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Ajeng', 'Implementator PT MSO', 'shohi', NULL, NULL),
+(81, 'TIC2024040002', 33, 'Kredit - Agunan', 'Tabungan,Transaksi,Data Tabungan', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>coba Tags</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ayu', 'Implementator PT MSO', 'Rijal Amri', NULL, NULL),
+(82, 'TIC2024040003', 28, 'Kredit - Kolektibilitas', 'Kredit,nominatif', '2024-04-27', 'proses', 'ADDED', 'High', 7, '<p>coba Tags</p>', NULL, '1702018237376.png', 'bagus', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL),
+(85, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', 'Backdate,Transaksi', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating</p>', NULL, 'CCS_Customer_Care_System1.pdf', 'cukup', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
+(86, 'TIC2024040005', 20, 'Kredit - Agunan', 'Agunan', '2024-04-30', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating 2</p>', NULL, '17020182373761.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
+(91, 'TIC2024050006', 28, 'Kredit - Agunan', 'agunan ,admin', '2024-05-02', 'proses', 'ADDED', NULL, NULL, '<p>Tes Rating&nbsp;</p>', NULL, 'CCS_Customer_Care_System_(2).pdf', 'bagus', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `rating`
+--
+
+CREATE TABLE `rating` (
+  `id_rating` int(11) NOT NULL,
+  `pelaporan_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `rating _name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -305,6 +319,12 @@ ALTER TABLE `pelaporan`
   ADD PRIMARY KEY (`id_pelaporan`);
 
 --
+-- Indeks untuk tabel `rating`
+--
+ALTER TABLE `rating`
+  ADD PRIMARY KEY (`id_rating`);
+
+--
 -- Indeks untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
@@ -330,7 +350,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
@@ -354,13 +374,19 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+
+--
+-- AUTO_INCREMENT untuk tabel `rating`
+--
+ALTER TABLE `rating`
+  MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
