@@ -269,7 +269,7 @@
                         <label for="tags">Tags</label>
                             <div class="form-group demo-tagsinput-area">
                                 <div class="form-line">
-                                    <input value="" type="text"  class="form-control" data-role="tagsinput" name="tags" id="tags">
+                                    <input type="text" class="form-control" data-role="tagsinput" name="tags" id="tags" value="<?= $dp['tags'];?>">
                                 </div>
                             </div>
 
@@ -496,8 +496,7 @@
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
             modal.find('#kategori').attr("value", div.data('kategori'));
-            // modal.find('#tags').attr("value", div.data('tags'));
-            modal.find('#tags option:selected').text(div.data('tags'));
+            modal.find('#tags').attr("value", div.data('tags'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             // modal.find('#tags').value = div.data('tags');
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
