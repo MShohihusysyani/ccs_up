@@ -4,6 +4,9 @@
 <!-- Bootstrap Core Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap/js/bootstrap.js"></script>
 
+<!-- Bootstrap Tags Input Plugin Js -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
  <!-- Select Plugin Js -->
  <!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-select/js/bootstrap-select.js"></script> -->
 
@@ -52,8 +55,6 @@
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
-<!-- Bootstrap Tags Input Plugin Js -->
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
 <!-- SweetAlert Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/sweetalert/sweetalert.min.js"></script>

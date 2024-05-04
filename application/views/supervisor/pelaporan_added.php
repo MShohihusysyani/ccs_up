@@ -126,13 +126,6 @@
                                             </td>
                                             <td><?= $dp['status']; ?></td>
                                             <td>
-                                                <!-- <div class="btn btn-sm btn-warning">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"><i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
-                                                </div>
-                                            </div> -->
 
                                             <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
@@ -143,9 +136,10 @@
                                                         data-perihal="<?= $dp['perihal']; ?>"
                                                         data-status="<?= $dp['status']; ?>"
                                                         data-status_ccs="<?= $dp['status_ccs']; ?>"
-                                                        data-kategory="<?= $dp['kategori']; ?>"
+                                                        data-kategori="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
-                                                        data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
+                                                        data-maxday="<?= $dp['maxday']; ?>" 
+                                                        data-tags = "<?= $dp['tags'];?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Edit</span></a>
                                                 </div>
@@ -167,14 +161,6 @@
                                                         data-target="#forwardModal"> <i class="material-icons">forward</i> <span
                                                             class="icon-name">Forward</span></a>
                                                 </div>
-                                                
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a>
-                                                <br>
-                                                <br> -->
-                                            
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -230,13 +216,6 @@
                                 <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
                             </div>
                         </div>
-                        
-                        <label for="status">Status</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status" name="status" class="form-control" readonly>
-                            </div>
-                        </div>
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
@@ -286,6 +265,13 @@
                                 <input type="hidden" id="id" name="id">
                             </div>
                         </div>
+
+                        <label for="tags">Tags</label>
+                            <div class="form-group demo-tagsinput-area">
+                                <div class="form-line">
+                                    <input value="" type="text"  class="form-control" data-role="tagsinput" name="tags" id="tags">
+                                </div>
+                            </div>
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
@@ -467,7 +453,6 @@
 </script>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
-
 <script type="text/javascript">
     //Get references to the select and input elements
     const select = document.getElementById('priority');
@@ -494,6 +479,46 @@
     $(document).ready(function () {
 
         // Untuk sunting
+        $('#editModalCP').on('show.bs.modal', function (event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
+            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
+            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
+            modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#perihal').attr("value", div.data('perihal'));
+            modal.find('#status').attr("value", div.data('status'));
+            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
+            // modal.find('#priority').attr("value", div.data('priority'));
+            modal.find('#priority').value = div.data('priority');
+            // modal.find('#priority option:selected').text(div.data('priority'));
+            modal.find('#maxday').attr("value", div.data('maxday'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            // modal.find('#tags').attr("value", div.data('tags'));
+            modal.find('#tags option:selected').text(div.data('tags'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+            // modal.find('#tags').value = div.data('tags');
+            // modal.find('#bprnama').attr("value", div.data('bprnama'));
+            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
+            // modal.find('#judul').attr("value", div.data('judul'));
+            // modal.find('#headline').attr("value", div.data('headline'));
+            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
+            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
+            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
+            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
+            // modal.find('#linkberita').val(div.data('linkberita'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        // Untuk sunting
         $('#forwardModal').on('show.bs.modal', function (event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
             var modal = $(this)
@@ -513,45 +538,6 @@
             // modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#kategori').attr("value", div.data('kategori'));
-            modal.find('#namauser option:selected').text(div.data('nama'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-
-        });
-
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-
-        // Untuk sunting
-        $('#editModalCP').on('show.bs.modal', function (event) {
-            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
-            var modal = $(this)
-
-            // Isi nilai pada field
-            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
-            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
-            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
-            modal.find('#nama').attr("value", div.data('nama'));
-            modal.find('#perihal').attr("value", div.data('perihal'));
-            modal.find('#status').attr("value", div.data('status'));
-            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
-            // modal.find('#priority option:selected').text(div.data('priority'));
-            modal.find('#maxday').attr("value", div.data('maxday'));
-            modal.find('#kategori').attr("value", div.data('kategori'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));

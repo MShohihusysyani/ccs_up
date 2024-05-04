@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                        <label for="jenis_barang">Tags</label>
+                        <label for="tags">Tags</label>
                             <div class="form-group demo-tagsinput-area">
                                 <div class="form-line">
                                     <input type="text" class="form-control" data-role="tagsinput" value="" id="tags" name="tags">

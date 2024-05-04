@@ -396,6 +396,7 @@ class Supervisor extends CI_Controller
         $kategori     = $this->input->post('kategori');
         $priority     = $this->input->post('priority');
         $maxday       = $this->input->post('maxday');
+        $tags         = $this->input->post('tags');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
             'perihal'    => $perihal,
@@ -403,7 +404,8 @@ class Supervisor extends CI_Controller
             'status_ccs' => $status_ccs,
             'priority'   => $priority,
             'kategori'   => $kategori,
-            'maxday'     => $maxday
+            'maxday'     => $maxday,
+            'tags'       => $tags
 
         );
         $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
@@ -434,7 +436,7 @@ class Supervisor extends CI_Controller
             'nama'           => $nama,
             'perihal'        => $perihal,
             'status_ccs'     => $status_ccs,
-            'waktu_approve'  =>$waktu
+            'waktu_approve'  => $waktu
 
         );
         $this->pelaporan_model->approveSPV($id, $ArrUpdate);
