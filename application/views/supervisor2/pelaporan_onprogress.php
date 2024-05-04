@@ -491,7 +491,6 @@
     </div>
 </div>
 
-
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 <script type="text/javascript">
     //Get references to the select and input elements
