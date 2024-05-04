@@ -145,7 +145,7 @@
                                                         data-perihal="<?= $dp['perihal']; ?>"
                                                         data-status="<?= $dp['status']; ?>"
                                                         data-status_ccs="<?= $dp['status_ccs']; ?>"
-                                                        data-kategory="<?= $dp['kategori']; ?>"
+                                                        data-kategori="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">forward</i> <span
@@ -162,7 +162,7 @@
                                                         data-perihal="<?= $dp['perihal']; ?>"
                                                         data-status="<?= $dp['status']; ?>"
                                                         data-status_ccs="<?= $dp['status_ccs']; ?>"
-                                                        data-kategory="<?= $dp['kategori']; ?>"
+                                                        data-kategori="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModal"> <i class="material-icons">add</i> <span
@@ -325,7 +325,6 @@
 </div>
 
 <!-- tambah teknisi -->
-<!-- MODAL EDIT -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -366,12 +365,12 @@
                             </div>
                         </div>
                         
-                        <label for="status">Status</label>
+                        <!-- <label for="status">Status</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="status" name="status" class="form-control" readonly>
                             </div>
-                        </div>
+                        </div> -->
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
