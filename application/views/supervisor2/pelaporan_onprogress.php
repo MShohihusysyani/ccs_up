@@ -128,14 +128,6 @@
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
 
                                             <td>
-                                                <!-- <div class="btn btn-sm btn-warning">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"><i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
-                                                </div>
-                                            </div> -->
-
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
@@ -168,14 +160,6 @@
                                                         data-target="#editModal"> <i class="material-icons">add</i> <span
                                                             class="icon-name">Tambah Teknisi</span></a>
                                                 </div>
-
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a>
-
-                                                <br>
-                                                <br> -->
 
                                             </td>
                                         </tr>
@@ -329,7 +313,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Pilih Teknisi</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Tambah Teknisi</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor2/fungsi_edit2') ?>
@@ -364,13 +348,6 @@
                                 <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
                             </div>
                         </div>
-                        
-                        <!-- <label for="status">Status</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status" name="status" class="form-control" readonly>
-                            </div>
-                        </div> -->
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
@@ -379,7 +356,14 @@
                             </div>
                         </div>
 
+                        <label for="priority">Priority</label>
                         <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select id="priority" name="priority" class="form-control">
                                     <option value="">-- Please select Priority--</option>
@@ -388,7 +372,7 @@
                                     <option value="High">High</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <label for="maxday">Max Day</label>
                         <div class="form-group">
@@ -397,7 +381,14 @@
                             </div>
                         </div>
 
+                        <label for="kategori">Kategori</label>
                         <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select name="kategori" id="kategori" class="form-control">
                                     <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
@@ -409,7 +400,7 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <div class="form-line">
@@ -502,7 +493,6 @@
 
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
-
 <script type="text/javascript">
     //Get references to the select and input elements
     const select = document.getElementById('priority');
@@ -596,12 +586,12 @@
             modal.find('#perihal').attr("value", div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
+            modal.find('#priority').attr("value", div.data('priority'));
+            // modal.find('#priority').value = div.data('priority');
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
-            // modal.find('#kategori').attr("value", div.data('kategori'));
-            modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namahd option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
