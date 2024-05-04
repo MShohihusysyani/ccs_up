@@ -269,7 +269,7 @@
                         <label for="tags">Tags</label>
                             <div class="form-group demo-tagsinput-area">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" data-role="tagsinput" name="tags" id="tags" value="<?= $dp['tags'];?>">
+                                    <input type="text" class="form-control" data-role="tagsinput" id="tags" name="tags" value="<?= $dp['tags'];?>">
                                 </div>
                             </div>
 
