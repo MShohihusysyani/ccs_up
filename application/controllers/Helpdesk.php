@@ -123,8 +123,7 @@ class Helpdesk extends CI_Controller
 
         public function edit_pelaporan()
         {
-            
-    
+
             $id_pelaporan = $this->input->post('id_pelaporan');
             $no_tiket     = $this->input->post('no_tiket');
             $perihal      = $this->input->post('perihal');
@@ -132,7 +131,6 @@ class Helpdesk extends CI_Controller
             $status_ccs   = $this->input->post('status_ccs');
             $impact       = $this->input->post('impact');
 
-        
             $ArrUpdate = array(
                 'no_tiket'   => $no_tiket,
                 'perihal'    => $perihal,
