@@ -38,10 +38,9 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
+                                            <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <!-- <th>Status</th>
-                                            <th>Aksi</th> -->
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -55,10 +54,9 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
+                                            <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <!-- <th>Status</th>
-                                            <th>Aksi</th> -->
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -68,12 +66,6 @@
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
                                             <td><?= $no++?></td>
-                                            <!-- <td><a
-                                                href="<?= base_url() ?>admin/ruangan_isi/<?= $rgn['id_ruangan']; ?>"><?= $rgn['kode_bangunan']; ?>.<?= $rgn['kode_ruangan']; ?>'</a>
-                                            </td> -->
-                                            <!-- <td> <a
-                                                href="<?= base_url('supervisor/pilih_helpdesk/' . $dp['id']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
                                             <td><?= $dp['no_tiket'];?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama'];?></td>
@@ -96,6 +88,20 @@
 
                                                 <?php elseif ($dp['priority'] == 'High') : ?>
                                                     <span class="label label-danger">High</span>
+
+                                                <?php else : ?>
+
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($dp['maxday'] == '90') : ?>
+                                                    <span class="label label-info">90</span>
+
+                                                <?php elseif ($dp['maxday'] == '60') : ?>
+                                                    <span class="label label-warning">60</span>
+
+                                                <?php elseif ($dp['maxday'] == '7') : ?>
+                                                    <span class="label label-danger">7</span>
 
                                                 <?php else : ?>
 
@@ -126,8 +132,6 @@
                                             
                                             </td>
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
-                                            <!-- <td><?= $dp['status'];?></td> -->
-                                            
 <!--                                            
                                             <td>
                                             <div class="btn btn-sm btn-warning">
