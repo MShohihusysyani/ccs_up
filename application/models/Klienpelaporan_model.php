@@ -134,9 +134,20 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, keterangan  FROM pelaporan WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
+        FROM forward
+        LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
+        WHERE forward.user_id=$user_id AND  status_ccs='FINISH'";
         return $this->db->query($query)->result_array();
     }
+
+    // public function getDataPelaporanHD()
+    // {
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $user_id = $this->session->userdata('id_user');
+    //     $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, keterangan  FROM pelaporan WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC";
+    //     return $this->db->query($query)->result_array();
+    // }
 
     public function ambil_id_pelaporan($id)
     { 

@@ -48,7 +48,6 @@ class Supervisor_model extends CI_Model {
         $this->db->query($query);
     }
 
-
     public function updateReject($id_pelaporan, $nama_user){
 
         $query = "UPDATE pelaporan SET status_ccs='REJECT', status='Return To Helpdesk', handle_by = '$nama_user'  WHERE id_pelaporan=$id_pelaporan" ;
