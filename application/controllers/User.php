@@ -179,14 +179,14 @@ class User extends CI_Controller
      {
          $this->load->model('User_model', 'user_model');
          $data['user'] = $this->user_model->getUserDetail($id);
-         $nama         = $this->input->post('nama');
+         $nama         = $this->input->post('nama_user');
          $username     = $this->input->post('username');
  
-         $this->db->set('nama', $nama);
+         $this->db->set('nama_user', $nama);
          $this->db->set('username', $username);
          $this->db->where('id_user', $id);
          $this->db->update('user');
-         $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data User Edited!</div>');
+         $this->session->set_flashdata('pesan', 'Successfully Edit!');
          $referred_from = $this->session->userdata('referred_from');
          redirect($referred_from, 'refresh');
      }

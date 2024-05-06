@@ -1,7 +1,10 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row clearfix">
-            <?= $this->session->flashdata('message'); ?>
+        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
+        <?php if ($this->session->flashdata('pesan')) { ?>
+
+        <?php } ?>
             <div class="col-xs-12 col-sm-9">
                 <div class="card">
                     <div class="body">
