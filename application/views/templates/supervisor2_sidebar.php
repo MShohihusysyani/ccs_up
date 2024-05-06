@@ -261,7 +261,6 @@
                             <li>
                                 <a href="<?php echo base_url('supervisor2/finish') ?>">Finish</a>
                             </li>
-                             
                         </ul>
 
                     </li>
@@ -287,7 +286,6 @@
                             <li>
                                 <a href="<?php echo base_url('supervisor/rekapProgres') ?>">Rekap Progres</a>
                             </li>
-                             
                         </ul>
 
                     </li> -->
