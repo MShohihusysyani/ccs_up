@@ -157,8 +157,6 @@ class Supervisor2 extends CI_Controller
         $this->load->model('Category_model', 'category_model');
         $data['category'] = $this->category_model->getNamaKategori();
 
-        
-    
         $this->db->where('id_pelaporan');
         $this->db->update('pelaporan');
         Redirect(base_url('supervisor2/added'));
