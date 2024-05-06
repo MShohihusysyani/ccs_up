@@ -97,7 +97,6 @@ class Klien extends CI_Controller
         $data['category'] = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTemp1();
 
-
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
         $this->load->view('klien/pengajuan', $data);
