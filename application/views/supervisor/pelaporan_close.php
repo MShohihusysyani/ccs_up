@@ -66,7 +66,6 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-
                                     <?php
                                     $no = 1;
                                     foreach ($datapelaporan as $dp): ?>
