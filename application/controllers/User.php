@@ -157,7 +157,6 @@ class User extends CI_Controller
         $sql = "UPDATE user SET active='Y' WHERE id_user=$id";
         $this->db->query($sql);
         $this->session->set_flashdata('pesan', 'Success Active!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User Activated<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         $referred_from = $this->session->userdata('referred_from');
         redirect($referred_from, 'refresh');
     }
@@ -168,51 +167,47 @@ class User extends CI_Controller
         $sql = "UPDATE user SET active='N' WHERE id_user=$id";
         $this->db->query($sql);
         $this->session->set_flashdata('pesan', 'Success Inactive!');
-        
         $referred_from = $this->session->userdata('referred_from');
         redirect($referred_from, 'refresh');
     }
 
 
-     #EDIT PROFILE
-     public function fungsi_edit($id)
-     {
-         $this->load->model('User_model', 'user_model');
-         $data['user'] = $this->user_model->getUserDetail($id);
-         $nama         = $this->input->post('nama_user');
-         $username     = $this->input->post('username');
- 
-         $this->db->set('nama_user', $nama);
-         $this->db->set('username', $username);
-         $this->db->where('id_user', $id);
-         $this->db->update('user');
-         $this->session->set_flashdata('pesan', 'Successfully Edit!');
-         $referred_from = $this->session->userdata('referred_from');
-         redirect($referred_from, 'refresh');
-     }
+    #EDIT PROFILE
+    public function fungsi_edit($id)
+    {
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getUserDetail($id);
+        $nama         = $this->input->post('nama_user');
+        $username     = $this->input->post('username');
 
-    
+        $this->db->set('nama_user', $nama);
+        $this->db->set('username', $username);
+        $this->db->where('id_user', $id);
+        $this->db->update('user');
+        $this->session->set_flashdata('pesan', 'Successfully Edit!');
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
+    }
 
+    #EDIT PASSWORD
+    public function changepassword()
+    {
+        $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
-  #EDIT PASSWORD
-  public function changepassword()
-  {
-    $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
+        $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
+        $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
 
-    $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
-
-    if ($this->form_validation->run() == false) {
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('profile/changepassword', $data);
-        $this->load->view('templates/footer');
-    } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header');
+            $this->load->view('templates/supervisor_sidebar');
+            $this->load->view('profile/changepassword', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $current_passwordmd5 = $this->input->post('current_password');
+            $new_passwordmd5     = $this->input->post('new_password1');
+            $current_password    = MD5($current_passwordmd5);
+            $new_password        = MD5($new_passwordmd5);
         if ($current_password != $data['user']['password']) {
             $this->session->set_flashdata('alert', 'Wrong current password!');
             redirect('user/changepassword');
