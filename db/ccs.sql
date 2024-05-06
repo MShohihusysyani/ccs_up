@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Bulan Mei 2024 pada 04.38
+-- Waktu pembuatan: 06 Bulan Mei 2024 pada 10.55
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -81,13 +81,6 @@ CREATE TABLE `comment` (
   `body` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `comment`
---
-
-INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
-(10, 94, 30, '<p>TES</p>');
-
 -- --------------------------------------------------------
 
 --
@@ -126,9 +119,11 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
-(84, 94, 30, NULL),
-(85, 94, 39, NULL),
-(88, 94, 24, 'TES');
+(104, 94, 32, NULL),
+(105, 95, 31, NULL),
+(106, 95, 39, NULL),
+(107, 95, 24, NULL),
+(108, 95, 8, 'testing');
 
 -- --------------------------------------------------------
 
@@ -192,7 +187,8 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`) VALUES
-(94, 'TIC2024050001', 20, 'Backdate - Backdate Transaksi', 'Transaksi,Backdate,Admin,Tabungan', '2024-05-06', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Ina', 'Implementator PT MSO', NULL, NULL, NULL);
+(94, 'TIC2024050001', 20, 'Backdate - Backdate Transaksi', 'Transaksi,Backdate,Tabungan', '2024-05-06', 'Solved', 'FINISH', 'Low', 90, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Nita', NULL, NULL, NULL, '2024-05-06'),
+(95, 'TIC2024050002', 28, 'Tabungan - Transaksi Tabungan', 'Tabungan,Customer,Transaksi', '2024-05-06', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>testing</p>', 'material', 'Screenshot_2024-04-18_161803.png', NULL, 'PT BPR BKK Karangmalang(Perseroda)', 'Luthfi', 'Implementator PT MSO', 'Support PT MSO', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -351,7 +347,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -363,7 +359,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -375,7 +371,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
