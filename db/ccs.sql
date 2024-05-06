@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Bulan Mei 2024 pada 07.18
+-- Waktu pembuatan: 06 Bulan Mei 2024 pada 03.59
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -86,7 +86,7 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
-(7, 80, 4, '<p>Tes Komen 2</p>');
+(10, 94, 30, '<p>TES</p>');
 
 -- --------------------------------------------------------
 
@@ -126,12 +126,10 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
-(72, 80, 24, 'tags'),
-(73, 80, 45, 'task'),
-(76, 81, 24, 'coba task'),
-(77, 81, 42, 'coba task'),
-(78, 92, 30, NULL),
-(79, 92, 39, NULL);
+(84, 94, 30, NULL),
+(85, 94, 39, NULL),
+(87, 94, 8, 'TES'),
+(88, 94, 24, 'TES');
 
 -- --------------------------------------------------------
 
@@ -195,13 +193,7 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`) VALUES
-(80, 'TIC2024040001', 20, 'Backdate - Backdate Transaksi ', 'tabungan,transaksi,Admin', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>coba tags</p>', 'kritikal', 'CCS_Customer_Care_System.pdf', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Ajeng', 'Implementator PT MSO', 'shohi', NULL, NULL),
-(81, 'TIC2024040002', 33, 'Kredit - Agunan', 'Tabungan,Transaksi,Data Tabungan', '2024-04-27', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>coba Tags</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ayu', 'Implementator PT MSO', 'Rijal Amri', NULL, NULL),
-(82, 'TIC2024040003', 28, 'Kredit - PPAP Kredit', 'Kredit,PPAP', '2024-04-27', 'proses', 'ADDED', 'Medium', 60, '<p>coba Tags</p>', NULL, '1702018237376.png', 'bagus', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(85, 'TIC2024040004', 20, 'Backdate - Backdate Transaksi', 'Backdate,Transaksi', '2024-04-30', 'proses', 'ADDED', 'Medium', 60, '<p>Tes Rating</p>', NULL, 'CCS_Customer_Care_System1.pdf', 'cukup', 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(86, 'TIC2024040005', 20, 'Kredit - Agunan', 'Agunan', '2024-04-30', 'proses', 'ADDED', 'High', 7, '<p>Tes Rating 2</p>', NULL, '17020182373761.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(91, 'TIC2024050006', 28, 'Kredit - Agunan', 'Kredit,PPAP', '2024-05-02', 'proses', 'ADDED', 'Low', 90, '<p>Tes Rating </p>', NULL, 'CCS_Customer_Care_System_(2).pdf', 'cukup', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, NULL),
-(92, 'TIC2024050007', 33, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', 'agunan ,kredit', '2024-05-03', 'Forward To Supervisor 2', 'ADDED 2', 'Medium', 60, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System_(3).xlsx', NULL, 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ina', NULL, NULL, NULL, NULL);
+(94, 'TIC2024050001', 20, 'Backdate - Backdate Transaksi', 'Transaksi,Backdate,Admin,Tabungan', '2024-05-06', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Ina', 'Implementator PT MSO', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -348,7 +340,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
@@ -360,7 +352,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -372,7 +364,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -384,7 +376,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
