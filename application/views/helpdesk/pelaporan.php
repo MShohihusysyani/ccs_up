@@ -320,12 +320,12 @@
                             </div>
                         </div>
                         
-                        <label for="status">Status</label>
+                        <!-- <label for="status">Status</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="status" name="status" class="form-control" readonly>
                             </div>
-                        </div>
+                        </div> -->
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
