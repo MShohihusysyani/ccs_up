@@ -73,10 +73,6 @@
                                     foreach ($datapelaporan as $dp): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                        
-                                            <!-- <td> <a
-                                                href="<?= base_url('supervisor2/pilih_helpdesk/' . $dp['id_pelaporan']); ?>"><?= $dp['no_tiket']; ?></a>
-                                            </td> -->
                                             <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['nama']; ?></td>
@@ -213,13 +209,6 @@
                                 <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
                             </div>
                         </div>
-                        
-                        <!-- <label for="status">Status</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status" name="status" class="form-control" readonly>
-                            </div>
-                        </div> -->
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">

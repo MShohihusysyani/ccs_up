@@ -326,13 +326,6 @@
                                 <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
                             </div>
                         </div>
-                        
-                        <!-- <label for="status">Status</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status" name="status" class="form-control" readonly>
-                            </div>
-                        </div> -->
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
@@ -362,7 +355,6 @@
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
@@ -376,8 +368,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
+                            <button type="submit" class="btn btn-link waves-effect">FORWARD</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
                         </div>

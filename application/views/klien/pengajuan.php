@@ -162,11 +162,6 @@
         </div>
             <!-- #END# Data Pengajuan -->
         </div>
-
-
-        
-
-        
     </div>
     
 </section>

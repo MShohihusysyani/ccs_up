@@ -185,7 +185,7 @@
 
 </section>
 
-<!-- modal cari kategori -->
+<!-- modal cari klien -->
 <div class="modal fade" id="defaultModalNamaKlien" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

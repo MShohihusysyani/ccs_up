@@ -186,7 +186,7 @@
     <!-- Button trigger modal -->
 </section>
 
- <!-- MODAL EDIT -->
+ <!-- MODAL FINISH -->
  <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>
@@ -194,7 +194,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Finish</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">FINISH</h4>
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('implementator/finish') ?>
@@ -237,22 +237,30 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group form-float">
                             <div class="form-line">
-                                <select id="impact" name="impact" class="form-control">
-                                    <option value="">-- Choose Impact--</option>
-                                    <option value="kritikal">Kritikal</option>
-                                    <option value="material">Material</option>
-                                </select>
+                                <input value="<?= $dp['priority']; ?>" type="text" id="priority" name="priority" class="form-control" readonly>
+                                <label class="form-label">Priority</label>
                             </div>
-                        </div> -->
+                        </div>
 
-                        
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['maxday']; ?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                                <label class="form-label">Max Day</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['kategori']; ?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                                <label class="form-label">Kategori</label>
+                            </div>
+                        </div>
 
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
+                                <button type="submit" class="btn btn-link waves-effect">FORWARD</button>
                                 <button type="button" class="btn btn-link waves-effect"
                                     data-dismiss="modal">CLOSE</button>
                                 <?php echo form_close() ?>
@@ -364,8 +372,6 @@
                                 </select>
                             </div>
                         </div>
-                        
-                       
 
                         <!-- <label for="kategori">Helpdesk</label>
                         <div class="form-group">
@@ -388,8 +394,7 @@
                         </div> -->
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
+                            <button type="submit" class="btn btn-link waves-effect">FORWARD</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
                         </div>

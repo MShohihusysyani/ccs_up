@@ -118,8 +118,6 @@
                             </div>
                         </div>
 
-    
-                                
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-link waves-effect">SAVE
                                     CHANGES</button>
@@ -136,7 +134,6 @@
     <?php endforeach ?>
 
     <!-- MODAL ADD -->
-    <!-- MODAL ADD -->
 <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -148,21 +145,6 @@
                 <div class="body">
                     <?php echo form_open_multipart('supervisor/tambah_client') ?>
                     <form>
-
-                        <!-- <div class="form-group form-float">
-                            <div class="form-line">
-                                <input type="date" id="tanggal" name="tanggal" class="form-control">
-                                <label class="form-label"></label>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="form-group form-float">
-                            <div class="form-line">
-                                <input type="text" id="divisi" name="divisi" class="form-control">
-                                <label class="form-label">Divisi</label>
-                            </div>
-                        </div> -->
-
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input value="<?= noUrutClient(); ?>"  type="text" id="no_urut" name="no_urut" class="form-control">
@@ -176,20 +158,6 @@
                                 <label class="form-label">Nama Klien</label>
                             </div>
                         </div>
-
-                        <!-- <label for="nama">Foto</label>
-                        <div class="form-group">
-                            <label for="exampleInputFile"></label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="foto_nota" name="foto_nota"
-                                        required>
-                                    <label for="file" class="custom-file-label">Choose
-                                        file</label>
-                                </div>
-                            </div>
-                        </div> -->
-
 
                 </div>
 

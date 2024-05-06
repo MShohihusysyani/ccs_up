@@ -78,14 +78,6 @@
                                                         class="fa fa-trash"></span>
                                                     </a>
 
-                                            <!-- <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                                <p>A warning message, with a function attached to the <b>Confirm</b>
-                                                    button...</p>
-                                                <button class="btn btn-primary waves-effect" data-type="confirm">CLICK
-                                                    ME</button>
-                                            </div> -->
-
-
                                         </td>
 
                                     </tr>
@@ -121,7 +113,7 @@ $('#tombol-tambah').on('click', function(e) {
 })
 </script> -->
 
-    <!-- MODAL  edit -->
+    <!-- MODAL  EDIT -->
     <?php
     $no = 0;
     foreach ($user as $u) : $no++; ?>
@@ -140,7 +132,10 @@ $('#tombol-tambah').on('click', function(e) {
                                 <select  id="divisi" name="divisi" class="form-control show-tick">
                                         <option><?= $u['divisi']; ?></option>
                                         <option value="Klien">Klien</option>
-                                        <option value="Helpdesk">Helpdesk</option>
+                                        <option value="Helpdesk 1">Helpdesk 1</option>
+                                        <option value="Helpdesk 2">Helpdesk 2</option>
+                                        <option value="Helpdesk 3">Helpdesk 3</option>
+                                        <option value="Helpdesk 4">Helpdesk 4</option>
                                         <option value="Supervisor">Supervisor</option>
                                         <option value="Implementator">Implementator</option>
                                         <option value="Support">Support</option>
@@ -183,10 +178,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="6">6-Dbs</option>
                                         <option value="7">7-Crd</option>
                                         <option value="8">8-Development</option>
-                                        <option value="9">9-Helpdesk 2</option>
-                                        <option value="10">10-Helpdesk 3</option>
-                                        <option value="11">11-Helpdesk 4</option>
-                                        <option value="12">12-Supervisor 2</option>
+                                        <option value="9">9-Supervisor 2</option>
                                </select> 
                         </div>
 
@@ -226,13 +218,14 @@ $('#tombol-tambah').on('click', function(e) {
                     <?php echo form_open_multipart('supervisor/tambah_user') ?>
                     <form>
 
-                     
-
                         <div class="form-group form-float">
                                 <select id="divisi" name="divisi" class="form-control show-tick">
                                         <option value="">-- Please select Divisi--</option>
                                         <option value="Klien">Klien</option>
-                                        <option value="Helpdesk">Helpdesk</option>
+                                        <option value="Helpdesk 1">Helpdesk 1</option>
+                                        <option value="Helpdesk 2">Helpdesk 2</option>
+                                        <option value="Helpdesk 3">Helpdesk 3</option>
+                                        <option value="Helpdesk 4">Helpdesk 4</option>
                                         <option value="Supervisor">Supervisor</option>
                                         <option value="Implementator">Implementator</option>
                                         <option value="Support">Support</option>
@@ -289,7 +282,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="6">6-Dbs</option>
                                         <option value="7">7-Crd</option>
                                         <option value="8">8-Development</option>
-                                        <option value="9">12-Supervisor 2</option>
+                                        <option value="9">9-Supervisor 2</option>
                                 </select> 
                         </div>
 

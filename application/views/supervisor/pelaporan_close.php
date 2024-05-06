@@ -153,7 +153,7 @@
                                                         data-perihal="<?= $dp['perihal']; ?>"
                                                         data-status="<?= $dp['status']; ?>"
                                                         data-status_ccs="<?= $dp['status_ccs']; ?>"
-                                                        data-kategory="<?= $dp['kategori']; ?>"
+                                                        data-kategori="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">cancel</i> <span
@@ -182,7 +182,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Approve</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">APPROVE</h4>
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('supervisor/approve') ?>
@@ -220,21 +220,34 @@
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                <label class="form-label">Status</label>
+                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                                <label class="form-label">Status CCS</label>
                             </div>
                         </div>
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                <label class="form-label">Status CCS</label>
+                                <input value="<?= $dp['priority']; ?>" type="text" id="priority" name="priority" class="form-control" readonly>
+                                <label class="form-label">Priority</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['maxday']; ?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                                <label class="form-label">Max Day</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['kategori']; ?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                                <label class="form-label">Kategori</label>
                             </div>
                         </div>
                         
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
+                                <button type="submit" class="btn btn-link waves-effect">APPROVE</button>
                                 <button type="button" class="btn btn-link waves-effect"
                                     data-dismiss="modal">CLOSE</button>
                                 <?php echo form_close() ?>
@@ -252,7 +265,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Reject</h4>
+                <h4 class="modal-title" id="defaultModalLabel">REJECT</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor/fungsi_reject') ?>
@@ -288,12 +301,6 @@
                             </div>
                         </div>
                         
-                        <label for="status">Status</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status" name="status" class="form-control" readonly>
-                            </div>
-                        </div>
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
@@ -302,14 +309,10 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
                             <div class="form-line">
-                                <select id="priority" name="priority" class="form-control">
-                                    <option value="">-- Please select Priority--</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                </select>
+                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -320,19 +323,13 @@
                             </div>
                         </div>
 
+                        <label for="kategori">Kategori</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <select name="kategori" id="kategori" class="form-control">
-                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
-                                    <?php
-                                    foreach ($category as $cat): ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                    <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
                             </div>
-                        </div> -->
+                        </div>
+
 
                         <div class="form-group">
                             <div class="form-line">
@@ -346,29 +343,9 @@
                             </div>
                         </div>
                         
-                        <!-- <label for="kategori">Helpdesk</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
-                                    name="namahd" id="namahd" placeholder="Pilih Helpdesk"
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id" value="">
-                            </div>
-                        </div> -->
-                        
-                        <!-- <label for="kategori">Category</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
-                                    name="kategori" id="kategori" placeholder=""
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id">
-                            </div>
-                        </div> -->
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
+                            <button type="submit" class="btn btn-link waves-effect">REJECT</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
                         </div>
@@ -531,12 +508,12 @@
             modal.find('#perihal').attr("value", div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
+            modal.find('#priority').attr("value", div.data('priority'));
+            // modal.find('#priority').value = div.data('priority');
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
-            // modal.find('#kategori').attr("value", div.data('kategori'));
-            modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));

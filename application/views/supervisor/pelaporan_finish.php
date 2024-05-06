@@ -125,7 +125,7 @@
                                             
                                             </td>
                                             
-                                            <td><?= $dp['handle_by'];?> , <?=$dp['handle_by2'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?=$dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
                                             <td><?= tanggal_indo($dp['waktu_approve']);?></td>
                                         </tr>
                                         <?php endforeach; ?>

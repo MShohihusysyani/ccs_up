@@ -252,15 +252,13 @@
                             </div>
                         </div>
 
-                       
-
                         <div class="form-group form-float">
                                 <select id="priority" name="priority" class="form-control">
                                         <option value="">-- Please select Priority--</option>
                                         <option value="Low">Low</option>
                                         <option value="Medium">Medium</option>
                                         <option value="High">High</option>
-                               </select> 
+                                </select> 
                         </div>
 
                         <!-- <div class="form-group form-float">
