@@ -197,11 +197,9 @@ class Helpdesk extends CI_Controller
         //         'pelaporan_id' => $this->input->post('id_pelaporan'),
         //         'user_id' => $this->input->post('namaspv')
         //     ];
-       
         //     $this->db->insert('forward', $data);
         //     $this->session->set_flashdata('pesan', 'Success Forward!');
         //     Redirect(Base_url('helpdesk/pelaporan'));
         // }
 
-      
 }
