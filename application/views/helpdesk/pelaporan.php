@@ -145,7 +145,7 @@
                                                         data-perihal="<?= $dp['perihal']; ?>"
                                                         data-status="<?= $dp['status']; ?>"
                                                         data-status_ccs="<?= $dp['status_ccs']; ?>"
-                                                        data-kategory="<?= $dp['kategori']; ?>"
+                                                        data-kategori="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">forward</i> <span
@@ -245,24 +245,6 @@
                             </div>
                         </div>
 
-                        
-                        
-<!-- 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['handle_by']; ?>" type="text" id="handle_by" name="handle_by" class="form-control" >
-                                <label class="form-label">Handle By</label>
-                            </div>
-                        </div> -->
-<!-- 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control" >
-                                <label class="form-label">Keterangan</label>
-                            </div>
-                        </div> -->
-
-
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-link waves-effect">SAVE
                                     CHANGES</button>
@@ -319,13 +301,6 @@
                                 <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
                             </div>
                         </div>
-                        
-                        <!-- <label for="status">Status</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status" name="status" class="form-control" readonly>
-                            </div>
-                        </div> -->
 
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
@@ -334,37 +309,26 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
                             <div class="form-line">
-                                <select id="priority" name="priority" class="form-control">
-                                    <option value="">-- Please select Priority--</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                </select>
+                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
                             </div>
-                        </div> -->
+                        </div>
 
-                        <!-- <label for="maxday">Max Day</label>
+                        <label for="maxday">Max Day</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
                             </div>
-                        </div> -->
+                        </div>
 
-                        <!-- <div class="form-group">
+                        <label for="kategori">Kategori</label>
+                        <div class="form-group">
                             <div class="form-line">
-                                <select name="kategori" id="kategori" class="form-control">
-                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
-                                    <?php
-                                    foreach ($category as $cat): ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                    <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="form-group">
                             <div class="form-line">
@@ -378,29 +342,8 @@
                             </div>
                         </div>
 
-                        <!-- <label for="kategori">Helpdesk</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaDivisi"
-                                    name="namahd" id="namahd" placeholder="Pilih Helpdesk"
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id" value="">
-                            </div>
-                        </div> -->
-                        
-                        <!-- <label for="kategori">Category</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
-                                    name="kategori" id="kategori" placeholder=""
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id">
-                            </div>
-                        </div> -->
-
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
+                            <button type="submit" class="btn btn-link waves-effect">FORWARD</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
                         </div>
@@ -420,7 +363,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Finish</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">FINISH CCS</h4>
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('helpdesk/finish') ?>
@@ -463,19 +406,29 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group form-float">
                             <div class="form-line">
-                                <select id="impact" name="impact" class="form-control">
-                                    <option value="">-- Choose Impact--</option>
-                                    <option value="kritikal">Kritikal</option>
-                                    <option value="material">Material</option>
-                                </select>
+                                <input value="<?= $dp['priority'];?>" type="text" id="priority" name="priority" class="form-control" readonly>
+                                <label class="form-label">Priority</label>
                             </div>
-                        </div> -->
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['maxday'];?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                                <label class="form-label">Max Day</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['kategori'];?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                                <label class="form-label">Kategori</label>
+                            </div>
+                        </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
+                                <button type="submit" class="btn btn-link waves-effect">FINISH</button>
                                 <button type="button" class="btn btn-link waves-effect"
                                     data-dismiss="modal">CLOSE</button>
                                 <?php echo form_close() ?>
@@ -488,51 +441,7 @@
     </div>
     <?php endforeach ?>
 
-<!-- modal cari kategori -->
-<div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Cari Kategori</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Kategori</th>
-                            <th class="hide">ID</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($category as $cat): ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
-                                <td><?= $cat['nama_kategori']; ?></td>
-                                <td class="hide"><?= $cat['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilihKategori"
-                                        data-nama-kategori="<?= $cat['nama_kategori']; ?>"
-                                        data-id-kategori="<?= $cat['id']; ?>">
-                                        Pilih</button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                    <?php echo form_close() ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
@@ -559,25 +468,11 @@
     });
 </script>
 
-
-
-
-
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '#pilihKategori', function () {
-            var nama_klas = $(this).data('nama-kategori');
-            var id = $(this).data('id-kategori');
-            $('#kategori').val(nama_klas);
-            $('#id').val(id);
-            $('#modalPilihKategori').modal('hide');
-        })
-    });
-</script>
+
 <script>
     $(document).ready(function () {
 
@@ -594,12 +489,12 @@
             modal.find('#perihal').attr("value", div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
+            modal.find('#priority').attr("value", div.data('priority'));
+            // modal.find('#priority').value = div.data('priority');
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
-            // modal.find('#kategori').attr("value", div.data('kategori'));
-            modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
@@ -615,16 +510,4 @@
         });
 
     });
-</script>
-
-<script>
-$(document).ready(function() {
-    $(document).on('click', '#pilih3', function() {
-        var nama_klas = $(this).data('nama-divisi');
-        var id = $(this).data('id-divisi');
-        $('#namahd').val(nama_klas);
-        $('#id').val(id);
-        $('#defaultModalNamaDivisi').modal('hide');
-    })
-});
 </script>

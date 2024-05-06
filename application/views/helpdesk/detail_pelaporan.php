@@ -125,7 +125,6 @@
     </div>
 </section>
 
-
 <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ) )

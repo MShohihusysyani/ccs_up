@@ -223,24 +223,6 @@
                             </div>
                         </div>
 
-                        
-                        
-<!-- 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['handle_by']; ?>" type="text" id="handle_by" name="handle_by" class="form-control" >
-                                <label class="form-label">Handle By</label>
-                            </div>
-                        </div> -->
-<!-- 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['keterangan']; ?>" type="text" id="keterangan" name="keterangan" class="form-control" >
-                                <label class="form-label">Keterangan</label>
-                            </div>
-                        </div> -->
-
-
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-link waves-effect">SAVE
                                     CHANGES</button>
@@ -329,10 +311,6 @@
 
     });
 </script>
-
-
-
-
 
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

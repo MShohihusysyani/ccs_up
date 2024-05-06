@@ -101,6 +101,9 @@ class Helpdesk extends CI_Controller
         $perihal         = $this->input->post('perihal');
         $status          = 'Solved';
         $status_ccs      = 'CLOSE';
+        $priority        = $this->input->post('priority');
+        $maxday          = $this->input->post('maxday');
+        $kategori        = $this->input->post('kategori');
         $ArrUpdate       = array(
    
             'no_tiket'        => $no_tiket,
@@ -108,7 +111,10 @@ class Helpdesk extends CI_Controller
             'nama'            => $nama,
             'perihal'         => $perihal,
             'status'          => $status,
-            'status_ccs'      => $status_ccs
+            'status_ccs'      => $status_ccs,
+            'priority'        => $priority,
+            'maxday'          => $maxday,
+            'kategori'        => $kategori
         );
         $this->pelaporan_model->updateHD($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Finish!');
