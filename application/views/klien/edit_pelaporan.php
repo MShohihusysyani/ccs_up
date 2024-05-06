@@ -55,20 +55,36 @@
                                     value="<?= $dp['perihal']; ?>" readonly>
                             </div>
                         </div>
-                        
-                        <label for="status">Status </label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" id="status" name="status" class="form-control"
-                                    value="<?= $dp['status']; ?>" readonly>
-                            </div>
-                        </div>
 
                         <label for="status_ccs ">Status CCS </label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="status_ccs" name="status_ccs" class="form-control"
                                     value="<?= $dp['status_ccs']; ?>" readonly>
+                            </div>
+                        </div>
+
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="priority" name="priority" class="form-control"
+                                    value="<?= $dp['priority']; ?>" readonly>
+                            </div>
+                        </div>
+
+                        <label for="maxday">Max Day</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="maxday" name="maxday" class="form-control"
+                                    value="<?= $dp['maxday']; ?>" readonly>
+                            </div>
+                        </div>
+
+                        <label for="kategori">Kategori</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="kategori" name="kategori" class="form-control"
+                                    value="<?= $dp['kategori']; ?>" readonly>
                             </div>
                         </div>
 
@@ -107,20 +123,6 @@
                             </div>
                         </div>
 
-
-                        <!-- <div class="form-group">
-                            <div class="form-line">
-                                <select name="kategori" id="kategori" class="form-control">
-                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
-                                    <?php
-                                    foreach ($category as $cat): ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                    <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div> -->
                         <a href="<?= base_url('klien/datapelaporan') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">Kembali</a>
                             

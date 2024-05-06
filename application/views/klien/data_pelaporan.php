@@ -201,5 +201,5 @@
             $('.stars span').addClass('active');
             alert($(this).text());
         });
-    </script> -->
+</script> -->
 
