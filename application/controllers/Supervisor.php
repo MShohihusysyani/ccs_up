@@ -523,7 +523,6 @@ class Supervisor extends CI_Controller
 
 
         // REKAP HANDLE BY HELPDESK
-        
         public function rekapHelpdesk()
         {
             $this->load->model('Pelaporan_model', 'pelaporan_model');

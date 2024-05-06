@@ -9,12 +9,10 @@ class Klien extends CI_Controller
         is_logged_in();
         
         $this->load->model('klienpelaporan_model');
-       
     }
 
     public function index()
     {
-      
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
         $this->load->view('klien/dashboard');
