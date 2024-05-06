@@ -128,7 +128,7 @@
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
 
                                             <td>
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -144,7 +144,7 @@
                                                             class="icon-name">Forward</span></a>
                                                 </div>
                                                     <br>
-                                                    <br>
+                                                    <br> -->
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-info">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
@@ -308,7 +308,7 @@
     </div>
 </div>
 
-<!-- tambah teknisi -->
+<!-- TAMBAH TEKNISI -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -316,7 +316,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">Tambah Teknisi</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor2/fungsi_edit2') ?>
+                <?= form_open_multipart('supervisor2/fungsi_tambah') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">

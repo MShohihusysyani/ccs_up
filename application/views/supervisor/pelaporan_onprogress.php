@@ -139,7 +139,7 @@
 
                                             </td>
                                             <td><?= $dp['status']; ?></td>
-                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
 
                                             <td>
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>

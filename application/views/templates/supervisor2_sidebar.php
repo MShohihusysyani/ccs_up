@@ -206,7 +206,7 @@
                 <ul class="list">
                     <li class="header">MAIN MENU</li>
                     <li class="active">
-                        <a href="<?php echo base_url('supervisor') ?>">
+                        <a href="<?php echo base_url('supervisor2') ?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>

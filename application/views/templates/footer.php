@@ -25,10 +25,8 @@
 <!-- Waves Effect Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/node-waves/waves.js"></script>
 
-
 <!-- Jquery CountTo Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-countto/jquery.countTo.js"></script>
-
 
 <!-- Morris Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/raphael/raphael.min.js"></script>

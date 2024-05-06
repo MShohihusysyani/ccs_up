@@ -219,7 +219,7 @@ class Supervisor2 extends CI_Controller
     }
 
     //TAMBAH TEKNISI
-    public function fungsi_edit2()
+    public function fungsi_tambah()
     {
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
         $this->form_validation->set_rules('namahd','Helpdesk', 'required');
