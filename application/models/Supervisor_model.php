@@ -44,7 +44,7 @@ class Supervisor_model extends CI_Model {
         $user_id = $this->session->userdata('id_user');
 
         $query = "DELETE FROM forward where user_id = $user_id";
-        // $query2 = "DELETE FROM barang_temp where user_id = $user_id";
+        //$query2 = "DELETE FROM barang_temp where user_id = $user_id";
         $this->db->query($query);
     }
 
