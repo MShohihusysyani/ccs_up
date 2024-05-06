@@ -98,8 +98,6 @@ class Auth extends CI_Controller
                 $this->session->set_flashdata('alert', 'Incorrect Username or Password!');
                 redirect('auth');
             }
-          
-
         }
     }
 
@@ -120,7 +118,6 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role');
         $this->session->set_flashdata('pesan', 'Successfully Logout!');
-        // $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been logout!</div>');
         redirect('auth');
     }
 
@@ -169,7 +166,6 @@ class Auth extends CI_Controller
             $this->db->update('user');
 
             $this->session->unset_userdata('reset_email');
-
             $this->session->set_flashdata('pesan', '<div class=" swal-log" data-swal-log="<?= session()->get("pesan");"></div>');
             redirect('auth');
         }
