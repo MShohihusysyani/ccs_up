@@ -155,12 +155,12 @@
                                                 <br>
 
                                                 <div class="btn btn-sm btn-info">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
+                                                    <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">done</i> <span
                                                         class="icon-name">Finish</span>
+                                                    </div>
                                                 </div>
-                                            </div>
 
                                                 <!-- <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
@@ -412,7 +412,7 @@
     </div>
 </div>
 
-<!-- MODAL EDIT -->
+<!-- MODAL FINISH -->
 <?php
     $no = 0;
     foreach ($datapelaporan as $dp) : $no++; ?>

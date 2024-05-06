@@ -122,16 +122,6 @@
                                             </td>
                                             <td><?= $dp['handle_by'];?></td>
                                             <td>
-                                                
-                                            <div class="btn btn-sm btn-info">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <br>
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
@@ -147,6 +137,15 @@
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                             class="icon-name">Forward</span></a>
+                                                </div>
+                                                    <br>
+                                                    <br>
+                                                <div class="btn btn-sm btn-info">
+                                                    <div class="demo-google-material-icon" data-toggle="modal"
+                                                    data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i
+                                                        class="material-icons">done</i> <span
+                                                        class="icon-name">Finish</span>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -372,6 +371,82 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL FINISH -->
+<?php
+    $no = 0;
+    foreach ($datapelaporan as $dp) : $no++; ?>
+    <div class="modal fade" id="finishModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Finish</h4>
+                </div>
+                <div class="modal-body">
+                    <?= form_open_multipart('helpdesk/finish') ?>
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
+                    <div class="body">
+                        <form class="form-horizontal">
+                        
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                                <label class="form-label">No tiket</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                                <label class="form-label">Waktu Pelaporan</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
+                                <label class="form-label">Nama Klien</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                                <label class="form-label">Perihal</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                                <label class="form-label">Status CCS</label>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <div class="form-line">
+                                <select id="impact" name="impact" class="form-control">
+                                    <option value="">-- Choose Impact--</option>
+                                    <option value="kritikal">Kritikal</option>
+                                    <option value="material">Material</option>
+                                </select>
+                            </div>
+                        </div> -->
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-link waves-effect">SAVE
+                                    CHANGES</button>
+                                <button type="button" class="btn btn-link waves-effect"
+                                    data-dismiss="modal">CLOSE</button>
+                                <?php echo form_close() ?>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach ?>
 
 <!-- modal cari kategori -->
 <div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
