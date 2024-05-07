@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Bulan Mei 2024 pada 11.16
+-- Waktu pembuatan: 07 Bulan Mei 2024 pada 06.08
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -119,11 +119,9 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
-(104, 94, 32, NULL),
-(105, 95, 31, NULL),
-(106, 95, 39, NULL),
-(107, 95, 24, NULL),
-(108, 95, 8, 'testing');
+(110, 95, 31, NULL),
+(111, 96, 30, NULL),
+(112, 94, 32, NULL);
 
 -- --------------------------------------------------------
 
@@ -187,8 +185,9 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`) VALUES
-(94, 'TIC2024050001', 20, 'Backdate - Backdate Transaksi', 'Transaksi,Backdate,Tabungan', '2024-05-06', 'Solved', 'FINISH', 'Low', 90, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Nita', NULL, NULL, NULL, '2024-05-06'),
-(95, 'TIC2024050002', 28, 'Tabungan - Transaksi Tabungan', 'Tabungan,Customer,Transaksi', '2024-05-06', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>testing</p>', 'material', 'Screenshot_2024-04-18_161803.png', NULL, 'PT BPR BKK Karangmalang(Perseroda)', 'Luthfi', 'Implementator PT MSO', 'Support PT MSO', NULL, NULL);
+(94, 'TIC2024050001', 20, 'Backdate - Backdate Transaksi', 'Transaksi,Backdate,Tabungan', '2024-05-06', 'Solved', 'FINISH', 'Low', 90, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Nita', NULL, NULL, NULL, '2024-05-07'),
+(95, 'TIC2024050002', 28, 'Tabungan - Transaksi Tabungan', 'Tabungan,Customer,Transaksi', '2024-05-06', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>testing</p>', 'material', 'Screenshot_2024-04-18_161803.png', NULL, 'PT BPR BKK Karangmalang(Perseroda)', 'Luthfi', 'Implementator PT MSO', 'Support PT MSO', NULL, NULL),
+(96, 'TIC2024050003', 33, 'Kredit - PPAP Kredit', 'Kredit,PPAP', '2024-05-07', 'Solved', 'FINISH', 'High', 7, '<p>Tes</p>', 'kritikal', 'CCS_Customer_Care_System.pdf', NULL, 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ina', 'Implementator PT MSO', NULL, NULL, '2024-05-07');
 
 -- --------------------------------------------------------
 
@@ -202,6 +201,67 @@ CREATE TABLE `rating` (
   `user_id` int(11) DEFAULT NULL,
   `rating _name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `s_forward`
+--
+
+CREATE TABLE `s_forward` (
+  `id_forward` int(11) NOT NULL,
+  `pelaporan_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `s_forward`
+--
+
+INSERT INTO `s_forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
+(1, 95, 39),
+(2, 96, 39);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `t1_forward`
+--
+
+CREATE TABLE `t1_forward` (
+  `id_forward` int(11) NOT NULL,
+  `pelaporan_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `subtask` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `t1_forward`
+--
+
+INSERT INTO `t1_forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
+(1, 95, 24, 'Tes'),
+(2, 96, 24, '');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `t2_forward`
+--
+
+CREATE TABLE `t2_forward` (
+  `id_forward` int(11) NOT NULL,
+  `pelaporan_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `subtask` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `t2_forward`
+--
+
+INSERT INTO `t2_forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
+(1, 95, 8, 'testing');
 
 -- --------------------------------------------------------
 
@@ -310,6 +370,24 @@ ALTER TABLE `rating`
   ADD PRIMARY KEY (`id_rating`);
 
 --
+-- Indeks untuk tabel `s_forward`
+--
+ALTER TABLE `s_forward`
+  ADD PRIMARY KEY (`id_forward`);
+
+--
+-- Indeks untuk tabel `t1_forward`
+--
+ALTER TABLE `t1_forward`
+  ADD PRIMARY KEY (`id_forward`);
+
+--
+-- Indeks untuk tabel `t2_forward`
+--
+ALTER TABLE `t2_forward`
+  ADD PRIMARY KEY (`id_forward`);
+
+--
 -- Indeks untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
@@ -347,7 +425,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -359,7 +437,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -368,10 +446,28 @@ ALTER TABLE `rating`
   MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `s_forward`
+--
+ALTER TABLE `s_forward`
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `t1_forward`
+--
+ALTER TABLE `t1_forward`
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `t2_forward`
+--
+ALTER TABLE `t2_forward`
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
