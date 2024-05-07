@@ -136,6 +136,14 @@
                                             <td><?= $dp['subtask'];?></td>
 
                                             <td>
+
+                                            <a class="btn btn-xs btn-info"
+                                                href="<?= base_url() ?>implementator/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>
+                                                Detail</a>
+                                            <br>
+                                            <br>
                                                 
                                             <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
