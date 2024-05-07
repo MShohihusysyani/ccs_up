@@ -204,11 +204,13 @@ class User extends CI_Controller
             $this->load->view('profile/changepassword', $data);
             $this->load->view('templates/footer');
         } else {
-            $current_passwordmd5 = $this->input->post('current_password');
-            $new_passwordmd5     = $this->input->post('new_password1');
-            $current_password    = MD5($current_passwordmd5);
-            $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
+            $current_passwordhash = password_hash($this->input->post('current_password'), PASSWORD_DEFAULT);
+            $new_passwordhash     = password_hash($this->input->post('new_password1'), PASSWORD_DEFAULT);
+            // $current_password     = MD5($current_passwordhash);
+            // $new_password         = MD5($new_passwordhash);
+            $current_password    = password_verify(($current_passwordhash), PASSWORD_DEFAULT);
+            $new_password        = password_verify(($new_passwordhash), PASSWORD_DEFAULT);
+        if (password_verify($current_password, PASSWORD_DEFAULT) != $data['user']['password']) {
             $this->session->set_flashdata('alert', 'Wrong current password!');
             redirect('user/changepassword');
 
@@ -217,10 +219,9 @@ class User extends CI_Controller
             redirect('user/changepassword');
             
         } else {
-            $this->db->set('password', $new_password);
+            $this->db->set('password', password_hash($new_password), PASSWORD_DEFAULT);
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $this->db->update('user');
-
 
             $this->session->set_flashdata('pesan', 'Password Changed!');
             redirect('user/changepassword');

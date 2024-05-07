@@ -156,7 +156,8 @@ class Supervisor extends CI_Controller
         $this->form_validation->set_rules('no_urut', 'No Urut', 'required');
         $this->form_validation->set_rules('nama_klien', 'Kategory', 'required');
 
-        $password = md5($this->input->post('password'));
+        // $password = md5($this->input->post('password'));
+        $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
         $data = [
             'divisi'   => $this->input->post('divisi'),
             'nama_user'     => $this->input->post('nama_user'),

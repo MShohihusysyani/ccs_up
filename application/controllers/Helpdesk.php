@@ -167,7 +167,7 @@ class Helpdesk extends CI_Controller
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
             $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-            // $data['datacomment']   = $this->klienpelaporan_model->ambil_id_comment($id);
+            $data['datacomment']   = $this->klienpelaporan_model->ambil_id_comment($id);
             $this->load->view('templates/header');
             $this->load->view('templates/helpdesk_sidebar');
             $this->load->view('helpdesk/detail_pelaporan', $data);
@@ -180,7 +180,7 @@ class Helpdesk extends CI_Controller
             $this->form_validation->set_rules('user_id','Helpdesk', 'required');
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('user_id');
-            $body = $this->input->post('body');
+            $body = htmlspecialchars($this->input->post('body'));
             $data = [
                 'pelaporan_id' => $id_pelaporan,
                 'user_id' => $id_user,
@@ -189,7 +189,7 @@ class Helpdesk extends CI_Controller
 
             $this->db->insert('comment', $data);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
-            Redirect(Base_url('helpdesk/detail_pelaporan'));
+            Redirect(Base_url('helpdesk/detail_pelaporan/'.$id_pelaporan));
         }
 
         

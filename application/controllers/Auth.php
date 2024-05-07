@@ -29,10 +29,15 @@ class Auth extends CI_Controller
             $this->load->view('templates/auth_footer');
         } else {
             $username = $this->input->post('username');
-            $password = $this->input->post('password');
+            // $password = $this->input->post('password');
+            $password = password_verify($this->input->post('password'), PASSWORD_DEFAULT);
 
             $user = $username;
-            $pass = MD5($password);
+            $pass = password_verify(($password), PASSWORD_DEFAULT);
+
+            // $user = $username;
+            // $pass = MD5($password);
+            
 
             $cek = $this->login_model->cek_login($user, $pass);
 

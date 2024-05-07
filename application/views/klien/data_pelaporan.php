@@ -119,10 +119,16 @@
                                             </td>
                                         <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?> -->
                                         <td>
-                                        <a class="btn btn-xs btn-info"
+                                        <!-- <a class="btn btn-xs btn-info"
                                                 href="<?= base_url() ?>klien/edit_pelaporan/<?= $divp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span
-                                                    class="icon-name"></span>Detail</a>
+                                                    class="icon-name"></span>Detail</a> -->
+
+                                        <a class="btn btn-xs btn-info"
+                                                href="<?= base_url() ?>klien/detail_pelaporan/<?= $divp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>
+                                                Detail</a>
                                         </td>
                                         <td>
                                             <div id="ratingForm">

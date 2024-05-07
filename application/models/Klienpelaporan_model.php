@@ -130,10 +130,17 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function ambil_id_comment($id)
-    { 
-        $query = "SELECT  id_comment, user_id, pelaporan_id, body  FROM comment WHERE id_comment='$id'";
-        return $this->db->query($query)->result_array();
+    // public function ambil_id_comment($id)
+    // { 
+    //     $query = "SELECT  id_comment, user_id, pelaporan_id, body  FROM comment WHERE id_comment='$id'";
+    //     return $this->db->query($query)->result_array();
+    // }
+
+    public function ambil_id_comment($id){
+        $this->db->select('*');
+        $this->db->from('comment');
+        $this->db->where('pelaporan_id', $id);
+        return $this->db->get()->result();
     }
 
 

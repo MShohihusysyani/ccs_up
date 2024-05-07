@@ -17,7 +17,7 @@
                         Comment</h2>
                 </div>
                 <div class="body">
-                    <?php echo form_open_multipart('helpdesk/add_comment') ?>
+                    <?php echo form_open_multipart('klien/add_comment') ?>
                     <form>
                         <?php foreach ($datapelaporan as $dp) : ?>
                         <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control" value="<?= $dp['id_pelaporan']; ?>">

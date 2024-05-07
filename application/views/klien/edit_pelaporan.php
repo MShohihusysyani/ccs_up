@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Edit CCS </h2>
+                        Detail Pelaporan </h2>
                 </div>
                 <div class="body">
                     <?php echo form_open_multipart('klien/fungsi_edit_pelaporan') ?>
@@ -110,7 +110,7 @@
                             <div class="form-line">
                                 <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="500"
                                     height="500" class="img-thumbnail">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="exampleInputFile"></label>
                                     <div class="input-group">
                                         <div class="custom-file">
@@ -119,9 +119,15 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
+
+                        <label for="comment">Comment</label>
+                        <textarea id="editor" class="form-control" name="body" id="body">
+                                
+                        </textarea>
+                        <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
 
                         <a href="<?= base_url('klien/datapelaporan') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">Kembali</a>
@@ -134,5 +140,26 @@
                 </div>
             </div>
         </div>
+        <!-- comment -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        Komentar</h2>
+                </div>
+                <?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
+                <div class="body">
+                    <form>
+                        <textarea  class="form-control" >
+                            <?= $dc->body?>
+                        </textarea>
+                        <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button> -->
+                        
+                    </form>
+                </div>
+                <?php } } ?>
+            </div>
+        </div>
+        <!-- END cOMMENT -->
     </div>
 </section>

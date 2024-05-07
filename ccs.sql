@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Bulan Mei 2024 pada 10.10
+-- Waktu pembuatan: 07 Bulan Mei 2024 pada 06.08
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -114,6 +114,15 @@ CREATE TABLE `forward` (
   `subtask` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `forward`
+--
+
+INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
+(110, 95, 31, NULL),
+(111, 96, 30, NULL),
+(112, 94, 32, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -170,6 +179,15 @@ CREATE TABLE `pelaporan` (
   `keterangan` varchar(255) DEFAULT NULL,
   `waktu_approve` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `pelaporan`
+--
+
+INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`) VALUES
+(94, 'TIC2024050001', 20, 'Backdate - Backdate Transaksi', 'Transaksi,Backdate,Tabungan', '2024-05-06', 'Solved', 'FINISH', 'Low', 90, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Nita', NULL, NULL, NULL, '2024-05-07'),
+(95, 'TIC2024050002', 28, 'Tabungan - Transaksi Tabungan', 'Tabungan,Customer,Transaksi', '2024-05-06', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, '<p>testing</p>', 'material', 'Screenshot_2024-04-18_161803.png', NULL, 'PT BPR BKK Karangmalang(Perseroda)', 'Luthfi', 'Implementator PT MSO', 'Support PT MSO', NULL, NULL),
+(96, 'TIC2024050003', 33, 'Kredit - PPAP Kredit', 'Kredit,PPAP', '2024-05-07', 'Solved', 'FINISH', 'High', 7, '<p>Tes</p>', 'kritikal', 'CCS_Customer_Care_System.pdf', NULL, 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ina', 'Implementator PT MSO', NULL, NULL, '2024-05-07');
 
 -- --------------------------------------------------------
 
@@ -283,17 +301,27 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `role`, `active`) VALUES
-(47, 'Supervisor 2', 'Supervisor 2', 'spv2', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y'),
-(48, 'Helpdesk 1', 'Ajeng', 'ajeng', '$2y$10$yMDEbxjjlh4oNXdZJw1om.SmuYMqFSzqLe3vycjiXnVFnZVXh7Fli', 2, 'Y'),
-(49, 'Helpdesk 1', 'Novi', 'novi', '$2y$10$61Gvfbmfq/xELLugqweR3.ITjxqoazOT478NP8hl9ND44iSRndaWO', 2, 'Y'),
-(50, 'Helpdesk 2', 'Ayu', 'ayu', '$2y$10$CBazdGZC3pDGBYv0WVS6WuqgRQW2SNVhGotgSoR09dL3CpXRLn4Tq', 2, 'Y'),
-(51, 'Helpdesk 2', 'Chintya', 'chintya', '$2y$10$dfuc4GUWd8UHDVpKSDO2z.9G./SV5svEYIThkIB6.ZCFvWnjz6zkC', 2, 'Y'),
-(52, 'Helpdesk 3', 'Eva', 'eva', '$2y$10$R8oQzXHI8pnwusrmXCTX3e9FWIjfvqgXFekk1yqJNhXIAkFDTY.n.', 2, 'Y'),
-(53, 'Helpdesk 3', 'Ina', 'ina', '$2y$10$FZNnbtkfhSp9udiGEEOuOOjFMG3XX38k2U1XXjdvwtgGu52oViYae', 2, 'Y'),
-(54, 'Helpdesk 4', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y'),
-(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y'),
-(56, 'Helpdesk 4', 'Khabibah', 'Khabibah', '$2y$10$kMOcFV1oh9PL5kGxkARcW.0q6iPYOTTe/M4OjztfR2dRory9yTwRa', 2, 'Y'),
-(57, 'Supervisor', 'Supervisor ', 'supervisor', '$2y$10$3DEhLQ855QS0gvAMQlSbC.uI1Fz..6KGobTwMfim6goDVQFoKiGuO', 3, 'Y');
+(3, 'Supervisor', 'Supervisor PT MSO Purwokerto', 'supervisor', '5f4dcc3b5aa765d61d8327deb882cf99', 3, 'Y'),
+(4, 'Helpdesk 1', 'Ajeng', 'ajeng', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(8, 'Support', 'Support PT MSO', 'support', '5f4dcc3b5aa765d61d8327deb882cf99', 5, 'Y'),
+(9, 'DBS', 'DBS PT MSO', 'dbs', '482c811da5d5b4bc6d497ffa98491e38', 6, 'Y'),
+(10, 'CRD', 'CRD PT MSO', 'crd', '5f4dcc3b5aa765d61d8327deb882cf99', 7, 'Y'),
+(11, 'Development', 'Development PT MSO', 'development', '5f4dcc3b5aa765d61d8327deb882cf99', 8, 'Y'),
+(20, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Y'),
+(23, 'Helpdesk 2', 'Ayu', 'ayu', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(24, 'Implementator', 'Implementator PT MSO', 'implementator', '5f4dcc3b5aa765d61d8327deb882cf99', 4, 'Y'),
+(25, 'Helpdesk 3', 'Eva', 'eva', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(26, 'Helpdesk 4', 'Khabibah', 'Khabibah', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(27, 'Helpdesk 1', 'Novi', 'novi', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(28, 'Klien', 'PT BPR BKK Karangmalang(Perseroda)', 'karangmalang', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Y'),
+(29, 'Helpdesk 2', 'Chintya', 'chintya', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(30, 'Helpdesk 3', 'Ina', 'ina', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(31, 'Helpdesk 4', 'Luthfi', 'luthfi', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(32, 'Helpdesk 4', 'Nita', 'nita', '5f4dcc3b5aa765d61d8327deb882cf99', 2, 'Y'),
+(33, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Y'),
+(39, 'Supervisor 2', 'Supervisor 2 PT MSO Purwokerto', 'spv2', '5f4dcc3b5aa765d61d8327deb882cf99', 9, 'Y'),
+(42, 'Support', 'Rijal Amri', 'rijal', '5f4dcc3b5aa765d61d8327deb882cf99', 5, 'Y'),
+(45, 'Implementator', 'shohi', 'shohi', '5f4dcc3b5aa765d61d8327deb882cf99', 4, 'Y');
 
 --
 -- Indexes for dumped tables
@@ -385,7 +413,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
@@ -397,7 +425,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -409,7 +437,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -439,13 +467,13 @@ ALTER TABLE `t2_forward`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
