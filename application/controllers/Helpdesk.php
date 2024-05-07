@@ -144,19 +144,7 @@ class Helpdesk extends CI_Controller
             Redirect(base_url('helpdesk/pelaporan'));
         }
 
-        public function detail_pelaporan($id)
-        {
-            $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-            $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-            $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-            // $data['datacomment']   = $this->klienpelaporan_model->ambil_id_comment($id);
-            $this->load->view('templates/header');
-            $this->load->view('templates/helpdesk_sidebar');
-            $this->load->view('helpdesk/detail_pelaporan', $data);
-            $this->load->view('templates/footer');
-        }
-
-
+        
         public function fungsi_forward()
         {
             $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
@@ -172,6 +160,18 @@ class Helpdesk extends CI_Controller
             $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
             Redirect(Base_url('helpdesk/pelaporan'));
+        }
+
+        public function detail_pelaporan($id)
+        {
+            $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+            $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+            $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
+            // $data['datacomment']   = $this->klienpelaporan_model->ambil_id_comment($id);
+            $this->load->view('templates/header');
+            $this->load->view('templates/helpdesk_sidebar');
+            $this->load->view('helpdesk/detail_pelaporan', $data);
+            $this->load->view('templates/footer');
         }
 
         public function add_comment()
