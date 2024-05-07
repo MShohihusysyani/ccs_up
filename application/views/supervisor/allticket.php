@@ -61,8 +61,7 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-
-                                <?php
+                                    <?php
                                         $no = 1;
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
@@ -123,6 +122,9 @@
 
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
                                                     <span class="label label-primary">ADDED 2</span>
+
+                                                <?php elseif ($dp['status_ccs'] == 'REJECT' ) : ?>
+                                                    <span class="label label-danger">REJECT</span>
 
                                                 <?php else : ?>
                                                 <?php endif; ?>

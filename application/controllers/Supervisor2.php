@@ -80,7 +80,7 @@ class Supervisor2 extends CI_Controller
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanClose();
+        $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanClose();
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
@@ -101,6 +101,44 @@ class Supervisor2 extends CI_Controller
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/pelaporan_finish', $data);
         $this->load->view('templates/footer');
+    }
+
+    //FUNGSI APPROVE
+    public function approve()
+    {
+        // date_default_timezone_set('Asia/Jakarta');
+        # add your city to set local time zone
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d');
+
+
+        $id         = $this->input->post('id_pelaporan');
+        $no_tiket   = $this->input->post('no_tiket');
+        //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
+        $nama       = $this->input->post('nama');
+        $perihal    = $this->input->post('perihal');
+        $status_ccs ='FINISH';
+        $waktu      = date('Y-m-d');
+        $priority   = $this->input->post('priority');
+        $maxday     = $this->input->post('maxday');
+        $kategori   = $this->input->post('kategori');
+        $ArrUpdate  = array(
+
+            'no_tiket'       => $no_tiket,
+            //    'waktu_pelaporan' => $waktu_pelaporan,
+            'nama'           => $nama,
+            'perihal'        => $perihal,
+            'status_ccs'     => $status_ccs,
+            'waktu_approve'  => $waktu,
+            'priority'       => $priority,
+            'maxday'         => $maxday,
+            'kategori'       => $kategori
+
+        );
+        $this->pelaporan_model->approveSPV($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Approve!');
+        redirect('supervisor/finish');
+
     }
 
     public function edit_pelaporan()
@@ -161,7 +199,7 @@ class Supervisor2 extends CI_Controller
         $this->db->update('pelaporan');
         Redirect(base_url('supervisor2/added'));
     }
-
+    // FORWARD KE TEKNISI
     public function fungsi_forward()
     {
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
@@ -181,7 +219,7 @@ class Supervisor2 extends CI_Controller
         $user = $query->row();
         $nama_user = $user->nama_user;
 
-        $this->db->insert('forward', $data);
+        $this->db->insert('t1_forward', $data);
         $this->spv2_model->updateForward($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Successfully Forward!');
         Redirect(Base_url('supervisor2/added'));
@@ -210,7 +248,7 @@ class Supervisor2 extends CI_Controller
         $nama_user = $user->nama_user;
 
         
-        $this->db->insert('forward', $data);
+        $this->db->update('t1_forward', $data);
         $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Teknisi has been update!');
         Redirect(Base_url('supervisor2/onprogress'));
@@ -239,7 +277,7 @@ class Supervisor2 extends CI_Controller
         $nama_user = $user->nama_user;
 
         
-        $this->db->insert('forward', $data);
+        $this->db->insert('t2_forward', $data);
         $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Teknisi has been update!');
         Redirect(Base_url('supervisor2/onprogress'));

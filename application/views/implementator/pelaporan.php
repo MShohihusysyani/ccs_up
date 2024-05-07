@@ -132,7 +132,7 @@
                                                 <?php endif; ?>
 
                                             </td>
-                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?>, <?= $dp['handle_by3'];?></td>
                                             <td><?= $dp['subtask'];?></td>
 
                                             <td>

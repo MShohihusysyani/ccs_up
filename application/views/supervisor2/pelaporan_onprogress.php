@@ -39,9 +39,10 @@
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
+                                        <th>Impact</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <th>Status</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -56,9 +57,10 @@
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Priority</th>
+                                        <th>Impact</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <th>Status</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -91,6 +93,7 @@
                                                 <?php else: ?>
                                                 <?php endif; ?>
                                             </td>
+                                            <td><?= $dp['impact'];?></td>
                                             <td>
                                                 <?php if ($dp['maxday'] == '90'): ?>
                                                     <span class="label label-info">90</span>
@@ -124,11 +127,11 @@
                                                 <?php endif; ?>
 
                                             </td>
-                                            <td><?= $dp['status']; ?></td>
+                                            <!-- <td><?= $dp['status']; ?></td> -->
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
 
                                             <td>
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -141,10 +144,10 @@
                                                         data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#editModalCP"> <i class="material-icons">forward</i> <span
-                                                            class="icon-name">Forward</span></a>
+                                                            class="icon-name">Edit</span></a>
                                                 </div>
                                                     <br>
-                                                    <br> -->
+                                                    <br>
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-info">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"

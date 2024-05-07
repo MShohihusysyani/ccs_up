@@ -52,13 +52,13 @@
                             </div>
                         </div>
                         
-                        <label for="status">Status </label>
+                        <!-- <label for="status">Status </label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="status" name="status" class="form-control"
                                     value="<?= $dp['status']; ?>" readonly>
                             </div>
-                        </div>
+                        </div> -->
 
                         <label for="status_ccs ">Status CCS </label>
                         <div class="form-group">
@@ -71,9 +71,9 @@
                         <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="500"
-                                    height="500" class="img-thumbnail">
-                                <div class="form-group">
+                                <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="700"
+                                    height="700" class="img-thumbnail">
+                                <!-- <div class="form-group">
                                     <label for="exampleInputFile"></label>
                                     <div class="input-group">
                                         <div class="custom-file">
@@ -82,7 +82,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -132,7 +132,6 @@
                 console.error( error );
             } );
 </script>
-
 <script>
         ClassicEditor
             .create( document.querySelector( '#editor2' ) )
@@ -140,8 +139,7 @@
                 console.error( error );
             } );
 </script>
-
-<!-- <script>
+<!--<script>
     ClassicEditor
     .create( document.querySelector( '#editor' ), {
         simpleUpload: {

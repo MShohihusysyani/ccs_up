@@ -36,6 +36,23 @@ class Implementator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function data_pelaporan()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $data['category'] = $this->category_model->getNamakategori();
+
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanImplementator();
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/data_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function finish()
     {
         // date_default_timezone_set('Asia/Jakarta');

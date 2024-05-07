@@ -168,7 +168,7 @@ class Helpdesk extends CI_Controller
                 'user_id' => $id_user
             ];
 
-            $this->db->insert('forward', $data);
+            $this->db->insert('s_forward', $data);
             $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
             Redirect(Base_url('helpdesk/pelaporan'));

@@ -124,14 +124,16 @@
                                                     <span class="label label-primary">ADDED</span>
                                                 
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
-                                                    <span class="label label-primary">ADDED 2</span>   
+                                                    <span class="label label-primary">ADDED 2</span> 
+
+                                                <?php elseif ($dp['status_ccs'] == 'REJECT') : ?>
+                                                    <span class="label label-danger">REJECT</span>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
                                             
                                             </td>
-                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
+                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
 <!--                                            
                                             <td>
                                             <div class="btn btn-sm btn-warning">

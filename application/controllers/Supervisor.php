@@ -229,12 +229,12 @@ class Supervisor extends CI_Controller
 
     public function AllTicket()
     {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Supervisor_model', 'supervisor_model');
         // $data['kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporan();
+        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporan();
         
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
@@ -244,12 +244,12 @@ class Supervisor extends CI_Controller
 
     public function added()
     {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Supervisor_model', 'supervisor_model');
         // $data['kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category']      = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
-        $data['dataAdded'] = $this->klienpelaporan_model->getKlienPelaporanAdd();
+        $data['dataAdded'] = $this->supervisor_model->getKlienPelaporanAdd();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -262,12 +262,12 @@ class Supervisor extends CI_Controller
 
     public function onprogress()
     {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Supervisor_model', 'supervisor_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanOP();
+        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanOP();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -281,12 +281,12 @@ class Supervisor extends CI_Controller
 
     public function close()
     {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Supervisor_model', 'supervisor_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanClose();
+        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanClose();
 
 
         $this->load->model('User_model', 'user_model');
@@ -301,12 +301,12 @@ class Supervisor extends CI_Controller
     
     public function finish()
     {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Supervisor_model', 'supervisor_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanFinish();
+        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanFinish();
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
