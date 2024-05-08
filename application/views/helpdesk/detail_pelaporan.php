@@ -129,7 +129,7 @@
                 <?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
                 <div class="body">
                     <form>
-                        <textarea  class="form-control" >
+                        <textarea  class="form-control">
                             <?= $dc['nama_user'];?> , <?= $dc['body'];?>
                         </textarea>
                         <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button> -->
