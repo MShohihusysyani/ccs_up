@@ -114,7 +114,8 @@
                 <div class="body">
                     <form>
                         <textarea  class="form-control" >
-                            <?= $dc->body?>
+                           <?= $dc['nama_user'];?> <br>
+                           <?= $dc['body'];?>
                         </textarea>
                         <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button> -->
                         
