@@ -51,14 +51,6 @@
                                     value="<?= $dp['perihal']; ?>" readonly>
                             </div>
                         </div>
-                        
-                        <!-- <label for="status">Status </label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" id="status" name="status" class="form-control"
-                                    value="<?= $dp['status']; ?>" readonly>
-                            </div>
-                        </div> -->
 
                         <label for="status_ccs ">Status CCS </label>
                         <div class="form-group">
