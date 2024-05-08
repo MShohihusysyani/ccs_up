@@ -17,7 +17,7 @@
                         Comment</h2>
                 </div>
                 <div class="body">
-                    <?php echo form_open_multipart('helpdesk/add_comment') ?>
+                    <?php echo form_open_multipart('supervisor/add_comment') ?>
                     <form>
                         <?php foreach ($datapelaporan as $dp) : ?>
                         <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control" value="<?= $dp['id_pelaporan']; ?>">
@@ -44,6 +44,7 @@
                                     value="<?= $dp['nama']; ?>" readonly>
                             </div>
                         </div>
+
                         <label for="perihal">Perihal </label>
                         <div class="form-group">
                             <div class="form-line">
@@ -51,7 +52,7 @@
                                     value="<?= $dp['perihal']; ?>" readonly>
                             </div>
                         </div>
-                        
+
                         <label for="kategori">Kategori</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -130,7 +131,7 @@
                 <div class="body">
                     <form>
                         <textarea  class="form-control" >
-                            <?= $dc['nama_user'];?> , <?= $dc['body'];?>
+                        <?= $dc['nama_user'];?>  ,  <?= $dc['body'];?>
                         </textarea>
                         <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button> -->
                         

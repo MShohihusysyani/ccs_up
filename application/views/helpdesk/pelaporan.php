@@ -136,7 +136,7 @@
                                             <br>
                                             <br>
 
-                                            <a class="btn btn-xs btn-info"
+                                            <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>helpdesk/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>
@@ -145,7 +145,7 @@
                                             <br>
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <div class="btn btn-sm btn-warning">
+                                                <div class="btn btn-sm btn-info">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
                                                         data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
@@ -450,10 +450,7 @@
     <?php endforeach ?>
 
 
-
-
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
-
 <script type="text/javascript">
     //Get references to the select and input elements
     const select = document.getElementById('priority');

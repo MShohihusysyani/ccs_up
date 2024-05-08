@@ -52,13 +52,29 @@
                             </div>
                         </div>
                         
-                        <!-- <label for="status">Status </label>
+                        <label for="kategori">Kategori</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="status" name="status" class="form-control"
-                                    value="<?= $dp['status']; ?>" readonly>
+                                <input type="text" id="kategori" name="kategori" class="form-control"
+                                    value="<?= $dp['kategori']; ?>" readonly>
                             </div>
-                        </div> -->
+                        </div>
+
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="priority" name="priority" class="form-control"
+                                    value="<?= $dp['priority']; ?>" readonly>
+                            </div>
+                        </div>
+
+                        <label for="impact">Impact</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="impact" name="impact" class="form-control"
+                                    value="<?= $dp['impact']; ?>" readonly>
+                            </div>
+                        </div>
 
                         <label for="status_ccs ">Status CCS </label>
                         <div class="form-group">
@@ -114,7 +130,7 @@
                 <div class="body">
                     <form>
                         <textarea  class="form-control" >
-                            <?= $dc->body?>
+                            <?= $dc['nama_user'];?> , <?= $dc['body'];?>
                         </textarea>
                         <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button> -->
                         

@@ -126,9 +126,11 @@
                                                 <?php elseif ($dp['status_ccs'] == 'HANDLE 2'): ?>
                                                     <span class="label label-info">HANDLE 2</span>
 
-
                                                 <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
                                                     <span class="label label-primary">ADDED</span>
+
+                                                <?php elseif ($dp['status_ccs'] == 'ADDED 2'): ?>
+                                                    <span class="label label-primary">ADDED 2</span>
 
                                                 <?php else: ?>
                                                 <?php endif; ?>
@@ -138,6 +140,7 @@
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
 
                                             <td>
+
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
@@ -153,6 +156,13 @@
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                         class="icon-name">Edit</span></a>
                                                 </div>
+                                                <br>
+                                                <br>
+                                                <a class="btn btn-sm btn-info"
+                                                href="<?= base_url() ?>supervisor/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>Detail</a>
+                                                
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

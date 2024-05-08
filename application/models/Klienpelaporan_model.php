@@ -51,7 +51,7 @@ class Klienpelaporan_model extends CI_Model
         $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
         FROM forward
         LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        WHERE forward.user_id=$user_id AND  status_ccs='HANDLE 2'";
+        WHERE forward.user_id=$user_id";
         return $this->db->query($query)->result_array();
     }
 
@@ -126,21 +126,26 @@ class Klienpelaporan_model extends CI_Model
 
     public function ambil_id_pelaporan($id)
     { 
-        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status_ccs, kategori, priority, maxday, file  FROM pelaporan WHERE id_pelaporan='$id'";
+        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status_ccs, kategori, priority, maxday, impact, file  FROM pelaporan WHERE id_pelaporan='$id'";
         return $this->db->query($query)->result_array();
     }
 
-    // public function ambil_id_comment($id)
-    // { 
-    //     $query = "SELECT  id_comment, user_id, pelaporan_id, body  FROM comment WHERE id_comment='$id'";
-    //     return $this->db->query($query)->result_array();
+    // AMBIL DATA KOMEN LAMA
+    // public function ambil_id_comment($id){
+    //     $this->db->select('*');
+    //     $this->db->from('comment');
+    //     $this->db->where('pelaporan_id', $id);
+    //     return $this->db->get()->result();
     // }
 
     public function ambil_id_comment($id){
-        $this->db->select('*');
-        $this->db->from('comment');
-        $this->db->where('pelaporan_id', $id);
-        return $this->db->get()->result();
+
+        $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id 
+        FROM comment
+        LEFT JOIN user ON comment.user_id=user.id_user
+        WHERE comment.pelaporan_id='$id'";
+
+        return $this->db->query($query)->result_array();
     }
 
 

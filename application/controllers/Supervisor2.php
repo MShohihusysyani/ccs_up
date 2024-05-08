@@ -75,7 +75,7 @@ class Supervisor2 extends CI_Controller
 
     public function close()
     {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Spv2_model', 'spv2_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
@@ -95,7 +95,7 @@ class Supervisor2 extends CI_Controller
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanFinish();
+        $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanFinish();
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
@@ -143,26 +143,26 @@ class Supervisor2 extends CI_Controller
 
     public function edit_pelaporan()
     {
-        $id         = $this->input->post('id');
-        $no_tiket   = $this->input->post('no_tiket');
-        $perihal    = $this->input->post('perihal');
-        $status     = $this->input->post('status');
-        $status_ccs = $this->input->post('status_ccs');
-        $kategori   = $this->input->post('kategori');
-        $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday'); 
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $no_tiket     = $this->input->post('no_tiket');
+        $perihal      = $this->input->post('perihal');
+        $status_ccs   = $this->input->post('status_ccs');
+        $kategori     = $this->input->post('kategori');
+        $priority     = $this->input->post('priority');
+        $maxday       = $this->input->post('maxday');
+        $tags         = $this->input->post('tags');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
             'perihal'    => $perihal,
-            'status'     => $status,
             'status_ccs' => $status_ccs,
             'priority'   => $priority,
             'kategori'   => $kategori,
-            'maxday'     => $maxday
+            'maxday'     => $maxday,
+            'tags'       => $tags
 
         );
-        $this->pelaporan_model->updateCP($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Success Edited!');
+        $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Edited!');
         Redirect(base_url('supervisor2/added'));
     }
 

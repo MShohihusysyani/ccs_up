@@ -39,6 +39,7 @@
                                         <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
+                                        <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
@@ -57,6 +58,7 @@
                                         <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
+                                        <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
@@ -85,6 +87,11 @@
                                                     href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                             </td>
                                             <td><?= $dp['kategori']; ?></td>
+                                            <td>
+                                                <span class="label label-info">
+                                                    <?= $dp['tags'];?>
+                                                </span>
+                                            </td>
                                             <td>
                                                 <?php if ($dp['priority'] == 'Low'): ?>
                                                     <span class="label label-info">Low</span>
@@ -138,15 +145,7 @@
                                             <td><?= $dp['handle_by'];?></td>
 
                                             <td>
-                                                <!-- <div class="btn btn-sm btn-warning">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"><i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
-                                                </div>
-                                            </div> -->
-
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -157,20 +156,30 @@
                                                         data-status_ccs="<?= $dp['status_ccs']; ?>"
                                                         data-kategori="<?= $dp['kategori']; ?>"
                                                         data-priority="<?= $dp['priority']; ?>"
+                                                        data-maxday="<?= $dp['maxday']; ?>" 
+                                                        data-tags = "<?= $dp['tags'];?>" data-toggle="modal"
+                                                        data-target="#editModal"> <i class="material-icons">edit</i> <span
+                                                            class="icon-name">Edit</span></a>
+                                                </div>
+                                                <br>
+                                                <br>
+
+                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <div class="btn btn-sm btn-info">
+                                                    <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
+                                                        data-no_tiket="<?= $dp['no_tiket']; ?>"
+                                                        data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
+                                                        data-nama="<?= $dp['nama']; ?>"
+                                                        data-perihal="<?= $dp['perihal']; ?>"
+                                                        data-status="<?= $dp['status']; ?>"
+                                                        data-status_ccs="<?= $dp['status_ccs']; ?>"
+                                                        data-kategori="<?= $dp['kategori']; ?>"
+                                                        data-priority="<?= $dp['priority']; ?>"
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
-                                                        data-target="#editModalCP"> <i class="material-icons">forward</i> <span
+                                                        data-target="#forwardModal"> <i class="material-icons">forward</i> <span
                                                             class="icon-name">Forward</span></a>
                                                 </div>
 
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a>
-
-                                                <br>
-                                                <br> -->
-
-                                            
 
                                             </td>
                                         </tr>
@@ -188,8 +197,8 @@
 </section>
 
 
-<!-- MODAL EDIT -->
-<div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
+<!-- MODAL FORWARD -->
+<div class="modal fade" id="forwardModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -293,6 +302,117 @@
     </div>
 </div>
 
+<!-- MODAL EDIT -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Edit Data</h4>
+            </div>
+            <div class="modal-body">
+                <?= form_open_multipart('supervisor/edit_pelaporan') ?>
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
+                <div class="body">
+                    <form class="form-horizontal">
+                                                    
+                        <label for="no_tiket">No Tiket</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                            </div>
+                        </div> 
+
+                        <label for="waktu_pelaporan">Tanggal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <label for="perihal">Perihal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="status_ccs">Status CCS</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select id="priority" name="priority" class="form-control">
+                                    <option value="">-- Please select Priority--</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="maxday">Max Day</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <div class="form-line">
+                                <select name="kategori" id="kategori" class="form-control">
+                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
+                                    <?php
+                                    foreach ($category as $cat): ?>
+                                    <option value="<?php echo $cat['nama_kategori']; ?>">
+                                    <?php echo $cat['nama_kategori']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div> -->
+                        
+                        <label for="kategori">Category</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
+                                    name="kategori" id="kategori" placeholder=""
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
+                                <input type="hidden" id="id" name="id">
+                            </div>
+                        </div>
+
+                        <label for="tags">Tags</label>
+                            <div class="form-group demo-tagsinput-area">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" data-role="tagsinput" id="tags" name="tags" value="<?= $dp['tags'];?>">
+                                </div>
+                            </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE
+                                CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+
+                        </div>
+                </div>
+                <?php echo form_close() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- modal cari kategori -->
 <div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -383,7 +503,7 @@
     $(document).ready(function () {
 
         // Untuk sunting
-        $('#editModalCP').on('show.bs.modal', function (event) {
+        $('#forwardModal').on('show.bs.modal', function (event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
             var modal = $(this)
 
@@ -402,6 +522,45 @@
             modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namahd option:selected').text(div.data('nama'));
+            // modal.find('#bprnama').attr("value", div.data('bprnama'));
+            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
+            // modal.find('#judul').attr("value", div.data('judul'));
+            // modal.find('#headline').attr("value", div.data('headline'));
+            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
+            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
+            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
+            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
+            // modal.find('#linkberita').val(div.data('linkberita'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        // Untuk sunting
+        $('#editModal').on('show.bs.modal', function (event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
+            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
+            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
+            modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#perihal').attr("value", div.data('perihal'));
+            modal.find('#status').attr("value", div.data('status'));
+            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
+            // modal.find('#priority').attr("value", div.data('priority'));
+            modal.find('#priority').value = div.data('priority');
+            // modal.find('#priority option:selected').text(div.data('priority'));
+            modal.find('#maxday').attr("value", div.data('maxday'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            modal.find('#tags').attr("value", div.data('tags'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+            // modal.find('#tags').value = div.data('tags');
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));

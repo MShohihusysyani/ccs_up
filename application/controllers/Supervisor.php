@@ -75,9 +75,6 @@ class Supervisor extends CI_Controller
         $data['no_urut'] = $this->db->get('klien')->result_array();
         $data['nama_klien'] = $this->db->get('klien')->result_array();
         
-       
-
-
         $data['klien'] = $this->client_model->getClient();
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
@@ -449,6 +446,38 @@ class Supervisor extends CI_Controller
         redirect('supervisor/finish');
 
     }
+
+    //DETAIL PELAPORAN
+    public function detail_pelaporan($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Supervisor_model', 'supervisor_model');
+        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan($id);
+        $data['datacomment']   = $this->supervisor_model->ambil_id_comment($id);
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/detail_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_comment()
+    {
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('user_id');
+        $body = htmlspecialchars($this->input->post('body'));
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user,
+            'body' => $body
+        ];
+
+        $this->db->insert('comment', $data);
+        $this->session->set_flashdata('pesan', 'Successfully Forward!');
+        Redirect(Base_url('supervisor/detail_pelaporan/'.$id_pelaporan));
+    }
+
 
         //   FILTER LAPORAN
         public function rekapPelaporan()

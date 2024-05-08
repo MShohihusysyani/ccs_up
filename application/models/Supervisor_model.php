@@ -100,8 +100,28 @@ class Supervisor_model extends CI_Model {
         return $this->db->query($query);
     }
 
+    public function ambil_id_pelaporan($id)
+    { 
+        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status_ccs, kategori, priority, maxday, impact, file  FROM pelaporan WHERE id_pelaporan='$id'";
+        return $this->db->query($query)->result_array();
+    }
 
-    
+    // public function ambil_id_comment($id){
+    //     $this->db->select('*');
+    //     $this->db->from('comment');
+    //     $this->db->where('pelaporan_id', $id);
+    //     return $this->db->get()->result();
+    // }
+
+    public function ambil_id_comment($id){
+
+        $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id 
+        FROM comment
+        LEFT JOIN user ON comment.user_id=user.id_user
+        WHERE comment.pelaporan_id='$id'";
+
+        return $this->db->query($query)->result_array();
+    }
 
 }
 

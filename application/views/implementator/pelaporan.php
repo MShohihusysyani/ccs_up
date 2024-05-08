@@ -137,11 +137,10 @@
 
                                             <td>
 
-                                            <a class="btn btn-xs btn-info"
+                                            <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>implementator/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span
-                                                    class="icon-name"></span>
-                                                Detail</a>
+                                                    class="icon-name"></span>Detail</a>
                                             <br>
                                             <br>
                                                 
