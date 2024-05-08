@@ -27,7 +27,7 @@
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <!-- <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/animate-css/animate.css" rel="stylesheet" /> -->
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Bootstrap Tagsinput Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/');?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
