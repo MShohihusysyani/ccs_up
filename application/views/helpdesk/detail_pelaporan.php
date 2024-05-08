@@ -1,3 +1,4 @@
+
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -6,8 +7,9 @@
         </div>
 
         <!-- jQuery UI CSS -->
-        <link rel="stylesheet"
-            href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet"> -->
+
 
         <?= $this->session->flashdata('message'); ?>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -104,7 +106,7 @@
 
                         <label for="comment">Comment</label>
                         <textarea id="editor" class="form-control" name="body" id="body">
-                            
+
                         </textarea>
                         <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
                         
@@ -130,10 +132,26 @@
                 <div class="body">
                     <form>
                         <textarea  class="form-control">
-                            <?= $dc['nama_user'];?> , <?= $dc['body'];?>
+                                <?= $dc['nama_user'];?><br>
+                                <?= $dc['body'];?>
                         </textarea>
                         <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button> -->
-                        
+
+                        <!-- <div class="media border">
+                            <img src="<?= base_url('assets/'); ?>images/user.png" alt="" class="mr-3 mt-3 rounded-circle" style="width:30px;">
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4> <?= $dc['nama_user'];?></h4>
+                                        <p><?= $dc['body'];?></p>
+                                    </div>
+                                    <div class="col-sm-12" align="right">
+                                        <button type="button" class="btn btn-primary reply" id="'.$dc["id_comment"].'">Reply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
                     </form>
                 </div>
                 <?php } } ?>
@@ -142,7 +160,6 @@
         <!-- end comment -->
     </div>
 </section>
-
 <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
