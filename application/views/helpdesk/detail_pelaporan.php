@@ -170,13 +170,6 @@
                 console.error( error );
             } );
 </script>
-<script>
-        ClassicEditor
-            .create( document.querySelector( '#editor2' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-</script>
 <!--<script>
     ClassicEditor
     .create( document.querySelector( '#editor' ), {
