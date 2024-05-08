@@ -68,7 +68,8 @@
                                         </div>
                                             <div class="content">
                                         <div class="text">NEW TIKET</div>
-                                        <div class="number"><?php echo $total->totalp ?></div>
+                                        <!-- <div class="number"><?php echo $total->totalp ?></div> -->
+                                        <div class="number count-to" data-from="0" data-to="<?php echo $total->totalp ?>" data-speed="1000" data-fresh-interval="20"><?php echo $total->totalp ?></div>
                                     </div>
                                     </div>
                             </div>
@@ -88,7 +89,8 @@
                                     </div>
                                     <div class="content">
                                         <div class="text">HANDLE</div>
-                                        <div class="number"><?php echo $total->totalp ?></div>
+                                        <!-- <div class="number"><?php echo $total->totalp ?></div> -->
+                                        <div class="number count-to" data-from="0" data-to="<?php echo $total->totalp ?>" data-speed="1000" data-fresh-interval="20"><?php echo $total->totalp ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +110,8 @@
                                     </div>
                                     <div class="content">
                                         <div class="text">CLOSE</div>
-                                        <div class="number"><?php echo $total->totalp ?></div>
+                                        <!-- <div class="number"><?php echo $total->totalp ?></div> -->
+                                        <div class="number count-to" data-from="0" data-to="<?php echo $total->totalp ?>" data-speed="1000" data-fresh-interval="20"><?php echo $total->totalp ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +131,8 @@
                                     </div>
                                     <div class="content">
                                         <div class="text">FINISH</div>
-                                        <div class="number"><?php echo $total->totalp ?></div>
+                                        <!-- <div class="number"><?php echo $total->totalp ?></div> -->
+                                        <div class="number count-to" data-from="0" data-to="<?php echo $total->totalp ?>" data-speed="1000" data-fresh-interval="20"><?php echo $total->totalp ?></div>
                                     </div>
                                 </div>
                             </div>
