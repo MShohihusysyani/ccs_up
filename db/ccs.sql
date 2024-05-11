@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Bulan Mei 2024 pada 05.54
+-- Waktu pembuatan: 11 Bulan Mei 2024 pada 07.29
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -86,20 +86,10 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
-(19, 98, 54, '&lt;p&gt;data kurang&lt;/p&gt;'),
-(20, 98, 59, '&lt;p&gt;kurang apa?&lt;/p&gt;'),
-(23, 99, 62, '&lt;p&gt;tes, ini kurang data&lt;/p&gt;'),
-(24, 99, 55, '&lt;p&gt;baik, nanti dikonfirmasi lagi&lt;/p&gt;'),
-(25, 99, 58, '&lt;p&gt;kurang dimananya?&lt;/p&gt;'),
-(26, 99, 62, 'file'),
-(27, 101, 62, '&lt;p&gt;kurang data&lt;/p&gt;'),
-(28, 101, 49, '&lt;p&gt;kurang data apa?&lt;/p&gt;'),
-(29, 101, 62, '&lt;p&gt;data tes4&lt;/p&gt;'),
-(30, 101, 57, '&lt;p&gt;Tes4&lt;/p&gt;'),
-(31, 99, 55, '&lt;p&gt;tesss&lt;/p&gt;'),
-(32, 101, 49, '&lt;p&gt;Tes44&lt;/p&gt;'),
-(33, 101, 57, '&lt;p&gt;tes444&lt;/p&gt;'),
-(34, 101, 62, '&lt;p&gt;tes4&lt;/p&gt;');
+(34, 101, 62, '&lt;p&gt;tes4&lt;/p&gt;'),
+(44, 101, 49, '&lt;p&gt;tes4&lt;/p&gt;'),
+(45, 101, 61, '&lt;p&gt;tes4&lt;/p&gt;'),
+(46, 101, 57, '&lt;p&gt;tes4&lt;/p&gt;');
 
 -- --------------------------------------------------------
 
@@ -430,7 +420,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
