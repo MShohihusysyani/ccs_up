@@ -9,7 +9,8 @@
         <link rel="stylesheet"
             href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
-            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <!-- CSS KOMENTAR -->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
         <?= $this->session->flashdata('message'); ?>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -131,7 +132,7 @@
                 </div>
                 <?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
                 <div class="body">
-                        <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child">
+                        <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child" style="margin:auto;">
                             <p>
                                 <b><?= $dc['nama_user'];?></b>
                                 <br><?= $dc['body'];?>
