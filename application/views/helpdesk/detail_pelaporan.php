@@ -138,7 +138,7 @@
                 </div>
                 <?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
                 <div class="body">
-                        <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child">
+                        <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child " style=" margin:auto;">
                             <p>
                                 <b><?= $dc['nama_user'];?></b>
                                 <br><?= $dc['body'];?>
