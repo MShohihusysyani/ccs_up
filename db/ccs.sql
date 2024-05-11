@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Bulan Mei 2024 pada 11.02
+-- Waktu pembuatan: 11 Bulan Mei 2024 pada 05.54
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -96,7 +96,10 @@ INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
 (28, 101, 49, '&lt;p&gt;kurang data apa?&lt;/p&gt;'),
 (29, 101, 62, '&lt;p&gt;data tes4&lt;/p&gt;'),
 (30, 101, 57, '&lt;p&gt;Tes4&lt;/p&gt;'),
-(31, 99, 55, '&lt;p&gt;tesss&lt;/p&gt;');
+(31, 99, 55, '&lt;p&gt;tesss&lt;/p&gt;'),
+(32, 101, 49, '&lt;p&gt;Tes44&lt;/p&gt;'),
+(33, 101, 57, '&lt;p&gt;tes444&lt;/p&gt;'),
+(34, 101, 62, '&lt;p&gt;tes4&lt;/p&gt;');
 
 -- --------------------------------------------------------
 
@@ -205,7 +208,7 @@ INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tag
 (98, 'TIC2024050001', 59, 'Backdate - Backdate Transaksi', 'Tes,transaksi,backdate', '2024-05-07', 'Solved', 'FINISH', 'Low', 90, '<p>Tes</p>', 'material', 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Karangmalang (Perseroda)', 'Nita', NULL, NULL, NULL, '2024-05-07'),
 (99, 'TIC2024050002', 58, 'Kredit - Agunan', 'kredit,agunan', '2024-05-07', 'Solved', 'FINISH', 'Medium', 60, '<p>Tes2</p>', 'material', 'code.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Luthfi', 'Implementator PT MSO Purwokerto', NULL, NULL, '2024-05-08'),
 (100, 'TIC2024050003', 60, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', 'backdate,kredit,pembatalan,ecollector', '2024-05-07', 'Solved', 'FINISH', 'High', 7, '<p>Tes3</p>', 'kritikal', 'CCS_Customer_Care_System.pdf', NULL, 'PT BPR BKK Purwokerto (Perseroda)', 'Khabibah', NULL, NULL, NULL, '2024-05-08'),
-(101, 'TIC2024050004', 61, 'Backdate - Backdate Transaksi', 'Backdate,Tes4,Transaksi', '2024-05-08', 'Forward To Teknisi', 'HANDLE 2', 'High', 7, '<p>Tes4</p>', 'kritikal', 'controller.png', NULL, 'PT BPR BKK Kab. Pekalongan (Perseroda)', 'Novi', 'Implementator PT MSO Purwokerto', NULL, NULL, NULL);
+(101, 'TIC2024050004', 61, 'Backdate - Backdate Transaksi', 'Backdate,Tes4,Transaksi', '2024-05-08', 'Forward To Teknisi', 'HANDLE 2', 'High', 7, '<p>Tes4</p>', 'kritikal', 'controller.png', NULL, 'PT BPR BKK Kab. Pekalongan (Perseroda)', 'Novi', 'Implementator PT MSO Purwokerto', 'Support PT MSO Purwokerto', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -250,7 +253,7 @@ CREATE TABLE `t1_forward` (
   `id_forward` int(11) NOT NULL,
   `pelaporan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `subtask` text NOT NULL
+  `subtask` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -271,8 +274,15 @@ CREATE TABLE `t2_forward` (
   `id_forward` int(11) NOT NULL,
   `pelaporan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `subtask` text NOT NULL
+  `subtask` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `t2_forward`
+--
+
+INSERT INTO `t2_forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
+(2, 101, 63, 'Tes4');
 
 -- --------------------------------------------------------
 
@@ -420,7 +430,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
@@ -468,7 +478,7 @@ ALTER TABLE `t1_forward`
 -- AUTO_INCREMENT untuk tabel `t2_forward`
 --
 ALTER TABLE `t2_forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
