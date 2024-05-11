@@ -138,7 +138,7 @@
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">view_list</i>
+                            <i class="material-icons">account_balance</i>
                             <span>Bank Knowlage</span>
                         </a>
                         <ul class="ml-menu">
