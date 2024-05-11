@@ -30,13 +30,27 @@ class Spv2_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
-    public function getKlienPelaporanOP()
-    {
+    public function getKlienPelaporanOP(){
+
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by, handle_by2, handle_by3, impact  FROM pelaporan WHERE status_ccs='HANDLE 2'  ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT * 
+        FROM t2_forward
+        INNER JOIN pelaporan
+        ON t2_forward.pelaporan_id = pelaporan.id_pelaporan
+        INNER JOIN s_forward
+        ON pelaporan.id_pelaporan = s_forward.pelaporan_id
+        WHERE s_forward.user_id = $user_id";
         return $this->db->query($query)->result_array();
     }
+
+    // public function getKlienPelaporanOP()
+    // {
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $user_id = $this->session->userdata('id_user');
+    //     $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by, handle_by2, handle_by3, impact  FROM pelaporan WHERE status_ccs='HANDLE 2'  ORDER BY waktu_pelaporan DESC";
+    //     return $this->db->query($query)->result_array();
+    // }
 
     public function getKlienPelaporanClose()
     {

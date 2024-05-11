@@ -1,4 +1,9 @@
-
+<style type="text/css">
+        .child{
+            margin-bottom: auto;
+        }
+        
+    </style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -10,6 +15,8 @@
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
         <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet"> -->
+
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
         <?= $this->session->flashdata('message'); ?>
@@ -131,14 +138,20 @@
                 </div>
                 <?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
                 <div class="body">
-                    <form>
+                        <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child">
+                            <p>
+                                <b><?= $dc['nama_user'];?></b>
+                                <br><?= $dc['body'];?>
+                            </p>
+                        </div>
+                    <!-- <form>
                         <textarea  class="form-control">
                                 <?= $dc['nama_user'];?><br>
                                 <?= $dc['body'];?>
                         </textarea>
-                        <!-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button> -->
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button>
 
-                        <!-- <div class="media border">
+                        <div class="media border">
                             <img src="<?= base_url('assets/'); ?>images/user.png" alt="" class="mr-3 mt-3 rounded-circle" style="width:30px;">
                             <div class="media-body">
                                 <div class="row">
@@ -151,9 +164,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
 
-                    </form>
+                    </form> -->
                 </div>
                 <?php } } ?>
             </div>

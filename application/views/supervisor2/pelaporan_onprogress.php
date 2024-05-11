@@ -42,8 +42,8 @@
                                         <th>Impact</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
-                                        <th>Handle By</th>
+                                        <th>Handle_by</th>
+                                        <th>Subtask</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -60,8 +60,8 @@
                                         <th>Impact</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <!-- <th>Status</th> -->
                                         <th>Handle By</th>
+                                        <th>Subtask</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -127,9 +127,8 @@
                                                 <?php endif; ?>
 
                                             </td>
-                                            <!-- <td><?= $dp['status']; ?></td> -->
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
-
+                                            <td><?= $dp['subtask'];?></td>
                                             <td>
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
@@ -276,7 +275,6 @@
                                 <input type="hidden" id="id" name="id">
                             </div>
                         </div> -->
-
 
                         <div class="form-group">
                             <div class="form-line">
