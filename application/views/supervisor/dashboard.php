@@ -206,7 +206,7 @@
                 <!-- end ticket -->
 
                         <!-- Jumlah BPR -->
-             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="header">
                             <h2>KLIEN INFO</h2>
@@ -257,26 +257,26 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script type="text/javascript">
-  const ctx = document.getElementById('bar_chart').getContext('2d');
-  new Chart(ctx, {
+const ctx = document.getElementById('bar_chart').getContext('2d');
+new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['High', 'Medium', 'Low'],
-      datasets: [{
+        labels: ['High', 'Medium', 'Low'],
+        datasets: [{
         label: '#Priority',
         data: [<?=total_high()?>,<?=total_medium()?>,<?=total_low()?>],
         // backgroundColor: ['rgba(233, 30, 99, 0.8)', '#FFC107', 'rgba(0, 188, 212, 0.8)'],
         backgroundColor:['rgb(255, 99, 132)', 'rgb(255, 205, 86)','rgb(54, 162, 235)',],
         borderWidth: 1
-      }]
+    }]
     },
     options: {
-      scales: {
+        scales: {
         y: {
-          beginAtZero: true
+            beginAtZero: true
         }
-      }
+    }
 }
-  });
+});
 </script>
 
