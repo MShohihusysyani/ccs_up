@@ -474,7 +474,7 @@ class Supervisor extends CI_Controller
         ];
 
         $this->db->insert('comment', $data);
-        $this->session->set_flashdata('pesan', 'Successfully Forward!');
+        $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('supervisor/detail_pelaporan/'.$id_pelaporan));
     }
 
