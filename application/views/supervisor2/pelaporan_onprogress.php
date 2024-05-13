@@ -160,6 +160,14 @@
                                                             class="icon-name">Tambah Teknisi</span></a>
                                                 </div>
 
+                                                <br>
+                                                <br>
+                                                <a class="btn btn-sm btn-info"
+                                                href="<?= base_url() ?>supervisor2/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>Detail</a>
+                                                
+
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
