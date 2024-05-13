@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Bulan Mei 2024 pada 07.57
+-- Waktu pembuatan: 13 Bulan Mei 2024 pada 03.38
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -89,7 +89,8 @@ INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
 (34, 101, 62, '&lt;p&gt;tes4&lt;/p&gt;'),
 (44, 101, 49, '&lt;p&gt;tes4&lt;/p&gt;'),
 (45, 101, 61, '&lt;p&gt;tes4&lt;/p&gt;'),
-(46, 101, 57, '&lt;p&gt;tes4&lt;/p&gt;');
+(46, 101, 57, '&lt;p&gt;tes4&lt;/p&gt;'),
+(47, 101, 63, '&lt;p&gt;Tes4&lt;/p&gt;');
 
 -- --------------------------------------------------------
 
@@ -420,7 +421,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
