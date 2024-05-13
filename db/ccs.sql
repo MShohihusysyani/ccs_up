@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Bulan Mei 2024 pada 03.38
+-- Waktu pembuatan: 13 Bulan Mei 2024 pada 11.08
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -90,7 +90,8 @@ INSERT INTO `comment` (`id_comment`, `pelaporan_id`, `user_id`, `body`) VALUES
 (44, 101, 49, '&lt;p&gt;tes4&lt;/p&gt;'),
 (45, 101, 61, '&lt;p&gt;tes4&lt;/p&gt;'),
 (46, 101, 57, '&lt;p&gt;tes4&lt;/p&gt;'),
-(47, 101, 63, '&lt;p&gt;Tes4&lt;/p&gt;');
+(48, 101, 47, '&lt;p&gt;Tes4&lt;/p&gt;'),
+(49, 101, 63, '&lt;p&gt;Tes4&lt;/p&gt;');
 
 -- --------------------------------------------------------
 
@@ -244,16 +245,18 @@ CREATE TABLE `t1_forward` (
   `id_forward` int(11) NOT NULL,
   `pelaporan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `subtask` text DEFAULT NULL
+  `judul` text NOT NULL,
+  `subtask` text DEFAULT NULL,
+  `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `t1_forward`
 --
 
-INSERT INTO `t1_forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
-(3, 99, 62, ''),
-(4, 101, 62, '');
+INSERT INTO `t1_forward` (`id_forward`, `pelaporan_id`, `user_id`, `judul`, `subtask`, `tanggal`) VALUES
+(3, 99, 62, '', '', '0000-00-00'),
+(7, 101, 62, 'TES 4', 'TES 44', '2024-05-16');
 
 -- --------------------------------------------------------
 
@@ -265,15 +268,17 @@ CREATE TABLE `t2_forward` (
   `id_forward` int(11) NOT NULL,
   `pelaporan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `subtask` text DEFAULT NULL
+  `judul2` text NOT NULL,
+  `subtask2` text DEFAULT NULL,
+  `tanggal2` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `t2_forward`
 --
 
-INSERT INTO `t2_forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
-(2, 101, 63, 'Tes4');
+INSERT INTO `t2_forward` (`id_forward`, `pelaporan_id`, `user_id`, `judul2`, `subtask2`, `tanggal2`) VALUES
+(5, 101, 63, 'TES4', 'TES44', '2024-05-16');
 
 -- --------------------------------------------------------
 
@@ -421,7 +426,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
@@ -463,13 +468,13 @@ ALTER TABLE `s_forward`
 -- AUTO_INCREMENT untuk tabel `t1_forward`
 --
 ALTER TABLE `t1_forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `t2_forward`
 --
 ALTER TABLE `t2_forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
