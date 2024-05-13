@@ -12,6 +12,7 @@
         <!-- CSS KOMENTAR -->
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+
         <?= $this->session->flashdata('message'); ?>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="card">
@@ -107,7 +108,7 @@
                         </div>
 
                         <label for="comment">Comment</label>
-                        <textarea id="editor" class="form-control" name="body" id="body">
+                        <textarea id="editor1" class="form-control" name="body" id="body">
                                 
                         </textarea>
                         <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
@@ -152,12 +153,15 @@
 </section>
 
 <script>
+    CKEDITOR.replace('editor')
+</script>
+<!-- <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
             .catch( error => {
                 console.error( error );
             } );
-</script>
+</script> -->
 
 <!--<script>
     ClassicEditor

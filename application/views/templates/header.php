@@ -17,9 +17,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-    <!-- ckeditor -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
-
     <!-- Bootstrap Core Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
@@ -50,5 +47,11 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>css/themes/all-themes.css" rel="stylesheet" />
+
+    
+    <!-- ckeditor -->
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script> -->
+    <script src="<?= base_url('vendor/ckeditor/'); ?>ckeditor/ckeditor.js"></script>
+
 
 </head>

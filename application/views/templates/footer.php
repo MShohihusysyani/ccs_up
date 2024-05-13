@@ -82,6 +82,7 @@
 
 <!-- Ckeditor -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/ckeditor/ckeditor.js"></script>
+
 <!-- TinyMCE -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/tinymce/tinymce.js"></script>
 

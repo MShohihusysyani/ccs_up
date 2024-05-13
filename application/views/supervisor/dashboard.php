@@ -151,7 +151,7 @@
                                         </a>
                                     </div>
                                     <div class="content">
-                                        <div class="text">All Ticket</div>
+                                        <div class="text">ALL TICKETS</div>
                                         <!-- <div class="number"><?php echo $total->totalp ?></div> -->
                                         <div class="number count-to" data-from="0" data-to="<?php echo $total->totalt ?>" data-speed="1000" data-fresh-interval="20"><?php echo $total->totalp ?></div>
                                     </div>
