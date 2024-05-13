@@ -45,6 +45,7 @@
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
                                         <th>Subtask</th>
+                                        <th>Tenggat waktu</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -64,6 +65,7 @@
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
                                         <th>Subtask</th>
+                                        <th>Tenggat waktu</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -134,6 +136,7 @@
                                             </td>
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?>, <?= $dp['handle_by3'];?></td>
                                             <td><?= $dp['subtask'];?></td>
+                                            <td><?= tanggal_indo($dp['tanggal'])?></td>
 
                                             <td>
 

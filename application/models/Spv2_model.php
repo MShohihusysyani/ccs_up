@@ -30,17 +30,32 @@ class Spv2_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
-    public function getKlienPelaporanOP(){
+    // public function getKlienPelaporanOP(){
 
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $user_id = $this->session->userdata('id_user');
+    //     $query = "SELECT * 
+    //     FROM pelaporan
+    //     INNER JOIN t1_forward
+    //     ON pelaporan.id_pelaporan = t1_forward.pelaporan_id
+    //     INNER JOIN t2_forward
+    //     ON pelaporan.id_pelaporan = t2_forward.pelaporan_id
+    //     INNER JOIN s_forward
+    //     ON pelaporan.id_pelaporan = s_forward.pelaporan_id
+    //     WHERE s_forward.user_id = $user_id AND status_ccs='HANDLE 2'";
+    //     return $this->db->query($query)->result_array();
+    // }
+
+    public function getKlienPelaporanOP()
+    {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT * 
-        FROM t2_forward
-        INNER JOIN pelaporan
-        ON t2_forward.pelaporan_id = pelaporan.id_pelaporan
-        INNER JOIN s_forward
-        ON pelaporan.id_pelaporan = s_forward.pelaporan_id
-        WHERE s_forward.user_id = $user_id";
+        $query = "SELECT pelaporan.*, pelaporan.no_tiket, pelaporan.kategori, pelaporan.tags, pelaporan.nama, pelaporan.waktu_pelaporan, pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.impact, pelaporan.file, pelaporan.handle_by, pelaporan.handle_by2, pelaporan.handle_by3, t1_forward.judul, t1_forward.subtask, t1_forward.tanggal, t2_forward.judul2, t2_forward.subtask2, t2_forward.tanggal2
+        FROM pelaporan
+        left join t1_forward ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
+        left join t2_forward ON t2_forward.pelaporan_id = pelaporan.id_pelaporan
+        left join s_forward  ON s_forward.pelaporan_id  = pelaporan.id_pelaporan
+        WHERE s_forward.user_id = $user_id AND status_ccs='HANDLE 2' ";
         return $this->db->query($query)->result_array();
     }
 

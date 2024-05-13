@@ -84,7 +84,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.handle_by2, pelaporan.handle_by3, t1_forward.subtask, pelaporan.tags
+        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.handle_by2, pelaporan.handle_by3, pelaporan.tags, t1_forward.subtask, t1_forward.tanggal, t1_forward.judul
         FROM t1_forward
         LEFT JOIN pelaporan ON t1_forward.pelaporan_id=pelaporan.id_pelaporan
         WHERE t1_forward.user_id=$user_id AND status_ccs='HANDLE 2'";
@@ -108,7 +108,7 @@ class Klienpelaporan_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.handle_by2, pelaporan.handle_by3, pelaporan.status, pelaporan.tags, t2_forward.subtask
+        $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.handle_by2, pelaporan.handle_by3, pelaporan.status, pelaporan.tags, t2_forward.subtask2, t2_forward.tanggal2, t2_forward.judul2
         FROM t2_forward
         LEFT JOIN pelaporan ON t2_forward.pelaporan_id=pelaporan.id_pelaporan
         WHERE t2_forward.user_id=$user_id AND status_ccs='HANDLE 2'";

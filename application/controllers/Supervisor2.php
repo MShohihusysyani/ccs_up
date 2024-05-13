@@ -206,9 +206,15 @@ class Supervisor2 extends CI_Controller
         $this->form_validation->set_rules('namahd','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namateknisi');
+        $judul   = $this->input->post('judul');
+        $subtask = $this->input->post('subtask');
+        $tanggal = $this->input->post('tanggal');
         $data = [
             'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
+            'user_id' => $id_user,
+            'judul'   => $judul,
+            'subtask' => $subtask,
+            'tanggal' => $tanggal
         ];
 
         // cari nama user berdasarkan id 
@@ -261,11 +267,15 @@ class Supervisor2 extends CI_Controller
         $this->form_validation->set_rules('namahd','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namateknisi');
-        $subtask = $this->input->post('subtask');
+        $judul   = $this->input->post('judul2');
+        $subtask = $this->input->post('subtask2');
+        $tanggal = $this->input->post('tanggal2');
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,
-            'subtask' => $subtask
+            'judul2'   => $judul,
+            'subtask2' => $subtask,
+            'tanggal2' => $tanggal
         ];
 
         // cari nama user berdasarkan id 

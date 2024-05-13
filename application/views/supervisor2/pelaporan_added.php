@@ -288,6 +288,28 @@
                             </div>
                         </div> -->
 
+                        
+                        <label for="judul">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="judul" name="judul" class="form-control">
+                            </div>
+                        </div>
+
+                        <label for="subtask">subtask</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="subtask" name="subtask" class="form-control">
+                            </div>
+                        </div>
+
+                        <label for="tanggal">Tenggat waktu</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="date" id="tanggal" name="tanggal" class="form-control">
+                            </div>
+                        </div>
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
                                 CHANGES</button>
@@ -522,6 +544,8 @@
             modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namahd option:selected').text(div.data('nama'));
+            modal.find('#judul').attr("value", div.data('judul'));
+            modal.find('#tanggal').attr("value", div.data('tanggal'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));

@@ -43,7 +43,6 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle_by</th>
-                                        <th>Subtask</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -61,7 +60,6 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
-                                        <th>Subtask</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -128,7 +126,6 @@
 
                                             </td>
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
-                                            <td><?= $dp['subtask'];?></td>
                                             <td>
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
@@ -415,12 +412,27 @@
                             </div>
                         </div>
 
-                        <label for="maxday">Subtask</label>
+                        <label for="judul">Judul</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="text" id="subtask" name="subtask" class="form-control">
+                                <input value="" type="text" id="judul2" name="judul2" class="form-control">
                             </div>
                         </div>
+
+                        <label for="subtask">Subtask</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="subtask2" name="subtask2" class="form-control">
+                            </div>
+                        </div>
+
+                        <label for="tanggal">Tenggat waktu</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="date" id="tanggal2" name="tanggal2" class="form-control">
+                            </div>
+                        </div>
+
                         
                         <!-- <label for="kategori">Category</label>
                         <div class="form-group">
@@ -593,6 +605,8 @@
             modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namahd option:selected').text(div.data('nama'));
+            modal.find('#judul').attr("value", div.data('judul'));
+            modal.find('#tanggal').attr("value", div.data('tanggal'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));
