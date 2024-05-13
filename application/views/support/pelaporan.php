@@ -174,14 +174,10 @@
                                                         class="icon-name">Finish</span>
                                                 </div>
                                             </div> -->
-
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a>
-
-                                                <br>
-                                                <br> -->
+                                            <a class="btn btn-sm btn-info"
+                                                href="<?= base_url() ?>support/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>Detail</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
