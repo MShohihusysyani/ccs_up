@@ -73,8 +73,8 @@
                                     </div>
                                     </div>
                             </div>
+                            <?php } ?>
 
-                        <?php } ?>
                             <?php
                                     $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE'");
 
@@ -85,7 +85,7 @@
                                 <div class="icon">
                                         <a href="<?php echo base_url('supervisor/onprogress') ?>">
                                             <i class="material-icons">assignment_turned_in</i>
-                                         </a>
+                                        </a>
                                     </div>
                                     <div class="content">
                                         <div class="text">HANDLE</div>
@@ -137,6 +137,28 @@
                                 </div>
                             </div>
                             <?php } ?>
+
+                            <?php
+                                $totalp = $this->db->query("SELECT count(no_tiket) as totalt FROM pelaporan");
+
+                                foreach ($totalp->result() as $total) {
+                                ?>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="info-box bg-cyan hover-expand-effect">
+                                    <div class="icon">
+                                        <a href="<?php echo base_url('supervisor/allticket') ?>">
+                                            <i class="material-icons">confirmation_number</i>
+                                        </a>
+                                    </div>
+                                    <div class="content">
+                                        <div class="text">All Ticket</div>
+                                        <!-- <div class="number"><?php echo $total->totalp ?></div> -->
+                                        <div class="number count-to" data-from="0" data-to="<?php echo $total->totalt ?>" data-speed="1000" data-fresh-interval="20"><?php echo $total->totalp ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+
                         </div>
                     </div>
                 </div>
