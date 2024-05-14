@@ -9,7 +9,7 @@ min-height: 200px;
 }
 .ck-content .image {
 /* Block images */
-max-width: 60%;
+max-width: 50%;
 margin: 20px auto;
 
 }
@@ -325,6 +325,7 @@ margin: 20px auto;
             'paragraph'
 
             ]
+            width : 30
         </script>
 
 <!-- <script>
