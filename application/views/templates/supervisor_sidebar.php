@@ -217,7 +217,7 @@
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">drafts</i>
+                            <i class="material-icons">confirmation_number</i>
                             <span>List Tiket</span>
                         </a>
                         <ul class="ml-menu">
