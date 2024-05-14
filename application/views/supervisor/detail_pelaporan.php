@@ -323,7 +323,6 @@ margin: 20px auto;
             });
             RemoveFormat : [
             'paragraph'
-
             ]
         </script>
 
