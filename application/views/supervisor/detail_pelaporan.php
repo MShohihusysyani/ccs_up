@@ -131,7 +131,7 @@ margin: 20px auto;
                         
                         <a href="<?= base_url('helpdesk/forward') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">Kembali</a>
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD</button>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">send</i></button>
                         <?php endforeach; ?>
                     </form>
 
