@@ -188,7 +188,7 @@ child {
                         'bulletedList', 'numberedList', 'todoList','|',
                         'fontSize', 'fontFamily', 'fontColor', '|',
                         'alignment', '|',
-                        'link', 'uploadImage', 'uploadFile', 'blockQuote', 'insertTable', 'mediaEmbed','|',
+                        'link', 'uploadImage','blockQuote', 'insertTable', 'mediaEmbed','|',
                         'undo', 'redo',
 
                     ],
