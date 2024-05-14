@@ -375,6 +375,10 @@
                     'CaseChange'
                 ]
             });
+            RemoveFormat : [
+            'paragraph'
+
+            ]
         </script>
 
     <!-- Script -->

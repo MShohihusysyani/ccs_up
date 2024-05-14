@@ -1,17 +1,21 @@
 <style>
-            #container {
-                width: 1000px;
-                margin: 20px auto;
-            }
-            .ck-editor__editable[role="textbox"] {
-                /* Editing area */
-                min-height: 200px;
-            }
-            .ck-content .image {
-                /* Block images */
-                max-width: 80%;
-                margin: 20px auto;
-            }
+#container {
+    width: 1000px;
+    margin: 20px auto;
+}
+.ck-editor__editable[role="textbox"] {
+ /* Editing area */
+min-height: 200px;
+}
+.ck-content .image {
+/* Block images */
+max-width: 60%;
+margin: 20px auto;
+
+child {
+
+}
+}
         </style>
 <section class="content">
     <div class="container-fluid">
@@ -154,11 +158,14 @@
                                 <br><?= $dc['body'];?>
                             </p>
                         </div>
-                    <!-- <form>
-                        <textarea  class="form-control" >
-                        <?= $dc['nama_user'];?>  ,  <?= $dc['body'];?>
-                        </textarea>
-                    </form> -->
+<!--                     
+                        <textarea id="editor"  class="form-control" >
+                            <p>
+                                <b><?= $dc['nama_user'];?></b>
+                                <br><?= $dc['body'];?>
+                            </p>
+                        </textarea> -->
+                
                 </div>
                 <?php } } ?>
             </div>
@@ -262,20 +269,20 @@
                     }
                 },
                 // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-                mention: {
-                    feeds: [
-                        {
-                            marker: '@',
-                            feed: [
-                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
-                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
-                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
-                                '@sugar', '@sweet', '@topping', '@wafer'
-                            ],
-                            minimumCharacters: 1
-                        }
-                    ]
-                },
+                // mention: {
+                //     feeds: [
+                //         {
+                //             marker: '@',
+                //             feed: [
+                //                 '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                //                 '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                //                 '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                //                 '@sugar', '@sweet', '@topping', '@wafer'
+                //             ],
+                //             minimumCharacters: 1
+                //         }
+                //     ]
+                // },
                 // The "superbuild" contains more premium features that require additional configuration, disable them below.
                 // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
                 removePlugins: [
@@ -317,15 +324,19 @@
                 ]
         
             });
+            RemoveFormat : [
+            'paragraph'
+
+            ]
         </script>
 
-<script>
+<!-- <script>
     CKEDITOR.replace('editor1', {
-      extraPlugins: 'widget',
-      height: 300,
-      removeButtons: 'PasteFromWord'
+    extraPlugins: 'widget',
+    height: 300,
+    removeButtons: 'PasteFromWord'
     });
-  </script>
+</script> -->
 
 <!-- <script>
         ClassicEditor

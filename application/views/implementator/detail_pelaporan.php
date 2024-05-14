@@ -311,6 +311,10 @@
                     'CaseChange'
                 ]
             });
+            RemoveFormat : [
+            'paragraph'
+
+            ]
         </script>
 
 <!--<script>
