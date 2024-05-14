@@ -20,6 +20,7 @@
       <!-- ckeditor -->
     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script> -->
     <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/super-build/ckeditor.js"></script>
+    <!-- <script src="http://cdn.ckeditor.com/4.6.2/standard-all/ckeditor.js"></script> -->
 
     <!-- Bootstrap Core Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">

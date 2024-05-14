@@ -220,7 +220,7 @@ class Supervisor2 extends CI_Controller
         $this->form_validation->set_rules('user_id','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
-        $body = htmlspecialchars($this->input->post('body'));
+        $body = $this->input->post('body');
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,

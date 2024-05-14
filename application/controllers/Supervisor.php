@@ -466,7 +466,7 @@ class Supervisor extends CI_Controller
         $this->form_validation->set_rules('user_id','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
-        $body = htmlspecialchars($this->input->post('body'));
+        $body = $this->input->post('body');
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,
@@ -476,6 +476,31 @@ class Supervisor extends CI_Controller
         $this->db->insert('comment', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('supervisor/detail_pelaporan/'.$id_pelaporan));
+    }
+
+    public function ck_upload(){
+
+        
+    if(isset($_FILES['upload']['name']))
+    {
+    $file = $_FILES['upload']['tmp_name'];
+    $file_name = $_FILES['upload']['name'];
+    $file_name_array = explode(".", $file_name);
+    $extension = end($file_name_array);
+    $new_image_name = rand() . '.' . $extension;
+    chmod('upload', 0777);
+    $allowed_extension = array("jpg", "gif", "png");
+    if(in_array($extension, $allowed_extension))
+    {
+    move_uploaded_file($file, 'assets/files' . $new_image_name);
+    $function_number = $_GET['CKEditorFuncNum'];
+    $url = 'assets/files' . $new_image_name;
+    $message = '';
+    echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($function_number, '$url', '$message');</script>";
+    }
+    }
+
+
     }
 
 
@@ -542,7 +567,7 @@ class Supervisor extends CI_Controller
 
         // public function dateKategori()
         // {
-          
+        
         //     $tgla = $this->input->post('tgla');
         //     $tglb = $this->input->post('tglb');
         //     $nama_kategori = $this->input->post('nama_kategori');

@@ -1,3 +1,18 @@
+<style>
+            #container {
+                width: 1000px;
+                margin: 20px auto;
+            }
+            .ck-editor__editable[role="textbox"] {
+                /* Editing area */
+                min-height: 200px;
+            }
+            .ck-content .image {
+                /* Block images */
+                max-width: 80%;
+                margin: 20px auto;
+            }
+        </style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -159,20 +174,16 @@
                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
                 toolbar: {
                     items: [
-                        'exportPDF','exportWord', '|',
+                        '|',
                         'findAndReplace', 'selectAll', '|',
                         'heading', '|',
-                        'bold', 'italic', 'strikethrough', 'underline', '', '|',
-                        'bulletedList', 'numberedList', 'todoList', '|',
-                        '', '', '|',
-                        'undo', 'redo',
-                        '-',
-                        'fontSize', 'fontFamily', 'fontColor', '', '', '|',
+                        'bold', 'italic', 'strikethrough', 'underline','|',
+                        'bulletedList', 'numberedList', 'todoList','|',
+                        'fontSize', 'fontFamily', 'fontColor', '|',
                         'alignment', '|',
-                        'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '', '', '|',
-                        '', '', '', '|',
-                        '', '|',
-                        ''
+                        'link', 'uploadImage', 'uploadFile', 'blockQuote', 'insertTable', 'mediaEmbed','|',
+                        'undo', 'redo',
+
                     ],
                     shouldNotGroupWhenFull: true
                 },
@@ -304,8 +315,17 @@
                     'PasteFromOfficeEnhanced',
                     'CaseChange'
                 ]
+        
             });
         </script>
+
+<script>
+    CKEDITOR.replace('editor1', {
+      extraPlugins: 'widget',
+      height: 300,
+      removeButtons: 'PasteFromWord'
+    });
+  </script>
 
 <!-- <script>
         ClassicEditor
