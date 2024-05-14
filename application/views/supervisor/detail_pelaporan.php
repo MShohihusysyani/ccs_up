@@ -12,9 +12,6 @@ min-height: 200px;
 max-width: 60%;
 margin: 20px auto;
 
-child {
-
-}
 }
         </style>
 <section class="content">
