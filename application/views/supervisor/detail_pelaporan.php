@@ -153,7 +153,8 @@ margin: 20px auto;
                             <p>
                                 <b><?= $dc['nama_user'];?></b>
                                 <br><?= $dc['body'];?>
-                            </p>
+
+                                <button  class="btn btn-sm btn-primary" id="reply"><i class="material-icons">reply</i></button>
                         </div>
 <!--                     
                         <textarea id="editor"  class="form-control" >
@@ -170,6 +171,18 @@ margin: 20px auto;
         <!-- end comment -->
     </div>
 </section>
+
+<!-- Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("reply").click(function(){
+    $("body").toggle();
+  });
+});
+</script>
 
 <script>
             // This sample still does not showcase all CKEditor&nbsp;5 features (!)
