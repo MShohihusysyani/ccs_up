@@ -130,8 +130,8 @@
             </div>
         </div>
 
-        <!-- comment -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+       <!-- comment -->
+       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="card">
                 <div class="header">
                     <h2>
@@ -139,35 +139,20 @@
                 </div>
                 <?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
                 <div class="body">
-                        <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child " style=" margin:auto;">
+                        <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child" style="margin:auto;">
                             <p>
                                 <b><?= $dc['nama_user'];?></b>
                                 <br><?= $dc['body'];?>
                             </p>
                         </div>
-                    <!-- <form>
-                        <textarea  class="form-control">
-                                <?= $dc['nama_user'];?><br>
-                                <?= $dc['body'];?>
-                        </textarea>
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Input</button>
-
-                        <div class="media border">
-                            <img src="<?= base_url('assets/'); ?>images/user.png" alt="" class="mr-3 mt-3 rounded-circle" style="width:30px;">
-                            <div class="media-body">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h4> <?= $dc['nama_user'];?></h4>
-                                        <p><?= $dc['body'];?></p>
-                                    </div>
-                                    <div class="col-sm-12" align="right">
-                                        <button type="button" class="btn btn-primary reply" id="'.$dc["id_comment"].'">Reply</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form> -->
+<!--                     
+                        <textarea id="editor"  class="form-control" >
+                            <p>
+                                <b><?= $dc['nama_user'];?></b>
+                                <br><?= $dc['body'];?>
+                            </p>
+                        </textarea> -->
+                
                 </div>
                 <?php } } ?>
             </div>
