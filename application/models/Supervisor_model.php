@@ -115,7 +115,7 @@ class Supervisor_model extends CI_Model {
 
     public function ambil_id_comment($id){
 
-        $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id, comment.id_comment
+        $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id, comment.id_comment, comment.file
         FROM comment
         LEFT JOIN user ON comment.user_id=user.id_user
         WHERE comment.pelaporan_id='$id'";

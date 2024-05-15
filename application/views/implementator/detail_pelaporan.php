@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
         <?= $this->session->flashdata('message'); ?>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
                     <h2>
@@ -99,6 +99,18 @@
                         <textarea id="editor" class="form-control" name="body" id="body">
                                 
                         </textarea>
+
+                        <label for="nama">File</label>
+                        <div class="form-group">
+                            <label for="exampleInputFile"></label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file" name="file">
+                                    <label for="file" class="custom-file-label">Choose
+                                        file</label>
+                                </div>
+                            </div>
+                        </div>
                         <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
                         
                         <a href="<?= base_url('implementator/pelaporan') ?>" type="button"
@@ -113,7 +125,7 @@
         </div>
 
         <!-- comment -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
                     <h2>
@@ -124,7 +136,9 @@
                         <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue child" style="margin:auto;">
                             <p>
                                 <b><?= $dc['nama_user'];?></b>
-                                <br><?= $dc['body'];?>
+                                <br><?= $dc['body'];?> <a href="<?= base_url('assets/comment/' . $dc['file']); ?>"><?= $dc['file']; ?></a>
+                                <br>
+                                <button  class="btn btn-sm btn-primary" id="reply"><i class="material-icons">reply</i></button>
                             </p>
                         </div>
                     <!-- <form>

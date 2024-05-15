@@ -216,6 +216,28 @@ class Supervisor2 extends CI_Controller
 
     public function add_comment()
     {
+
+       //jika ada gambar
+        $photo = $_FILES['file']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/comment/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file')) {
+ 
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                $referred_from = $this->session->userdata('referred_from');
+                redirect($referred_from, 'refresh');
+            }
+        }
+
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
         $this->form_validation->set_rules('user_id','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
@@ -224,7 +246,8 @@ class Supervisor2 extends CI_Controller
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,
-            'body' => $body
+            'body' => $body,
+            'file' => $photo
         ];
 
         $this->db->insert('comment', $data);
