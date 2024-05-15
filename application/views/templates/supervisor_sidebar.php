@@ -172,7 +172,7 @@
 
                             <li role="separator" class="divider"></li>
                             <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i
-                                        class="material-icons">input</i>Sign Out</a>
+                                        class="material-icons">logout</i>Sign Out</a>
                             </li>
                             </li>
                         </ul>
