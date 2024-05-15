@@ -13,7 +13,8 @@ max-width: 80%;
 margin: 20px auto;
 
 }
-        </style>
+</style>
+
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -173,6 +174,7 @@ $(document).ready(function(){
     $("body").toggle();
   });
 });
+
 </script>
 
 <script>
@@ -331,13 +333,6 @@ $(document).ready(function(){
             ]
         </script>
 
-<!-- <script>
-    CKEDITOR.replace('editor1', {
-    extraPlugins: 'widget',
-    height: 300,
-    removeButtons: 'PasteFromWord'
-    });
-</script> -->
 
 <!-- <script>
         ClassicEditor
@@ -346,21 +341,3 @@ $(document).ready(function(){
                 console.error( error );
             } );
 </scripipt> -->
-
-<!--<script>
-    ClassicEditor
-    .create( document.querySelector( '#editor' ), {
-        simpleUpload: {
-            // The URL that the images are uploaded to.
-            
-        }
-    } )
-    .then( editor => {
-        window.editor = editor;
-    } )
-    .catch( err => {
-        console.error( err.stack );
-    } );
-</scipt> -->
-
-

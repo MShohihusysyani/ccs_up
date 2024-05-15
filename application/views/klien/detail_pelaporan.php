@@ -272,22 +272,6 @@
             'paragraph'
 
             ]
-        </script>
-
-<!--<script>
-    ClassicEditor
-    .create( document.querySelector( '#editor' ), {
-        simpleUpload: {
-            // The URL that the images are uploaded to.
-            
-        }
-    } )
-    .then( editor => {
-        window.editor = editor;
-    } )
-    .catch( err => {
-        console.error( err.stack );
-    } );
-</script> -->
+</script>
 
 
