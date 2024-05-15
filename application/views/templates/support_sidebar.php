@@ -89,6 +89,15 @@
 
                         </ul>
                     </li>
+
+                    <li>
+                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                        <a href="<?php echo base_url('support/data_pelaporan') ?>">
+                            <i class="material-icons">view_list</i>
+                            <span>Data Pelaporan</span>
+                        </a>
+                    </li>
+
                     <li class="header">LABELS</li>
                     <li>
                         <a href="javascript:void(0);">

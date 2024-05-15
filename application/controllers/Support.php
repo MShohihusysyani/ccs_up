@@ -35,6 +35,24 @@ class Support extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    // DATA PELAPORAN FINISH
+    public function data_pelaporan()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $data['category'] = $this->category_model->getNamakategori();
+
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanSupport();
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/support_sidebar');
+        $this->load->view('support/data_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)
     {
