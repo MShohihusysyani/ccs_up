@@ -79,8 +79,8 @@
                     </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">drafts</i>
-                            <span>Kelola Pelaporan</span>
+                            <i class="material-icons">confirmation_number</i>
+                            <span>List Ticket</span>
                         </a>
                         <ul class="ml-menu">
                             <li>

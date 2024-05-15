@@ -95,28 +95,21 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li
-                        class="<?= $this->uri->segment(2) == 'rekap' || $this->uri->segment(2) == 'divpengajuan' || $this->uri->segment(2) == 'pengajuan' || $this->uri->segment(2) == 'pengajuan2' || $this->uri->segment(2) == 'pengajuan3' || $this->uri->segment(2) == 'pengajuan4' ? 'active' : ' ' ?>">
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">view_list</i>
-                            <span>Kelola Data</span>
-                        </a>
-                        <ul class="ml-menu">
-                            
-                            <li>
-                                <a href="<?php echo base_url('klien/pengajuan') ?>">
-                                    <span>Pelaporan</span>
-                                </a>
-                            </li>
-                            
-                            <li>
-                                <a href="<?php echo base_url('klien/datapelaporan') ?>">
-                                    <span>Data Pelaporan</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
 
+                    <li>
+                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                        <a href="<?php echo base_url('klien/pengajuan') ?>">
+                            <i class="material-icons">confirmation_number</i>
+                            <span>New Ticket</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                        <a href="<?php echo base_url('klien/datapelaporan') ?>">
+                            <i class="material-icons">view_list</i>
+                            <span>Data Pelaporan</span>
+                        </a>
                     </li>
 
                     <li>
@@ -127,12 +120,11 @@
                         <ul class="ml-menu">
                             <li>
                                 <a href="<?php echo base_url('klien/bank_knowlage') ?>">
-                                    <span>Bank Know Lage</span>
+                                    <span>Bank Knowlage</span>
                                 </a>
                             </li>
                             
                         </ul>
-
                     </li>
 
                     <li class="header">LABELS</li>

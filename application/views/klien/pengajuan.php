@@ -229,20 +229,14 @@
                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
                 toolbar: {
                     items: [
-                        'exportPDF','exportWord', '|',
                         'findAndReplace', 'selectAll', '|',
                         'heading', '|',
                         'bold', 'italic', 'strikethrough', 'underline', '', '|',
-                        'bulletedList', 'numberedList', 'todoList', '|',
-                        '', '', '|',
-                        'undo', 'redo',
-                        '-',
+                        'bulletedList', 'numberedList', 'todoList','|',
                         'fontSize', 'fontFamily', 'fontColor', '', '', '|',
                         'alignment', '|',
                         'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '', '', '|',
-                        '', '', '', '|',
-                        '', '|',
-                        ''
+                        'undo', 'redo',
                     ],
                     shouldNotGroupWhenFull: true
                 },

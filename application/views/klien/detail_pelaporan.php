@@ -64,21 +64,11 @@
                             </div>
                         </div>
 
-                        <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                        <label for="file">File</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="700"
                                     height="700" class="img-thumbnail">
-                                <!-- <div class="form-group">
-                                    <label for="exampleInputFile"></label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="file"
-                                                name="file">
-
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
 
@@ -137,7 +127,6 @@
                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
                 toolbar: {
                     items: [
-                        '|',
                         'findAndReplace', 'selectAll', '|',
                         'heading', '|',
                         'bold', 'italic', 'strikethrough', 'underline','|',

@@ -105,21 +105,11 @@ margin: 20px auto;
                             </div>
                         </div>
 
-                        <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                        <label for="nama">File</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="700"
                                     height="700" class="img-thumbnail">
-                                <!-- <div class="form-group">
-                                    <label for="exampleInputFile"></label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="file"
-                                                name="file">
-
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
 
@@ -176,6 +166,7 @@ margin: 20px auto;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 <script>
 $(document).ready(function(){
   $("reply").click(function(){
@@ -185,6 +176,7 @@ $(document).ready(function(){
 </script>
 
 <script>
+
             // This sample still does not showcase all CKEditor&nbsp;5 features (!)
             // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
             CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
@@ -198,8 +190,8 @@ $(document).ready(function(){
                         'bulletedList', 'numberedList', 'todoList','|',
                         'fontSize', 'fontFamily', 'fontColor', '|',
                         'alignment', '|',
-                        'link', 'uploadImage','blockQuote', 'insertTable', 'mediaEmbed','|',
-                        'undo', 'redo',
+                        'link', 'uploadImage', 'ckbox', 'blockQuote', 'insertTable', 'mediaEmbed','|',
+                        'undo', 'redo'
 
                     ],
                     shouldNotGroupWhenFull: true

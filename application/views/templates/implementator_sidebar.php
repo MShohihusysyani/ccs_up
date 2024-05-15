@@ -80,8 +80,8 @@
                     <li>
                         <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
                         <a href="<?php echo base_url('implementator/pelaporan') ?>">
-                            <i class="material-icons">view_list</i>
-                            <span>Kelola Pelaporan</span>
+                            <i class="material-icons">confirmation_number</i>
+                            <span>List Ticket</span>
                         </a>
                     </li>
 
