@@ -280,7 +280,6 @@
                             </div>
                         </div>
 
-
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
                                 CHANGES</button>
