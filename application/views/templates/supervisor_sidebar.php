@@ -190,83 +190,102 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li>
+
+                    <li
+                        <?= $this->uri->segment(2) == 'category' || $this->uri->segment(2) == 'client' || $this->uri->segment(2) == 'user' || $this->uri->segment(2) == 'getDataUser'  ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">storage</i>
                             <span>Kelola Data</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'category' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/category') ?>">Data Kategori</a>
-                            </li>  
+                            </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'client' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/client') ?>">Data BPR</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'user' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/user') ?>">Data User</a>
                             </li>
-                            
-                            <li>
+
+                            <li
+                                <?= $this->uri->segment(2) == 'getDataUser' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('user/getDataUser') ?>">Aktivasi User</a>
                             </li>
-                        </ul>
 
+                        </ul>
                     </li>
 
-                    <li>
+
+                    <li
+                        <?= $this->uri->segment(2) == 'AllTicket' || $this->uri->segment(2) == 'added' || $this->uri->segment(2) == 'onprogress' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'close' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">confirmation_number</i>
-                            <span>List Tiket</span>
+                            <span>List Ticket</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'AllTicket' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/AllTicket') ?>">All Ticket</a>
-                            </li>  
+                            </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'added' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/added') ?>">Added</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'onprogress' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/onprogress') ?>">On Progress</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'close' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/close') ?>">Close</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'finish' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/finish') ?>">Finish</a>
                             </li>
-                        </ul>
 
+                        </ul>
                     </li>
 
-                    <li>
+
+                    <li
+                        <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == 'rekapProgres'  ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">archive</i>
                             <span>Laporan</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/rekapPelaporan') ?>">Rekap Pelaporan</a>
-                            </li>  
+                            </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/rekapKategori') ?>">Rekap Kategori</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/rekapHelpdesk') ?>">Rekap Helpdesk</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/rekapProgres') ?>">Rekap Progres</a>
                             </li>
-                        </ul>
 
+                        </ul>
                     </li>
 
                     <li class="header">LABELS</li>

@@ -96,16 +96,14 @@
                         </a>
                     </li>
 
-                    <li>
-                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                    <li <?= $this->uri->segment(2) == 'pengajuan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('klien/pengajuan') ?>">
                             <i class="material-icons">confirmation_number</i>
                             <span>New Ticket</span>
                         </a>
                     </li>
 
-                    <li>
-                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                    <li <?= $this->uri->segment(2) == 'datapelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('klien/datapelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>

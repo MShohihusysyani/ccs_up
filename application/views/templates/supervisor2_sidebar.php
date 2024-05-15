@@ -217,34 +217,40 @@
                         </ul>
 
                     </li> -->
-
-                    <li>
+                    
+                    <li
+                        <?= $this->uri->segment(2) == 'AllTicket' || $this->uri->segment(2) == 'added' || $this->uri->segment(2) == 'onprogress' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'close' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">confirmation_number</i>
-                            <span>List Tiket</span>
+                            <span>List Ticket</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'AllTicket' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor2/AllTicket') ?>">All Ticket</a>
-                            </li>  
+                            </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'added' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor2/added') ?>">Added</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'onprogress' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor2/onprogress') ?>">On Progress</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'close' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor2/close') ?>">Close</a>
                             </li>
 
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'finish' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor2/finish') ?>">Finish</a>
                             </li>
-                        </ul>
 
+                        </ul>
                     </li>
 <!-- 
                     <li>

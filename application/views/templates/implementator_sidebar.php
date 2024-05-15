@@ -77,22 +77,20 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li>
-                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                    
+                    <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('implementator/pelaporan') ?>">
                             <i class="material-icons">confirmation_number</i>
                             <span>List Ticket</span>
                         </a>
                     </li>
 
-                    <li>
-                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                    <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('implementator/data_pelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
                         </a>
                     </li>
-
 
                     <li class="header">LABELS</li>
                     <li>

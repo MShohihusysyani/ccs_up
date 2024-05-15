@@ -77,26 +77,21 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
+
+                    <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                        <a href="<?php echo base_url('support/pelaporan') ?>">
                             <i class="material-icons">confirmation_number</i>
                             <span>List Ticket</span>
                         </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="<?php echo base_url('support/pelaporan') ?>">Added</a>
-                            </li>
-
-                        </ul>
                     </li>
 
-                    <li>
-                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                    <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('support/data_pelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
                         </a>
                     </li>
+
 
                     <li class="header">LABELS</li>
                     <li>

@@ -77,34 +77,37 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    
-                    <li>
+
+                    <li
+                        <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">confirmation_number</i>
                             <span>List Ticket</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
+                            <li
+                                <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('helpdesk/pelaporan') ?>">Added</a>
                             </li>
-                            
-                            <li>
+
+                            <li
+                                <?= $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('helpdesk/forward') ?>">Forward</a>
                             </li>
 
-                            <li>
-                                <a href="<?php echo base_url('helpdesk/reject') ?>">Reject</a>
+                            <li
+                                <?= $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('helpdesk/reject') ?>">Close</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <!-- <?= $this->uri->segment(2) == 'jabatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+
+                    <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('helpdesk/data_pelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
                         </a>
                     </li>
-
 
                     <li class="header">LABELS</li>
                     <li>
