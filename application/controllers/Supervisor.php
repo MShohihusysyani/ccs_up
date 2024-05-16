@@ -311,80 +311,9 @@ class Supervisor extends CI_Controller
         $this->load->view('supervisor/pelaporan_finish', $data);
         $this->load->view('templates/footer');
     }
-    // EDIT CCS
-    public function updateccs($id)
-    {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-        $this->load->model('Category_model', 'category_model');
-        $data['category']      = $this->category_model->getCategory();
-        
-
-        $this->load->model('User_model', 'user_model');
-        $data['namahd'] = $this->user_model->getNamaUser();
-        
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/edit_ccs', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function fungsi_edit_ccs()
-    {
-        $this->load->model('Category_model', 'category_model');
-        $data['category'] = $this->category_model->getCategory();
-
-        // $data['category'] = $this->db->get_where('category', ['nama_kategori' => $this->input->post('kategori')])->row_array();
-        $id = $this->input->post('id_pelaporan');
-        $no_tiket = $this->input->post('no_tiket');
-        $perihal = $this->input->post('perihal');
-        $status = $this->input->post('status');
-        $status_ccs = $this->input->post('status_ccs');
-        $priority = $this->input->post('priority');
-        $kategori = $this->input->post('kategori');
-        $maxday = $this->input->post('maxday');
-
-
-        //jika ada gambar
-        // $photo = $_FILES['file']['name'];
-
-        // if ($photo) {
-        //     $config['allowed_types'] = 'pdf|xlsx|docx|jpg|png';
-        //     $config['max_size'] = '2048';
-        //     $config['upload_path'] = './assets/files/';
-
-        //     $this->load->library('upload', $config);
-        //     $this->upload->initialize($config);
-
-        //     if ($this->upload->do_upload('file')) {
-        //         $old_image = $data['pelaporan']['file'];
-        //         if ($old_image != '') {
-        //             unlink(FCPATH . 'assets/files/' . $old_image);
-        //         }
-        //         $new_image = $this->upload->data('file_name');
-        //         $this->db->set('file', $new_image);
-        //     } else {
-        //         $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-        //         redirect('supervisor/edit_ccs');
-        //     }
-        // }
-        $this->db->set('no_tiket', $no_tiket);
-        $this->db->set('perihal', $perihal);
-        $this->db->set('status', $status);
-        $this->db->set('status_ccs', $status_ccs);
-        $this->db->set('priority', $priority);
-        $this->db->set('kategori', $kategori);
-        $this->db->set('maxday', $maxday);
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan');
-        $this->session->set_flashdata('pesan', 'Success!');
-        Redirect(base_url('supervisor/added'));
-    }
 
     public function edit_pelaporan()
     {
-        
-
         $id_pelaporan = $this->input->post('id_pelaporan');
         $no_tiket     = $this->input->post('no_tiket');
         $perihal      = $this->input->post('perihal');

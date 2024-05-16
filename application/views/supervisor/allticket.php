@@ -146,10 +146,6 @@
     <!-- Button trigger modal -->
 </section>
 
-        
-
-
-
 <!-- modal cari kategori -->
 <div class="modal fade" id="defaultModalNamaKategori" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
