@@ -15,7 +15,6 @@ class Supervisor2 extends CI_Controller
         $this->load->model('Supervisor_model', 'supervisor_model');
         $data['data_bpr'] = $this->supervisor_model->getKlien();
         
-        
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/dashboard', $data);
@@ -111,10 +110,8 @@ class Supervisor2 extends CI_Controller
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d');
 
-
         $id         = $this->input->post('id_pelaporan');
         $no_tiket   = $this->input->post('no_tiket');
-        //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
         $nama       = $this->input->post('nama');
         $perihal    = $this->input->post('perihal');
         $status_ccs ='FINISH';
@@ -123,9 +120,7 @@ class Supervisor2 extends CI_Controller
         $maxday     = $this->input->post('maxday');
         $kategori   = $this->input->post('kategori');
         $ArrUpdate  = array(
-
             'no_tiket'       => $no_tiket,
-            //    'waktu_pelaporan' => $waktu_pelaporan,
             'nama'           => $nama,
             'perihal'        => $perihal,
             'status_ccs'     => $status_ccs,
@@ -133,7 +128,6 @@ class Supervisor2 extends CI_Controller
             'priority'       => $priority,
             'maxday'         => $maxday,
             'kategori'       => $kategori
-
         );
         $this->pelaporan_model->approveSPV($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Approve!');
@@ -180,7 +174,6 @@ class Supervisor2 extends CI_Controller
         $this->load->model('Category_model', 'category_model');
         $data['category'] = $this->category_model->getNamaKategori();
 
-
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/pilih_helpdesk', $data);
@@ -200,7 +193,6 @@ class Supervisor2 extends CI_Controller
         Redirect(base_url('supervisor2/added'));
     }
 
-    
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)
     {
@@ -308,7 +300,6 @@ class Supervisor2 extends CI_Controller
         $user = $query->row();
         $nama_user = $user->nama_user;
 
-        
         $this->db->update('t1_forward', $data);
         $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Teknisi has been update!');
@@ -341,7 +332,6 @@ class Supervisor2 extends CI_Controller
         $user = $query->row();
         $nama_user = $user->nama_user;
 
-        
         $this->db->insert('t2_forward', $data);
         $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Teknisi has been update!');

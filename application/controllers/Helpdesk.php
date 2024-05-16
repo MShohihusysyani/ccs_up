@@ -79,7 +79,6 @@ class Helpdesk extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanHD();
 
-
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
         $this->load->view('helpdesk/data_pelaporan', $data);
@@ -92,7 +91,7 @@ class Helpdesk extends CI_Controller
     {
         // date_default_timezone_set('Asia/Jakarta');
         # add your city to set local time zone
-  
+        
         $id              = $this->input->post('id_pelaporan');
         $no_tiket        = $this->input->post('no_tiket');
         $waktu_pelaporan = $this->input->post('waktu_pelaporan');
@@ -104,7 +103,7 @@ class Helpdesk extends CI_Controller
         $maxday          = $this->input->post('maxday');
         $kategori        = $this->input->post('kategori');
         $ArrUpdate       = array(
-   
+
             'no_tiket'        => $no_tiket,
             'waktu_pelaporan' => $waktu_pelaporan,
             'nama'            => $nama,

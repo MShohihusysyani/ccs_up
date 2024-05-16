@@ -45,7 +45,6 @@ class Support extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanSupport();
 
-
         $this->load->view('templates/header');
         $this->load->view('templates/support_sidebar');
         $this->load->view('support/data_pelaporan', $data);
@@ -80,7 +79,6 @@ class Support extends CI_Controller
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('file')) {
-
                 $photo = $this->upload->data('file_name');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');

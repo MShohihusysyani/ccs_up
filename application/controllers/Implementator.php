@@ -44,8 +44,7 @@ class Implementator extends CI_Controller
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanImplementator();
-
-
+        
         $this->load->view('templates/header');
         $this->load->view('templates/implementator_sidebar');
         $this->load->view('implementator/data_pelaporan', $data);

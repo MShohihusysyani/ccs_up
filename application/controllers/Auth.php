@@ -85,7 +85,7 @@ class Auth extends CI_Controller
                     } elseif ($sess_data['role'] == '8') {
                         $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('development');
-
+                        
                     } elseif ($sess_data['role'] == '9') {
                         $this->session->set_flashdata('pesan', 'Successfully Login!');
                         redirect('supervisor2');
@@ -117,7 +117,6 @@ class Auth extends CI_Controller
 
     public function logout()
     {
-        
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('id_user');
         $this->session->unset_userdata('email');
@@ -132,7 +131,6 @@ class Auth extends CI_Controller
         $token = $this->input->get('token');
 
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
-
 
         if ($user) {
             $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
