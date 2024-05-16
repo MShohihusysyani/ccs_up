@@ -378,6 +378,7 @@ class Supervisor extends CI_Controller
         $this->load->model('Supervisor_model', 'supervisor_model');
         $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan($id);
         $data['datacomment']   = $this->supervisor_model->ambil_id_comment($id);
+        $data['datareply']     = $this->supervisor_model->ambil_comment_id($id);
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/detail_pelaporan', $data);
@@ -417,6 +418,27 @@ class Supervisor extends CI_Controller
             'user_id' => $id_user,
             'body' => $body,
             'file' => $photo
+        ];
+
+        $this->db->insert('comment', $data);
+        $this->session->set_flashdata('pesan', 'Successfully Add!');
+        Redirect(Base_url('supervisor/detail_pelaporan/'.$id_pelaporan));
+    }
+
+    public function add_reply()
+    {
+
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('user_id');
+        $body = $this->input->post('body');
+        $comment_id = $this->input->post('id_comment');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user,
+            'body' => $body,
+            'comment_id' => $comment_id
         ];
 
         $this->db->insert('comment', $data);

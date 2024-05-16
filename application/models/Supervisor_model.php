@@ -123,6 +123,18 @@ class Supervisor_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+    public function ambil_comment_id($id){
+
+        
+        $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id,  comment.file, comment.comment_id
+        FROM comment
+        LEFT JOIN user ON comment.user_id=user.id_user
+        WHERE comment.comment_id='$id'";
+
+        return $this->db->query($query)->result_array();
+    }
+
+
 }
 
 
