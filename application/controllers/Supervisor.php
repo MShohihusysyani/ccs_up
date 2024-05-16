@@ -130,7 +130,6 @@ class Supervisor extends CI_Controller
         $this->load->model('Client_model', 'client_model');
         $data['nama_klien'] = $this->db->get('klien')->result_array();
 
-
         $data['user'] = $this->usermaster_model->getUser();
         $data['klien'] = $this->client_model->getClient();
         $this->load->view('templates/header');
@@ -148,7 +147,6 @@ class Supervisor extends CI_Controller
         $data['password'] = $this->db->get('user')->result_array();
         $data['role']     = $this->db->get('user')->result_array();
         $data['active']   = $this->db->get('user')->result_array();
-
 
         $this->form_validation->set_rules('no_urut', 'No Urut', 'required');
         $this->form_validation->set_rules('nama_klien', 'Kategory', 'required');
@@ -286,10 +284,8 @@ class Supervisor extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanClose();
 
-
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
-
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
@@ -452,7 +448,7 @@ class Supervisor extends CI_Controller
             $this->load->model('Pelaporan_model', 'pelaporan_model');
             $data['klien'] = $this->client_model->getClient();
             $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien);
-            
+
             $this->load->view('templates/header');
             $this->load->view('templates/supervisor_sidebar');
             $this->load->view('supervisor/rekap_pelaporan', $data);
