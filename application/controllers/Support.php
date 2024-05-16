@@ -7,7 +7,6 @@ class Support extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
-      
     }
 
     public function index()

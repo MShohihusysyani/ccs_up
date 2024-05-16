@@ -333,7 +333,6 @@ class Supervisor extends CI_Controller
     {
         $this->load->model('Category_model', 'category_model');
         $data['category'] = $this->category_model->getCategory();
-      
 
         // $data['category'] = $this->db->get_where('category', ['nama_kategori' => $this->input->post('kategori')])->row_array();
         $id = $this->input->post('id_pelaporan');

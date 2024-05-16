@@ -158,7 +158,6 @@ class Klien extends CI_Controller
         $perihal = $this->input->post('perihal');
         $perihal = $this->input->post('perihal');
         $status = $this->input->post('status');
-       
 
         //jika FILE
         $photo = $_FILES['file']['name'];

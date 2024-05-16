@@ -10,7 +10,6 @@ class Klienn extends CI_Controller
 
         $this->load->model('M_klien');
         $this->load->library('form_validation');
-      
     }
 
     public function index()

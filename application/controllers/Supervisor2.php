@@ -229,7 +229,6 @@ class Supervisor2 extends CI_Controller
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('file')) {
- 
                 $photo = $this->upload->data('file_name');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
