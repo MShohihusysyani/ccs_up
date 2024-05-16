@@ -19,12 +19,12 @@ class Superadmin extends CI_Controller
 
     public function AllTicket()
     {
-        $this->load->model('Supervisor_model', 'supervisor_model');
+        $this->load->model('Superadmin_model', 'superadmin_model');
         // $data['kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporan();
+        $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporan();
         
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
@@ -34,12 +34,12 @@ class Superadmin extends CI_Controller
 
     public function added()
     {
-        $this->load->model('Supervisor_model', 'supervisor_model');
+        $this->load->model('Superadmin_model', 'superadmin_model');
         // $data['kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category']      = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
-        $data['dataAdded'] = $this->supervisor_model->getKlienPelaporanAdd();
+        $data['dataAdded'] = $this->superadmin_model->getKlienPelaporanAdd();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -52,16 +52,15 @@ class Superadmin extends CI_Controller
 
     public function onprogress()
     {
-        $this->load->model('Supervisor_model', 'supervisor_model');
+        $this->load->model('Superadmin_model', 'superadmin_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanOP();
+        $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporanOP();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
-
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
@@ -71,12 +70,12 @@ class Superadmin extends CI_Controller
 
     public function close()
     {
-        $this->load->model('Supervisor_model', 'supervisor_model');
+        $this->load->model('Superadmin_model', 'superadmin_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanClose();
+        $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporanClose();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -89,12 +88,12 @@ class Superadmin extends CI_Controller
     
     public function finish()
     {
-        $this->load->model('Supervisor_model', 'supervisor_model');
+        $this->load->model('Superadmin_model', 'superadmin_model');
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanFinish();
+        $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporanFinish();
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
@@ -107,9 +106,9 @@ class Superadmin extends CI_Controller
     public function detail_pelaporan($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Supervisor_model', 'supervisor_model');
-        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan($id);
-        $data['datacomment']   = $this->supervisor_model->ambil_id_comment($id);
+        $this->load->model('Superadmin_model', 'superadmin_model');
+        $data['datapelaporan'] = $this->superadmin_model->ambil_id_pelaporan($id);
+        $data['datacomment']   = $this->superadmin_model->ambil_id_comment($id);
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/detail_pelaporan', $data);
