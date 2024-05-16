@@ -513,7 +513,6 @@ class Supervisor extends CI_Controller
             $this->load->model('Pelaporan_model', 'pelaporan_model');
             $data['pencarian_data'] = $this->pelaporan_model->getHelpdesk();
 
-    
             $this->load->view('templates/header');
             $this->load->view('templates/supervisor_sidebar');
             $this->load->view('supervisor/rekap_helpdesk', $data);
@@ -526,8 +525,7 @@ class Supervisor extends CI_Controller
             $tglb = $this->input->post('tglb');
             $this->load->model('Pelaporan_model', 'pelaporan_model');
             $data['pencarian_data'] = $this->pelaporan_model->getDateHelpdesk($tgla, $tglb);
-    
-    
+            
             $this->load->view('templates/header');
             $this->load->view('templates/supervisor_sidebar');
             $this->load->view('supervisor/rekap_helpdesk', $data);
