@@ -11,9 +11,12 @@ class Superadmin extends CI_Controller
 
     public function index()
     {
+        $this->load->model('Superadmin_model', 'superadmin_model');
+        $data['data_bpr'] = $this->superadmin_model->getKlien();
+
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/dashboard');
+        $this->load->view('superadmin/dashboard', $data);
         $this->load->view('templates/footer');
     }
 

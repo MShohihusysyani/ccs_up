@@ -22,7 +22,7 @@
 
                             </ul>
                             <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
-                                <form class="form-horizontal" action="<?= base_url('user/changepassword_hd1') ?>"
+                                <form class="form-horizontal" action="<?= base_url('user/changepassword_hd') ?>"
                                     method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="OldPassword" class="col-sm-3 control-label">Old Password</label>

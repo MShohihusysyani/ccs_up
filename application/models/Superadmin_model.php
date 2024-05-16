@@ -64,4 +64,12 @@ class Superadmin_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+    
+    public function getKlien()
+    {
+        $query = "SELECT nama, COUNT(nama) AS jumlah FROM pelaporan GROUP BY nama ORDER BY jumlah DESC";
+        return $this->db->query($query)->result_array();
+        
+    }
+
 }

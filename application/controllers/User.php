@@ -125,7 +125,6 @@ class User extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-     
     // public function getUser()
     // {
     //     $this->load->model('User_model', 'user_model');
@@ -190,8 +189,8 @@ class User extends CI_Controller
     }
 
     #EDIT PASSWORD
-    public function changepassword()
-    {
+public function changepassword()
+{
         $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
         $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
@@ -204,22 +203,20 @@ class User extends CI_Controller
             $this->load->view('profile/changepassword', $data);
             $this->load->view('templates/footer');
         } else {
-            $current_passwordhash = password_hash($this->input->post('current_password'), PASSWORD_DEFAULT);
-            $new_passwordhash     = password_hash($this->input->post('new_password1'), PASSWORD_DEFAULT);
-            // $current_password     = MD5($current_passwordhash);
-            // $new_password         = MD5($new_passwordhash);
-            $current_password    = password_verify(($current_passwordhash), PASSWORD_DEFAULT);
-            $new_password        = password_verify(($new_passwordhash), PASSWORD_DEFAULT);
-        if (password_verify($current_password, PASSWORD_DEFAULT) != $data['user']['password']) {
+            $current_password = $this->input->post('current_password');
+            $new_password = $this->input->post('new_password1');
+
+        if (!password_verify($current_password, $data['user']['password'])) {
             $this->session->set_flashdata('alert', 'Wrong current password!');
             redirect('user/changepassword');
 
-        } else if ($current_password == $new_password) {
+        } elseif (password_verify($new_password, $data['user']['password'])) {
             $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
             redirect('user/changepassword');
-            
+
         } else {
-            $this->db->set('password', password_hash($new_password), PASSWORD_DEFAULT);
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $this->db->set('password', $hashed_password);
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $this->db->update('user');
 
@@ -230,79 +227,39 @@ class User extends CI_Controller
 }
 
 public function changepassword_superadmin()
-{
-    $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+    {
+        $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
-    $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
+        $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
+        $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
+        $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
 
-    if ($this->form_validation->run() == false) {
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('profile/changepassword_superadmin', $data);
-        $this->load->view('templates/footer');
-    } else {
-        $current_passwordhash = password_hash($this->input->post('current_password'), PASSWORD_DEFAULT);
-        $new_passwordhash     = password_hash($this->input->post('new_password1'), PASSWORD_DEFAULT);
-        // $current_password     = MD5($current_passwordhash);
-        // $new_password         = MD5($new_passwordhash);
-        $current_password    = password_verify(($current_passwordhash), PASSWORD_DEFAULT);
-        $new_password        = password_verify(($new_passwordhash), PASSWORD_DEFAULT);
-    if (password_verify($current_password, PASSWORD_DEFAULT) != $data['user']['password']) {
-        $this->session->set_flashdata('alert', 'Wrong current password!');
-        redirect('user/changepassword_superadmin');
-
-    } else if ($current_password == $new_password) {
-        $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-        redirect('user/changepassword_superadmin');
-        
-    } else {
-        $this->db->set('password', password_hash($new_password), PASSWORD_DEFAULT);
-        $this->db->where('id_user', $this->session->userdata('id_user'));
-        $this->db->update('user');
-
-        $this->session->set_flashdata('pesan', 'Password Changed!');
-        redirect('user/changepassword_superadmin');
-    }
-}
-}
-
-public function changepassword2()
-{
-    $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
-
-    $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
-
-    if ($this->form_validation->run() == false) {
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor2_sidebar');
-        $this->load->view('profile/changepassword2', $data);
-        $this->load->view('templates/footer');
-
-    } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword2');
-
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword2');
-
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('profile/changepassword_superadmin', $data);
+            $this->load->view('templates/footer');
         } else {
-            $this->db->set('password', $new_password);
+
+            $current_password = $this->input->post('current_password');
+            $new_password = $this->input->post('new_password1');
+
+            if (!password_verify($current_password, $data['user']['password'])) {
+            $this->session->set_flashdata('alert', 'Wrong current password!');
+            redirect('user/changepassword_superadmin');
+
+            } elseif (password_verify($new_password, $data['user']['password'])) {
+            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+            redirect('user/changepassword_superadmin');
+
+            } else {
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $this->db->set('password', $hashed_password);
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $this->db->update('user');
 
-
             $this->session->set_flashdata('pesan', 'Password Changed!');
-            redirect('user/changepassword2');
+            redirect('user/changepassword_superadmin');
         }
     }
 }
@@ -321,24 +278,26 @@ public function changepassword_klien()
         $this->load->view('profile/changepassword_klien', $data);
         $this->load->view('templates/footer');
     } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword_klien');
 
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword_klien');
-            
+        $current_password = $this->input->post('current_password');
+        $new_password = $this->input->post('new_password1');
+
+        if (!password_verify($current_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'Wrong current password!');
+        redirect('user/changepassword_klien');
+
+        } elseif (password_verify($new_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+        redirect('user/changepassword_klien');
+
         } else {
-            $this->db->set('password', $new_password);
-            $this->db->where('id_user', $this->session->userdata('id_user'));
-            $this->db->update('user');
-            $this->session->set_flashdata('pesan', 'Password Changed!');
-            redirect('user/changepassword_klien');
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $this->db->set('password', $hashed_password);
+        $this->db->where('id_user', $this->session->userdata('id_user'));
+        $this->db->update('user');
+
+        $this->session->set_flashdata('pesan', 'Password Changed!');
+        redirect('user/changepassword_klien');
         }
     }
 }
@@ -357,24 +316,26 @@ public function changepassword_hd()
         $this->load->view('profile/changepassword_hd', $data);
         $this->load->view('templates/footer');
     } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword_hd1');
-            
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword_hd1');
+
+        $current_password = $this->input->post('current_password');
+        $new_password = $this->input->post('new_password1');
+
+        if (!password_verify($current_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'Wrong current password!');
+        redirect('user/changepassword_hd');
+
+        } elseif (password_verify($new_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+        redirect('user/changepassword_hd');
 
         } else {
-            $this->db->set('password', $new_password);
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $this->db->set('password', $hashed_password);
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $this->db->update('user');
+
             $this->session->set_flashdata('pesan', 'Password Changed!');
-            redirect('user/changepassword_hd1');
+            redirect('user/changepassword_hd');
         }
     }
 }
@@ -392,24 +353,25 @@ public function changepassword_implementator()
         $this->load->view('templates/implementator_sidebar');
         $this->load->view('profile/changepassword_implementator', $data);
         $this->load->view('templates/footer');
-
     } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword_implementator');
 
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword_implementator');
-            
+        $current_password = $this->input->post('current_password');
+        $new_password = $this->input->post('new_password1');
+
+        if (!password_verify($current_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'Wrong current password!');
+        redirect('user/changepassword_implementator');
+
+        } elseif (password_verify($new_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+        redirect('user/changepassword_implementator');
+
         } else {
-            $this->db->set('password', $new_password);
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $this->db->set('password', $hashed_password);
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $this->db->update('user');
+
             $this->session->set_flashdata('pesan', 'Password Changed!');
             redirect('user/changepassword_implementator');
         }
@@ -430,131 +392,28 @@ public function changepassword_support()
         $this->load->view('profile/changepassword_support', $data);
         $this->load->view('templates/footer');
     } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword_support');
 
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword_support');
+        $current_password = $this->input->post('current_password');
+        $new_password = $this->input->post('new_password1');
+
+        if (!password_verify($current_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'Wrong current password!');
+        redirect('user/changepassword_support');
+
+        } elseif (password_verify($new_password, $data['user']['password'])) {
+        $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+        redirect('user/changepassword_support');
 
         } else {
-            $this->db->set('password', $new_password);
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $this->db->set('password', $hashed_password);
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $this->db->update('user');
+
             $this->session->set_flashdata('pesan', 'Password Changed!');
             redirect('user/changepassword_support');
         }
     }
 }
 
-public function changepassword_dbs()
-{
-    $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
-
-    $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
-
-    if ($this->form_validation->run() == false) {
-        $this->load->view('templates/header');
-        $this->load->view('templates/dbs_sidebar');
-        $this->load->view('profile/changepassword_dbs', $data);
-        $this->load->view('templates/footer');
-    } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword_dbs');
-
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword_dbs');
-        } else {
-            $this->db->set('password', $new_password);
-            $this->db->where('id_user', $this->session->userdata('id_user'));
-            $this->db->update('user');
-            $this->session->set_flashdata('pesan', 'Password Changed!');
-            redirect('user/changepassword_dbs');
-        }
-    }
-}
-
-public function changepassword_crd()
-{
-    $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
-
-    $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
-
-    if ($this->form_validation->run() == false) {
-        $this->load->view('templates/header');
-        $this->load->view('templates/crd_sidebar');
-        $this->load->view('profile/changepassword_crd', $data);
-        $this->load->view('templates/footer');
-    } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword_crd');
-
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword_crd');
-        } else {
-            $this->db->set('password', $new_password);
-            $this->db->where('id_user', $this->session->userdata('id_user'));
-            $this->db->update('user');
-            $this->session->set_flashdata('pesan', 'Password Changed!');
-            redirect('user/changepassword_crd');
-        }
-    }
-}
-
-public function changepassword_development()
-{
-    $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
-
-    $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
-
-    if ($this->form_validation->run() == false) {
-        $this->load->view('templates/header');
-        $this->load->view('templates/development_sidebar');
-        $this->load->view('profile/changepassword_development', $data);
-        $this->load->view('templates/footer');
-    } else {
-        $current_passwordmd5 = $this->input->post('current_password');
-        $new_passwordmd5     = $this->input->post('new_password1');
-        $current_password    = MD5($current_passwordmd5);
-        $new_password        = MD5($new_passwordmd5);
-        if ($current_password != $data['user']['password']) {
-            $this->session->set_flashdata('alert', 'Wrong current password!');
-            redirect('user/changepassword_development');
-
-        } else if ($current_password == $new_password) {
-            $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
-            redirect('user/changepassword_development');
-
-        } else {
-            $this->db->set('password', $new_password);
-            $this->db->where('id_user', $this->session->userdata('id_user'));
-            $this->db->update('user');
-            $this->session->set_flashdata('pesan', 'Password Changed!');
-            redirect('user/changepassword_development');
-        }
-    }
-}
 }
