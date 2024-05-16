@@ -115,7 +115,7 @@
                                 <b><?= $dc['nama_user'];?></b>
                                 <br><?= $dc['body'];?> <a href="<?= base_url('assets/comment/' . $dc['file']); ?>"><?= $dc['file']; ?></a>
                                 <br>
-                                <button  class="btn btn-sm btn-primary" id="reply"><i class="material-icons">reply</i></button>
+                                <!-- <button  class="btn btn-sm btn-primary" id="reply"><i class="material-icons">reply</i></button> -->
                             </p>
                         </div>
 

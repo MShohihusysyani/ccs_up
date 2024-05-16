@@ -139,7 +139,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="Supervisor">Supervisor</option>
                                         <option value="Implementator">Implementator</option>
                                         <option value="Support">Support</option>
-                                        <option value="DBS">DBS</option>
+                                        <option value="Superadmin">Superadmin</option>
                                         <option value="CRD">CRD</option>
                                         <option value="Development">Development</option>
                                         <option value="Supervisor 2">Supervisor 2</option>
@@ -175,7 +175,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="3">3-Supervisor</option>
                                         <option value="4">4-Implementator</option>
                                         <option value="5">5-Support</option>
-                                        <option value="6">6-Dbs</option>
+                                        <option value="6">6-Superadmin</option>
                                         <option value="7">7-Crd</option>
                                         <option value="8">8-Development</option>
                                         <option value="9">9-Supervisor 2</option>
@@ -229,7 +229,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="Supervisor">Supervisor</option>
                                         <option value="Implementator">Implementator</option>
                                         <option value="Support">Support</option>
-                                        <option value="DBS">DBS</option>
+                                        <option value="Superadmin">Superadmin</option>
                                         <option value="CRD">CRD</option>
                                         <option value="Development">Development</option>
                                         <option value="Supervisor 2">Supervisor 2</option>
@@ -279,7 +279,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="3">3-Supervisor</option>
                                         <option value="4">4-Implementator</option>
                                         <option value="5">5-Support</option>
-                                        <option value="6">6-Dbs</option>
+                                        <option value="6">6-Superadmin</option>
                                         <option value="7">7-Crd</option>
                                         <option value="8">8-Development</option>
                                         <option value="9">9-Supervisor 2</option>

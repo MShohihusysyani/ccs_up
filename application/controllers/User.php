@@ -92,13 +92,13 @@ class User extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function profile_dbs($id)
+    public function profile_superadmin($id)
     {
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getUserDetail($id);
 
         $this->load->view('templates/header');
-        $this->load->view('templates/dbs_sidebar');
+        $this->load->view('templates/superadmin_sidebar');
         $this->load->view('profile/profile', $data);
         $this->load->view('templates/footer');
     }
@@ -227,6 +227,45 @@ class User extends CI_Controller
             redirect('user/changepassword');
         }
     }
+}
+
+public function changepassword_superadmin()
+{
+    $data['user'] = $this->db->get_where('user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+    $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
+    $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[8]|matches[new_password2]');
+    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[8]|matches[new_password1]');
+
+    if ($this->form_validation->run() == false) {
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('profile/changepassword_superadmin', $data);
+        $this->load->view('templates/footer');
+    } else {
+        $current_passwordhash = password_hash($this->input->post('current_password'), PASSWORD_DEFAULT);
+        $new_passwordhash     = password_hash($this->input->post('new_password1'), PASSWORD_DEFAULT);
+        // $current_password     = MD5($current_passwordhash);
+        // $new_password         = MD5($new_passwordhash);
+        $current_password    = password_verify(($current_passwordhash), PASSWORD_DEFAULT);
+        $new_password        = password_verify(($new_passwordhash), PASSWORD_DEFAULT);
+    if (password_verify($current_password, PASSWORD_DEFAULT) != $data['user']['password']) {
+        $this->session->set_flashdata('alert', 'Wrong current password!');
+        redirect('user/changepassword_superadmin');
+
+    } else if ($current_password == $new_password) {
+        $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+        redirect('user/changepassword_superadmin');
+        
+    } else {
+        $this->db->set('password', password_hash($new_password), PASSWORD_DEFAULT);
+        $this->db->where('id_user', $this->session->userdata('id_user'));
+        $this->db->update('user');
+
+        $this->session->set_flashdata('pesan', 'Password Changed!');
+        redirect('user/changepassword_superadmin');
+    }
+}
 }
 
 public function changepassword2()

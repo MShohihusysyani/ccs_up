@@ -76,7 +76,7 @@ class Auth extends CI_Controller
 
                     } elseif ($sess_data['role'] == '6') {
                         $this->session->set_flashdata('pesan', 'Successfully Login!');
-                        redirect('dbs');
+                        redirect('superadmin');
                     
                     } elseif ($sess_data['role'] == '7') {
                         $this->session->set_flashdata('pesan', 'Successfully Login!');
