@@ -154,7 +154,9 @@ margin: 20px auto;
                 <?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
                 <div class="body">
                         <div class="panel panel-default">
-                            <div class="panel-heading"> <b><?= $dc['nama_user'];?></b></div>
+                            <div class="panel-heading"> <b><?= $dc['nama_user'];?></b>  
+                                <?= format_indo($dc['created_at']);?>
+                            </div>
                             <div class="panel-body"><?= $dc['comment_body'];?></div>
                             <div class="panel-body"><a href="<?= base_url('assets/comment/' . $dc['file']); ?>"><?= $dc['file']; ?></a></div>
                             <div class="panel-footer" align="right"><button  class="btn btn-sm btn-primary" id="<?= $dc['id_comment'];?>showFormInputButton"><i class="material-icons">reply</i></button></div>
@@ -181,7 +183,8 @@ margin: 20px auto;
                             user.nama_user, 
                             user.id_user, 
                             reply.body, 
-                            reply.comment_id
+                            reply.comment_id,
+                            reply.created_at
                         FROM reply
                         LEFT JOIN user ON reply.user_id = user.id_user
                         WHERE reply.comment_id = $id_comment
@@ -190,6 +193,7 @@ margin: 20px auto;
                             <div class="panel panel-default" style="margin-left: 48px;">
                                 <div class="panel-heading">
                                     <b><?= $dr['nama_user']; ?></b>
+                                    <?= format_indo($dr['created_at']);?>
                                 </div>
                                 <div class="panel-body">
                                     <?= $dr['body']; ?>
@@ -197,15 +201,6 @@ margin: 20px auto;
                             </div>
                         <?php endforeach; ?>
                         <!-- <?php endif; ?> -->
-
-
-                        <!-- <?php if(empty($datareply)) {} else { foreach($datareply as $dr) { ?>
-                            <div class="panel panel-default" style="margin-left: 48px;">
-                            <div class="panel-heading"> <b><?= $dr['nama_user'];?></div>
-                            <div class="panel-body"><?= $dr['body'];?></div>
-                            </div>
-                        <?php } }?> -->
-
 
                         
                 </div>
