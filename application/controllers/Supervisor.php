@@ -15,7 +15,6 @@ class Supervisor extends CI_Controller
         $this->load->model('Supervisor_model', 'supervisor_model');
         $data['data_bpr'] = $this->supervisor_model->getKlien();
         
-        
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/dashboard', $data);
@@ -26,7 +25,6 @@ class Supervisor extends CI_Controller
     {
         $this->load->model('Category_model', 'category_model');
         $data['nama_kategori'] = $this->db->get('category')->result_array();
-
 
         $data['category'] = $this->category_model->getCategory();
         $this->load->view('templates/header');
@@ -377,8 +375,9 @@ class Supervisor extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Supervisor_model', 'supervisor_model');
         $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan($id);
-        $data['datacomment']   = $this->supervisor_model->ambil_id_comment($id);
-        $data['datareply']     = $this->supervisor_model->ambil_comment_id($id);
+        $data['datacomment']   = $this->supervisor_model->get_latest_comments($id);
+        $data['datareply']     = $this->supervisor_model->get_replies_by_pelaporan_id($id);
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/detail_pelaporan', $data);
@@ -387,6 +386,8 @@ class Supervisor extends CI_Controller
 
     public function add_comment()
     {
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
         //jika ada gambar
         $photo = $_FILES['file']['name'];
 
@@ -413,11 +414,13 @@ class Supervisor extends CI_Controller
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
+        $create_at = date('Y-m-d H:i:s');
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,
             'body' => $body,
-            'file' => $photo
+            'file' => $photo,
+            'created_at' => $create_at
         ];
 
         $this->db->insert('comment', $data);
@@ -427,21 +430,25 @@ class Supervisor extends CI_Controller
 
     public function add_reply()
     {
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
 
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
         $this->form_validation->set_rules('user_id','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
+        $create_at  = date('Y-m-d H:i:s');
         $comment_id = $this->input->post('id_comment');
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,
             'body' => $body,
+            'created_at' => $create_at,
             'comment_id' => $comment_id
         ];
 
-        $this->db->insert('comment', $data);
+        $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('supervisor/detail_pelaporan/'.$id_pelaporan));
     }

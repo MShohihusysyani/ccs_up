@@ -135,15 +135,15 @@
                 <div class="body">
                         <div class="panel panel-default">
                             <div class="panel-heading"> <b><?= $dc['nama_user'];?></b></i></div>
-                            <div class="panel-body"><?= $dc['body'];?></div>
+                            <div class="panel-body"><?= $dc['comment_body'];?></div>
                             <div class="panel-body"><a href="<?= base_url('assets/comment/' . $dc['file']); ?>"><?= $dc['file']; ?></a></div>
-                            <div class="panel-footer" align="right"><button  class="btn btn-sm btn-primary" id="showFormInputButton" onclick=""><i class="material-icons">reply</i></button></div>
+                            <div class="panel-footer" align="right"><button  class="btn btn-sm btn-primary" id="<?= $dc['id_comment'];?>showFormInputButton" onclick=""><i class="material-icons">reply</i></button></div>
                         </div>
 
-                        <div id="hiddenFormInput" style="display: none;">
+                        <div id="<?= $dc['id_comment'];?>hiddenFormInput" style="display: none;">
                         <?php echo form_open_multipart('implementator/add_reply') ?>
                             <label for="comment">Reply Comment</label>
-                            <textarea id="editor2" class="form-control" name="body" id="body">
+                            <textarea id="<?= $dc['id_comment'];?>editor2" class="form-control" name="body" id="body">
                                 
                             </textarea>
                             <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
@@ -153,6 +153,28 @@
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">send</i></button>
                         <?php echo form_close() ?>
                         </div>
+
+                        <?php
+                        $id_comment = $dc['id_comment'];
+                            $reply = $this->db->query("SELECT 
+                            user.nama_user, 
+                            user.id_user, 
+                            reply.body, 
+                            reply.comment_id
+                        FROM reply
+                        LEFT JOIN user ON reply.user_id = user.id_user
+                        WHERE reply.comment_id = $id_comment
+                        ORDER BY reply.created_at DESC")->result_array();
+                             foreach ($reply as $dr) : ?>
+                            <div class="panel panel-default" style="margin-left: 48px;">
+                                <div class="panel-heading">
+                                    <b><?= $dr['nama_user']; ?></b>
+                                </div>
+                                <div class="panel-body">
+                                    <?= $dr['body']; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                 </div>
                 <?php } } ?>
             </div>
@@ -161,25 +183,26 @@
     </div>
 </section>
 
+<?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Find the button and input elements
-    const showFormInputButton = document.getElementById("showFormInputButton");
-    const hiddenFormInput = document.getElementById("hiddenFormInput");
+    
+    const showFormInputButton = document.getElementById("<?= $dc['id_comment'];?>showFormInputButton");
+    const hiddenFormInput = document.getElementById("<?= $dc['id_comment'];?>hiddenFormInput");
 
     // Add click event listener to the button
     showFormInputButton.addEventListener("click", function() {
         // Toggle the display of the input form
         if (hiddenFormInput.style.display === "none") {
             hiddenFormInput.style.display = "block";
-        } else if (hiddenFormInput.style.display === "none") {
-                    hiddenFormInput.style.display = "block";
         } else {
             hiddenFormInput.style.display = "none";
         }
     });
 });
 </script>
+<?php } } ?>
 
 <script>
             // This sample still does not showcase all CKEditor&nbsp;5 features (!)
@@ -334,11 +357,11 @@ document.addEventListener("DOMContentLoaded", function() {
             ]
 </script>
 
-
+<?php if(empty($datacomment)) { } else { foreach($datacomment as $dc) { ?> 
 <script>
             // This sample still does not showcase all CKEditor&nbsp;5 features (!)
             // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
-            CKEDITOR.ClassicEditor.create(document.getElementById("editor2"), {
+            CKEDITOR.ClassicEditor.create(document.getElementById("<?= $dc['id_comment'];?>editor2"), {
                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
                 toolbar: {
                     items: [
@@ -487,5 +510,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
             ]
 </script>
-
+<?php } }?>
 

@@ -150,14 +150,36 @@ class Klienpelaporan_model extends CI_Model
     //     return $this->db->get()->result();
     // }
 
-    public function ambil_id_comment($id){
+    // 
+    public function get_latest_comments($id) {
+        $query = "SELECT 
+                    user.nama_user, 
+                    user.id_user, 
+                    comment.body AS comment_body, 
+                    comment.pelaporan_id, 
+                    comment.created_at,
+                    comment.file,
+                    comment.id_comment
+                FROM comment
+                LEFT JOIN user ON comment.user_id = user.id_user
+                WHERE comment.pelaporan_id = '$id' AND comment.parent_id = 0
+                ORDER BY comment.created_at DESC";
 
-        $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id, comment.id_comment, comment.file 
-        FROM comment
-        LEFT JOIN user ON comment.user_id=user.id_user
-        WHERE comment.pelaporan_id='$id'";
+        return $this->db->query($query, array($id))->result_array();
+    }
 
-        return $this->db->query($query)->result_array();
+    public function get_replies_by_pelaporan_id($id) {
+        $query = "SELECT 
+                    user.nama_user, 
+                    user.id_user, 
+                    reply.body, 
+                    reply.pelaporan_id
+                FROM reply
+                LEFT JOIN user ON reply.user_id = user.id_user
+                WHERE reply.pelaporan_id = $id
+                ORDER BY reply.created_at DESC";
+        
+        return $this->db->query($query, array($id))->result_array();
     }
 
 
