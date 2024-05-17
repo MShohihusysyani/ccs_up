@@ -114,7 +114,7 @@ if (!function_exists('format_indo')) {
     $tahun = substr($date,0,4);
     $bulan = substr($date,5,2);
     $tgl = substr($date,8,2);
-    $waktu = substr($date, 11,5);
+    $waktu = substr($date, 11,8);
     $hari = date("w",strtotime($date));
     $result = $Hari[$hari].", ".$tgl." ".$Bulan[(int)$bulan-1]." ".$tahun." ".$waktu;
 
