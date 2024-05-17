@@ -155,7 +155,8 @@ class Supervisor_model extends CI_Model {
                     comment.pelaporan_id, 
                     comment.created_at,
                     comment.file,
-                    comment.id_comment
+                    comment.id_comment,
+                    comment.created_at
                 FROM comment
                 LEFT JOIN user ON comment.user_id = user.id_user
                 WHERE comment.pelaporan_id = '$id' AND comment.parent_id = 0
@@ -169,7 +170,8 @@ class Supervisor_model extends CI_Model {
                     user.nama_user, 
                     user.id_user, 
                     reply.body, 
-                    reply.pelaporan_id
+                    reply.pelaporan_id,
+                    reply.created_at
                 FROM reply
                 LEFT JOIN user ON reply.user_id = user.id_user
                 WHERE reply.pelaporan_id = $id
