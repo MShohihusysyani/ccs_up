@@ -104,7 +104,7 @@ function tanggal_indo($tanggal)
 
 if (!function_exists('format_indo')) {
 
-  function format_indo($date){
+function format_indo($date){
     date_default_timezone_set('Asia/Jakarta');
     // array hari dan bulan
     $Hari = array("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
