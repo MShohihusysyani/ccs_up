@@ -157,7 +157,7 @@ margin: 20px auto;
                             <div class="panel-heading"> <b><?= $dc['nama_user'];?></b></i></div>
                             <div class="panel-body"><?= $dc['body'];?></div>
                             <div class="panel-body"><a href="<?= base_url('assets/comment/' . $dc['file']); ?>"><?= $dc['file']; ?></a></div>
-                            <div class="panel-footer" align="right"><button  class="btn btn-sm btn-primary" id="showFormInputButton"><i class="material-icons">reply</i></button></div>
+                            <div class="panel-footer" align="right"><button  class="btn btn-sm btn-primary" id="showFormInputButton" onclick=""><i class="material-icons">reply</i></button></div>
                         </div>
 
                         <div id="hiddenFormInput" style="display: none;">
@@ -198,8 +198,8 @@ margin: 20px auto;
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Find the button and input elements
-    var showFormInputButton = document.getElementById("showFormInputButton");
-    var hiddenFormInput = document.getElementById("hiddenFormInput");
+    const showFormInputButton = document.getElementById("showFormInputButton");
+    const hiddenFormInput = document.getElementById("hiddenFormInput");
 
     // Add click event listener to the button
     showFormInputButton.addEventListener("click", function() {
