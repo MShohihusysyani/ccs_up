@@ -49,7 +49,8 @@ class Klien extends CI_Controller
             'user_id'  => $this->input->post('user_id'),
             'nama'     => $this->input->post('nama'),
             'kategori' => $this->input->post('kategori'),
-            'tags'     => $this->input->post('tags')
+            'tags'     => $this->input->post('tags'),
+            'judul'    => $this->input->post('judul')
         ];
         $this->db->insert('tiket_temp', $data);
         $this->session->set_flashdata('pesan', 'Pelaporan Added!');
@@ -130,6 +131,51 @@ class Klien extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function edit_tiket()
+    {
+
+         //jika FILE
+        $photo = $_FILES['file']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png|docx|pdf|xlsx';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/files/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+ 
+            if ($this->upload->do_upload('file')) {
+                $old_image = $data['tiket_temp']['file'];
+                if ($old_image != '') {
+                    unlink(FCPATH . 'assets/files/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('file', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('klien/pengajuan');
+            }
+        }
+        $id_temp = $this->input->post('id_temp');
+        $no_tiket     = $this->input->post('no_tiket');
+        $judul        = $this->input->post('judul');
+        $perihal      = $this->input->post('perihal');
+        $kategori     = $this->input->post('kategori');
+        $tags         = $this->input->post('tags');
+        $ArrUpdate = array(
+            'no_tiket'   => $no_tiket,
+            'judul'      => $judul,
+            'perihal'    => $perihal,
+            'kategori'   => $kategori,
+            'tags'       => $tags,
+            'file'       => $photo
+
+        );
+        $this->temp_model->updateTiket($id_temp, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Edited!');
+        Redirect(base_url('klien/pengajuan'));
+    }
     // EDIT PELAPORAN
     public function edit_pelaporan($id){
 

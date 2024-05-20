@@ -10,10 +10,11 @@
             <?php if ($this->session->flashdata('pesan')) { ?>
 
             <?php } ?>
-            <?= $this->session->flashdata('message'); ?>
-        </div>
+            <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>">
+                <?php if ($this->session->flashdata('pesan')) { ?>
 
-        <!-- <?= $this->session->flashdata('message'); ?> -->
+                <?php } ?>
+
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -55,7 +56,7 @@
                                     foreach ($klien as $cln) : ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?= $cln['no_urut'];?></td>
+                                        <td><?= $cln['no_klien'];?></td>
                                         <td><?= $cln['nama_klien']; ?></td>
 
                                         <td>
@@ -105,7 +106,7 @@
                         <form class="form-horizontal">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input value="<?= $cln['no_urut']; ?>" type="text" id="no_urut" name="no_urut" class="form-control">
+                                <input value="<?= $cln['no_klien']; ?>" type="text" id="no_klien" name="no_klien" class="form-control">
                                 <label class="form-label">No Urut</label>
                             </div>
                         </div>
@@ -147,8 +148,20 @@
                     <form>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input value="<?= noUrutClient(); ?>"  type="text" id="no_urut" name="no_urut" class="form-control">
-                                <label class="form-label">No Urut</label>
+                                <input value="<?= noUrutClient(); ?>"  type="text" id="no_klien" name="no_klien" class="form-control">
+                                <label class="form-label">No Klien</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                            <select  id="nama_user_client" name="nama_user_client" class="form-control show-tick" required>
+                                <option value="">-- Please select User--</option>
+                                <?php foreach($user as $data):
+                                ?>
+                                    <option value="<?= $data['id_user']?>"><?= $data['nama_user']?></option>
+                                <?php endforeach;?>
+                                </select> 
                             </div>
                         </div>
 

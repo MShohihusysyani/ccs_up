@@ -52,6 +52,11 @@ class Client_model extends CI_Model
         return $nik;
     }
 
+    public function getUserClient()
+    {
+        return $this->db->query("SELECT id_user, nama_user FROM user where role = 1")->result_array();
+    }
+
     // public function buat_tiket(){
     //     $this->db->select('RIGHT(tiket_temp.no_tiket) as tiket', FALSE);
     //     $this->db->order_by('no_tiket','DESC');

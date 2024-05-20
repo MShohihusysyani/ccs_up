@@ -29,12 +29,19 @@
                                 <label class="form-label">No tiket</label>
                             </div>
                         </div>
+
+                            <label for="judul">Judul</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="judul" name="judul" class="form-control" placeholder="Masukkan Judul">
+                                </div>
+                            </div>
 <!--                         
                         <input type="hidden" name="category_id" id="category_id" placeholder="id category"
                             class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly> -->
                         <br>
-
                         
+                        <label for="perihal">Perihal</label>
                             <textarea id="editor" class="form-control" name="perihal" id="perihal" rows="10">
                                 
                             </textarea>
@@ -44,7 +51,7 @@
                             </textarea> -->
                             <br>
 
-                        <label for="nama">File</label>
+                        <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
                             <label for="exampleInputFile"></label>
                             <div class="input-group">
@@ -117,6 +124,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>No Tiket</th>
+                                        <th>Judul</th>
                                         <th>Perihal</th>
                                         <th>Attachment</th>
                                         <th>kategori</th>
@@ -131,6 +139,7 @@
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $tmp['no_tiket']; ?></td>
+                                        <td><?= $tmp['judul'];?></td>
                                         <td><?= $tmp['perihal']; ?></td>
                                         <td> <a
                                                 href="<?= base_url('assets/files/' . $tmp['file']); ?>"><?= $tmp['file']; ?></a>
@@ -140,6 +149,21 @@
                                             <span class="label label-info" data-role="tagsinput"><?= $tmp['tags'];?></span>
                                         </td>
                                         <td>
+                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <div class="btn btn-sm btn-warning">
+                                                    <a href="javascript:;" data-id_temp="<?= $tmp['id_temp']; ?>"
+                                                        data-no_tiket="<?= $tmp['no_tiket']; ?>"
+                                                        data-judul = "<?= $tmp['judul'];?>"
+                                                        data-perihal="<?= $tmp['perihal']; ?>"
+                                                        data-kategori="<?= $tmp['kategori']; ?>"
+                                                        data-file="<?= $tmp['file']; ?>"
+                                                        data-tags="<?= $tmp['tags'];?>" data-toggle="modal"
+                                                        data-target="#editModalTemp"> <i class="material-icons">edit</i> <span
+                                                        class="icon-name">Edit</span></a>
+                                                </div>
+
+                                                <br>
+                                                <br>
 
                                             <a class="btn btn-sm btn-danger tombol-hapus"
                                                 href="<?= base_url() ?>klien/fungsi_delete_temp/<?= $tmp['id_temp']; ?>"><span
@@ -166,6 +190,88 @@
     </div>
     
 </section>
+
+<!-- Modal edit tiket temp -->
+<div class="modal fade" id="editModalTemp" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Edit Tiket</h4>
+            </div>
+            <div class="modal-body">
+                <?= form_open_multipart('klien/edit_tiket') ?>
+                <input type="hidden" name="id_temp" id="id_temp">
+                <div class="body">
+                    <form class="form-horizontal">
+                                                    
+                        <label for="no_tiket">No Tiket</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                            </div>
+                        </div> 
+
+                        <label for="perihal">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="judul" name="judul" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <label for="perihal">Perihal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="perihal" name="perihal" class="form-control">
+                            </div>
+                        </div>
+
+                        <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <img src="<?= base_url('assets/files/') . $tmp['file']; ?>" width="500"
+                                    height="500" class="img-thumbnail">
+                                <div class="form-group">
+                                    <label for="exampleInputFile"></label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="file"
+                                                name="file">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label for="jenis_barang">Category</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaKategori"
+                                    name="kategori" id="kategori" placeholder=""
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="off">
+                                <input type="hidden" id="id" name="id">
+                            </div>
+                        </div>
+
+                        <label for="tags">Tags</label>
+                            <div class="form-group demo-tagsinput-area">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" data-role="tagsinput" value="" id="tags" name="tags">
+                                </div>
+                            </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE
+                                CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    
+                </div>
+                <?php echo form_close() ?>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- modal cari kategori -->
     <div class="modal fade" id="defaultModalNamaKategori" tabindex="-1" role="dialog">
@@ -213,14 +319,43 @@
             </div>
         </div>
     </div>
-<!-- ckeditor -->
-<!-- <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script> -->
+
+    
+<!-- Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        // Untuk sunting
+        $('#editModalTemp').on('show.bs.modal', function (event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id_temp').attr("value", div.data('id_temp'));
+            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
+            modal.find('#judul').attr("value", div.data('judul'));
+            modal.find('#perihal').attr("value", div.data('perihal'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            modal.find('#tags').attr("value", div.data('tags'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+            // modal.find('#bprnama').attr("value", div.data('bprnama'));
+            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
+            // modal.find('#judul').attr("value", div.data('judul'));
+            // modal.find('#headline').attr("value", div.data('headline'));
+            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
+            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
+            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
+            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
+            // modal.find('#linkberita').val(div.data('linkberita'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+
+        });
+
+    });
+</script>
 
     <script>
             // This sample still does not showcase all CKEditor&nbsp;5 features (!)

@@ -81,7 +81,7 @@
                     <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('implementator/pelaporan') ?>">
                             <i class="material-icons">confirmation_number</i>
-                            <span>List Ticket</span>
+                            <span>List Ticket Handle</span>
                         </a>
                     </li>
 

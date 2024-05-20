@@ -74,6 +74,7 @@ class Supervisor extends CI_Controller
         $data['nama_klien'] = $this->db->get('klien')->result_array();
         
         $data['klien'] = $this->client_model->getClient();
+        $data['user'] = $this->client_model->getUserClient();
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/client', $data);
@@ -82,18 +83,33 @@ class Supervisor extends CI_Controller
 
     public function tambah_client()
     {
-        $data['no_urut']    = $this->db->get('klien')->result_array();
+        $data['no_klien']    = $this->db->get('klien')->result_array();
         $data['nama_klien'] = $this->db->get('klien')->result_array();
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('no_klien', 'No Klien', 'required|is_unique[klien.no_klien]');
+        $this->form_validation->set_rules('nama_klien', 'Nama Klient', 'required');
+        $this->form_validation->set_rules('nama_user_klien', 'Nama User', 'required');
+        var_dump($this->form_validation->run());
+        die;
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->session->set_flashdata('alert', 'Nomer klien tidak boleh sama!');
+            redirect('supervisor/client');
+        }
+        else
+        {
 
-        $this->form_validation->set_rules('no_urut', 'No Urut', 'required');
-        $this->form_validation->set_rules('nama_klien', 'Kategory', 'required');
-        $data = [
-            'no_urut'    => $this->input->post('no_urut'),
-            'nama_klien' => $this->input->post('nama_klien')
-        ];
-        $this->db->insert('klien', $data);
-        $this->session->set_flashdata('pesan', 'Successfully Added!');
-        redirect('supervisor/client');
+            $data = [
+                'no_klien'    => $this->input->post('no_klien'),
+                'nama_klien' => $this->input->post('nama_klien'),
+                'id_user_client' => $this->input->post('nama_user_client')
+            ];
+            $this->db->insert('klien', $data);
+            $this->session->set_flashdata('pesan', 'Successfully Added!');
+            redirect('supervisor/client');
+        }
+
+
     }
 
     public function hapus_klien($id)
@@ -629,7 +645,7 @@ class Supervisor extends CI_Controller
         $nama_user = $user->nama_user;
 
         $this->db->update('forward', $data);
-        $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
+        $this->supervisor_model->updateHD1($id_pelaporan, $nama_user);
         $this->session->set_flashdata('pesan', 'Helpdesk has been update!');
         Redirect(Base_url('supervisor/onprogress'));
     }

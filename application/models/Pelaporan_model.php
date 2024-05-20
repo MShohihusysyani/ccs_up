@@ -10,7 +10,7 @@ class Pelaporan_model extends CI_Model
 
 
 
-        $query = "INSERT INTO pelaporan ( user_id,waktu_pelaporan, perihal, file, nama, no_tiket, kategori, tags) select  user_id, '$now',perihal, file, nama, no_tiket, kategori, tags
+        $query = "INSERT INTO pelaporan ( user_id,waktu_pelaporan, perihal, file, nama, no_tiket, kategori, tags, judul) select  user_id, '$now',perihal, file, nama, no_tiket, kategori, tags, judul
                     from tiket_temp 
                     where user_id = $user_id 
                     ";
@@ -36,6 +36,7 @@ class Pelaporan_model extends CI_Model
         $this->db->where('id_pelaporan', $id_pelaporan);
         $this->db->update('pelaporan', $data);
     }
+
 
     function updateImpact($id_pelaporan, $data)
     {

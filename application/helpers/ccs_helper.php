@@ -76,14 +76,14 @@ if (!function_exists('tanggal')) {
 function noUrutClient()
 {
     $ci = get_instance();
-    $query = "SELECT max(no_urut) as maxNo FROM klien";
+    $query = "SELECT max(no_klien) as maxNo FROM klien";
     $data = $ci->db->query($query)->row_array();
     $kode = $data['maxNo'];
-    $noUrut = (int) substr($kode, 0);
+    $noUrut = (int) substr($kode, 0, 4);
 
     $noUrut++;
 
-    $kodeBaru = sprintf('%01s', $noUrut);
+    $kodeBaru = sprintf('%04s', $noUrut);
     return $kodeBaru;
 }
 

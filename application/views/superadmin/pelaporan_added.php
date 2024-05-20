@@ -184,7 +184,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">Edit Priority and Category</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor/edit_pelaporan') ?>
+                <?= form_open_multipart('superadmin/edit_pelaporan') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
                 <div class="body">
                     <form class="form-horizontal">
@@ -301,7 +301,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">Select Helpdesk</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor/fungsi_forward') ?>
+                <?= form_open_multipart('superadmin/fungsi_forward') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">

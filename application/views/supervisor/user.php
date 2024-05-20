@@ -136,14 +136,14 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="Helpdesk 2">Helpdesk 2</option>
                                         <option value="Helpdesk 3">Helpdesk 3</option>
                                         <option value="Helpdesk 4">Helpdesk 4</option>
-                                        <option value="Supervisor">Supervisor</option>
+                                        <option value="Superviso 1">Supervisor 1</option>
                                         <option value="Implementator">Implementator</option>
                                         <option value="Support">Support</option>
                                         <option value="Superadmin">Superadmin</option>
                                         <option value="CRD">CRD</option>
                                         <option value="Development">Development</option>
                                         <option value="Supervisor 2">Supervisor 2</option>
-                               </select> 
+                                </select> 
                         </div>
 
                         <div class="form-group form-float">
@@ -276,7 +276,7 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="">-- Please select Role--</option>
                                         <option value="1">1-Klien</option>
                                         <option value="2">2-Helpdesk</option>
-                                        <option value="3">3-Supervisor</option>
+                                        <option value="3">3-Supervisor 1</option>
                                         <option value="4">4-Implementator</option>
                                         <option value="5">5-Support</option>
                                         <option value="6">6-Superadmin</option>

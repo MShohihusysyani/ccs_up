@@ -84,6 +84,16 @@ class Supervisor_model extends CI_Model {
         $query = "UPDATE pelaporan SET status_ccs='HANDLE', handle_by = '$nama_user', status='Forward To Helpdesk'  WHERE id_pelaporan=$id_pelaporan" ;
         return $this->db->query($query);
     }
+
+    public function updateHD1($id_pelaporan,$nama_user){
+
+        $query = "UPDATE pelaporan
+                SET status_ccs = 'HANDLE', handle_by = '$nama_user'
+                FROM pelaporan
+                JOIN forward ON pelaporan.id_pelaporan = forward.pelaporan_id
+                WHERE pelaporan.id_pelaporan = '$id_pelaporan;" ;
+        return $this->db->query($query);
+    }
     public function delete_forward()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();

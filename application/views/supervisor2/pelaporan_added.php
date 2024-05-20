@@ -332,7 +332,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">Edit Data</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor/edit_pelaporan') ?>
+                <?= form_open_multipart('supervisor2/edit_pelaporan') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
                 <div class="body">
                     <form class="form-horizontal">

@@ -87,7 +87,7 @@
                         <ul class="ml-menu">
                             <li
                                 <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('helpdesk/pelaporan') ?>">Added</a>
+                                <a href="<?php echo base_url('helpdesk/pelaporan') ?>">Handle</a>
                             </li>
 
                             <li
