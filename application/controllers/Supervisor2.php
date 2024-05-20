@@ -364,7 +364,7 @@ class Supervisor2 extends CI_Controller
 
         $this->db->insert('t2_forward', $data);
         $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Teknisi has been update!');
+        $this->session->set_flashdata('pesan', 'Teknisi has been added!');
         Redirect(Base_url('supervisor2/onprogress'));
     }
 }
