@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Bulan Mei 2024 pada 11.11
+-- Waktu pembuatan: 20 Bulan Mei 2024 pada 11.16
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -122,7 +122,7 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
-(135, 105, 53, NULL),
+(135, 105, 48, NULL),
 (136, 106, 50, NULL);
 
 -- --------------------------------------------------------
