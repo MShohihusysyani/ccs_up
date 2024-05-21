@@ -181,7 +181,8 @@ class Supervisor_model extends CI_Model {
                     user.id_user, 
                     reply.body, 
                     reply.pelaporan_id,
-                    reply.created_at
+                    reply.created_at,
+                    reply.file
                 FROM reply
                 LEFT JOIN user ON reply.user_id = user.id_user
                 WHERE reply.pelaporan_id = $id

@@ -101,7 +101,7 @@
                                 
                         </textarea>
 
-                        <label for="nama">File</label>
+                        <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
                             <label for="exampleInputFile"></label>
                             <div class="input-group">
@@ -149,6 +149,18 @@
                                 <textarea id="<?= $dc['id_comment'];?>editor2" class="form-control" name="body" id="body">
                                 
                                 </textarea>
+
+                                <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                                <div class="form-group">
+                                    <label for="exampleInputFile"></label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="file" name="file">
+                                            <label for="file" class="custom-file-label">Choose
+                                            file</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
                                 <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                                 <input type="hidden" name="id_comment" id="id_comment" value="<?= $dc['id_comment'];?>">
@@ -164,7 +176,8 @@
                             user.id_user, 
                             reply.body, 
                             reply.comment_id,
-                            reply.created_at
+                            reply.created_at,
+                            reply.file
                         FROM reply
                         LEFT JOIN user ON reply.user_id = user.id_user
                         WHERE reply.comment_id = $id_comment
@@ -177,6 +190,9 @@
                                 </div>
                                 <div class="panel-body">
                                     <?= $dr['body']; ?>
+                                </div>
+                                <div class="panel-body">
+                                    <a href="<?= base_url('assets/reply/' . $dr['file']); ?>"><?= $dr['file']; ?></a>
                                 </div>
                             </div>
                         <?php endforeach; ?>

@@ -6,15 +6,15 @@
             </h2>
         </div>
         <!-- Basic Examples -->
-        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
+        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>"></div>
             <?php if ($this->session->flashdata('pesan')) { ?>
 
             <?php } ?>
-            <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>">
+            <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>"></div>
                 <?php if ($this->session->flashdata('pesan')) { ?>
 
                 <?php } ?>
-
+                <p><?= validation_errors(); ?></p>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -88,7 +88,7 @@
     </div>
     <!-- Button trigger modal -->
 </section>
-    <!-- Button trigger modal -->
+
     <!-- MODAL  edit -->
     <?php
     $no = 0;
@@ -155,7 +155,7 @@
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                            <select  id="nama_user_client" name="nama_user_client" class="form-control show-tick" required>
+                            <select  id="nama_user_klien" name="nama_user_klien" class="form-control show-tick" required>
                                 <option value="">-- Please select User--</option>
                                 <?php foreach($user as $data):
                                 ?>

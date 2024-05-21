@@ -276,7 +276,7 @@
                         <label for="tags">Tags</label>
                         <div class="form-group demo-tagsinput-area">
                             <div class="form-line">
-                                <input value="<?= $dp['tags'];?>" type="text" id="tags" name="tags" class="form-control" data-role="tagsinput">
+                                <input value="" type="text" id="tags" name="tags" class="form-control" data-role="tagsinput">
                             </div>
                         </div>
 

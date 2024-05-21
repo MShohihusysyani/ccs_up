@@ -145,22 +145,41 @@ class Implementator extends CI_Controller
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d H:i:s');
-
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('user_id');
-        $body = $this->input->post('body');
-        $create_at  = date('Y-m-d H:i:s');
-        $comment_id = $this->input->post('id_comment');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user,
-            'body' => $body,
-            'created_at' => $create_at,
-            'comment_id' => $comment_id
-        ];
-
+        
+        $photo = $_FILES['file']['name'];
+    
+            if ($photo) {
+                $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png|jpg';
+                $config['max_size'] = '2048';
+                $config['upload_path'] = './assets/reply/';
+    
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+    
+                if ($this->upload->do_upload('file')) {
+    
+                    $photo = $this->upload->data('file_name');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                    $referred_from = $this->session->userdata('referred_from');
+                    redirect($referred_from, 'refresh');
+                }
+            }
+            $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+            $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('user_id');
+            $body = $this->input->post('body');
+            $create_at  = date('Y-m-d H:i:s');
+            $comment_id = $this->input->post('id_comment');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user,
+                'body' => $body,
+                'file' => $photo,
+                'created_at' => $create_at,
+                'comment_id' => $comment_id
+            ];
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('implementator/detail_pelaporan/'.$id_pelaporan));

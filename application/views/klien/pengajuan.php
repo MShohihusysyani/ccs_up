@@ -25,7 +25,7 @@
                     <form method="post" action="<?= base_url('klien/add_temp'); ?>" enctype="multipart/form-data">
                     <div class="form-group form-float">
                             <div class="form-line">
-                                <input  type="text" id="no_tiket" name="no_tiket" class="form-control" value="<?= $noTiket; ?>" readonly>
+                                <input  type="text" id="no_tiket" name="no_tiket" class="form-control" value="<?= $tiket; ?>" readonly>
                                 <label class="form-label">No tiket</label>
                             </div>
                         </div>

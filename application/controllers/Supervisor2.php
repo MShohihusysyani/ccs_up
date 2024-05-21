@@ -140,7 +140,6 @@ class Supervisor2 extends CI_Controller
         $id_pelaporan = $this->input->post('id_pelaporan');
         $no_tiket     = $this->input->post('no_tiket');
         $perihal      = $this->input->post('perihal');
-        $status_ccs   = $this->input->post('status_ccs');
         $kategori     = $this->input->post('kategori');
         $priority     = $this->input->post('priority');
         $maxday       = $this->input->post('maxday');
@@ -148,7 +147,6 @@ class Supervisor2 extends CI_Controller
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
             'perihal'    => $perihal,
-            'status_ccs' => $status_ccs,
             'priority'   => $priority,
             'kategori'   => $kategori,
             'maxday'     => $maxday,
@@ -256,6 +254,25 @@ class Supervisor2 extends CI_Controller
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d H:i:s');
 
+        $photo = $_FILES['file']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png|jpg';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/reply/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file')) {
+
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                $referred_from = $this->session->userdata('referred_from');
+                redirect($referred_from, 'refresh');
+            }
+        }
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
         $this->form_validation->set_rules('user_id','Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
@@ -267,6 +284,7 @@ class Supervisor2 extends CI_Controller
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,
             'body' => $body,
+            'file' => $photo,
             'created_at' => $create_at,
             'comment_id' => $comment_id
         ];
@@ -311,29 +329,54 @@ class Supervisor2 extends CI_Controller
     //EDIT TEKNISI
     public function fungsi_edit()
     {
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+         // Load the form validation library
+    $this->load->library('form_validation');
+
+    // Set validation rules
+    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+
+    // Check if the form passes validation
+    if ($this->form_validation->run() == FALSE) {
+        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+        redirect(base_url('supervisor/onprogress'));
+    } else {
+        // Retrieve POST data
         $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namateknisi');
-        $subtask = $this->input->post('subtask');
+        $id_user = $this->input->post('namahd');
         $data = [
             'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user,
-            'subtask' => $subtask
+            'user_id' => $id_user
         ];
 
-        // cari nama user berdasarkan id 
+        // Fetch the user name based on the user ID
         $this->db->select('id_user, nama_user');
         $this->db->from('user');
         $this->db->where('id_user', $id_user);
         $query = $this->db->get();
-        $user = $query->row();
-        $nama_user = $user->nama_user;
 
-        $this->db->update('t1_forward', $data);
-        $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Teknisi has been update!');
-        Redirect(Base_url('supervisor2/onprogress'));
+        // Check if user exists
+        if ($query->num_rows() > 0) {
+            $user = $query->row();
+            $nama_user = $user->nama_user;
+
+            // Update the forward table
+            $this->db->where('pelaporan_id', $id_pelaporan);
+            $this->db->update('forward', $data);
+
+            // Update the Helpdesk in the supervisor_model
+            $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
+
+            // Set success message
+            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        } else {
+            // Set error message if user not found
+            $this->session->set_flashdata('error', 'User not found.');
+        }
+
+        // Redirect to the onprogress page
+        redirect(base_url('supervisor2/onprogress'));
+    }
     }
 
     //TAMBAH TEKNISI

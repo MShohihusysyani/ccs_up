@@ -187,7 +187,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">Edit Helpdesk</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor/fungsi_edit') ?>
+                <?= form_open_multipart('superadmin/fungsi_edit') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
@@ -387,16 +387,4 @@
         });
 
     });
-</script>
-
-<script>
-$(document).ready(function() {
-    $(document).on('click', '#pilih3', function() {
-        var nama_klas = $(this).data('nama-divisi');
-        var id = $(this).data('id-divisi');
-        $('#namahd').val(nama_klas);
-        $('#id').val(id);
-        $('#defaultModalNamaDivisi').modal('hide');
-    })
-});
 </script>

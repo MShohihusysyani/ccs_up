@@ -33,6 +33,26 @@ class Client_model extends CI_Model
         $this->db->update('klien', $data);
     }
 
+    public function getNoKlien($id)
+    {
+        $no_klien = $this->db->query("SELECT no_klien FROM klien WHERE id_user_klien = $id")->row_array();
+        
+        return $no_klien['no_klien'];
+    }
+
+    public function getNoUrut($id)
+    {
+        $no_urut = $this->db->query("SELECT no_tiket FROM pelaporan WHERE user_id = $id")->row_array();
+
+        if($no_urut == NULL){
+            $no = 0;
+        } else {
+            $no = substr($no_urut['no_tiket'], -4);
+        }
+        $no_urut = intval($no) + 1;
+        return sprintf('%04d',$no_urut);
+    }
+
       // GENERATE KODE OTOMATIS
     public function getkodeticket()
     {
