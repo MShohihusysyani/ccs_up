@@ -46,7 +46,7 @@
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $u['nama_user']; ?></td>
                                         <td><?= $u['divisi']; ?></td>
-                                        <td><?= $u['last_login'];?></td>
+                                        <td><?= format_indo($u['last_login']);?></td>
                                         <td> <?php if ($u['active'] == 'N') : ?>
                                                 <i class="material-icons">clear</i>
 
