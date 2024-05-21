@@ -87,7 +87,52 @@
             </div>
 
             <div class="row clearfix">
+
             </div>
+             <!-- DATA TIKET YANG MASIH DIHANDLE-->
+             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>KLIEN INFO</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>No Tiket</th>
+                                            <th>Status CCS</th>
+                                            
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $no = 1;
+                                        foreach ($data_handle as $dh) : ?>
+                                        <tr>
+                                            <td><?= $no++?></td>
+                                            <td><?= $dh['no_tiket'];?></td>
+                                            <td><?= $dh['status_ccs'];?></td>
+                                            
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END DATA TIKET YANG MASIH HANDLE-->
 
         </div>
 </section>

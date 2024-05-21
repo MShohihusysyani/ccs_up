@@ -212,4 +212,5 @@ class Klienpelaporan_model extends CI_Model
 		return $this->db->update($table, $data);
     }
 
+
 }

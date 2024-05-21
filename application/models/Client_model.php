@@ -42,15 +42,15 @@ class Client_model extends CI_Model
 
     public function getNoUrut($id)
     {
-        $no_urut = $this->db->query("SELECT no_tiket FROM pelaporan WHERE user_id = $id")->row_array();
+        $no_urut = $this->db->query("SELECT max(no_tiket) AS no_tiket FROM pelaporan WHERE user_id = $id")->row_array();
 
         if($no_urut == NULL){
             $no = 0;
         } else {
             $no = substr($no_urut['no_tiket'], -4);
         }
-        $no_urut = intval($no) + 1;
-        return sprintf('%04d',$no_urut);
+        $no_urut = $no + 1;
+        return sprintf('%04s',$no_urut);
     }
 
       // GENERATE KODE OTOMATIS
@@ -76,6 +76,18 @@ class Client_model extends CI_Model
     {
         return $this->db->query("SELECT id_user, nama_user FROM user where role = 1")->result_array();
     }
+
+    // DASHBOARD KLIEN
+    public function getDataKlienHandle()
+    {
+        
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+        $query = "SELECT no_tiket, status_ccs FROM pelaporan WHERE  user_id= $user_id AND status_ccs IN('HANDLE', 'HANDLE 2')";
+        return $this->db->query($query)->result_array();
+        
+    }
+
 
     // public function buat_tiket(){
     //     $this->db->select('RIGHT(tiket_temp.no_tiket) as tiket', FALSE);

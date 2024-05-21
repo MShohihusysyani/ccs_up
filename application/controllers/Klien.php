@@ -13,9 +13,12 @@ class Klien extends CI_Controller
 
     public function index()
     {
+        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $data['data_handle'] = $this->client_model->getDataKlienHandle();
+
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
-        $this->load->view('klien/dashboard');
+        $this->load->view('klien/dashboard', $data);
         $this->load->view('templates/footer');
     }
 
