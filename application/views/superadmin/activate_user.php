@@ -32,6 +32,7 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Divisi</th>
+                                        <th>Last Login</th>
                                         <th>Active</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -45,6 +46,7 @@
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $u['nama_user']; ?></td>
                                         <td><?= $u['divisi']; ?></td>
+                                        <td><?= $u['last_login'];?></td>
                                         <td> <?php if ($u['active'] == 'N') : ?>
                                                 <i class="material-icons">clear</i>
 
