@@ -191,8 +191,8 @@
                         </a>
                     </li>
 
-                    <!-- <li
-                        <?= $this->uri->segment(2) == 'category' || $this->uri->segment(2) == 'client' || $this->uri->segment(2) == 'user' || $this->uri->segment(2) == 'getDataUser'  ? 'class="active"' : '' ?>>
+                    <li
+                        <?= $this->uri->segment(2) == 'category' || $this->uri->segment(2) == 'client' || $this->uri->segment(2) == 'user' || $this->uri->segment(2) == 'AktivasiUser'  ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">storage</i>
                             <span>Kelola Data</span>
@@ -200,26 +200,26 @@
                         <ul class="ml-menu">
                             <li
                                 <?= $this->uri->segment(2) == 'category' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('supervisor/category') ?>">Data Kategori</a>
+                                <a href="<?php echo base_url('superadmin/category') ?>">Data Kategori</a>
                             </li>
 
                             <li
                                 <?= $this->uri->segment(2) == 'client' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('supervisor/client') ?>">Data BPR</a>
+                                <a href="<?php echo base_url('superadmin/client') ?>">Data BPR</a>
                             </li>
 
                             <li
-                                <?= $this->uri->segment(2) == 'user' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('supervisor/user') ?>">Data User</a>
+                                <?= $this->uri->segment(2) == 'user' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('superadmin/user') ?>">Data User</a>
                             </li>
 
                             <li
-                                <?= $this->uri->segment(2) == 'getDataUser' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('user/getDataUser') ?>">Aktivasi User</a>
+                                <?= $this->uri->segment(2) == 'AktivasiUser' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('user/AktivasiUser') ?>">Aktivasi User</a>
                             </li>
 
                         </ul>
-                    </li> -->
+                    </li>
 
 
                     <li

@@ -149,6 +149,18 @@ class User extends CI_Controller
 
     }
 
+    public function AktivasiUser()
+    {
+        $this->load->model('User_model', 'user_model');
+
+        $data['user'] = $this->user_model->getDataUser();
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/activate_user', $data);
+        $this->load->view('templates/footer');
+
+    }
+
 
     public function active($id)
     {
