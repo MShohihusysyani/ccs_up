@@ -60,4 +60,23 @@ class User_model extends CI_Model
         $this->db->where('id_user', $id);
         $this->db->delete('user');
     }
+    // public function update_last_login($user_id)
+    // {
+
+    //     $this->db->where('id_user', $user_id);
+    //     $this->db->update('user', ['last_login' => date('Y-m-d H:i:s')]);
+    // }
+
+    public function update_last_login($user_id){
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d H:i:s');
+
+        $data = array(
+            'last_login' => $now
+        );
+        $this->db->where('id_user', $user_id);
+        return $this->db->update('user', $data);
+    }
+    
+    
 }
