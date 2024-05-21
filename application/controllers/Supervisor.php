@@ -642,35 +642,9 @@ class Supervisor extends CI_Controller
         Redirect(Base_url('supervisor/added'));
     }
 
-    // EDIT HELPDESK
-    // public function fungsi_edit()
-    // {
-    //     $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-    //     $this->form_validation->set_rules('namahd','Helpdesk', 'required');
-    //     $id_pelaporan = $this->input->post('id_pelaporan');
-    //     $id_user = $this->input->post('namahd');
-    //     $data = [
-    //         'pelaporan_id' => $id_pelaporan,
-    //         'user_id' => $id_user
-    //     ];
-
-    //     // cari nama user berdasarkan id 
-    //     $this->db->select('id_user, nama_user');
-    //     $this->db->from('user');
-    //     $this->db->where('id_user', $id_user);
-    //     $query = $this->db->get();
-    //     $user = $query->row();
-    //     $nama_user = $user->nama_user;
-
-
-    //     $this->db->update('forward', $data);
-    //     $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
-    //     $this->session->set_flashdata('pesan', 'Helpdesk has been update!');
-    //     Redirect(Base_url('supervisor/onprogress'));
-    // }
 
     public function fungsi_edit()
-{
+    {
     // Load the form validation library
     $this->load->library('form_validation');
 
@@ -725,8 +699,20 @@ class Supervisor extends CI_Controller
     // FUNGSI REJECT
     public function fungsi_reject()
     {
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+
+        // Load the form validation library
+    $this->load->library('form_validation');
+
+    // Set validation rules
+    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+
+    // Check if the form passes validation
+    if ($this->form_validation->run() == FALSE) {
+        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+        redirect(base_url('supervisor/onprogress'));
+    } else {
+        // Retrieve POST data
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namahd');
         $data = [
@@ -734,18 +720,34 @@ class Supervisor extends CI_Controller
             'user_id' => $id_user
         ];
 
-        // cari nama user berdasarkan id 
+        // Fetch the user name based on the user ID
         $this->db->select('id_user, nama_user');
         $this->db->from('user');
         $this->db->where('id_user', $id_user);
         $query = $this->db->get();
-        $user = $query->row();
-        $nama_user = $user->nama_user;
 
-        $this->db->update('forward', $data);
-        $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Successfully Reject!');
-        Redirect(Base_url('supervisor/close'));
+        // Check if user exists
+        if ($query->num_rows() > 0) {
+            $user = $query->row();
+            $nama_user = $user->nama_user;
+
+            // Update the forward table
+            $this->db->where('pelaporan_id', $id_pelaporan);
+            $this->db->update('forward', $data);
+
+            // Update the Helpdesk in the supervisor_model
+            $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
+
+            // Set success message
+            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        } else {
+            // Set error message if user not found
+            $this->session->set_flashdata('error', 'User not found.');
+        }
+
+        // Redirect to the onprogress page
+        redirect(base_url('supervisor/close'));
     }
 
+}
 }
