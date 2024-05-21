@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         'bulletedList', 'numberedList', 'todoList','|',
                         'fontSize', 'fontFamily', 'fontColor', '|',
                         'alignment', '|',
-                        'link', 'uploadImage', 'ckbox', 'blockQuote', 'insertTable', 'mediaEmbed','|',
+                        'link', 'uploadImage', 'ckbox', 'blockQuote', 'insertTable','|',
                         'undo', 'redo'
 
                     ],
