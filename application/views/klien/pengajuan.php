@@ -149,6 +149,13 @@
                                             <span class="label label-info" data-role="tagsinput"><?= $tmp['tags'];?></span>
                                         </td>
                                         <td>
+                                            <a class="btn btn-xs btn-info"
+                                                href="<?= base_url() ?>klien/preview/<?= $tmp['id_temp']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>Detail</a>
+                                                <br>
+                                                <br>
+
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_temp="<?= $tmp['id_temp']; ?>"
@@ -161,7 +168,6 @@
                                                         data-target="#editModalTemp"> <i class="material-icons">edit</i> <span
                                                         class="icon-name">Edit</span></a>
                                                 </div>
-
                                                 <br>
                                                 <br>
 
@@ -169,6 +175,7 @@
                                                 href="<?= base_url() ?>klien/fungsi_delete_temp/<?= $tmp['id_temp']; ?>"><span
                                                     class="fa fa-trash tombol-hapus"></span>
                                                 Hapus</a>
+
 
                                         </td>
 

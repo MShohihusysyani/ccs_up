@@ -263,6 +263,18 @@ class Klien extends CI_Controller
             $this->load->view('templates/footer');
         }
 
+        public function preview($id)
+        {
+            $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+            $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+            $data['tiket_temp'] = $this->klienpelaporan_model->ambil_id_temp($id);
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/klien_sidebar');
+            $this->load->view('klien/preview', $data);
+            $this->load->view('templates/footer');
+        }
+
     public function add_comment()
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone

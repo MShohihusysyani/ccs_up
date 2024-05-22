@@ -142,15 +142,12 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    // AMBIL DATA KOMEN LAMA
-    // public function ambil_id_comment($id){
-    //     $this->db->select('*');
-    //     $this->db->from('comment');
-    //     $this->db->where('pelaporan_id', $id);
-    //     return $this->db->get()->result();
-    // }
+    public function ambil_id_temp($id)
+    { 
+        $query = "SELECT  id_temp, no_tiket, judul, perihal, nama, kategori, tags, file  FROM tiket_temp WHERE id_temp='$id'";
+        return $this->db->query($query)->result_array();
+    }
 
-    // 
     public function get_latest_comments($id) {
         $query = "SELECT 
                     user.nama_user, 
