@@ -488,8 +488,8 @@ class Supervisor extends CI_Controller
     }
 
         //   FILTER LAPORAN
-        public function rekapPelaporan()
-        {
+    public function rekapPelaporan()
+    {
             $this->load->model('Client_model', 'client_model');
             $this->load->model('Pelaporan_model', 'pelaporan_model');
             $data['pencarian_data'] = $this->pelaporan_model->getAll();
@@ -499,10 +499,10 @@ class Supervisor extends CI_Controller
             $this->load->view('templates/supervisor_sidebar');
             $this->load->view('supervisor/rekap_pelaporan', $data);
             $this->load->view('templates/footer');
-        }
+    }
 
-        public function datepelaporan()
-        {
+    public function datepelaporan()
+    {
             $tgla       = $this->input->post('tgla');
             $tglb       = $this->input->post('tglb');
             $status_ccs = $this->input->post('status_ccs');
@@ -516,7 +516,7 @@ class Supervisor extends CI_Controller
             $this->load->view('templates/supervisor_sidebar');
             $this->load->view('supervisor/rekap_pelaporan', $data);
             $this->load->view('templates/footer');
-        }
+    }
 
         //LAPORAN FILTER KATEGORI
         public function rekapKategori()

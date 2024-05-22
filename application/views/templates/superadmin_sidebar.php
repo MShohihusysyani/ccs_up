@@ -258,7 +258,7 @@
                     </li>
 
 
-                    <!-- <li
+                    <li
                         <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' || $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == 'rekapProgres'  ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">archive</i>
@@ -267,26 +267,26 @@
                         <ul class="ml-menu">
                             <li
                                 <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('supervisor/rekapPelaporan') ?>">Rekap Pelaporan</a>
+                                <a href="<?php echo base_url('superadmin/rekapPelaporan') ?>">Rekap Pelaporan</a>
                             </li>
 
                             <li
                                 <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('supervisor/rekapKategori') ?>">Rekap Kategori</a>
+                                <a href="<?php echo base_url('superadmin/rekapKategori') ?>">Rekap Kategori</a>
                             </li>
 
                             <li
                                 <?= $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('supervisor/rekapHelpdesk') ?>">Rekap Helpdesk</a>
+                                <a href="<?php echo base_url('superadmin/rekapHelpdesk') ?>">Rekap Helpdesk</a>
                             </li>
 
                             <li
                                 <?= $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('supervisor/rekapProgres') ?>">Rekap Progres</a>
+                                <a href="<?php echo base_url('superadmin/rekapProgres') ?>">Rekap Progres</a>
                             </li>
 
                         </ul>
-                    </li> -->
+                    </li>
 
                     <li class="header">LABELS</li>
                     <li>

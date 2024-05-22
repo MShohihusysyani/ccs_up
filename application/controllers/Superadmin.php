@@ -293,6 +293,37 @@ class Superadmin extends CI_Controller
     }
 
     
+        //   FILTER LAPORAN
+        public function rekapPelaporan()
+        {
+            $this->load->model('Client_model', 'client_model');
+            $this->load->model('Pelaporan_model', 'pelaporan_model');
+            $data['pencarian_data'] = $this->pelaporan_model->getAll();
+            $data['klien'] = $this->client_model->getClient();
+    
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_pelaporan', $data);
+            $this->load->view('templates/footer');
+        }
+
+        public function datepelaporan()
+        {
+            $tgla       = $this->input->post('tgla');
+            $tglb       = $this->input->post('tglb');
+            $status_ccs = $this->input->post('status_ccs');
+            $nama_klien = $this->input->post('nama_klien');
+
+            $this->load->model('Pelaporan_model', 'pelaporan_model');
+            $data['klien'] = $this->client_model->getClient();
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien);
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_pelaporan', $data);
+            $this->load->view('templates/footer');
+        }
+
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)
     {
