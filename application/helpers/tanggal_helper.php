@@ -104,7 +104,7 @@ function tanggal_indo($tanggal)
 
 if (!function_exists('format_indo')) {
 
-function format_indo($date){
+function format_indo1($date){
     date_default_timezone_set('Asia/Jakarta');
     // array hari dan bulan
     $Hari = array("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
@@ -122,152 +122,38 @@ function format_indo($date){
 }
 }
 
-function romawi()
-{
-    $romawi = Date('m');
-    switch ($romawi) {
-        case 1:
-            $romawi = "I";
-            break;
-        case 2:
-            $romawi = "II";
-            break;
-        case 3:
-            $romawi = "III";
-            break;
-        case 4:
-            $romawi = "IV";
-            break;
-        case 5:
-            $romawi = "V";
-            break;
-        case 6:
-            $romawi = "VI";
-            break;
-        case 7:
-            $romawi = "VII";
-            break;
-        case 8:
-            $romawi = "VIII";
-            break;
-        case 9:
-            $romawi = "IX";
-            break;
-        case 10:
-            $romawi = "X";
-            break;
-        case 11:
-            $romawi = "XI";
-            break;
-        case 12:
-            $romawi = "XII";
-            break;
+if (!function_exists('format_indo')) {
 
-        default:
-            $romawi = Date('F');
-            break;
+    function format_indo($date){
+        date_default_timezone_set('Asia/Jakarta');
+    
+        // Array hari dan bulan
+        $Hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+        $Bulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+    
+        // Validate input date format (YYYY-MM-DD HH:MM:SS)
+        if (preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $date)) {
+            // Pemisahan tahun, bulan, hari, dan waktu
+            $tahun = substr($date, 0, 4);
+            $bulan = substr($date, 5, 2);
+            $tgl = substr($date, 8, 2);
+            $waktu = substr($date, 11, 8);
+    
+            // Validate extracted values
+            if (checkdate((int)$bulan, (int)$tgl, (int)$tahun)) {
+                $hari = date("w", strtotime($date));
+                $result = $Hari[$hari] . ", " . $tgl . " " . $Bulan[(int)$bulan - 1] . " " . $tahun . " " . $waktu;
+                return $result;
+            } else {
+                return "Invalid date components.";
+            }
+        } else {
+            return "Invalid date format.";
+        }
     }
-    return $romawi;
-}
-
-function kodeSurat()
-{
-    $ci = get_instance();
-    $bulan = date('m');
-    $romawi = romawi($bulan);
-    $taun = date('Y');
-    $query = "SELECT max(kode_surat) as maxKode FROM surat where month(tanggal_surat) = '$bulan' AND year(tanggal_surat) = '$taun' ";
-    $data = $ci->db->query($query)->row_array();
-    $kode = $data['maxKode'];
-    $noUrut = (int) substr($kode, 0, 3);
-
-    $noUrut++;
-
-    $char = "/PR/AMIKOMPWT/UPB/" . $romawi . "/" . $taun;
-    $kodeBaru = sprintf('%03s', $noUrut) . $char;
-    return $kodeBaru;
-}
-
-function romawipo()
-{
-    $romawi = Date('m');
-    switch ($romawi) {
-        case 1:
-            $romawi = "I";
-            break;
-        case 2:
-            $romawi = "II";
-            break;
-        case 3:
-            $romawi = "III";
-            break;
-        case 4:
-            $romawi = "IV";
-            break;
-        case 5:
-            $romawi = "V";
-            break;
-        case 6:
-            $romawi = "VI";
-            break;
-        case 7:
-            $romawi = "VII";
-            break;
-        case 8:
-            $romawi = "VIII";
-            break;
-        case 9:
-            $romawi = "IX";
-            break;
-        case 10:
-            $romawi = "X";
-            break;
-        case 11:
-            $romawi = "XI";
-            break;
-        case 12:
-            $romawi = "XII";
-            break;
-
-        default:
-            $romawi = Date('F');
-            break;
     }
-    return $romawi;
-}
+    
 
-function kodeSuratPO()
-{
-    $ci = get_instance();
-    $bulan = date('m');
-    $romawi = romawipo($bulan);
-    $taun = date('Y');
-    $query = "SELECT max(kode_surat) as maxKode FROM surat_po where month(tanggal_surat) = '$bulan' AND year(tanggal_surat) = '$taun' ";
-    $data = $ci->db->query($query)->row_array();
-    $kode = $data['maxKode'];
-    $noUrut = (int) substr($kode, 0, 3);
 
-    $noUrut++;
 
-    $char = "/PO/AMIKOMPWT/UPB/" . $romawi . "/" . $taun;
-    $kodeBaru = sprintf('%03s', $noUrut) . $char;
-    return $kodeBaru;
-}
 
-function kodeSuratBA()
-{
-    $ci = get_instance();
-    $bulan = date('m');
-    $romawi = romawi($bulan);
-    $taun = date('Y');
-    $query = "SELECT max(kode_surat) as maxKode FROM surat_ba where month(tanggal_surat) = '$bulan' AND year(tanggal_surat) = '$taun' ";
-    $data = $ci->db->query($query)->row_array();
-    $kode = $data['maxKode'];
-    $noUrut = (int) substr($kode, 0, 3);
-
-    $noUrut++;
-
-    $char = "/BA/AMIKOMPWT/UPB/" . $romawi . "/" . $taun;
-    $kodeBaru = sprintf('%03s', $noUrut) . $char;
-    return $kodeBaru;
-}
