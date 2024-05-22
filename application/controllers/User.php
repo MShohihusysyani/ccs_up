@@ -23,6 +23,38 @@ class User extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function AktivasiUser()
+    {
+        $this->load->model('User_model', 'user_model');
+
+        $data['user'] = $this->user_model->getDataUser();
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/activate_user', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function active($id)
+    {
+        // $this->_sendEmail($id, 'active');
+        $sql = "UPDATE user SET active='Y' WHERE id_user=$id";
+        $this->db->query($sql);
+        $this->session->set_flashdata('pesan', 'Success Active!');
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
+    }
+
+    public function inactive($id)
+    {
+        // $this->_sendEmail($id, 'nonactive');
+        $sql = "UPDATE user SET active='N' WHERE id_user=$id";
+        $this->db->query($sql);
+        $this->session->set_flashdata('pesan', 'Success Inactive!');
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
+    }
+
     #PROFILE
     public function profile_klien($id)
     {
@@ -147,39 +179,6 @@ class User extends CI_Controller
         $this->load->view('supervisor/activate_user', $data);
         $this->load->view('templates/footer');
 
-    }
-
-    public function AktivasiUser()
-    {
-        $this->load->model('User_model', 'user_model');
-
-        $data['user'] = $this->user_model->getDataUser();
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/activate_user', $data);
-        $this->load->view('templates/footer');
-
-    }
-
-
-    public function active($id)
-    {
-        // $this->_sendEmail($id, 'active');
-        $sql = "UPDATE user SET active='Y' WHERE id_user=$id";
-        $this->db->query($sql);
-        $this->session->set_flashdata('pesan', 'Success Active!');
-        $referred_from = $this->session->userdata('referred_from');
-        redirect($referred_from, 'refresh');
-    }
-
-    public function inactive($id)
-    {
-        // $this->_sendEmail($id, 'nonactive');
-        $sql = "UPDATE user SET active='N' WHERE id_user=$id";
-        $this->db->query($sql);
-        $this->session->set_flashdata('pesan', 'Success Inactive!');
-        $referred_from = $this->session->userdata('referred_from');
-        redirect($referred_from, 'refresh');
     }
 
 

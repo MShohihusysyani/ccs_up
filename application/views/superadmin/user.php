@@ -184,7 +184,7 @@ $('#tombol-tambah').on('click', function(e) {
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input value="<?= $u['active']; ?>" type="text" id="active" name="active" class="form-control">
+                                <input value="<?= $u['active']; ?>" type="text" id="active" name="active" class="form-control" readonly>
                                 <label class="form-label">Active</label>
                             </div>
                         </div>
@@ -286,10 +286,9 @@ $('#tombol-tambah').on('click', function(e) {
                                 </select> 
                         </div>
 
-                        <div class="form-group form-float">
+                        <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="active" name="active" class="form-control">
-                                <label class="form-label">Active</label>
+                                <input type="date" class="form-control" id="tgl_register" name="tgl_register" placeholder="tanggal registrasi" />
                             </div>
                         </div>
                 </div>

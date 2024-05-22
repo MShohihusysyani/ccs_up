@@ -157,7 +157,7 @@ class Superadmin extends CI_Controller
         $data['username'] = $this->db->get('user')->result_array();
         $data['password'] = $this->db->get('user')->result_array();
         $data['role']     = $this->db->get('user')->result_array();
-        $data['active']   = $this->db->get('user')->result_array();
+        $data['tgl_register']   = $this->db->get('user')->result_array();
 
         $this->form_validation->set_rules('no_urut', 'No Urut', 'required');
         $this->form_validation->set_rules('nama_klien', 'Kategory', 'required');
@@ -170,7 +170,7 @@ class Superadmin extends CI_Controller
             'username' => $this->input->post('username'),
             'password' => $password,
             'role'     => $this->input->post('role'),
-            'active'   => $this->input->post('active')
+            'tgl_register'   => $this->input->post('tgl_register')
         ];
         $this->db->insert('user', $data);
         $this->session->set_flashdata('pesan', 'Successfully Added!');
