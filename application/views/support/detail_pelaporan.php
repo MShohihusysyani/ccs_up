@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control"
-                                    value="<?= $dp['waktu_pelaporan']; ?>" readonly>
+                                    value="<?= tanggal_indo($dp['waktu_pelaporan']); ?>" readonly>
                             </div>
                         </div>
 
