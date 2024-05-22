@@ -1,0 +1,4 @@
+"No","No Tiket","Tanggal","Nama Klien","Perihal","Category","Tags","Priority","Impact","Max Day","Status CCS","Handle By","Tanggal Approve"
+"1","TIC00032024050001","21 Mei 2024","PT BPR BKK Kab. Pekalongan (Perseroda)","test 2","Kredit - Agunan","agunan,test2,kredit","Medium","kritikal","60","FINISH","Nita ,  ,","21 Mei 2024"
+"2","TIC00022024050001","21 Mei 2024","PT BPR BKK Karangmalang (Perseroda)","Test 3","Kredit - Koreksi PYD Kredit","pyd,kredit","High","kritikal","7","FINISH","Luthfi , Implementator PT MSO Purwokerto ,","22 Mei 2024"
+"3","TIC00012024050002","21 Mei 2024","PT BPR BKK Banjarharjo(Perseroda)","Test 4","Kredit - PPAP Kredit","ppap,kredit","High","kritikal","7","FINISH","Luthfi ,  ,","22 Mei 2024"
