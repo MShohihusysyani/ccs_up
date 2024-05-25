@@ -44,13 +44,13 @@ class Client_model extends CI_Model
     {
         $no_urut = $this->db->query("SELECT max(no_tiket) AS no_tiket FROM pelaporan WHERE user_id = $id")->row_array();
 
-        if($no_urut !== NULL){
+        if($no_urut == NULL){
             $no = 0;
         } else {
-            $no = substr($no_urut['no_tiket'], -4);
+            $no = (int) substr($no_urut['no_tiket'], -4);
         }
         $no_urut = $no + 1;
-        return sprintf('%04s',$no_urut);
+        return sprintf('%04d',$no_urut);
     }
 
       // GENERATE KODE OTOMATIS

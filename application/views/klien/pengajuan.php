@@ -347,6 +347,7 @@
             modal.find('#perihal').attr("value", div.data('perihal'));
             modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#tags').attr("value", div.data('tags'));
+            modal.find('#file').attr("value", div.data('file'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));

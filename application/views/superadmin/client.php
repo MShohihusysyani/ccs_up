@@ -38,14 +38,14 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>No Urut</th>
+                                        <th>Kode Klien</th>
                                         <th>Nama Klien</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                         <th>No</th>
-                                        <th>No Urut</th>
+                                        <th>Kode Klien</th>
                                         <th>Nama Klien</th>
                                         <th>Aksi</th>
                                 </tfoot>
