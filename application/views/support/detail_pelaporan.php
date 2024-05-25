@@ -88,7 +88,7 @@
                             </div>
                         </div>
 
-                        <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                        <label for="nama">File</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="700"
@@ -101,7 +101,7 @@
                                 
                         </textarea>
 
-                        <label for="nama">File</label>
+                        <label for="nama">File(jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
                             <label for="exampleInputFile"></label>
                             <div class="input-group">

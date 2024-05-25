@@ -77,7 +77,7 @@
                                 
                         </textarea>
 
-                        <label for="nama">File</label>
+                        <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
                             <label for="exampleInputFile"></label>
                             <div class="input-group">
