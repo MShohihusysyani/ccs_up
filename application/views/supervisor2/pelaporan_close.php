@@ -333,10 +333,10 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
-                                <option value=""> -- Pilih Helpdesk -- </option>
+                                <option value=""> -- Pilih Teknisi-- </option>
                                     <?php
-                                        foreach ($namahd as $nah): ?>
-                                        <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                        foreach ($namateknisi as $nat): ?>
+                                        <option value="<?= $nat['id_user']; ?>"><?= $nat['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

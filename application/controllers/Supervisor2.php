@@ -81,6 +81,9 @@ class Supervisor2 extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanClose();
 
+        $this->load->model('User_model', 'user_model');
+        $data['namateknisi'] = $this->user_model->getNamaTeknisi();
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/pelaporan_close', $data);
@@ -131,7 +134,7 @@ class Supervisor2 extends CI_Controller
         );
         $this->pelaporan_model->approveSPV($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Approve!');
-        redirect('supervisor/finish');
+        redirect('supervisor2/finish');
 
     }
 
