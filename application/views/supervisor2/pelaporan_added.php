@@ -298,7 +298,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Select Teknisi</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Pilih Teknisi</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor2/fungsi_forward') ?>

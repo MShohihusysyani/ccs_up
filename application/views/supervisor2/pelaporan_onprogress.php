@@ -189,7 +189,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Pilih Teknisi</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Edit Teknisi</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor2/fungsi_edit') ?>
@@ -239,14 +239,10 @@
                             </div>
                         </div>
 
+                        <label for="priority">Priority</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <select id="priority" name="priority" class="form-control">
-                                    <option value="">-- Please select Priority--</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                </select>
+                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -256,8 +252,15 @@
                                 <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
                             </div>
                         </div>
-
+                        
+                        <label for="kategori">Kategori</label>
                         <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select name="kategori" id="kategori" class="form-control">
                                     <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
@@ -269,17 +272,8 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                        </div>
-
-                        <!-- <label for="kategori">Category</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori"
-                                    name="kategori" id="kategori" placeholder=""
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id">
-                            </div>
                         </div> -->
+
 
                         <div class="form-group">
                             <div class="form-line">
@@ -293,12 +287,12 @@
                             </div>
                         </div>
 
-                        <label for="maxday">Subtask</label>
+                        <!-- <label for="maxday">Subtask</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="subtask" name="subtask" class="form-control">
                             </div>
-                        </div>
+                        </div> -->
                     
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
@@ -567,12 +561,12 @@
             modal.find('#perihal').attr("value", div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
+            modal.find('#priority').attr("value", div.data('priority'));
+            // modal.find('#priority').value = div.data('priority');
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
-            // modal.find('#kategori').attr("value", div.data('kategori'));
-            modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namahd option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));

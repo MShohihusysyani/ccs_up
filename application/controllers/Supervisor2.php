@@ -273,21 +273,21 @@ class Supervisor2 extends CI_Controller
                 redirect($referred_from, 'refresh');
             }
         }
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('user_id');
-        $body = $this->input->post('body');
-        $create_at  = date('Y-m-d H:i:s');
-        $comment_id = $this->input->post('id_comment');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user,
-            'body' => $body,
-            'file' => $photo,
-            'created_at' => $create_at,
-            'comment_id' => $comment_id
-        ];
+            $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+            $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('user_id');
+            $body = $this->input->post('body');
+            $create_at  = date('Y-m-d H:i:s');
+            $comment_id = $this->input->post('id_comment');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user,
+                'body' => $body,
+                'file' => $photo,
+                'created_at' => $create_at,
+                'comment_id' => $comment_id
+            ];
 
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
@@ -334,16 +334,16 @@ class Supervisor2 extends CI_Controller
 
     // Set validation rules
     $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+    $this->form_validation->set_rules('namateknisi', 'Helpdesk', 'required');
 
     // Check if the form passes validation
     if ($this->form_validation->run() == FALSE) {
         $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-        redirect(base_url('supervisor/onprogress'));
+        redirect(base_url('supervisor2/onprogress'));
     } else {
         // Retrieve POST data
         $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namahd');
+        $id_user = $this->input->post('namateknisi');
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user
@@ -362,13 +362,13 @@ class Supervisor2 extends CI_Controller
 
             // Update the forward table
             $this->db->where('pelaporan_id', $id_pelaporan);
-            $this->db->update('forward', $data);
+            $this->db->update('t1_forward', $data);
 
             // Update the Helpdesk in the supervisor_model
-            $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
+            $this->supervisor_model->updateTeknisi($id_pelaporan, $nama_user);
 
             // Set success message
-            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+            $this->session->set_flashdata('pesan', 'Teknisi has been updated!');
         } else {
             // Set error message if user not found
             $this->session->set_flashdata('error', 'User not found.');
