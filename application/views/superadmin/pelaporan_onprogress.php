@@ -141,7 +141,7 @@
 
                                             <td>
 
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -157,7 +157,7 @@
                                                         class="icon-name">Edit</span></a>
                                                 </div>
                                                 <br>
-                                                <br> -->
+                                                <br>
                                                 <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span

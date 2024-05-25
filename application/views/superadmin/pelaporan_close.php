@@ -184,7 +184,7 @@
                     <h4 class="modal-title" id="defaultModalLabel">APPROVE</h4>
                 </div>
                 <div class="modal-body">
-                    <?= form_open_multipart('supervisor/approve') ?>
+                    <?= form_open_multipart('superadmin/approve') ?>
                     <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
@@ -267,7 +267,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">REJECT</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('supervisor/fungsi_reject') ?>
+                <?= form_open_multipart('superadmin/fungsi_reject') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">

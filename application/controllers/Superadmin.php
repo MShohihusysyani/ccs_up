@@ -292,10 +292,209 @@ class Superadmin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    // EDIT PELAPORAN
+    public function edit_pelaporan()
+    {
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $no_tiket     = $this->input->post('no_tiket');
+        $perihal      = $this->input->post('perihal');
+        $status_ccs   = $this->input->post('status_ccs');
+        $kategori     = $this->input->post('kategori');
+        $priority     = $this->input->post('priority');
+        $maxday       = $this->input->post('maxday');
+        $tags         = $this->input->post('tags');
+        $ArrUpdate = array(
+            'no_tiket'   => $no_tiket,
+            'perihal'    => $perihal,
+            'status_ccs' => $status_ccs,
+            'priority'   => $priority,
+            'kategori'   => $kategori,
+            'maxday'     => $maxday,
+            'tags'       => $tags
+
+        );
+        $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Edited!');
+        Redirect(base_url('superadmin/added'));
+    }
+
+     //DISTRIBUSI TO HELPDESK
+    public function fungsi_forward()
+    {
+        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namahd');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
+        ];
+
+         // cari nama user berdasarkan id 
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+        $user = $query->row();
+        $nama_user = $user->nama_user;
+
+        $this->db->insert('forward', $data);
+        $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
+        $this->session->set_flashdata('pesan', 'Successfully Forward!');
+        Redirect(Base_url('superadmin/added'));
+     }
+
+    // FUNGSI EDIT HELPDESK
+    public function fungsi_edit()
+    {
+    // Load the form validation library
+    $this->load->library('form_validation');
+
+    // Set validation rules
+    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+
+    // Check if the form passes validation
+    if ($this->form_validation->run() == FALSE) {
+        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+        redirect(base_url('supervisor/onprogress'));
+    } else {
+        // Retrieve POST data
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namahd');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
+        ];
+
+        // Fetch the user name based on the user ID
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+
+        // Check if user exists
+        if ($query->num_rows() > 0) {
+            $user = $query->row();
+            $nama_user = $user->nama_user;
+
+            // Update the forward table
+            $this->db->where('pelaporan_id', $id_pelaporan);
+            $this->db->update('forward', $data);
+
+            // Update the Helpdesk in the supervisor_model
+            $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
+
+            // Set success message
+            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        } else {
+            // Set error message if user not found
+            $this->session->set_flashdata('error', 'User not found.');
+        }
+
+        // Redirect to the onprogress page
+        redirect(base_url('superadmin/onprogress'));
+    }
+}
+
+
+// FUNGSI REJECT
+public function fungsi_reject()
+{
+
+        // Load the form validation library
+    $this->load->library('form_validation');
+
+    // Set validation rules
+    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+
+    // Check if the form passes validation
+    if ($this->form_validation->run() == FALSE) {
+        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+        redirect(base_url('supervisor/onprogress'));
+    } else {
+        // Retrieve POST data
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('namahd');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user
+        ];
+
+        // Fetch the user name based on the user ID
+        $this->db->select('id_user, nama_user');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+
+        // Check if user exists
+        if ($query->num_rows() > 0) {
+            $user = $query->row();
+            $nama_user = $user->nama_user;
+
+            // Update the forward table
+            $this->db->where('pelaporan_id', $id_pelaporan);
+            $this->db->update('forward', $data);
+
+            // Update the Helpdesk in the supervisor_model
+            $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
+
+            // Set success message
+            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        } else {
+            // Set error message if user not found
+            $this->session->set_flashdata('error', 'User not found.');
+        }
+
+        // Redirect to the onprogress page
+        redirect(base_url('superadmin/close'));
+    }
+
+}
+
+  //Approve supervisor
+    public function approve()
+    {
+        // date_default_timezone_set('Asia/Jakarta');
+        # add your city to set local time zone
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d');
+
+
+        $id         = $this->input->post('id_pelaporan');
+        $no_tiket   = $this->input->post('no_tiket');
+        //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
+        $nama       = $this->input->post('nama');
+        $perihal    = $this->input->post('perihal');
+        $status_ccs ='FINISH';
+        $waktu      = date('Y-m-d');
+        $priority   = $this->input->post('priority');
+        $maxday     = $this->input->post('maxday');
+        $kategori   = $this->input->post('kategori');
+        $ArrUpdate  = array(
+
+            'no_tiket'       => $no_tiket,
+          //    'waktu_pelaporan' => $waktu_pelaporan,
+            'nama'           => $nama,
+            'perihal'        => $perihal,
+            'status_ccs'     => $status_ccs,
+            'waktu_approve'  => $waktu,
+            'priority'       => $priority,
+            'maxday'         => $maxday,
+            'kategori'       => $kategori
+
+        );
+        $this->pelaporan_model->approveSPV($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Approve!');
+        redirect('superadmin/finish');
+
+    }
+
     
-        //   FILTER LAPORAN
-        public function rekapPelaporan()
-        {
+    //   FILTER LAPORAN
+    public function rekapPelaporan()
+    {
             $this->load->model('Client_model', 'client_model');
             $this->load->model('Pelaporan_model', 'pelaporan_model');
             $data['pencarian_data'] = $this->pelaporan_model->getAll();
@@ -305,10 +504,10 @@ class Superadmin extends CI_Controller
             $this->load->view('templates/superadmin_sidebar');
             $this->load->view('superadmin/rekap_pelaporan', $data);
             $this->load->view('templates/footer');
-        }
+    }
 
-        public function datepelaporan()
-        {
+    public function datepelaporan()
+    {
             $tgla       = $this->input->post('tgla');
             $tglb       = $this->input->post('tglb');
             $status_ccs = $this->input->post('status_ccs');
@@ -322,7 +521,7 @@ class Superadmin extends CI_Controller
             $this->load->view('templates/superadmin_sidebar');
             $this->load->view('superadmin/rekap_pelaporan', $data);
             $this->load->view('templates/footer');
-        }
+    }
 
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)

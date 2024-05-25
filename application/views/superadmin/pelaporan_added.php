@@ -124,7 +124,7 @@
                                             </td>
                                             <td>
 
-                                            <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -157,7 +157,7 @@
                                                         data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
                                                         data-target="#forwardModal"> <i class="material-icons">forward</i> <span
                                                             class="icon-name">Forward</span></a>
-                                                </div> -->
+                                                </div> 
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

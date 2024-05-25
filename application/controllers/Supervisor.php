@@ -616,8 +616,8 @@ class Supervisor extends CI_Controller
             $this->load->view('templates/footer');
         }
 
-        //DISTRIBUSI TO HELPDESK
-        public function fungsi_forward()
+    //DISTRIBUSI TO HELPDESK
+    public function fungsi_forward()
     {
         $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
         $this->form_validation->set_rules('namahd','Helpdesk', 'required');
