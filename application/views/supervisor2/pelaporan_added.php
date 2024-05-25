@@ -42,7 +42,6 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -59,7 +58,6 @@
                                         <th>Priority</th>
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
-                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -127,7 +125,6 @@
                                                 <?php endif; ?>
 
                                             </td>
-                                            <td><?= $dp['status']; ?></td>
                                             <td>
 
                                             <?php $this->session->set_userdata('referred_from', current_url()); ?>
