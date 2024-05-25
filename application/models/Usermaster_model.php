@@ -6,8 +6,7 @@ class Usermaster_model extends CI_Model
     public function getUser()
     {
         $query = "SELECT *
-                    FROM user
-                    ";
+                    FROM user ORDER BY divisi ASC";
         return $this->db->query($query)->result_array();
     }
 
