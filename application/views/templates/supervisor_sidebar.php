@@ -191,7 +191,7 @@
                         </a>
                     </li>
 
-                    <li
+                    <!-- <li
                         <?= $this->uri->segment(2) == 'category' || $this->uri->segment(2) == 'client' || $this->uri->segment(2) == 'user' || $this->uri->segment(2) == 'getDataUser'  ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">storage</i>
@@ -219,7 +219,7 @@
                             </li>
 
                         </ul>
-                    </li>
+                    </li> -->
 
 
                     <li
@@ -256,7 +256,6 @@
 
                         </ul>
                     </li>
-
 
                     <li
                         <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' || $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == 'rekapProgres'  ? 'class="active"' : '' ?>>
