@@ -15,7 +15,7 @@ class Export extends CI_Controller
         $this->load->model('Export_model');
     }
 
-	public function rekap_pelaporan()
+	public function rekap_pelaporan($tgla, $tglb)
     {
         $this->load->model('Export_model', 'export_model');
         $data['waktu_pelaporan'] = $this->db->get('pelaporan')->result_array();
@@ -29,7 +29,7 @@ class Export extends CI_Controller
 		$data['impact'] = $this->db->get('pelaporan')->result_array();
 		$data['maxday'] = $this->db->get('pelaporan')->result_array();
 		$data['status_ccs'] = $this->db->get('pelaporan')->result_array();
-        $data['rekapPelaporan'] = $this->Export_model->getPelaporan();
+        $data['rekapPelaporan'] = $this->Export_model->getPelaporan($tgla, $tglb);
 
         $this->load->view('cetak/rekap_pelaporan', $data);
     }

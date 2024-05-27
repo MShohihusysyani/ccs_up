@@ -544,11 +544,11 @@ public function fungsi_reject()
             $tglb       = $this->input->post('tglb');
             $status_ccs = $this->input->post('status_ccs');
             $nama_klien = $this->input->post('nama_klien');
-            $tags       = $this->input->post('tags');
+            // $tags       = $this->input->post('tags');
 
             $this->load->model('Pelaporan_model', 'pelaporan_model');
             $data['klien'] = $this->client_model->getClient();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags);
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien);
 
             $this->load->view('templates/header');
             $this->load->view('templates/superadmin_sidebar');

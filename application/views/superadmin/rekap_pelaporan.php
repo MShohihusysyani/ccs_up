@@ -66,13 +66,13 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                             <div class="form-group">
                                 <div class="form-line">
                                     <input type="text" name="tags" id="tags" placeholder="Masukkan Tags" class="form-control">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">

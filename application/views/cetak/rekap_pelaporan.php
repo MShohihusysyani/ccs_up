@@ -4,7 +4,9 @@
 <head>
     <title></title>
 </head>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <body>
 
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -78,8 +80,7 @@
             </th>
             <td align="center" style="width: 520px;">
                 <font style="font-size: 18px"><b>PT Mitranet Software Online Purwokerto</b></font>
-                <br>Jl. Letjen Pol Sumarto Watumas, Purwanegara, Purwokerto Utara, Banyumas, Kode Pos : 53127
-                <br>Telepon : (0281) 623321 / (0281) 623196
+                <br>Jl. Gerilya Tengah, Komp.Ruko Perum Griya Karangindah Blok B4-5 Purwokerto
             </td>
 
         </tr>
