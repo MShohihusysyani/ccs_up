@@ -11,6 +11,7 @@ class Export extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Export_model');
+        $this->load->helper('tanggal_helper');
     }
 
 	public function rekap_pelaporan()
@@ -61,7 +62,7 @@ class Export extends CI_Controller {
 		foreach($rekapPelaporan as $rpe){
 
 			$object->getActiveSheet()->setCellValue('A'.$baris, $no++);
-			$object->getActiveSheet()->setCellValue('B'.$baris, $rpe->waktu_pelaporan);
+			$object->getActiveSheet()->setCellValue('B'.$baris, tanggal_indo($rpe->waktu_pelaporan));
 			$object->getActiveSheet()->setCellValue('C'.$baris, $rpe->no_tiket);
 			$object->getActiveSheet()->setCellValue('D'.$baris, $rpe->nama);
 			$object->getActiveSheet()->setCellValue('E'.$baris, $rpe->perihal);
@@ -140,9 +141,15 @@ class Export extends CI_Controller {
         $sheet->setCellValue('A3', "NO");
         $sheet->setCellValue('B3', "TANGGAL");
         $sheet->setCellValue('C3', "NO TIKET");
-        $sheet->setCellValue('D3', "NAMA");
+        $sheet->setCellValue('D3', "NAMA KLIEN");
         $sheet->setCellValue('E3', "PERIHAL");
-        $sheet->setCellValue('F3', "STATUS");
+        $sheet->setCellValue('F3', "TAGS");
+        $sheet->setCellValue('G3', "KATEGORI");
+        $sheet->setCellValue('H3', "PRIORITY");
+        $sheet->setCellValue('I3', "IMPACT");
+        $sheet->setCellValue('J3', "MAXDAY");
+        $sheet->setCellValue('K3', "STATUS CCS");
+
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -150,6 +157,12 @@ class Export extends CI_Controller {
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
+        $sheet->getStyle('H3')->applyFromArray($style_col);
+        $sheet->getStyle('I3')->applyFromArray($style_col);
+        $sheet->getStyle('J3')->applyFromArray($style_col);
+        $sheet->getStyle('K3')->applyFromArray($style_col);
+
 
         $sheet->getRowDimension('1')->setRowHeight(20);
         $sheet->getRowDimension('2')->setRowHeight(20);
@@ -162,11 +175,16 @@ class Export extends CI_Controller {
 
         foreach ($query->result() as $data) {
             $sheet->setCellValue('A' . $row, $no);
-            $sheet->setCellValue('B' . $row, $data->waktu_pelaporan);
+            $sheet->setCellValue('B' . $row, tanggal_indo($data->waktu_pelaporan));
             $sheet->setCellValue('C' . $row, $data->no_tiket);
             $sheet->setCellValue('D' . $row, $data->nama);
             $sheet->setCellValue('E' . $row, $data->perihal);
-            $sheet->setCellValue('F' . $row, $data->status_ccs);
+            $sheet->setCellValue('F' . $row, $data->tags);
+            $sheet->setCellValue('G' . $row, $data->kategori);
+            $sheet->setCellValue('H' . $row, $data->priority);
+            $sheet->setCellValue('I' . $row, $data->impact);
+            $sheet->setCellValue('J' . $row, $data->maxday);
+            $sheet->setCellValue('K' . $row, $data->status_ccs);
 
             $sheet->getStyle('A' . $row)->applyFromArray($style_row);
             $sheet->getStyle('B' . $row)->applyFromArray($style_row);
@@ -174,9 +192,23 @@ class Export extends CI_Controller {
             $sheet->getStyle('D' . $row)->applyFromArray($style_row);
             $sheet->getStyle('E' . $row)->applyFromArray($style_row);
             $sheet->getStyle('F' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('H' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('I' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('J' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('K' . $row)->applyFromArray($style_row);
 
             $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('D' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('E' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('F' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('G' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('I' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('K' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
             $sheet->getRowDimension($row)->setRowHeight(20);
 
             $no++;
@@ -185,10 +217,15 @@ class Export extends CI_Controller {
 
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(15);
-        $sheet->getColumnDimension('C')->setWidth(25);
-        $sheet->getColumnDimension('D')->setWidth(20);
-        $sheet->getColumnDimension('E')->setWidth(25);
+        $sheet->getColumnDimension('C')->setWidth(20);
+        $sheet->getColumnDimension('D')->setWidth(35);
+        $sheet->getColumnDimension('E')->setWidth(50);
         $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('G')->setWidth(83);
+        $sheet->getColumnDimension('H')->setWidth(10);
+        $sheet->getColumnDimension('I')->setWidth(10);
+        $sheet->getColumnDimension('J')->setWidth(5);
+        $sheet->getColumnDimension('K')->setWidth(10);
 
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->setTitle("Data Rekap Pelaporan");
@@ -198,7 +235,7 @@ class Export extends CI_Controller {
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
-		ob_end_clean();
+		ob_end_clean();//digunakan ketika file tidak bisa dibuka diexcel
         $writer->save('php://output');
     }
 }

@@ -114,9 +114,7 @@
                         </ul>
                     </div>
                     <br><br>
-                <!-- <form action="<?= base_url('export/rekap_pelaporan'); ?>" method="post"
-                                enctype="multipart/form-data">
-                    </form> -->
+            
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover js-exportable dataTable"
                             id="example">
