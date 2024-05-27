@@ -104,15 +104,16 @@
             <div class="card">
                 <div class="body">
                     <!-- Single button -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Export<span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?= base_url('export/rekap_pelaporan'); ?>">Export PDF</a></li>
-                            <li><a href="<?= base_url('export/rekap_pelaporann')?>">Export Excel</a></li>
-                        </ul>
-                    </div>
+                    <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons">save</i>
+                                    <span>Export</span>
+                                <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?= base_url('export/rekap_pelaporan'); ?>">Export PDF</a></li>
+                                    <li><a href="<?= base_url('export/rekap_pelaporan_excel')?>">Export Excel</a></li>
+                                </ul>
+                        </div>
                     <br><br>
             
                     <div class="table-responsive">
