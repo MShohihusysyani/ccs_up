@@ -103,6 +103,20 @@
 
             <div class="card">
                 <div class="body">
+                    <!-- Single button -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Export<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?= base_url('export/rekap_pelaporan'); ?>">Export PDF</a></li>
+                            <li><a href="<?= base_url('export/rekap_pelaporann')?>">Export Excel</a></li>
+                        </ul>
+                    </div>
+                    <br><br>
+                <!-- <form action="<?= base_url('export/rekap_pelaporan'); ?>" method="post"
+                                enctype="multipart/form-data">
+                    </form> -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover js-exportable dataTable"
                             id="example">
@@ -113,12 +127,7 @@
                                             <th>No Tiket</th>
                                             <th>Nama Klien</th>
                                             <th>Perihal</th>
-                                            <!-- <th>Status</th> -->
-                                            <!-- <th>Category</th>
-                                            <th>Priority</th> -->
                                             <th>Status</th>
-                                            <!-- <th>Handle By</th> -->
-                                           
                                 </tr>
 
                             </thead>
@@ -133,23 +142,6 @@
                                             <td><?= $pd['no_tiket'];?></td>
                                             <td><?= $pd['nama'];?></td>
                                             <td><?= $pd['perihal'];?></td>
-                                            <!-- <td><?= $pd['status'];?></td> -->
-                                            <!-- <td><?= $pd['kategori'];?></td>
-                                            <td>
-                                                <?php if ($pd['priority'] == 'Low') : ?>
-                                                    <span class="label label-info">Low</span>
-
-                                                <?php elseif ($pd['priority'] == 'Medium') : ?>
-                                                    <span class="label label-warning">Medium</span>
-
-                                                <?php elseif ($pd['priority'] == 'High') : ?>
-                                                    <span class="label label-danger">High</span>
-                                               
-
-                                                <?php else : ?>
-
-                                                <?php endif; ?>
-                                            </td> -->
                                             <td>
                                                 <?php if ($pd['status_ccs'] == 'FINISH') : ?>
                                                     <span class="label label-success">FINISH</span>

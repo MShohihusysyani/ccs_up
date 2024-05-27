@@ -1,22 +1,21 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-// Include librari PhpSpreadsheet
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
-class Export extends CI_Controller
-{
-    public function __construct()
-    {
+class Export extends CI_Controller {
+
+    public function __construct() {
         parent::__construct();
-        // Ensure is_logged_in function exists
-        is_logged_in();
         $this->load->model('Export_model');
     }
 
 	public function rekap_pelaporan()
     {
+		$data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Export_model', 'export_model');
         $data['waktu_pelaporan'] = $this->db->get('pelaporan')->result_array();
 		$data['no_tiket'] = $this->db->get('pelaporan')->result_array();
@@ -34,107 +33,172 @@ class Export extends CI_Controller
         $this->load->view('cetak/rekap_pelaporan', $data);
     }
 
-    public function rekap_pelaporan1(){
-		$data['pelaporan'] = $this->Export_model->getPelaporan();
-		$this->load->view('cetak/rekap_pelaporan', $data);
-	  }
-	  
-	  public function export(){
-		// Load plugin PHPExcel nya
-		include APPPATH.'third_party/PHPExcel/PHPExcel.php';
-		
-		// Panggil class PHPExcel nya
-		$excel = new PHPExcel();
-		// Settingan awal fil excel
-		$excel->getProperties()->setCreator('PT MSO')
-					 ->setLastModifiedBy('PT MSO')
-					 ->setTitle("Rekap pelaporan")
-					 ->setSubject("Pelaporan")
-					 ->setDescription("Rekap Pelaporan")
-					 ->setKeywords("Rekap Pelaporan");
-		// Buat sebuah variabel untuk menampung pengaturan style dari header tabel
-		$style_col = array(
-		  'font' => array('bold' => true), // Set font nya jadi bold
-		  'alignment' => array(
-			'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
-			'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-		  ),
-		  'borders' => array(
-			'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border top dengan garis tipis
-			'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),  // Set border right dengan garis tipis
-			'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border bottom dengan garis tipis
-			'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN) // Set border left dengan garis tipis
-		  )
-		);
-		// Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
-		$style_row = array(
-		  'alignment' => array(
-			'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-		  ),
-		  'borders' => array(
-			'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border top dengan garis tipis
-			'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),  // Set border right dengan garis tipis
-			'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border bottom dengan garis tipis
-			'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN) // Set border left dengan garis tipis
-		  )
-		);
-		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Rekap Pelaporan"); // Set kolom A1 dengan tulisan "DATA SISWA"
-		$excel->getActiveSheet()->mergeCells('A1:E1'); // Set Merge Cell pada kolom A1 sampai E1
-		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); // Set bold kolom A1
-		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); // Set font size 15 untuk kolom A1
-		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); // Set text center untuk kolom A1
-		// Buat header tabel nya pada baris ke 3
-		$excel->setActiveSheetIndex(0)->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"
-		$excel->setActiveSheetIndex(0)->setCellValue('B3', "TANGGAL"); // Set kolom B3 dengan tulisan "NIS"
-		$excel->setActiveSheetIndex(0)->setCellValue('C3', "NO TIKET"); // Set kolom C3 dengan tulisan "NAMA"
-		$excel->setActiveSheetIndex(0)->setCellValue('D3', "NAMA"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
-		$excel->setActiveSheetIndex(0)->setCellValue('E3', "PERIHAL"); // Set kolom E3 dengan tulisan "ALAMAT"
-		// Apply style header yang telah kita buat tadi ke masing-masing kolom header
-		$excel->getActiveSheet()->getStyle('A3')->applyFromArray($style_col);
-		$excel->getActiveSheet()->getStyle('B3')->applyFromArray($style_col);
-		$excel->getActiveSheet()->getStyle('C3')->applyFromArray($style_col);
-		$excel->getActiveSheet()->getStyle('D3')->applyFromArray($style_col);
-		$excel->getActiveSheet()->getStyle('E3')->applyFromArray($style_col);
-		// Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-		$siswa = $this->Export_model->view();
-		$no = 1; // Untuk penomoran tabel, di awal set dengan 1
-		$numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
-		foreach($siswa as $data){ // Lakukan looping pada variabel siswa
-		  $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
-		  $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->waktu_pelaporan);
-		  $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->no_tiket);
-		  $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->nama);
-		  $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->perihal);
-		  
-		  // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
-		  $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row);
-		  $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row);
-		  $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row);
-		  $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row);
-		  $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row);
-		  
-		  $no++; // Tambah 1 setiap kali looping
-		  $numrow++; // Tambah 1 setiap kali looping
+	public function rekap_pelaporan_excel(){
+
+		$data['rekapPelaporan'] = $this->Export_model->getPelaporan('pelaporan')->result();
+
+		require(APPPATH.'PHPExcel-1.8/Classes/PHPExcel.php');
+		require(APPPATH.'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+		$object = new PHPExcel();
+
+		$object->getProperties()->setCreator('PT MSO PWT');
+		$object->getProperties()->setLastModifiedBy('PT MSO PWT');
+		$object->getProperties()->setTitle('CCS | Rekap Pelaporan');
+
+		$object->setActiveSheetIndex(0);
+
+		$object->getActiveSheet('A1', 'NO');
+		$object->getActiveSheet('B1', 'TANGGAL');
+		$object->getActiveSheet('C1', 'NO TIKET');
+		$object->getActiveSheet('D1', 'NAMA KLIEN');
+		$object->getActiveSheet('E1', 'PERIHAL');
+		$object->getActiveSheet('F1', 'STATUS CCS');
+
+		$baris = 2;
+		$no = 1;
+
+		foreach($rekapPelaporan as $rpe){
+
+			$object->getActiveSheet()->setCellValue('A'.$baris, $no++);
+			$object->getActiveSheet()->setCellValue('B'.$baris, $rpe->waktu_pelaporan);
+			$object->getActiveSheet()->setCellValue('C'.$baris, $rpe->no_tiket);
+			$object->getActiveSheet()->setCellValue('D'.$baris, $rpe->nama);
+			$object->getActiveSheet()->setCellValue('E'.$baris, $rpe->perihal);
+			$object->getActiveSheet()->setCellValue('F'.$baris, $rpe->status_ccs);
+
+			$baris++;
+
 		}
-		// Set width kolom
-		$excel->getActiveSheet()->getColumnDimension('A')->setWidth(5); // Set width kolom A
-		$excel->getActiveSheet()->getColumnDimension('B')->setWidth(15); // Set width kolom B
-		$excel->getActiveSheet()->getColumnDimension('C')->setWidth(25); // Set width kolom C
-		$excel->getActiveSheet()->getColumnDimension('D')->setWidth(20); // Set width kolom D
-		$excel->getActiveSheet()->getColumnDimension('E')->setWidth(30); // Set width kolom E
-		
-		// Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
-		$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
-		// Set orientasi kertas jadi LANDSCAPE
-		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
-		// Set judul file excel nya
-		$excel->getActiveSheet(0)->setTitle("Rekap Pelaporan");
-		$excel->setActiveSheetIndex(0);
-		// Proses file excel
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="Rekap Pelaporan.xlsx"'); // Set nama file excel nya
+		$filename="Rekap pelaporan".'xlsx';
+
+		$object->getActiveSheet()->setTitle('Rekap Pelaporan');
+
+		header('Content-Type : application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Conten-Disposition: attachment;filename="'.$filename.'"');
 		header('Cache-Control: max-age=0');
-		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2016');
-		$write->save('php://output');
-	  }
+
+		$writer=PHPExcel_IOFactory::createWriter($object, 'Excel2007');
+		$writer->save('php"//output');
+
+		exit;
+
+
+	}
+
+    public function rekap_pelaporann() {
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle'  => Border::BORDER_THIN],
+                'left' => ['borderStyle'  => Border::BORDER_THIN]
+            ]
+        ];
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle'  => Border::BORDER_THIN],
+                'left' => ['borderStyle'  => Border::BORDER_THIN]
+            ]
+        ];
+
+        $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
+        $sheet->mergeCells('A1:F1');
+        $sheet->getStyle('A1')->getFont()->setBold(true);
+        $sheet->getStyle('A1')->getFont()->setSize(15);
+
+		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $current_date = date('Y-m-d H:i:s');
+
+		$this->db->where('id_user', $this->session->userdata('id_user')); // Assuming user_id is stored in session
+        $user_query = $this->db->get('user');
+        $user = $user_query->row_array(); // Fetching the user data
+		$sheet->setCellValue('A2', "CCS | REKAP PELAPORAN");
+		$sheet->setCellValue('A2','Rekap Pelaporan dicetak oleh' .  $user['nama_user']. 'Pada tanggal' . format_indo($current_date));
+        $sheet->mergeCells('A2:F2');
+        $sheet->getStyle('A2')->getFont()->setBold(true);
+        $sheet->getStyle('A2')->getFont()->setSize(15);
+
+        // Buat header tabel pada baris ke 3
+        $sheet->setCellValue('A3', "NO");
+        $sheet->setCellValue('B3', "TANGGAL");
+        $sheet->setCellValue('C3', "NO TIKET");
+        $sheet->setCellValue('D3', "NAMA");
+        $sheet->setCellValue('E3', "PERIHAL");
+        $sheet->setCellValue('F3', "STATUS");
+
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+
+        $sheet->getRowDimension('1')->setRowHeight(20);
+        $sheet->getRowDimension('2')->setRowHeight(20);
+        $sheet->getRowDimension('3')->setRowHeight(20);
+
+        // Fetch data from database
+        $query = $this->db->get('pelaporan');
+        $no = 1;
+        $row = 4;
+
+        foreach ($query->result() as $data) {
+            $sheet->setCellValue('A' . $row, $no);
+            $sheet->setCellValue('B' . $row, $data->waktu_pelaporan);
+            $sheet->setCellValue('C' . $row, $data->no_tiket);
+            $sheet->setCellValue('D' . $row, $data->nama);
+            $sheet->setCellValue('E' . $row, $data->perihal);
+            $sheet->setCellValue('F' . $row, $data->status_ccs);
+
+            $sheet->getStyle('A' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $row)->applyFromArray($style_row);
+
+            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getRowDimension($row)->setRowHeight(20);
+
+            $no++;
+            $row++;
+        }
+
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(15);
+        $sheet->getColumnDimension('C')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(20);
+        $sheet->getColumnDimension('E')->setWidth(25);
+        $sheet->getColumnDimension('F')->setWidth(30);
+
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->setTitle("Data Rekap Pelaporan");
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+		ob_end_clean();
+        $writer->save('php://output');
+    }
 }

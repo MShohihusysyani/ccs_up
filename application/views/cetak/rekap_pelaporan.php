@@ -94,9 +94,8 @@
 
 
     <div class="isi" style="margin: 0 auto;">
-        <p style="color: black; text-align: left;"><br>Rekap Pelaporan:
-            </b>
-        </p>
+        <p>Rekap Pelaporan ini dicetak oleh <b><?= $user['nama_user']?></b> pada tanggal <?= tanggal()?></p>
+        <!-- <p style="color: black; text-align: left;"><br>Rekap Pelaporan:</p> -->
 
         <table class="tabel2">
             <thead>
