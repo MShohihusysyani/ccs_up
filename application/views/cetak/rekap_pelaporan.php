@@ -87,14 +87,14 @@
     </table>
     <hr>
     <p align="center" style="font-weight: bold; font-size: 18px;"><u>CCS | Rekap Pelaporan</u></p>
-    <!-- <?php
+     <?php
             date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-            $tanggal = date('Y-m-d');
-            ?> -->
+            $current_date = date('Y-m-d H:i:s');
+            ?>
 
 
     <div class="isi" style="margin: 0 auto;">
-        <p>Rekap Pelaporan ini dicetak oleh <b><?= $user['nama_user']?></b> pada tanggal <?= tanggal()?></p>
+        <p>Rekap Pelaporan ini dicetak oleh <b><?= $user['nama_user']?></b> pada Hari <?= format_indo($current_date)?></p>
         <!-- <p style="color: black; text-align: left;"><br>Rekap Pelaporan:</p> -->
 
         <table class="tabel2">
