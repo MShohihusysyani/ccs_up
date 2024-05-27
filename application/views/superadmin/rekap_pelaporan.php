@@ -66,6 +66,15 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="tags" id="tags" placeholder="Masukkan Tags" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
@@ -108,7 +117,7 @@
                             <div>
                                 <button class='btn btn-primary waves-effect m-r-20' type="submit">
                                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                                    Export Excel
+                                    Export PDF
                                 </button>
                             </div>
                     </form>
@@ -123,6 +132,7 @@
                                             <th>No Tiket</th>
                                             <th>Nama Klien</th>
                                             <th>Perihal</th>
+                                            <th>Tags</th>
                                             <!-- <th>Status</th> -->
                                             <!-- <th>Category</th>
                                             <th>Priority</th> -->
@@ -143,6 +153,11 @@
                                             <td><?= $pd['no_tiket'];?></td>
                                             <td><?= $pd['nama'];?></td>
                                             <td><?= $pd['perihal'];?></td>
+                                            <td>
+                                                <span class="label label-info">
+                                                    <?= $pd['tags'];?>
+                                                </span>
+                                            </td>
                                             <!-- <td><?= $pd['status'];?></td> -->
                                             <!-- <td><?= $pd['kategori'];?></td>
                                             <td>

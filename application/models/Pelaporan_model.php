@@ -84,17 +84,31 @@ class Pelaporan_model extends CI_Model
     //LAPORAN status
     public function getAll()
     {
-        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori , pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.nama, pelaporan.user_id, user.nama_user
+        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori , pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.nama, pelaporan.user_id, pelaporan.tags, user.nama_user
         FROM pelaporan
         left JOIN user ON pelaporan.user_id = user.id_user WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC ";
         return $this->db->query($query)->result_array();
     }
 
-    public function getDate($tgla, $tglb, $status_ccs, $nama_klien)
+    // public function getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags)
+    // {
+    //     $this->db->select('pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori, pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.keterangan, pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id, pelaporan.tags');
+    //     $this->db->from('pelaporan');
+    //     $this->db->where('waktu_pelaporan >=', $tgla);
+    //     $this->db->where('waktu_pelaporan <=', $tglb);
+    //     $this->db->where('status_ccs', $status_ccs);
+    //     $this->db->where('nama', $nama_klien);
+    //     $this->db->where('tags', $tags);
+
+    //     $query = $this->db->get();
+    //     return $query->result_array();
+    // }
+
+    public function getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags)
     {
-        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori, pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.keterangan, pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id
+        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.keterangan, pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id, pelaporan.tags
         FROM pelaporan
-        where waktu_pelaporan BETWEEN '$tgla' AND '$tglb' AND status_ccs = '$status_ccs' AND nama = '$nama_klien'";
+        where waktu_pelaporan BETWEEN '$tgla' AND '$tglb' AND status_ccs = '$status_ccs' AND nama = '$nama_klien' AND tags = '$tags'";
         return $this->db->query($query)->result_array();
     }
 

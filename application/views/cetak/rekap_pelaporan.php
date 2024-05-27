@@ -1,172 +1,153 @@
-<section class="content">
-    <div class="container-fluid">
-        <div class="block-header">
+<!DOCTYPE html>
+<html>
 
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="header">
-                    <h2>
-                        FILTER
-                    </h2>
+<head>
+    <title></title>
+</head>
 
-                </div>
-            </div>
+<body>
 
-            <div class="card">
-                <div class="body">
-                    <form action="<?= base_url('export/rekap_pelaporan'); ?>" method="post"
-                                enctype="multipart/form-data">
-                            <div>
-                                <button class='btn btn-primary waves-effect m-r-20' type="submit">
-                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                                    Export Excel
-                                </button>
-                            </div>
-                    </form>
-                    <br><br>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover js-exportable dataTable"
-                            id="example">
-                            <thead>
-                                <tr>
-                                            <th>No</th>
-                                            <th>Tanggal</th>
-                                            <th>No Tiket</th>
-                                            <th>Nama Klien</th>
-                                            <th>Perihal</th>
-                                            <!-- <th>Status</th> -->
-                                            <!-- <th>Category</th>
-                                            <th>Priority</th> -->
-                                            <th>Status</th>
-                                            <!-- <th>Handle By</th> -->
-                                </tr>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic-icons.css">
+    <!-- Setting CSS bagian header/ kop -->
+    <style type="text/css">
+    table.page_header {
+        width: 1020px;
+        border: none;
+        background-color: #DDDDFF;
+        border-bottom: solid 1mm #AAAADD;
+        padding: 2mm
+    }
 
-                            </thead>
-                            <tbody>
+    table.page_footer {
+        width: 1020px;
+        border: none;
+        background-color: #DDDDFF;
+        border-top: solid 1mm #AAAADD;
+        padding: 2mm
+    }
+    </style>
+    <!-- Setting Margin header/ kop -->
+    <!-- Setting CSS Tabel data yang akan ditampilkan -->
+    <style type="text/css">
+    .tabel2 {
+        border-collapse: collapse;
+        margin: 0 auto;
+        width: 90%;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
 
-                                <?php
-                                $no = 1;
-                                foreach ($pelaporan as $pd) : ?>
-                                <tr>
-                                            <td><?= $no++?></td>
-                                            <td><?= ['waktu_pelaporan'] ?></td>
-                                            <td><?= $pd['no_tiket'];?></td>
-                                            <td><?= $pd['nama'];?></td>
-                                            <td><?= $pd['perihal'];?></td>
-                                            <!-- <td><?= $pd['status'];?></td> -->
-                                            <!-- <td><?= $pd['kategori'];?></td>
-                                            <td>
-                                                <?php if ($pd['priority'] == 'Low') : ?>
-                                                    <span class="label label-info">Low</span>
+    .tabel2 th,
+    .tabel2 td {
+        padding: 5px 5px;
+        border: 1px solid #000000;
 
-                                                <?php elseif ($pd['priority'] == 'Medium') : ?>
-                                                    <span class="label label-warning">Medium</span>
+    }
 
-                                                <?php elseif ($pd['priority'] == 'High') : ?>
-                                                    <span class="label label-danger">High</span>
+    p {
+        margin-left: 30px;
+    }
 
-                                                <?php else : ?>
 
-                                                <?php endif; ?>
-                                            </td> -->
-                                            <td>
-                                                <?php if ($pd['status_ccs'] == 'FINISH') : ?>
-                                                    <span class="label label-success">FINISH</span>
 
-                                                <?php elseif ($pd['status_ccs'] == 'CLOSE') : ?>
-                                                    <span class="label label-warning">CLOSE</span>
+    div.kanan {
+        position: absolute;
 
-                                                <?php elseif ($pd['status_ccs'] == 'HANDLE') : ?>
-                                                    <span class="label label-info">HANDLE</span>
+        right: 50px;
 
-                                                <?php elseif ($pd['status_ccs'] == 'ADDED') : ?>
-                                                    <span class="label label-primary">ADDED</span>
+    }
 
-                                                <?php else : ?>
+    div.tengah {
+        position: absolute;
 
-                                                <?php endif; ?>
-                                            
-                                            </td>
-                                            <!-- <td><?= $pd['handle_by'];?></td> -->
+        right: 330px;
 
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+    }
 
-                    </div>
-                </div>
-            </div>
-        </div>
+    div.kiri {
+        position: absolute;
 
-        <!-- #END# Exportable Table -->
-    </div>
+        left: 10px;
+    }
+    </style>
 
-</section>
+    <table>
+        <tr>
+            <th rowspan="3"><img src="<?= base_url('assets/'); ?>images/mso.png" style="width:100px;height:80px" />
+            </th>
+            <td align="center" style="width: 520px;">
+                <font style="font-size: 18px"><b>PT Mitranet Software Online Purwokerto</b></font>
+                <br>Jl. Letjen Pol Sumarto Watumas, Purwanegara, Purwokerto Utara, Banyumas, Kode Pos : 53127
+                <br>Telepon : (0281) 623321 / (0281) 623196
+            </td>
 
-<!-- modal cari klien -->
-<div class="modal fade" id="defaultModalNamaKlien" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Cari Klien</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                        width="100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Klien</th>
-                                <th class="hide">ID</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($klien  as $cln) : ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
-                                <td><?= $cln['nama_klien']; ?></td>
-                                <td class="hide"><?= $cln['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3"
-                                        data-nama-klien="<?= $cln['nama_klien']; ?>"
-                                        data-id-namaklien="<?= $cln['id']; ?>">
-                                        Pilih</button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        <?php echo form_close() ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </tr>
+    </table>
+    <hr>
+    <p align="center" style="font-weight: bold; font-size: 18px;"><u>CCS | Rekap Pelaporan</u></p>
+    <!-- <?php
+            date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $tanggal = date('Y-m-d');
+            ?> -->
+
+
+    <div class="isi" style="margin: 0 auto;">
+        <p style="color: black; text-align: left;"><br>Rekap Pelaporan:
+            </b>
+        </p>
+
+        <table class="tabel2">
+            <thead>
+                <tr>
+                    <th style="text-align: center;  "><b>No</b></th>
+                    <th style="text-align: center;  "><b>Tanggal</b></th>
+                    <th style="text-align: center;  "><b>No Tiket</b></th>
+                    <th style="text-align: center;  "><b>Nama Klien</b></th>
+                    <!-- <th style="text-align: center;  "><b>Judul</b></th> -->
+                    <th style="text-align: center;  "><b>Perihal</b></th>
+                    <th style="text-align: center;  "><b>Tags</b></th>
+                    <th style="text-align: center;  "><b>Kategori</b></th>
+                    <th style="text-align: center;  "><b>Priority</b></th>
+                    <th style="text-align: center;  "><b>Impact</b></th>
+                    <th style="text-align: center;  "><b>Maxday</b></th>
+                    <th style="text-align: center;  "><b>Status CCS</b></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php
+                $no = 1;
+                foreach ($rekapPelaporan as $rp) : ?>
+                <tr>
+                    <td style="text-align: center; font-size: 12px;"><?php echo $no++; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo tanggal_indo($rp['waktu_pelaporan']); ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['no_tiket']; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['nama']; ?></td>
+                    <!-- <td style="text-align: left; font-size: 12px;"><?php echo $rp['judul']; ?></td> -->
+                    <td style="text-align: left; font-size: 11px;"><?php echo $rp['perihal']; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['tags']; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['kategori']; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['priority']; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['impact']; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['maxday']; ?></td>
+                    <td style="text-align: left; font-size: 12px;"><?php echo $rp['status_ccs']; ?></td>
+                </tr>
+                <?php endforeach;
+                ?>
+            </tbody>
+        </table>
     </div>
 
 
-<!-- Script -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- jQuery UI -->
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-    $(document).ready(function() {
-    $(document).on('click', '#pilih3', function() {
-        var nama_klas = $(this).data('nama-klien');
-        var id = $(this).data('id');
-        $('#nama_klien').val(nama_klas);
-        $('#id').val(id);
-        $('#defaultModalNamaKlien').modal('hide');
-    })
-});
+
+
+</body>
+
+<script type="text/javascript">
+window.print();
 </script>
 
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
+</html>

@@ -15,8 +15,27 @@ class Export extends CI_Controller
         $this->load->model('Export_model');
     }
 
-    public function rekap_pelaporan(){
-		$data['pelaporan'] = $this->Export_model->view();
+	public function rekap_pelaporan()
+    {
+        $this->load->model('Export_model', 'export_model');
+        $data['waktu_pelaporan'] = $this->db->get('pelaporan')->result_array();
+		$data['no_tiket'] = $this->db->get('pelaporan')->result_array();
+		$data['nama'] = $this->db->get('pelaporan')->result_array();
+		// $data['judul'] = $this->db->get('pelaporan')->result_array();
+		$data['perihal'] = $this->db->get('pelaporan')->result_array();
+		$data['tags'] = $this->db->get('pelaporan')->result_array();
+		$data['kategori'] = $this->db->get('pelaporan')->result_array();
+		$data['priority'] = $this->db->get('pelaporan')->result_array();
+		$data['impact'] = $this->db->get('pelaporan')->result_array();
+		$data['maxday'] = $this->db->get('pelaporan')->result_array();
+		$data['status_ccs'] = $this->db->get('pelaporan')->result_array();
+        $data['rekapPelaporan'] = $this->Export_model->getPelaporan();
+
+        $this->load->view('cetak/rekap_pelaporan', $data);
+    }
+
+    public function rekap_pelaporan1(){
+		$data['pelaporan'] = $this->Export_model->getPelaporan();
 		$this->load->view('cetak/rekap_pelaporan', $data);
 	  }
 	  
@@ -115,7 +134,7 @@ class Export extends CI_Controller
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment; filename="Rekap Pelaporan.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
-		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2013');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2016');
 		$write->save('php://output');
 	  }
 }

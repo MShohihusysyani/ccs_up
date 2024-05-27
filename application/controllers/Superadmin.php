@@ -506,16 +506,49 @@ public function fungsi_reject()
             $this->load->view('templates/footer');
     }
 
+    // public function datepelaporan()
+    // {
+    //     // Load the necessary models
+    //     $this->load->model('Pelaporan_model', 'pelaporan_model');
+    //     $this->load->model('Client_model', 'client_model');
+
+    //     // Retrieve and sanitize input data
+    //     $tgla = $this->input->post('tgla', TRUE);
+    //     $tglb = $this->input->post('tglb', TRUE);
+    //     $status_ccs = $this->input->post('status_ccs', TRUE);
+    //     $nama_klien = $this->input->post('nama_klien', TRUE);
+    //     $tags = $this->input->post('tags', TRUE);
+
+    //     // Fetch client data
+    //     $data['klien'] = $this->client_model->getClient();
+
+    //     // Fetch reporting data
+    //     try {
+    //         $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags);
+    //     } catch (Exception $e) {
+    //         // Handle potential errors
+    //         $data['pencarian_data'] = [];
+    //         $data['error_message'] = $e->getMessage();
+    //     }
+
+    //     // Load the views with the retrieved data
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/superadmin_sidebar');
+    //     $this->load->view('superadmin/rekap_pelaporan', $data);
+    //     $this->load->view('templates/footer');
+    // }
+
     public function datepelaporan()
     {
             $tgla       = $this->input->post('tgla');
             $tglb       = $this->input->post('tglb');
             $status_ccs = $this->input->post('status_ccs');
             $nama_klien = $this->input->post('nama_klien');
+            $tags       = $this->input->post('tags');
 
             $this->load->model('Pelaporan_model', 'pelaporan_model');
             $data['klien'] = $this->client_model->getClient();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien);
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags);
 
             $this->load->view('templates/header');
             $this->load->view('templates/superadmin_sidebar');
