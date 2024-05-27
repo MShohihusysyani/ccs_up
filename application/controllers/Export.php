@@ -34,60 +34,7 @@ class Export extends CI_Controller {
         $this->load->view('cetak/rekap_pelaporan', $data);
     }
 
-	public function rekap_pelaporan_excel(){
-
-		$data['rekapPelaporan'] = $this->Export_model->getPelaporan('pelaporan')->result();
-
-		require(APPPATH.'PHPExcel-1.8/Classes/PHPExcel.php');
-		require(APPPATH.'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
-
-		$object = new PHPExcel();
-
-		$object->getProperties()->setCreator('PT MSO PWT');
-		$object->getProperties()->setLastModifiedBy('PT MSO PWT');
-		$object->getProperties()->setTitle('CCS | Rekap Pelaporan');
-
-		$object->setActiveSheetIndex(0);
-
-		$object->getActiveSheet('A1', 'NO');
-		$object->getActiveSheet('B1', 'TANGGAL');
-		$object->getActiveSheet('C1', 'NO TIKET');
-		$object->getActiveSheet('D1', 'NAMA KLIEN');
-		$object->getActiveSheet('E1', 'PERIHAL');
-		$object->getActiveSheet('F1', 'STATUS CCS');
-
-		$baris = 2;
-		$no = 1;
-
-		foreach($rekapPelaporan as $rpe){
-
-			$object->getActiveSheet()->setCellValue('A'.$baris, $no++);
-			$object->getActiveSheet()->setCellValue('B'.$baris, tanggal_indo($rpe->waktu_pelaporan));
-			$object->getActiveSheet()->setCellValue('C'.$baris, $rpe->no_tiket);
-			$object->getActiveSheet()->setCellValue('D'.$baris, $rpe->nama);
-			$object->getActiveSheet()->setCellValue('E'.$baris, $rpe->perihal);
-			$object->getActiveSheet()->setCellValue('F'.$baris, $rpe->status_ccs);
-
-			$baris++;
-
-		}
-		$filename="Rekap pelaporan".'xlsx';
-
-		$object->getActiveSheet()->setTitle('Rekap Pelaporan');
-
-		header('Content-Type : application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Conten-Disposition: attachment;filename="'.$filename.'"');
-		header('Cache-Control: max-age=0');
-
-		$writer=PHPExcel_IOFactory::createWriter($object, 'Excel2007');
-		$writer->save('php"//output');
-
-		exit;
-
-
-	}
-
-    public function rekap_pelaporann() {
+    public function rekap_pelaporan_excel() {
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -238,4 +185,58 @@ class Export extends CI_Controller {
 		ob_end_clean();//digunakan ketika file tidak bisa dibuka diexcel
         $writer->save('php://output');
     }
+
+    public function rekap_pelaporan_excel_error(){
+
+		$data['rekapPelaporan'] = $this->Export_model->getPelaporan('pelaporan')->result();
+
+		require(APPPATH.'PHPExcel-1.8/Classes/PHPExcel.php');
+		require(APPPATH.'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+		$object = new PHPExcel();
+
+		$object->getProperties()->setCreator('PT MSO PWT');
+		$object->getProperties()->setLastModifiedBy('PT MSO PWT');
+		$object->getProperties()->setTitle('CCS | Rekap Pelaporan');
+
+		$object->setActiveSheetIndex(0);
+
+		$object->getActiveSheet('A1', 'NO');
+		$object->getActiveSheet('B1', 'TANGGAL');
+		$object->getActiveSheet('C1', 'NO TIKET');
+		$object->getActiveSheet('D1', 'NAMA KLIEN');
+		$object->getActiveSheet('E1', 'PERIHAL');
+		$object->getActiveSheet('F1', 'STATUS CCS');
+
+		$baris = 2;
+		$no = 1;
+
+		foreach($rekapPelaporan as $rpe){
+
+			$object->getActiveSheet()->setCellValue('A'.$baris, $no++);
+			$object->getActiveSheet()->setCellValue('B'.$baris, tanggal_indo($rpe->waktu_pelaporan));
+			$object->getActiveSheet()->setCellValue('C'.$baris, $rpe->no_tiket);
+			$object->getActiveSheet()->setCellValue('D'.$baris, $rpe->nama);
+			$object->getActiveSheet()->setCellValue('E'.$baris, $rpe->perihal);
+			$object->getActiveSheet()->setCellValue('F'.$baris, $rpe->status_ccs);
+
+			$baris++;
+
+		}
+		$filename="Rekap pelaporan".'xlsx';
+
+		$object->getActiveSheet()->setTitle('Rekap Pelaporan');
+
+		header('Content-Type : application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Conten-Disposition: attachment;filename="'.$filename.'"');
+		header('Cache-Control: max-age=0');
+
+		$writer=PHPExcel_IOFactory::createWriter($object, 'Excel2007');
+		$writer->save('php"//output');
+
+		exit;
+
+
+	}
+
 }
