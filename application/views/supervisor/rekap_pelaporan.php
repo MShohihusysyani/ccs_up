@@ -104,7 +104,7 @@
             <div class="card">
                 <div class="body">
                     <!-- Single button -->
-                    <div class="btn-group" role="group">
+                    <!-- <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons">save</i>
                                     <span>Export</span>
                                 <span class="caret"></span>
@@ -114,7 +114,7 @@
                                     <li><a href="<?= base_url('export/rekap_pelaporan_excel')?>">Export Excel</a></li>
                                 </ul>
                         </div>
-                    <br><br>
+                    <br><br> -->
             
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover js-exportable dataTable"
