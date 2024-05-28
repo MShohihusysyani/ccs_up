@@ -33,7 +33,7 @@
                                         <th>Nama</th>
                                         <th>Divisi</th>
                                         <th>Tanggal Registrasi</th>
-                                        <th>Last Login</th>
+                                        <!-- <th>Last Login</th> -->
                                         <th>Active</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -48,7 +48,7 @@
                                         <td><?= $u['nama_user']; ?></td>
                                         <td><?= $u['divisi']; ?></td>
                                         <td><?= tanggal_indo($u['tgl_register']);?></td>
-                                        <td><?= format_indo($u['last_login']);?></td>
+                                        <!-- <td><?= format_indo($u['last_login']);?></td> -->
                                         <td> <?php if ($u['active'] == 'N') : ?>
                                                 <i class="material-icons">clear</i>
 

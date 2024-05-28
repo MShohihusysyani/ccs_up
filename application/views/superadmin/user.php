@@ -285,7 +285,8 @@ $('#tombol-tambah').on('click', function(e) {
                                         <option value="8">8-Development</option>
                                 </select> 
                         </div>
-
+                    
+                        <label for="">Tanggal Register</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="date" class="form-control" id="tgl_register" name="tgl_register" placeholder="tanggal registrasi" />

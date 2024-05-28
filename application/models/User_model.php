@@ -16,8 +16,7 @@ class User_model extends CI_Model
     public function getDataUser()
     {
         $query = "SELECT *
-                    FROM user
-                    ";
+                    FROM user ORDER BY divisi DESC";
         return $this->db->query($query)->result_array();
     }
 
