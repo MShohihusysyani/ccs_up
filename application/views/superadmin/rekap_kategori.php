@@ -4,7 +4,7 @@
 
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="card">
+            <div class="card">
                 <div class="header">
                     <h2>
                         FILTER
@@ -14,7 +14,7 @@
                 <div class="body">
 
                     <div class="row clearfix">
-                        <?= form_open('supervisor/dateKategori'); ?>
+                        <?= form_open('superadmin/dateKategori'); ?>
                         <form method="POST" id="cari" action="">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
                                 <label for="dari_tgl">Dari Tanggal</label>
@@ -47,7 +47,7 @@
                             <br>
                             <?= form_close(); ?>
                             
-                            <?= form_open('supervisor/rekapKategori'); ?>
+                            <?= form_open('superadmin/rekapKategori'); ?>
                             <div class="form-control-label" style="text-align: left;">
                                 <button type="submit" class="btn btn-sm btn-success" name="tampilkan"
                                     value="proses">Semua
@@ -57,7 +57,8 @@
                         </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
+
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -79,7 +80,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                            <table class="table table-bordered table-striped table-hover js-exportable dataTable"
                                 id="example">
                                 <thead>
                                     <tr>

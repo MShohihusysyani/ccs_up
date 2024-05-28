@@ -77,17 +77,23 @@
             </div>
 
             <div class="card">
-                <div class="body">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?= base_url('export/rekap_pelaporan'); ?>">Export PDF</a></li>
-                            <li><a href="<?= base_url('export/rekap_pelaporan_excel')?>">Export Excel</a></li>
-                        </ul>
+            <div class="header">
+                        <h2>
+                            Rekap Pelaporan
+                        </h2>
+                        <br>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?= base_url('export/rekap_pelaporan'); ?>">Export PDF</a></li>
+                                <li><a href="<?= base_url('export/rekap_pelaporan_excel')?>">Export Excel</a></li>
+                            </ul>
+                        </div>
+
                     </div>
-                    <br><br>
+                <div class="body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover js-exportable dataTable" id="example">
                             <thead>
