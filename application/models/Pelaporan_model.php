@@ -104,11 +104,11 @@ class Pelaporan_model extends CI_Model
     //     return $query->result_array();
     // }
 
-    public function getDate($tgla, $tglb, $status_ccs, $nama_klien)
+    public function getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags)
     {
         $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by, pelaporan.keterangan, pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id, pelaporan.tags
         FROM pelaporan
-        where waktu_pelaporan BETWEEN '$tgla' AND '$tglb' AND status_ccs = '$status_ccs' AND nama = '$nama_klien' ";
+        where waktu_pelaporan BETWEEN '$tgla' AND '$tglb' AND status_ccs = '$status_ccs' AND nama = '$nama_klien' AND tags= '$tags' ";
         return $this->db->query($query)->result_array();
     }
 
