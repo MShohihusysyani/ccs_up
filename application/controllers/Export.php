@@ -117,7 +117,10 @@ class Export extends CI_Controller {
         $sheet->getRowDimension('3')->setRowHeight(20);
 
         // Fetch data from database
-        $query = $this->db->get('pelaporan');
+        $this->db->select('kategori,id_pelaporan,waktu_pelaporan,status_ccs,priority,maxday,perihal,file,nama,no_tiket,impact,handle_by,status,tags');
+        $this->db->from('pelaporan');
+        $this->db->where('status_ccs', 'FINISH');
+        $query = $this->db->get();
         $no = 1;
         $row = 4;
 

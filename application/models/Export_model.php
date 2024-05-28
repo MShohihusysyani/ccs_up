@@ -7,10 +7,13 @@ class Export_model extends CI_Model {
 		$data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        $query = "SELECT *
-                    FROM pelaporan";
+        // $query = "SELECT *
+        //             FROM pelaporan";
+        $query = "SELECT * FROM PELAPORAN where status_ccs = 'FINISH'";
         return $this->db->query($query)->result_array();
     }
+
+
 
 	public function tampil_data(){
 
