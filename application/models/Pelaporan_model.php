@@ -120,9 +120,9 @@ class Pelaporan_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function getDateKategori($tgla, $tglb)
+    public function getDateKategori($tgla, $tglb, $kategori)
     {
-        $query ="SELECT kategori, COUNT(*) AS 'total', waktu_pelaporan FROM pelaporan WHERE status_ccs='FINISH' AND  waktu_pelaporan  BETWEEN '$tgla' AND '$tglb' GROUP BY kategori  ";
+        $query ="SELECT kategori, COUNT(*) AS 'total', waktu_pelaporan FROM pelaporan WHERE status_ccs='FINISH' AND  waktu_pelaporan  BETWEEN '$tgla' AND '$tglb' AND kategori = '$kategori' ";
         return $this->db->query($query)->result_array();
     }
 

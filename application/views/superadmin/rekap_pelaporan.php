@@ -29,16 +29,18 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
-                                               name="nama_klien" id="nama_klien" placeholder="Pilih BPR"
-                                               class="form-control" value="" autocomplete="off" readonly required>
+                                            name="nama_klien" id="nama_klien" placeholder="Pilih BPR"
+                                            class="form-control" value="" autocomplete="off" readonly required>
                                         <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">

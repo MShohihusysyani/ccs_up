@@ -594,21 +594,60 @@ public function fungsi_reject()
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/rekap_kategori', $data);
         $this->load->view('templates/footer');
+
+        
     }
 
     public function dateKategori()
     {
-        $tgla = $this->input->post('tgla');
-        $tglb = $this->input->post('tglb');
-        // $nama_kategori = $this->input->post('nama_kategori');
-        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        // $tgla = $this->input->post('tgla');
+        // $tglb = $this->input->post('tglb');
+        // // $nama_kategori = $this->input->post('nama_kategori');
+        // $this->load->model('Pelaporan_model', 'pelaporan_model');
+        // $data['category'] = $this->category_model->getCategory();
+        // $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb);
+
+        // $this->load->view('templates/header');
+        // $this->load->view('templates/superadmin_sidebar');
+        // $this->load->view('superadmin/rekap_kategori', $data);
+        // $this->load->view('templates/footer');
+
+        //Load necessary libraries and models
+    $this->load->library('form_validation');
+    $this->load->model('Pelaporan_model', 'pelaporan_model');
+    $this->load->model('Category_model', 'category_model');
+
+    // Set form validation rules
+    $this->form_validation->set_rules('tgla', 'Start Date', 'required');
+    $this->form_validation->set_rules('tglb', 'End Date', 'required');
+    $this->form_validation->set_rules('kategori', 'Category Name', 'required');
+
+    if ($this->form_validation->run() == FALSE) {
+        // Validation failed, prepare data for the view with error messages
+        $data['errors'] = validation_errors();
         $data['category'] = $this->category_model->getCategory();
-        $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb);
+        $data['pencarian_data'] = [];
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/rekap_kategori', $data);
         $this->load->view('templates/footer');
+    } else {
+        // Validation passed, retrieve POST data
+        $tgla = $this->input->post('tgla');
+        $tglb = $this->input->post('tglb');
+        $kategori = $this->input->post('kategori');
+
+        // Get data from the models
+        $data['category'] = $this->category_model->getCategory();
+        $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb,  $kategori);
+
+        // Load views with data
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/rekap_kategori', $data);
+        $this->load->view('templates/footer');
+    }
     }
 
     
