@@ -582,6 +582,20 @@ public function fungsi_reject()
     }
 }
 
+    // REKAP KATEGORI
+    public function rekapKategori()
+    {
+        $this->load->model('Category_model', 'category_model');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['pencarian_data'] = $this->pelaporan_model->getAllCategory();
+        $data['category'] = $this->category_model->getCategory();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/rekap_kategori', $data);
+        $this->load->view('templates/footer');
+    }
+
     
 
     //DETAIL PELAPORAN

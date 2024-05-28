@@ -24,4 +24,13 @@ class Export_model extends CI_Model {
 
         return $this->db->get();
     }
+
+    public function getCategory()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+        
+        $query = "SELECT kategori, COUNT(*) AS 'total', waktu_pelaporan FROM pelaporan WHERE status_ccs='FINISH' GROUP BY kategori";
+        return $this->db->query($query)->result_array();
+    }
 }

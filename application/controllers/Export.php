@@ -34,6 +34,7 @@ class Export extends CI_Controller {
         $this->load->view('cetak/rekap_pelaporan', $data);
     }
 
+
     public function rekap_pelaporan_excel() {
 
         $spreadsheet = new Spreadsheet();
@@ -185,6 +186,122 @@ class Export extends CI_Controller {
 		ob_end_clean();//digunakan ketika file tidak bisa dibuka diexcel
         $writer->save('php://output');
     }
+
+      // REKAP KATEGORI
+    public function rekap_kategori()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Export_model', 'export_model');
+        $data['kategori'] = $this->db->get('pelaporan')->result_array();
+        $data['total'] = $this->db->get('pelaporan')->result_array();
+        $data['rekapCategory'] = $this->Export_model->getCategory();
+        $this->load->view('cetak/rekap_kategori', $data);
+    }
+
+    public function rekap_kategori_excel() {
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+    
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
+            ]
+        ];
+    
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
+            ]
+        ];
+    
+        $sheet->setCellValue('A1', "CCS | REKAP KATEGORI");
+        $sheet->mergeCells('A1:F1');
+        $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(15);
+    
+        date_default_timezone_set('Asia/Jakarta'); // Set local time zone
+        $current_date = date('Y-m-d H:i:s');
+    
+        $this->db->where('id_user', $this->session->userdata('id_user')); // Assuming user_id is stored in session
+        $user_query = $this->db->get('user');
+        $user = $user_query->row_array(); // Fetching the user data
+    
+        $sheet->setCellValue('A2', "Rekap Pelaporan dicetak oleh " . $user['nama_user'] . " pada tanggal " . format_indo($current_date));
+        $sheet->mergeCells('A2:F2');
+        $sheet->getStyle('A2')->getFont()->setBold(true)->setSize(15);
+    
+        // Buat header tabel pada baris ke 3
+        $sheet->setCellValue('A3', "NO");
+        $sheet->setCellValue('B3', "KATEGORI");
+        $sheet->setCellValue('C3', "TOTAL");
+    
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+    
+        $sheet->getRowDimension('1')->setRowHeight(20);
+        $sheet->getRowDimension('2')->setRowHeight(20);
+        $sheet->getRowDimension('3')->setRowHeight(20);
+    
+        // Fetch data from database
+        $this->db->select('kategori, COUNT(*) AS total');
+        $this->db->from('pelaporan');
+        $this->db->where('status_ccs', 'FINISH');
+        $this->db->group_by('kategori');
+        $query = $this->db->get();
+    
+        $no = 1;
+        $row = 4;
+    
+        foreach ($query->result() as $data) {
+            $sheet->setCellValue('A' . $row, $no);
+            $sheet->setCellValue('B' . $row, $data->kategori);
+            $sheet->setCellValue('C' . $row, $data->total);
+    
+            $sheet->getStyle('A' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $row)->applyFromArray($style_row);
+    
+            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getRowDimension($row)->setRowHeight(20);
+    
+            $no++;
+            $row++;
+        }
+    
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(20);
+        $sheet->getColumnDimension('C')->setWidth(10);
+    
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->setTitle("Data Rekap Kategori");
+    
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Rekap_Kategori.xlsx"');
+        header('Cache-Control: max-age=0');
+    
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        ob_end_clean(); // Used to fix issue with file not opening in Excel
+        $writer->save('php://output');
+    }
+    
 
     public function rekap_pelaporan_excel_error(){
 
