@@ -94,11 +94,11 @@ class Klien extends CI_Controller
     {
         // $data['noTiket'] = $this->client_model->getkodeticket();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Category_model', 'category_model');
-        $data['nama_kategori'] = $this->db->get('category')->result_array();
+        // $this->load->model('Category_model', 'category_model');
+        // $data['nama_kategori'] = $this->db->get('category')->result_array();
         $this->load->model('Temp_model', 'temp_model');
-        $data['nama_kategori'] = $this->db->get('tiket_temp')->result_array();
-        $data['category'] = $this->category_model->getCategory();
+        // $data['nama_kategori'] = $this->db->get('tiket_temp')->result_array();
+        $data['category']      = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTemp1();
         $id_user = $this->session->userdata('id_user');
         $no_klien = $this->client_model->getNoKlien($id_user);
@@ -141,57 +141,11 @@ class Klien extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function edit_tiket()
-    {
-
-         //jika FILE
-        $photo = $_FILES['file']['name'];
-
-        if ($photo) {
-            $config['allowed_types'] = 'jpeg|jpg|png|docx|pdf|xlsx|csv|txt';
-            $config['max_size'] = '2048';
-            $config['upload_path'] = './assets/files/';
-
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
- 
-            if ($this->upload->do_upload('file')) {
-                $old_image = $data['tiket_temp']['file'];
-                if ($old_image != '') {
-                    unlink(FCPATH . 'assets/files/' . $old_image);
-                }
-                $new_image = $this->upload->data('file_name');
-                $this->db->set('file', $new_image);
-            } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-                redirect('klien/pengajuan');
-            }
-        }
-        $id_temp = $this->input->post('id_temp');
-        $no_tiket     = $this->input->post('no_tiket');
-        $judul        = $this->input->post('judul');
-        $perihal      = $this->input->post('perihal');
-        $kategori     = $this->input->post('kategori');
-        $tags         = $this->input->post('tags');
-        $ArrUpdate = array(
-            'no_tiket'   => $no_tiket,
-            'judul'      => $judul,
-            'perihal'    => $perihal,
-            'kategori'   => $kategori,
-            'tags'       => $tags,
-            'file'       => $photo
-
-        );
-        $this->temp_model->updateTiket($id_temp, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Edited!');
-        Redirect(base_url('klien/pengajuan'));
-    }
     // EDIT PELAPORAN
     public function edit_pelaporan($id){
 
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-        $data['datacomment']   = $this->klienpelaporan_model->ambil_id_comment($id);
+        $this->load->model('Temp_model', 'temp_model');
+        $data['tiket_temp'] = $this->temp_model->ambil_id_temp($id);
 
         $this->load->model('Category_model', 'category_model');
         $data['category'] = $this->category_model->getNamaKategori();
@@ -208,12 +162,11 @@ class Klien extends CI_Controller
         $this->load->model('Category_model', 'category_model');
         $data['category'] = $this->category_model->getNamaKategori();
 
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-        $nama = $this->input->post('nama');
+        $id_temp = $this->input->post('id_temp');
+        $judul = $this->input->post('judul');
         $perihal = $this->input->post('perihal');
-        $perihal = $this->input->post('perihal');
-        $status = $this->input->post('status');
+        $kategori = $this->input->post('kategori');
+        $tags  = $this->input->post('tags');
 
         //jika FILE
         $photo = $_FILES['file']['name'];
@@ -227,7 +180,7 @@ class Klien extends CI_Controller
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('file')) {
-                $old_image = $data['pelaporan']['file'];
+                $old_image = $data['tiket_temp']['file'];
                 if ($old_image != '') {
                     unlink(FCPATH . 'assets/files/' . $old_image);
                 }
@@ -239,14 +192,14 @@ class Klien extends CI_Controller
             }
         }
 
-        $this->db->set('waktu_pelaporan', $waktu_pelaporan);
-        $this->db->set('nama', $nama);
+        $this->db->set('judul', $judul);
         $this->db->set('perihal', $perihal);
-        $this->db->set('status', $status);
-        $this->db->where('id_pelaporan', $id_pelaporan);
-        $this->db->update('pelaporan');
+        $this->db->set('kategori', $kategori);
+        $this->db->set('tags', $tags);
+        $this->db->where('id_temp', $id_temp);
+        $this->db->update('tiket_temp');
         $this->session->set_flashdata('pesan', 'Data Edited!');
-        Redirect(base_url('klien/datapelaporan'));
+        Redirect(base_url('klien/pengajuan'));
     }
 
     public function detail_pelaporan($id)

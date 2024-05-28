@@ -35,4 +35,10 @@ class Temp_model extends CI_Model
         $this->db->update('tiket_temp', $data);
     }
 
+    public function ambil_id_temp($id)
+    { 
+        $query = "SELECT  id_temp, no_tiket, perihal, judul, kategori, tags, nama, file  FROM tiket_temp WHERE id_temp='$id'";
+        return $this->db->query($query)->result_array();
+    }
+
 }
