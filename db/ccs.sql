@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Bulan Mei 2024 pada 10.58
+-- Waktu pembuatan: 28 Bulan Mei 2024 pada 04.21
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -194,7 +194,7 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `judul`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`, `csrf_token`) VALUES
-(125, 'TIC00012024050001', 58, 'Backdate - Backdate Transaksi', 'Backdate,transaksi', '2024-05-22', 'Forward To Helpdesk', 'HANDLE', 'Low', 90, 'Test 1', '<p>Test 1</p>', NULL, 'Screenshot_2024-05-13_084149.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Luthfi', NULL, NULL, NULL, '2024-05-25', NULL),
+(125, 'TIC00012024050001', 58, 'Backdate - Backdate Transaksi', 'Backdate,transaksi', '2024-05-22', 'Forward To Helpdesk', 'HANDLE', 'Low', 90, 'Test 1', '<p>Test 1</p>', NULL, 'Screenshot_2024-05-13_084149.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Luthfi', NULL, NULL, NULL, NULL, NULL),
 (126, 'TIC00012024050002', 58, 'C6', 'C6', '2024-05-25', 'proses', 'ADDED', 'Medium', 60, 'Test 2', '<p>Test 2</p>', NULL, 'Screenshot_2024-04-22_115028.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
 (127, 'TIC00042024050001', 60, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', 'current date,adendum', '2024-05-25', 'Forward To Helpdesk', 'HANDLE', 'High', 7, 'TEST 3', '<p>Test 3</p>', 'kritikal', 'Screenshot_2024-05-07_112200.png', NULL, 'PT BPR BKK Purwokerto (Perseroda)', 'Luthfi', NULL, NULL, NULL, NULL, NULL),
 (128, 'TIC00042024050002', 60, 'Kredit - Agunan', 'agunan', '2024-05-25', 'proses', 'ADDED', 'Low', 90, 'TEST 4', '<p>Test 4</p>', NULL, 'Screenshot_2024-05-16_143604.png', NULL, 'PT BPR BKK Purwokerto (Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
@@ -344,15 +344,15 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (54, 'Helpdesk 4', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y', '2024-05-21', '2024-05-22 08:49:50'),
 (55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-21', '2024-05-25 12:34:10'),
 (56, 'Helpdesk 4', 'Khabibah', 'Khabibah', '$2y$10$kMOcFV1oh9PL5kGxkARcW.0q6iPYOTTe/M4OjztfR2dRory9yTwRa', 2, 'Y', '2024-05-22', '2024-05-21 16:21:03'),
-(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-22', '2024-05-27 15:52:34'),
-(58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-22', '2024-05-25 09:21:22'),
-(59, 'Klien', 'PT BPR BKK Karangmalang (Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-22', '2024-05-25 09:02:45'),
-(60, 'Klien', 'PT BPR BKK Purwokerto (Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-22', '2024-05-25 12:36:30'),
-(61, 'Klien', 'PT BPR BKK Kab. Pekalongan (Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-22', '2024-05-25 08:51:19'),
+(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-22', '2024-05-28 09:10:32'),
+(58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-22', '2024-05-28 09:07:25'),
+(59, 'Klien', 'PT BPR BKK Karangmalang(Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-22', '2024-05-25 09:02:45'),
+(60, 'Klien', 'PT BPR BKK Purwokerto(Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-22', '2024-05-25 12:36:30'),
+(61, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-22', '2024-05-25 08:51:19'),
 (62, 'Implementator', 'Implementator PT MSO Purwokerto', 'implementator', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-22', '2024-05-25 11:42:25'),
 (63, 'Support', 'Support PT MSO Purwokerto', 'support', '$2y$10$HEztd8wkl66Mpu2EIIRdpuFj/EBs57NLxZiZRGjc0Kg4M1kNpwoUu', 5, 'Y', '2024-05-22', '2024-05-25 10:59:07'),
 (66, 'Klien', 'PT BPR BKK Kebumen (Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-22', '2024-05-25 09:14:04'),
-(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-22', '2024-05-27 15:02:52');
+(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-22', '2024-05-28 09:10:59');
 
 --
 -- Indexes for dumped tables
