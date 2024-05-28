@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Bulan Mei 2024 pada 04.21
+-- Waktu pembuatan: 28 Bulan Mei 2024 pada 10.55
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -196,10 +196,11 @@ CREATE TABLE `pelaporan` (
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `judul`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `keterangan`, `waktu_approve`, `csrf_token`) VALUES
 (125, 'TIC00012024050001', 58, 'Backdate - Backdate Transaksi', 'Backdate,transaksi', '2024-05-22', 'Forward To Helpdesk', 'HANDLE', 'Low', 90, 'Test 1', '<p>Test 1</p>', NULL, 'Screenshot_2024-05-13_084149.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Luthfi', NULL, NULL, NULL, NULL, NULL),
 (126, 'TIC00012024050002', 58, 'C6', 'C6', '2024-05-25', 'proses', 'ADDED', 'Medium', 60, 'Test 2', '<p>Test 2</p>', NULL, 'Screenshot_2024-04-22_115028.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
-(127, 'TIC00042024050001', 60, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', 'current date,adendum', '2024-05-25', 'Forward To Helpdesk', 'HANDLE', 'High', 7, 'TEST 3', '<p>Test 3</p>', 'kritikal', 'Screenshot_2024-05-07_112200.png', NULL, 'PT BPR BKK Purwokerto (Perseroda)', 'Luthfi', NULL, NULL, NULL, NULL, NULL),
+(127, 'TIC00042024050001', 60, 'Pembatalan - Pembatalan Transaksi(Current Date, Backdate, Adendum Kredit dan Ecollector)', 'current date,adendum', '2024-05-25', 'Solved', 'FINISH', 'High', 7, 'TEST 3', '<p>Test 3</p>', 'kritikal', 'Screenshot_2024-05-07_112200.png', NULL, 'PT BPR BKK Purwokerto (Perseroda)', 'Luthfi', 'Implementator PT MSO Purwokerto', NULL, NULL, '2024-05-28', NULL),
 (128, 'TIC00042024050002', 60, 'Kredit - Agunan', 'agunan', '2024-05-25', 'proses', 'ADDED', 'Low', 90, 'TEST 4', '<p>Test 4</p>', NULL, 'Screenshot_2024-05-16_143604.png', NULL, 'PT BPR BKK Purwokerto (Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL),
 (129, 'TIC00022024050001', 59, 'Kredit - Data Kredit', 'kredit,data', '2024-05-25', 'proses', 'ADDED', 'Low', 90, 'TEST 5', '<p>Test 5</p>', NULL, 'Screenshot_2024-05-15_114436.png', NULL, 'PT BPR BKK Karangmalang (Perseroda)', NULL, NULL, NULL, NULL, '2024-05-25', NULL),
-(130, 'TIC00012024050003', 58, 'Kredit - PPAP Kredit', 'Kredit,PPAP', '2024-05-25', 'Solved', 'FINISH', 'Medium', 60, 'Test 6', '<p>Test 66</p>', 'kritikal', 'Screenshot_2024-05-13_082002.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Eva', 'Implementator PT MSO Purwokerto', NULL, NULL, '2024-05-25', NULL);
+(130, 'TIC00012024050003', 58, 'Kredit - PPAP Kredit', 'Kredit,PPAP', '2024-05-25', 'Solved', 'FINISH', 'Medium', 60, 'Test 6', '<p>Test 66</p>', 'kritikal', 'Screenshot_2024-05-13_082002.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Eva', 'Implementator PT MSO Purwokerto', NULL, NULL, '2024-05-25', NULL),
+(132, 'TIC00012024050004', 58, 'API - TTF', 'API', '2024-05-28', 'proses', 'ADDED', NULL, NULL, 'coba', 'coba', NULL, 'Screenshot_2024-05-18_085129.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -254,7 +255,8 @@ CREATE TABLE `s_forward` (
 --
 
 INSERT INTO `s_forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
-(9, 130, 47);
+(9, 130, 47),
+(10, 127, 47);
 
 -- --------------------------------------------------------
 
@@ -276,7 +278,8 @@ CREATE TABLE `t1_forward` (
 --
 
 INSERT INTO `t1_forward` (`id_forward`, `pelaporan_id`, `user_id`, `judul`, `subtask`, `tanggal`) VALUES
-(11, 130, 62, 'Test 66', 'Test 666', '2024-05-29');
+(11, 130, 62, 'Test 66', 'Test 666', '2024-05-29'),
+(12, 127, 62, 'TEST 3', 'test 333', '2024-05-31');
 
 -- --------------------------------------------------------
 
@@ -334,7 +337,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `role`, `active`, `tgl_register`, `last_login`) VALUES
-(47, 'Supervisor 2', 'Supervisor 2', 'spv2', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y', '2024-05-21', '2024-05-25 11:20:15'),
+(47, 'Supervisor 2', 'Supervisor 2', 'spv2', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y', '2024-05-21', '2024-05-28 09:52:13'),
 (48, 'Helpdesk 1', 'Ajeng', 'ajeng', '$2y$10$yMDEbxjjlh4oNXdZJw1om.SmuYMqFSzqLe3vycjiXnVFnZVXh7Fli', 2, 'Y', '2024-05-21', '2024-05-21 16:18:09'),
 (49, 'Helpdesk 1', 'Novi', 'novi', '$2y$10$61Gvfbmfq/xELLugqweR3.ITjxqoazOT478NP8hl9ND44iSRndaWO', 2, 'Y', '2024-05-21', '2024-05-21 16:19:16'),
 (50, 'Helpdesk 2', 'Ayu', 'ayu', '$2y$10$CBazdGZC3pDGBYv0WVS6WuqgRQW2SNVhGotgSoR09dL3CpXRLn4Tq', 2, 'Y', '2024-05-21', '2024-05-21 16:19:30'),
@@ -342,17 +345,17 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (52, 'Helpdesk 3', 'Eva', 'eva', '$2y$10$R8oQzXHI8pnwusrmXCTX3e9FWIjfvqgXFekk1yqJNhXIAkFDTY.n.', 2, 'Y', '2024-05-21', '2024-05-25 10:22:11'),
 (53, 'Helpdesk 3', 'Ina', 'ina', '$2y$10$39stpYd9tIjV.jrW/ffns.bVwZtKOyDqHHdZkSSwTmaNjTAS.1Qsi', 2, 'Y', '2024-05-21', '2024-05-25 11:32:23'),
 (54, 'Helpdesk 4', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y', '2024-05-21', '2024-05-22 08:49:50'),
-(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-21', '2024-05-25 12:34:10'),
+(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-21', '2024-05-28 09:52:49'),
 (56, 'Helpdesk 4', 'Khabibah', 'Khabibah', '$2y$10$kMOcFV1oh9PL5kGxkARcW.0q6iPYOTTe/M4OjztfR2dRory9yTwRa', 2, 'Y', '2024-05-22', '2024-05-21 16:21:03'),
-(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-22', '2024-05-28 09:10:32'),
-(58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-22', '2024-05-28 09:07:25'),
-(59, 'Klien', 'PT BPR BKK Karangmalang(Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-22', '2024-05-25 09:02:45'),
+(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-22', '2024-05-28 15:14:41'),
+(58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-22', '2024-05-28 12:15:08'),
+(59, 'Klien', 'PT BPR BKK Karangmalang(Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-22', '2024-05-28 12:14:51'),
 (60, 'Klien', 'PT BPR BKK Purwokerto(Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-22', '2024-05-25 12:36:30'),
 (61, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-22', '2024-05-25 08:51:19'),
-(62, 'Implementator', 'Implementator PT MSO Purwokerto', 'implementator', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-22', '2024-05-25 11:42:25'),
-(63, 'Support', 'Support PT MSO Purwokerto', 'support', '$2y$10$HEztd8wkl66Mpu2EIIRdpuFj/EBs57NLxZiZRGjc0Kg4M1kNpwoUu', 5, 'Y', '2024-05-22', '2024-05-25 10:59:07'),
+(62, 'Implementator', 'Implementator PT MSO Purwokerto', 'implementator', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-22', '2024-05-28 15:14:15'),
+(63, 'Support', 'Support PT MSO Purwokerto', 'support', '$2y$10$HEztd8wkl66Mpu2EIIRdpuFj/EBs57NLxZiZRGjc0Kg4M1kNpwoUu', 5, 'Y', '2024-05-22', '2024-05-28 09:54:07'),
 (66, 'Klien', 'PT BPR BKK Kebumen (Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-22', '2024-05-25 09:14:04'),
-(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-22', '2024-05-28 09:10:59');
+(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-22', '2024-05-28 15:16:04');
 
 --
 -- Indexes for dumped tables
@@ -475,7 +478,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -493,13 +496,13 @@ ALTER TABLE `reply`
 -- AUTO_INCREMENT untuk tabel `s_forward`
 --
 ALTER TABLE `s_forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `t1_forward`
 --
 ALTER TABLE `t1_forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `t2_forward`
@@ -511,7 +514,7 @@ ALTER TABLE `t2_forward`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
