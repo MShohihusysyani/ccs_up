@@ -188,44 +188,48 @@
                 </div>
                 <!--END DIAGRAM -->
 
-                <!-- TIKET -->
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <!-- TICKET -->
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div class="card">
-                        <div class="body bg-cyan">
-                            <div class="font-bold m-b--35"> TICKETS</div>
-                            <ul class="dashboard-stat-list">
-                                <li>
-                                    TODAY
-                                    <span class="pull-right"><b><?= total_today()?></b> <medium>TICKETS</medium></span>
-                                </li>
-                                <li>
-                                    YESTERDAY
-                                    <span class="pull-right"><b><?= total_yesterday()?></b> <medium>TICKETS</medium></span>
-                                </li>
-                                <li>
-                                    LAST WEEK
-                                    <span class="pull-right"><b><?= total_lastweek()?></b> <medium>TICKETS</medium></span>
-                                </li>
-
-                                <li>
-                                    LAST MONTH
-                                    <span class="pull-right"><b><?= total_lastmonth()?></b> <medium>TICKETS</medium></span>
-                                </li>
-
-                                <li>
-                                    THIS MONTH
-                                    <span class="pull-right"><b><?= total_thismonth()?></b> <medium>TICKETS</medium></span>
-                                </li>
-                                
-                                <li>
-                                    ALL
-                                    <span class="pull-right"><b><?= total_all()?></b> <medium>TICKETS</medium></span>
+                        <div class="header">
+                            <h2>
+                                LIST TICKET
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
+                        <div class="body">
+                            <div class="list-group">
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <span class="badge bg-pink"><b><?= total_today()?></b> <medium>TICKETS</medium> </span> Today
+                                </a>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <span class="badge bg-cyan"><b><?= total_yesterday()?></b> <medium>TICKETS</medium> </span>Yesterday
+                                </a>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <span class="badge bg-teal"><b><?= total_lastweek()?></b> <medium>TICKETS</medium></span>Last Week
+                                </a>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <span class="badge bg-orange"><?= total_lastmonth()?> <medium>TICKETS</medium></span>Last Month
+                                </a>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <span class="badge bg-purple"><b><?= total_thismonth()?></b> <medium>TICKETS</medium> </span>This Month
+                                </a>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <span class="badge bg-amber"><b><?= total_all()?></b> <medium>TICKETS</medium> </span>All Ticket
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- end ticket -->
+            </div>
+            <!-- #END# TICKET -->
 
                         <!-- Jumlah BPR -->
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
