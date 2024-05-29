@@ -29,7 +29,7 @@ class Klien extends CI_Controller
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png';
+            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
             $config['max_size'] = '2048';
             $config['upload_path'] = './assets/files/';
 
@@ -172,7 +172,7 @@ class Klien extends CI_Controller
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'jpeg|jpg|png|docx|pdf|xlsx|csv|txt';
+            $config['allowed_types'] = 'jpeg|jpg|png|docx|pdf|xlsx|csv|txt|zip|rar';
             $config['max_size'] = '2048';
             $config['upload_path'] = './assets/files/';
 
@@ -236,7 +236,7 @@ class Klien extends CI_Controller
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png';
+            $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|jpg|png';
             $config['max_size'] = '2048';
             $config['upload_path'] = './assets/comment/';
 
@@ -280,7 +280,7 @@ class Klien extends CI_Controller
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png|jpg';
+            $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|png|jpg';
             $config['max_size'] = '2048';
             $config['upload_path'] = './assets/reply/';
 

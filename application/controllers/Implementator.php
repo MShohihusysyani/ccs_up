@@ -105,7 +105,7 @@ class Implementator extends CI_Controller
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png';
+            $config['allowed_types'] = 'txt|csv|xlsx|docx|pdf|jpeg|jpg|zip|rar|png';
             $config['max_size'] = '2048';
             $config['upload_path'] = './assets/comment/';
 
@@ -149,7 +149,7 @@ class Implementator extends CI_Controller
         $photo = $_FILES['file']['name'];
     
             if ($photo) {
-                $config['allowed_types'] = 'xlsx|docx|pdf|jpeg|png|jpg';
+                $config['allowed_types'] = 'txt|csv|xlsx|docx|pdf|jpeg|jpg|zip|rar|png';
                 $config['max_size'] = '2048';
                 $config['upload_path'] = './assets/reply/';
     
