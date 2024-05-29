@@ -280,10 +280,10 @@
                                 <a href="<?php echo base_url('superadmin/rekapHelpdesk') ?>">Rekap Helpdesk</a>
                             </li>
 
-                            <li
+                            <!-- <li
                                 <?= $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('superadmin/rekapProgres') ?>">Rekap Progres</a>
-                            </li>
+                            </li> -->
 
                         </ul>
                     </li>

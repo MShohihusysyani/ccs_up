@@ -97,6 +97,8 @@ class Export extends CI_Controller {
         $sheet->setCellValue('I3', "IMPACT");
         $sheet->setCellValue('J3', "MAXDAY");
         $sheet->setCellValue('K3', "STATUS CCS");
+        $sheet->setCellValue('L3', "HANDLE BY");
+
 
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
@@ -110,6 +112,7 @@ class Export extends CI_Controller {
         $sheet->getStyle('I3')->applyFromArray($style_col);
         $sheet->getStyle('J3')->applyFromArray($style_col);
         $sheet->getStyle('K3')->applyFromArray($style_col);
+        $sheet->getStyle('L3')->applyFromArray($style_col);
 
 
         $sheet->getRowDimension('1')->setRowHeight(20);
@@ -136,6 +139,7 @@ class Export extends CI_Controller {
             $sheet->setCellValue('I' . $row, $data->impact);
             $sheet->setCellValue('J' . $row, $data->maxday);
             $sheet->setCellValue('K' . $row, $data->status_ccs);
+            $sheet->setCellValue('L' . $row, $data->handle_by);
 
             $sheet->getStyle('A' . $row)->applyFromArray($style_row);
             $sheet->getStyle('B' . $row)->applyFromArray($style_row);
@@ -148,6 +152,7 @@ class Export extends CI_Controller {
             $sheet->getStyle('I' . $row)->applyFromArray($style_row);
             $sheet->getStyle('J' . $row)->applyFromArray($style_row);
             $sheet->getStyle('K' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('L' . $row)->applyFromArray($style_row);
 
             $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
@@ -160,6 +165,7 @@ class Export extends CI_Controller {
             $sheet->getStyle('I' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
             $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
             $sheet->getStyle('K' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('L' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
             $sheet->getRowDimension($row)->setRowHeight(20);
 
             $no++;
@@ -175,8 +181,9 @@ class Export extends CI_Controller {
         $sheet->getColumnDimension('G')->setWidth(83);
         $sheet->getColumnDimension('H')->setWidth(10);
         $sheet->getColumnDimension('I')->setWidth(10);
-        $sheet->getColumnDimension('J')->setWidth(5);
-        $sheet->getColumnDimension('K')->setWidth(10);
+        $sheet->getColumnDimension('J')->setWidth(10);
+        $sheet->getColumnDimension('K')->setWidth(15);
+        $sheet->getColumnDimension('L')->setWidth(10);
 
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->setTitle("Data Rekap Pelaporan");

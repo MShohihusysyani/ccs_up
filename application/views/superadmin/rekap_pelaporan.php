@@ -79,7 +79,7 @@
             </div>
 
             <div class="card">
-            <div class="header">
+                <div class="header">
                         <h2>
                             Rekap Pelaporan
                         </h2>
@@ -94,7 +94,7 @@
                             </ul>
                         </div>
 
-                    </div>
+                </div>
                 <div class="body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover js-exportable dataTable" id="example">

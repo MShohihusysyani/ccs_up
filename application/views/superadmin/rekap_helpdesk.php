@@ -58,6 +58,22 @@
             </div>
 
             <div class="card">
+            <div class="header">
+                        <h2>
+                            Rekap Helpdesk
+                        </h2>
+                        <br>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?= base_url('export/rekap_hd'); ?>">Export PDF</a></li>
+                                <li><a href="<?= base_url('export/rekap_hd_excel')?>">Export Excel</a></li>
+                            </ul>
+                        </div>
+
+                </div>
                 <div class="body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover js-exportable dataTable"
@@ -65,7 +81,6 @@
                             <thead>
                                 <tr>
                                             <th>No</th>
-                                            <!-- <th>Tanggal</th> -->
                                             <th>Nama</th>
                                             <th>Total</th>
                                 </tr>
@@ -76,7 +91,6 @@
                                 foreach ($pencarian_data as $pd) : ?>
                                 <tr>
                                             <td><?= $no++?></td>
-                                            <!-- <td><?= tanggal_indo($pd['waktu_approve']) ?></td> -->
                                             <td><?= $pd['handle_by'];?></td>
                                             <td><?= $pd['totalH'];?></td>
                                 </tr>
