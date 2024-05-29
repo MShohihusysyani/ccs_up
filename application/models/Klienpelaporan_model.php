@@ -6,15 +6,33 @@ class Klienpelaporan_model extends CI_Model
 {
     public $table = 'pelaporan';
 
+    // public function getKlienPelaporanTemp()
+    // {
+
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $user_id = $this->session->userdata('id_user');
+    //     $query = "SELECT pelaporan.id_pelaporan, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.perihal, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority, pelaporan.maxday, pelaporan.kategori, pelaporan.tags, pelaporan.no_tiket, pelaporan.rating, pelaporan.judul
+    //     FROM pelaporan 
+    //     where user_id = $user_id ORDER BY waktu_pelaporan DESC";
+    //     return $this->db->query($query)->result_array();
+    // }
+
     public function getKlienPelaporanTemp()
     {
-
+        // Retrieve current user data based on the username stored in the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    
+        // Retrieve the current user's ID from session data
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT pelaporan.id_pelaporan, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.perihal, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority, pelaporan.maxday, pelaporan.kategori, pelaporan.tags, pelaporan.no_tiket, pelaporan.rating
-        FROM pelaporan 
-        where user_id = $user_id ORDER BY waktu_pelaporan DESC";
-        return $this->db->query($query)->result_array();
+
+        // Prepare the SQL query with query binding to prevent SQL injection
+        $sql = "SELECT pelaporan.id_pelaporan, pelaporan.status, pelaporan.waktu_pelaporan, pelaporan.perihal, pelaporan.user_id, pelaporan.status_ccs, pelaporan.file, pelaporan.priority, pelaporan.maxday, pelaporan.kategori, pelaporan.tags, pelaporan.no_tiket, pelaporan.rating, pelaporan.judul
+            FROM pelaporan 
+            WHERE user_id = ? 
+            ORDER BY waktu_pelaporan DESC";
+    
+    // Execute the query with the user_id as the bound parameter
+    return $this->db->query($sql, array($user_id))->result_array();
     }
 
     public function getKlienPelaporan2()

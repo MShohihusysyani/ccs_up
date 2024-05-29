@@ -40,6 +40,7 @@
                                         <th>No</th>
                                         <th>Tanggal Pelaporan</th>
                                         <th>No Tiket</th>
+                                        <th>Judul</th>
                                         <th>Perihal</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
@@ -51,6 +52,23 @@
                                         <th>Rating</th>
                                     </tr>
                                 </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Pelaporan</th>
+                                        <th>No Tiket</th>
+                                        <th>Judul</th>
+                                        <th>Perihal</th>
+                                        <th>Attachment</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status CCS</th>
+                                        <th>Aksi</th>
+                                        <th>Rating</th>
+                                    </tr>
+                                </tfoot>
                                 <tbody>
                                     
                                     <?php
@@ -60,6 +78,7 @@
                                         <td><?php echo $no++ ?></td>
                                         <td><?= tanggal_indo($divp['waktu_pelaporan']); ?></td>
                                         <td><?= $divp['no_tiket'];?></td>
+                                        <td><?= $divp['judul'];?></td>
                                         <td><?= $divp['perihal']; ?></td>
                                         <td> <a
                                                 href="<?= base_url('assets/files/' . $divp['file']); ?>"><?= $divp['file']; ?></a>
