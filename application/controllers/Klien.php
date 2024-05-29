@@ -55,6 +55,8 @@ class Klien extends CI_Controller
             'tags'     => $this->input->post('tags'),
             'judul'    => $this->input->post('judul')
         ];
+        $data = preg_replace("/^<p.*?>/", "",$data);
+        $data = preg_replace("|</p>$|", "",$data);
         $this->db->insert('tiket_temp', $data);
         $this->session->set_flashdata('pesan', 'Pelaporan Added!');
 
