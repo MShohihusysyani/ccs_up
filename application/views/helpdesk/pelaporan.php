@@ -170,13 +170,6 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
-                                                    class="material-icons"></i> <span class="icon-name"></span>
-                                                edit</a>
-
-                                                <br>
-                                                <br> -->
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

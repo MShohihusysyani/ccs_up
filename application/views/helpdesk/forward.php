@@ -132,7 +132,7 @@
 
                                             <td>
                                             <a class="btn btn-xs btn-info"
-                                                href="<?= base_url() ?>helpdesk/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>
                                                 Detail</a>

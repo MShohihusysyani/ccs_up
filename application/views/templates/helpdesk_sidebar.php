@@ -79,19 +79,19 @@
                     </li>
 
                     <li
-                        <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
+                        <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">confirmation_number</i>
                             <span>List Ticket</span>
                         </a>
                         <ul class="ml-menu">
                             <li
-                                <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('helpdesk/pelaporan') ?>">Handle</a>
                             </li>
 
                             <li
-                                <?= $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
+                                <?= $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('helpdesk/forward') ?>">Forward</a>
                             </li>
 
