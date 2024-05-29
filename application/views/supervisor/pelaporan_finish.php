@@ -25,7 +25,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-finish"
+                            <table class="table table-bordered table-striped table-hover  js-exportable dataTable"
                                 id="example">
                                 <!-- class="table table-bordered table-striped table-hover dataTable js-basic-example" -->
                                 <thead>
