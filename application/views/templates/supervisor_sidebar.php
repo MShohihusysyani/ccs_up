@@ -269,7 +269,7 @@
                                 <a href="<?php echo base_url('supervisor/rekapPelaporan') ?>">Rekap Pelaporan</a>
                             </li>
 
-                            <li
+                            <!-- <li
                                 <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/rekapKategori') ?>">Rekap Kategori</a>
                             </li>
@@ -277,7 +277,7 @@
                             <li
                                 <?= $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('supervisor/rekapHelpdesk') ?>">Rekap Helpdesk</a>
-                            </li>
+                            </li> -->
 
                             <!-- <li
                                 <?= $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
