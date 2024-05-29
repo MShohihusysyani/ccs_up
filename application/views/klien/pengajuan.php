@@ -1,5 +1,9 @@
+
 <section class="content">
     <div class="container-fluid">
+        <div class="alert alert-lg alert-danger"> <i class="material-icons">report</i>
+            <strong>Peringatan!</strong> Sebelum mengajukan tiket yang baru, dimohon untuk mengajukan tiket yang sudah diproses terlebih dahulu.
+        </div>
         <div class="block-header">
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
         <?php if ($this->session->flashdata('pesan')) { ?>
@@ -271,7 +275,7 @@
                         'bulletedList', 'numberedList', 'todoList','|',
                         'fontSize', 'fontFamily', 'fontColor', '', '', '|',
                         'alignment', '|',
-                        'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '', '', '|',
+                        'link', '', 'blockQuote', 'insertTable', '', '', '', '|',
                         'undo', 'redo',
                     ],
                     shouldNotGroupWhenFull: true
