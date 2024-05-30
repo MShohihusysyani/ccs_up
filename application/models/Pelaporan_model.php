@@ -136,7 +136,9 @@ class Pelaporan_model extends CI_Model
             pelaporan.nama,
             pelaporan.user_id,
             pelaporan.tags,
-            user.nama_user
+            user.nama_user,
+            pelaporan.maxday,
+            pelaporan.impact
         ');
         $this->db->from('pelaporan');
         $this->db->join('user', 'pelaporan.user_id = user.id_user', 'left');
@@ -194,7 +196,9 @@ class Pelaporan_model extends CI_Model
             pelaporan.file,
             pelaporan.nama,
             pelaporan.user_id,
-            pelaporan.tags
+            pelaporan.tags,
+            pelaporan.impact,
+            pelaporan.maxday
         ');
         $this->db->from('pelaporan');
         $this->db->where('waktu_pelaporan >=', $tgla);

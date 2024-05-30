@@ -12,6 +12,7 @@ class Export extends CI_Controller {
         parent::__construct();
         $this->load->model('Export_model');
         $this->load->helper('tanggal_helper');
+        $this->load->model('Pelaporan_model');
     }
 
 	public function rekap_pelaporan()
@@ -29,11 +30,53 @@ class Export extends CI_Controller {
 		$data['impact'] = $this->db->get('pelaporan')->result_array();
 		$data['maxday'] = $this->db->get('pelaporan')->result_array();
 		$data['status_ccs'] = $this->db->get('pelaporan')->result_array();
-        $data['rekapPelaporan'] = $this->Export_model->getPelaporan();
+        
+        $tgla = $this->input->post('tgla');
+        $tglb = $this->input->post('tglb');
+        $data['rekapPelaporan'] = $this->Export_model->getPelaporan($tgla, $tglb);
 
         $this->load->view('cetak/rekap_pelaporan', $data);
     }
+    
+//     public function rekap_pelaporan_datanull()
+// {
+//     // Fetching user data
+//     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
 
+//     // Load the Export model
+//     $this->load->model('Export_model', 'export_model');
+
+//     // Fetch all the data from 'pelaporan' once and use it for all necessary fields
+//     $pelaporanData = $this->db->get('pelaporan')->result_array();
+//     $data['waktu_pelaporan'] = $pelaporanData;
+//     $data['no_tiket'] = $pelaporanData;
+//     $data['nama'] = $pelaporanData;
+//     $data['perihal'] = $pelaporanData;
+//     $data['tags'] = $pelaporanData;
+//     $data['kategori'] = $pelaporanData;
+//     $data['priority'] = $pelaporanData;
+//     $data['impact'] = $pelaporanData;
+//     $data['maxday'] = $pelaporanData;
+//     $data['status_ccs'] = $pelaporanData;
+
+//     // Handle date input and validation
+//     $tgla = $this->input->post('tgla');
+//     $tglb = $this->input->post('tglb');
+
+//     if ($tgla && $tglb && preg_match("/\d{4}-\d{2}-\d{2}/", $tgla) && preg_match("/\d{4}-\d{2}-\d{2}/", $tglb)) {
+//         // Fetch filtered data based on date range
+//         $data['rekapPelaporan'] = $this->export_model->getPelaporan($tgla, $tglb);
+//     } else {
+//         $data['rekapPelaporan'] = []; // or handle the error as needed
+//     }
+
+//     // Pass the dates to the view
+//     $data['tgla'] = $tgla;
+//     $data['tglb'] = $tglb;
+
+//     // Load the view with the data
+//     $this->load->view('cetak/rekap_pelaporan', $data);
+// }
 
     public function rekap_pelaporan_excel() {
 
@@ -45,13 +88,13 @@ class Export extends CI_Controller {
             'font' => ['bold' => true],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
-                'vertical' => Alignment::VERTICAL_CENTER
+                'vertical'   => Alignment::VERTICAL_CENTER
             ],
             'borders' => [
-                'top' => ['borderStyle'  => Border::BORDER_THIN],
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
                 'right' => ['borderStyle'  => Border::BORDER_THIN],
-                'bottom' => ['borderStyle'  => Border::BORDER_THIN],
-                'left' => ['borderStyle'  => Border::BORDER_THIN]
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
             ]
         ];
 
@@ -61,10 +104,10 @@ class Export extends CI_Controller {
                 'vertical' => Alignment::VERTICAL_CENTER
             ],
             'borders' => [
-                'top' => ['borderStyle'  => Border::BORDER_THIN],
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
                 'right' => ['borderStyle'  => Border::BORDER_THIN],
-                'bottom' => ['borderStyle'  => Border::BORDER_THIN],
-                'left' => ['borderStyle'  => Border::BORDER_THIN]
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
             ]
         ];
 
@@ -72,6 +115,7 @@ class Export extends CI_Controller {
         $sheet->mergeCells('A1:F1');
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle('A1')->getFont()->setSize(15);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $current_date = date('Y-m-d H:i:s');
@@ -84,6 +128,7 @@ class Export extends CI_Controller {
         $sheet->mergeCells('A2:F2');
         $sheet->getStyle('A2')->getFont()->setBold(true);
         $sheet->getStyle('A2')->getFont()->setSize(15);
+        $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
         // Buat header tabel pada baris ke 3
         $sheet->setCellValue('A3', "NO");
@@ -123,6 +168,8 @@ class Export extends CI_Controller {
         $this->db->select('kategori,id_pelaporan,waktu_pelaporan,status_ccs,priority,maxday,perihal,file,nama,no_tiket,impact,handle_by,status,tags');
         $this->db->from('pelaporan');
         $this->db->where('status_ccs', 'FINISH');
+        // $this->db->where('waktu_pelaporan ', $this->input->get('tgla'));
+        // $this->db->where('waktu_pelaporan ', $this->input->get('tglb'));
         $query = $this->db->get();
         $no = 1;
         $row = 4;
@@ -197,6 +244,8 @@ class Export extends CI_Controller {
         $writer->save('php://output');
     }
 
+    
+
       // REKAP KATEGORI
     public function rekap_kategori()
     {
@@ -217,13 +266,13 @@ class Export extends CI_Controller {
             'font' => ['bold' => true],
             'alignment' => [
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+                'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
             ],
             'borders' => [
-                'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'top' => ['borderStyle'    => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
                 'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
+                'left' => ['borderStyle'   => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
             ]
         ];
     
@@ -233,10 +282,10 @@ class Export extends CI_Controller {
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
             ],
             'borders' => [
-                'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'top' => ['borderStyle'    => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
                 'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
+                'left' => ['borderStyle'   => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
             ]
         ];
     
@@ -311,6 +360,8 @@ class Export extends CI_Controller {
         ob_end_clean(); // Used to fix issue with file not opening in Excel
         $writer->save('php://output');
     }
+
+
     
 
     public function rekap_pelaporan_excel_error(){

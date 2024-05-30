@@ -15,7 +15,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="date" name="tgla" id="tgla" class="form-control" required>
+                                        <input type="date" value="<?= @$_GET['tgla'] ?>" name="tgla" id="tgla" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -25,7 +25,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="date" name="tglb" id="tglb" class="form-control" required>
+                                        <input type="date" value="<?= @$_GET['tglb'] ?>" name="tglb" id="tglb" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -106,6 +106,10 @@
                                     <th>Nama Klien</th>
                                     <th>Perihal</th>
                                     <th>Tags</th>
+                                    <th>Kategori</th>
+                                    <th>Impact</th>
+                                    <th>Priority</th>
+                                    <th>Maxday</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -120,6 +124,26 @@
                                         <td><?= $pd['nama']; ?></td>
                                         <td><?= $pd['perihal']; ?></td>
                                         <td><?= $pd['tags']; ?></td>
+                                        <td><?= $pd['kategori'];?></td>
+                                        <td><?= $pd['impact'];?></td>
+                                        <td>
+                                            <?php if ($pd['priority'] == 'High') : ?>
+                                                <span class="label label-danger">HIGH</span>
+                                            <?php elseif ($pd['priority'] == 'Medium') : ?>
+                                                <span class="label label-warning">MEDIUM</span>
+                                            <?php elseif ($pd['priority'] == 'Low') : ?>
+                                                <span class="label label-info">LOW</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($pd['maxday'] == '7') : ?>
+                                                <span class="label label-danger">7</span>
+                                            <?php elseif ($pd['maxday'] == '60') : ?>
+                                                <span class="label label-warning">60</span>
+                                            <?php elseif ($pd['maxday'] == '90') : ?>
+                                                <span class="label label-info">90</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td>
                                             <?php if ($pd['status_ccs'] == 'FINISH') : ?>
                                                 <span class="label label-success">FINISH</span>

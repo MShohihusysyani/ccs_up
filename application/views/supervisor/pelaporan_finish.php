@@ -42,7 +42,7 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <th>Tanggal Approve</th>
+                                            <!-- <th>Tanggal Approve</th> -->
                                         
                                     </tr>
                                 </thead>
@@ -60,7 +60,7 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
-                                        <th>Tanggal Approve</th>
+                                        <!-- <th>Tanggal Approve</th> -->
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -126,7 +126,7 @@
                                             </td>
                                             
                                             <td><?= $dp['handle_by'];?> , <?=$dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
-                                            <td><?= tanggal_indo($dp['waktu_approve']);?></td>
+                                            <!-- <td><?= tanggal_indo($dp['waktu_approve']);?></td> -->
                                         </tr>
                                         <?php endforeach; ?>
                                 </tbody>
