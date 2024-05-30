@@ -80,7 +80,7 @@ class Export extends CI_Controller {
         $user_query = $this->db->get('user');
         $user = $user_query->row_array(); // Fetching the user data
 		$sheet->setCellValue('A2', "CCS | REKAP PELAPORAN");
-		$sheet->setCellValue('A2','Rekap Pelaporan dicetak oleh' .  $user['nama_user']. 'Pada hari' . format_indo($current_date));
+		$sheet->setCellValue('A2','Rekap Pelaporan dicetak oleh' .  $user['nama_user']. 'Pada Hari' . format_indo($current_date));
         $sheet->mergeCells('A2:F2');
         $sheet->getStyle('A2')->getFont()->setBold(true);
         $sheet->getStyle('A2')->getFont()->setSize(15);
