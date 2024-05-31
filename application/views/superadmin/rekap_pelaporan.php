@@ -15,7 +15,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="date" value="<?= @$_GET['tgla'] ?>" name="tgla" id="tgla" class="form-control" required>
+                                        <input type="date" value="" name="tanggal_awal" id="tanggal_awal" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -25,7 +25,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="date" value="<?= @$_GET['tglb'] ?>" name="tglb" id="tglb" class="form-control" required>
+                                        <input type="date" value="" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
                                     </div>
                                 </div>
                             </div>

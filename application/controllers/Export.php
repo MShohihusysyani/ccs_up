@@ -31,9 +31,7 @@ class Export extends CI_Controller {
 		$data['maxday'] = $this->db->get('pelaporan')->result_array();
 		$data['status_ccs'] = $this->db->get('pelaporan')->result_array();
         
-        $tgla = $this->input->post('tgla');
-        $tglb = $this->input->post('tglb');
-        $data['rekapPelaporan'] = $this->Export_model->getPelaporan($tgla, $tglb);
+        $data['rekapPelaporan'] = $this->Export_model->getPelaporan();
 
         $this->load->view('cetak/rekap_pelaporan', $data);
     }
@@ -283,10 +281,10 @@ class Export extends CI_Controller {
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
             ],
             'borders' => [
-                'top' => ['borderStyle'    => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'left' => ['borderStyle'   => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
+                'top'   => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'bottom'=> ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'left'  => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
             ]
         ];
     

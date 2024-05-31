@@ -546,8 +546,8 @@ public function fungsi_reject()
     $this->load->model('Client_model', 'client_model');
 
     // Set form validation rules
-    $this->form_validation->set_rules('tgla', 'Start Date', 'required');
-    $this->form_validation->set_rules('tglb', 'End Date', 'required');
+    $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'required');
+    $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'required');
     $this->form_validation->set_rules('status_ccs', 'Status CCS', 'required');
     $this->form_validation->set_rules('nama_klien', 'Client Name', 'required');
     $this->form_validation->set_rules('tags', 'Tags', 'required');
@@ -564,8 +564,8 @@ public function fungsi_reject()
         $this->load->view('templates/footer');
     } else {
         // Validation passed, retrieve POST data
-        $tgla = $this->input->post('tgla');
-        $tglb = $this->input->post('tglb');
+        $tgla = $this->input->post('tanggal_awal');
+        $tglb = $this->input->post('tanggal_akhir');
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
