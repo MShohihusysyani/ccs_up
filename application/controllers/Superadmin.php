@@ -564,15 +564,15 @@ public function fungsi_reject()
         $this->load->view('templates/footer');
     } else {
         // Validation passed, retrieve POST data
-        $tgla = $this->input->post('tanggal_awal');
-        $tglb = $this->input->post('tanggal_akhir');
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
 
         // Get data from the models
         $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags);
+        $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
 
         // Load views with data
         $this->load->view('templates/header');

@@ -12,6 +12,21 @@ class Export_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+    // public function getPelaporan(){
+    //     $this->db->select('*');
+    //     $this->db->where('waktu_pelaporan ', $this->input->post('tanggal_awal'));
+    //     $this->db->where('waktu_pelaporan ', $this->input->post('tanggal_akhir'));
+    //     $query = $this->db->get('pelaporan');
+    //     return $query->result();
+    // }
+
+    public function get_data_by_date_range($start_date, $end_date) {
+        $this->db->where('waktu_pelaporan ', $start_date);
+        $this->db->where('waktu_pelaporan ', $end_date);
+        $query = $this->db->get('pelaporan');
+        return $query->result();
+    }
+
     public function getPelaporan_datanull($tgla, $tglb)
     {
         $this->db->select('*');

@@ -71,7 +71,7 @@ class Auth extends CI_Controller
                         break;
                 }
             } else {
-                $this->session->set_flashdata('alert', 'Inactive User, Please Contact Supervisor!');
+                $this->session->set_flashdata('alert', 'Inactive User, Please Contact Superadmin!');
                 redirect('auth');
             }
         } else {

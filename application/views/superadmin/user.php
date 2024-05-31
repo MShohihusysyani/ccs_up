@@ -60,7 +60,16 @@
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $u['divisi'];?></td>
                                         <td><?= $u['nama_user']; ?></td>
-                                        <td><?= $u['active'];?></td>
+                                        <td>
+                                            <?php if ($u['active'] == 'Y'): ?>
+                                                <span><i class="material-icons">verified_us</i></span>
+                                                    
+                                            <?php elseif ($u['active'] == 'N'): ?>
+                                                <span><i class="material-icons">cancel</i></span>
+
+                                            <?php else: ?>
+                                            <?php endif; ?>
+                                        </td>
 
                                         <td>
                                             <div class="btn btn-sm btn-warning">
