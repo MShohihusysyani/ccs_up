@@ -246,7 +246,8 @@ class Supervisor2 extends CI_Controller
             'file' => $photo,
             'created_at' => $create_at
         ];
-
+        $data = preg_replace("/^<p.*?>/", "",$data);
+        $data = preg_replace("|</p>$|", "",$data);
         $this->db->insert('comment', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('supervisor2/detail_pelaporan/'.$id_pelaporan));
@@ -291,7 +292,8 @@ class Supervisor2 extends CI_Controller
                 'created_at' => $create_at,
                 'comment_id' => $comment_id
             ];
-
+            $data = preg_replace("/^<p.*?>/", "",$data);
+            $data = preg_replace("|</p>$|", "",$data);
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('supervisor2/detail_pelaporan/'.$id_pelaporan));

@@ -53,7 +53,7 @@
                                                 <i class="material-icons">clear</i>
 
                                                 <?php elseif ($u['active'] == 'Y') : ?>
-                                                    <i class="material-icons">verified_us</i>
+                                                    <i class="material-icons">verified</i>
                                                 <?php else : ?>
                                                 <?php endif; ?>
                                             </td>

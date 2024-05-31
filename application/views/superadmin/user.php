@@ -62,10 +62,10 @@
                                         <td><?= $u['nama_user']; ?></td>
                                         <td>
                                             <?php if ($u['active'] == 'Y'): ?>
-                                                <span><i class="material-icons">verified_us</i></span>
+                                                <span><i class="material-icons">verified</i></span>
                                                     
                                             <?php elseif ($u['active'] == 'N'): ?>
-                                                <span><i class="material-icons">cancel</i></span>
+                                                <span><i class="material-icons">close</i></span>
 
                                             <?php else: ?>
                                             <?php endif; ?>

@@ -730,7 +730,8 @@ public function fungsi_reject()
             'file' => $photo,
             'created_at' => $create_at
         ];
-
+        $data = preg_replace("/^<p.*?>/", "",$data);
+        $data = preg_replace("|</p>$|", "",$data);
         $this->db->insert('comment', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('superadmin/detail_pelaporan/'.$id_pelaporan));
@@ -775,7 +776,8 @@ public function fungsi_reject()
             'created_at' => $create_at,
             'comment_id' => $comment_id
         ];
-
+        $data = preg_replace("/^<p.*?>/", "",$data);
+        $data = preg_replace("|</p>$|", "",$data);
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('superadmin/detail_pelaporan/'.$id_pelaporan));
