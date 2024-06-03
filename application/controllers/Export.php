@@ -13,7 +13,6 @@ class Export extends CI_Controller {
         $this->load->model('Export_model');
         $this->load->helper('tanggal_helper');
         $this->load->model('Pelaporan_model');
-        $this->load->library('fpdf');
     }
 
 	public function rekap_pelaporan()
@@ -36,53 +35,6 @@ class Export extends CI_Controller {
 
         $this->load->view('cetak/rekap_pelaporan', $data);
     }
-
-    public function export_pdf() {
-        // Ambil data dari form
-
-        // Panggil model untuk mengambil data berdasarkan rentang tanggal
-        $data['rekapPelaporan'] = $this->Export_model->getPelaporan();
-
-        // Panggil fungsi untuk membuat PDF
-        $this->create_pdf($data);
-    }
-
-    private function create_pdf($data) {
-        // Buat objek PDF
-        $pdf = new FPDF('P', 'mm', 'A4');
-        $pdf->AddPage();
-        $pdf->SetFont('Arial', 'B', 12);
-
-        // Tambahkan judul
-        $pdf->Cell(190, 10, 'Data Export PDF', 0, 1, 'C');
-        $pdf->Ln(10);
-
-        // Tambahkan header tabel
-        $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(10, 10, 'No', 1);
-        $pdf->Cell(40, 10, 'Tanggal', 1);
-        $pdf->Cell(40, 10, 'No Tiket', 1);
-        $pdf->Cell(60, 10, 'Nama', 1);
-        $pdf->Cell(60, 10, 'Perihal', 1);
-        $pdf->Ln();
-
-        // Tambahkan data ke tabel
-        $pdf->SetFont('Arial', '', 10);
-        $no = 1;
-        foreach ($data['rekapPelaporan'] as $record) {
-            $pdf->Cell(10, 10, $no++, 1);
-            $pdf->Cell(40, 10, $record['waktu_pelaporan'], 1);
-            $pdf->Cell(40, 10, $record['no_tiket'], 1);
-            $pdf->Cell(60, 10, $record['nama'], 1);
-            $pdf->Cell(60, 10, $record['perihal'], 1);
-            $pdf->Ln();
-        }
-
-
-        // Output PDF
-        $pdf->Output('D', 'data_export.pdf');
-    }
-    
 
     public function rekap_pelaporan_excel() {
 
