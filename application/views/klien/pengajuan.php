@@ -9,7 +9,10 @@
         <?php if ($this->session->flashdata('pesan')) { ?>
 
         <?php } ?>
-            <!-- <?= $this->session->flashdata('message'); ?> -->
+        <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>">
+                <?php if ($this->session->flashdata('pesan')) { ?>
+
+                <?php } ?>
         </div>
 
         <!-- jQuery UI CSS -->
@@ -26,7 +29,7 @@
                         Input Pelaporan </h2>
                 </div>
                 <div class="body">
-                    <form method="post" action="<?= base_url('klien/add_temp'); ?>" enctype="multipart/form-data">
+                    <form method="post" action="<?= base_url('klien/add_temp_tiket'); ?>" enctype="multipart/form-data">
                     <div class="form-group form-float">
                             <div class="form-line">
                                 <input  type="text" id="no_tiket" name="no_tiket" class="form-control" value="<?= $tiket; ?>" readonly>
@@ -43,9 +46,9 @@
                         <br>
                         
                         <label for="perihal">Perihal</label>
-                            <textarea id="editor" class="form-control" name="perihal" id="perihal" rows="10">
-                                
-                            </textarea>
+                        <textarea id="editor" class="form-control" name="perihal" id="perihal" rows="10" required>
+
+                        </textarea>
 
                         <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
@@ -261,9 +264,15 @@
     });
 </script>
 
+<script>
+        editor.on( 'required', function( evt ) {
+        alert( 'Article content is required.' );
+        evt.cancel();
+    } );
+</script>
 
-    <script>
-            // This sample still does not showcase all CKEditor&nbsp;5 features (!)
+<script>
+        // This sample still does not showcase all CKEditor&nbsp;5 features (!)
             // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
             CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -413,5 +422,5 @@
             'paragraph'
 
             ]
-        </script>
+</script>
 

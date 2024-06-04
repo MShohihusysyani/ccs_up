@@ -21,47 +21,83 @@ class Klien extends CI_Controller
         $this->load->view('klien/dashboard', $data);
         $this->load->view('templates/footer');
     }
-
-    public function add_temp()
+    
+public function add_temp_tiket()
     {
-        
-        //jika ada gambar
-        $photo = $_FILES['file']['name'];
+    // Load the form validation library
+    $this->load->library('form_validation');
 
-        if ($photo) {
-            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
-            $config['max_size'] = '2048';
-            $config['upload_path'] = './assets/files/';
+    // Set validation rules
+    $this->form_validation->set_rules('perihal', 'Perihal', 'required|min_length[50]');
 
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
+    // Check if the form validation passed
+    if ($this->form_validation->run() == FALSE) {
+        // If validation fails, set an error message and redirect back
+        $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi dan minimal 50 karakter.');
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
+    } else {
+        // Retrieve the ticket number from the form input
+        $no_tiket = $this->input->post('no_tiket');
 
-            if ($this->upload->do_upload('file')) {
+        // Check if the ticket number already exists in the database
+        $this->db->where('no_tiket', $no_tiket);
+        $existing_ticket = $this->db->get('tiket_temp')->row();
 
-                $photo = $this->upload->data('file_name');
-            } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-                $referred_from = $this->session->userdata('referred_from');
-                redirect($referred_from, 'refresh');
+        if ($existing_ticket) {
+            // If the ticket number already exists, set an error message and redirect back
+            $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan tiket yang sudah diproses!!!');
+            $referred_from = $this->session->userdata('referred_from');
+            redirect($referred_from, 'refresh');
+        } else {
+            // Handle file upload if there is a file
+            $photo = $_FILES['file']['name'];
+
+            if ($photo) {
+                $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
+                $config['max_size'] = '2048';
+                $config['upload_path'] = './assets/files/';
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ($this->upload->do_upload('file')) {
+                    $photo = $this->upload->data('file_name');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                    $referred_from = $this->session->userdata('referred_from');
+                    redirect($referred_from, 'refresh');
+                }
             }
-        }
-        $data          = [
-            'no_tiket' => $this->input->post('no_tiket'),
-            'perihal'  => $this->input->post('perihal'),
-            'file'     => $photo,
-            'user_id'  => $this->input->post('user_id'),
-            'nama'     => $this->input->post('nama'),
-            'kategori' => $this->input->post('kategori'),
-            'tags'     => $this->input->post('tags'),
-            'judul'    => $this->input->post('judul')
-        ];
-        $data = preg_replace("/^<p.*?>/", "",$data);
-        $data = preg_replace("|</p>$|", "",$data);
-        $this->db->insert('tiket_temp', $data);
-        $this->session->set_flashdata('pesan', 'Pelaporan Added!');
 
-        redirect('klien/pengajuan');
+            // Prepare the data for insertion
+            $data = [
+                'no_tiket' => $no_tiket,
+                'perihal'  => $this->input->post('perihal'),
+                'file'     => $photo,
+                'user_id'  => $this->input->post('user_id'),
+                'nama'     => $this->input->post('nama'),
+                'kategori' => $this->input->post('kategori'),
+                'tags'     => $this->input->post('tags'),
+                'judul'    => $this->input->post('judul')
+            ];
+
+            // Remove unwanted HTML tags from data
+            $data = array_map(function($value) {
+                return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
+            }, $data);
+
+            // Insert the data into the database
+            $this->db->insert('tiket_temp', $data);
+
+            // Set a success message and redirect to the submission page
+            $this->session->set_flashdata('pesan', 'Pelaporan Added!');
+            redirect('klien/pengajuan');
+        }
     }
+}
+
+        
 
     public function fungsi_delete_temp($id)
     {
