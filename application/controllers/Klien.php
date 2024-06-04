@@ -33,9 +33,9 @@ public function add_temp_tiket()
     // Check if the form validation passed
     if ($this->form_validation->run() == FALSE) {
         // If validation fails, set an error message and redirect back
-        $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi dan minimal 50 karakter.');
-        $referred_from = $this->session->userdata('referred_from');
-        redirect($referred_from, 'refresh');
+        $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter.');
+        // $referred_from = $this->session->userdata('referred_from');
+        redirect('klien/pengajuan');
     } else {
         // Retrieve the ticket number from the form input
         $no_tiket = $this->input->post('no_tiket');
@@ -46,9 +46,9 @@ public function add_temp_tiket()
 
         if ($existing_ticket) {
             // If the ticket number already exists, set an error message and redirect back
-            $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan tiket yang sudah diproses!!!');
-            $referred_from = $this->session->userdata('referred_from');
-            redirect($referred_from, 'refresh');
+            $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan terlebih dahulu tiket yang sudah diproses!!!');
+            // $referred_from = $this->session->userdata('referred_from');
+            redirect('klien/pengajuan');
         } else {
             // Handle file upload if there is a file
             $photo = $_FILES['file']['name'];

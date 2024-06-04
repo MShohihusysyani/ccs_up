@@ -2,7 +2,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="alert alert-lg alert-info"> <i class="material-icons">report</i>
-            <strong>Peringatan!</strong> Sebelum mengajukan tiket yang baru, <strong>Dimohon</strong> untuk mengajukan tiket yang sudah diproses terlebih dahulu. Agar No urut tiket tidak sama!!!
+            <strong>Peringatan!</strong> Sebelum mengajukan tiket yang baru, <strong>Dimohon</strong> untuk mengajukan tiket yang sudah diproses terlebih dahulu. Agar tiket yang baru dapat diproses!!!
         </div>
         <div class="block-header">
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jun 2024 pada 11.14
+-- Waktu pembuatan: 04 Jun 2024 pada 11.19
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -131,7 +131,8 @@ CREATE TABLE `forward` (
 --
 
 INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUES
-(152, 140, 55, NULL);
+(152, 140, 55, NULL),
+(153, 141, 55, NULL);
 
 -- --------------------------------------------------------
 
@@ -191,7 +192,8 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `judul`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `waktu_approve`) VALUES
-(140, 'TIC00032024050001', 60, 'Proses - Proses Ulang', 'proses ulang', '2024-05-31', 'Forward To Helpdesk', 'FINISH', 'High', 7, 'Coba Preg', 'coba preg', 'kritikal', 'Rekap_Pelaporan.xlsx', NULL, 'PT BPR BKK Purwokerto(Perseroda)', 'Luthfi', NULL, NULL, NULL);
+(140, 'TIC00032024050001', 60, 'Proses - Proses Ulang', 'proses ulang', '2024-05-31', 'Forward To Helpdesk', 'FINISH', 'High', 7, 'Coba Preg', 'coba preg', 'kritikal', 'Rekap_Pelaporan.xlsx', NULL, 'PT BPR BKK Purwokerto(Perseroda)', 'Luthfi', NULL, NULL, NULL),
+(141, 'TIC00032024060002', 60, 'API - TTF', 'api', '2024-06-04', 'Solved', 'FINISH', 'Medium', 60, 'tesss', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'Screenshot_2024-06-03_102755.png', NULL, 'PT BPR BKK Purwokerto(Perseroda)', 'Luthfi', NULL, NULL, '2024-06-04');
 
 -- --------------------------------------------------------
 
@@ -321,17 +323,17 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (52, 'Helpdesk 3', 'Eva', 'eva', '$2y$10$R8oQzXHI8pnwusrmXCTX3e9FWIjfvqgXFekk1yqJNhXIAkFDTY.n.', 2, 'Y', '2024-05-31', '2024-05-31 15:09:37'),
 (53, 'Helpdesk 3', 'Ina', 'ina', '$2y$10$39stpYd9tIjV.jrW/ffns.bVwZtKOyDqHHdZkSSwTmaNjTAS.1Qsi', 2, 'Y', '2024-05-31', '2024-05-31 15:09:55'),
 (54, 'Helpdesk 4', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y', '2024-05-31', '2024-05-31 15:10:43'),
-(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-06-03 08:25:41'),
+(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-06-04 14:42:32'),
 (56, 'Helpdesk 4', 'Khabibah', 'Khabibah', '$2y$10$kMOcFV1oh9PL5kGxkARcW.0q6iPYOTTe/M4OjztfR2dRory9yTwRa', 2, 'Y', '2024-05-31', '2024-05-31 15:10:18'),
-(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-06-03 09:09:17'),
+(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-06-04 14:41:33'),
 (58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-31', '2024-05-31 15:07:00'),
 (59, 'Klien', 'PT BPR BKK Karangmalang(Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-31', '2024-05-31 15:07:21'),
-(60, 'Klien', 'PT BPR BKK Purwokerto(Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-31', '2024-05-31 16:15:09'),
+(60, 'Klien', 'PT BPR BKK Purwokerto(Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-31', '2024-06-04 16:07:17'),
 (61, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-31', '2024-05-31 15:48:51'),
 (62, 'Implementator', 'Implementator PT MSO Purwokerto', 'implementator', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-31', '2024-05-31 15:08:20'),
 (63, 'Support', 'Support PT MSO Purwokerto', 'support', '$2y$10$HEztd8wkl66Mpu2EIIRdpuFj/EBs57NLxZiZRGjc0Kg4M1kNpwoUu', 5, 'Y', '2024-05-31', '2024-05-31 15:05:31'),
 (66, 'Klien', 'PT BPR BKK Kebumen(Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-31', '2024-05-31 15:08:02'),
-(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-06-03 16:14:12');
+(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-06-04 15:59:59');
 
 --
 -- Indexes for dumped tables
@@ -408,7 +410,8 @@ ALTER TABLE `t2_forward`
 -- Indeks untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  ADD PRIMARY KEY (`id_temp`);
+  ADD PRIMARY KEY (`id_temp`),
+  ADD UNIQUE KEY `no_tiket` (`no_tiket`);
 
 --
 -- Indeks untuk tabel `user`
@@ -442,7 +445,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -454,7 +457,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -490,13 +493,13 @@ ALTER TABLE `t2_forward`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
