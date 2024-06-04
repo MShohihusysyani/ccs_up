@@ -164,14 +164,12 @@
                                                 href="<?= base_url() ?>klien/edit_pelaporan/<?= $tmp['id_temp']; ?>"><i
                                                     class="material-icons">edit</i> <span
                                                     class="icon-name"></span>Edit</a>
-
-
+                                                    <br><br>
                                             <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>klien/preview/<?= $tmp['id_temp']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>Detail</a>
-
-                    
+                                                    <br><br>
                                             <a class="btn btn-sm btn-danger tombol-hapus"
                                                 href="<?= base_url() ?>klien/fungsi_delete_temp/<?= $tmp['id_temp']; ?>"><span
                                                     class="fa fa-trash tombol-hapus"></span>

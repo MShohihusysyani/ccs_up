@@ -55,7 +55,8 @@
 
     div.kanan {
         position: absolute;
-
+        bottom: 0.5rem;
+        font-size: 11px;
         right: 50px;
 
     }
@@ -91,11 +92,14 @@
             date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
             $current_date = date('Y-m-d H:i:s');
             ?>
+         <?php
+            date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+            $date = date('Y-m-d');
+            ?>
 
 
     <div class="isi" style="margin: 0 auto;">
-        <p>Rekap Pelaporan ini dicetak oleh <b><?= $user['nama_user']?></b> pada Hari <?= format_indo($current_date)?></p>
-        <!-- <p style="color: black; text-align: left;"><br>Rekap Pelaporan:</p> -->
+        <p style="text-align: center;">Periode <?= tanggal_indo($date)?> s/d <?= tanggal_indo($date)?> 
 
         <table class="tabel2">
             <thead>
@@ -139,6 +143,9 @@
         </table>
     </div>
 
+    <div class="kanan" style="margin: 0 auto;">
+        <p>Rekap Pelaporan ini dicetak oleh <b><?= $user['nama_user']?></b> pada Hari <?= format_indo($current_date)?></p>
+    </div>
 
 
 
