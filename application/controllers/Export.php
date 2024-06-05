@@ -16,73 +16,89 @@ class Export extends CI_Controller {
     }
 
     public function rekap_pelaporan_pdf()
-{
-    $this->load->model('Export_model', 'export_model');
+    {
+        $this->load->model('Export_model', 'export_model');
 
-    // Retrieve POST data
-    $tanggal_awal = $this->input->post('tanggal_awal');
-    $tanggal_akhir = $this->input->post('tanggal_akhir');
-    $status_ccs = $this->input->post('status_ccs');
-    $nama_klien = $this->input->post('nama_klien');
-    $tags = $this->input->post('tags');
+        // Retrieve POST data
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $status_ccs = $this->input->post('status_ccs');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
 
-    // Get filtered data
-    $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+        // Get filtered data
+        $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
 
-    // Load the mPDF library
-    $this->load->library('pdf');
-    $mpdf = new \Mpdf\Mpdf();
+        // Load the mPDF library
+        $this->load->library('pdf');
+        $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 
-    // Create PDF content
-    $html = '<h1 style="text-align: center;">CCS | REKAP PELAPORAN</h1>';
-    $html .= '<p style="text-align: center;">Periode' . tanggal_indo($tanggal_awal) . ' sampai ' . tanggal_indo($tanggal_akhir) . '</p>';
-    $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%;">';
-    $html .= '<thead>';
-    $html .= '<tr>';
-    $html .= '<th>No</th>';
-    $html .= '<th>Tanggal</th>';
-    $html .= '<th>No Tiket</th>';
-    $html .= '<th>Nama Klien</th>';
-    $html .= '<th>Perihal</th>';
-    $html .= '<th>Tags</th>';
-    $html .= '<th>Kategori</th>';
-    $html .= '<th>Priority</th>';
-    $html .= '<th>Impact</th>';
-    $html .= '<th>Maxday</th>';
-    $html .= '<th>Status CCS</th>';
-    $html .= '<th>Handle By</th>';
-    $html .= '</tr>';
-    $html .= '</thead>';
-    $html .= '<tbody>';
+        // Kop surat
+        $kop_surat = '
+        <div style="text-align: left; margin-bottom: 20px;">
+            <img src="' . base_url('assets/images/mso.png') . '" style="width: 100px;">
+        </div>
+        <h2>Nama Perusahaan</h2>
+            <p>Alamat Perusahaan</p>
+            <p>Telepon: (021) 12345678 | Email: info@perusahaan.com</p>
+        ';
+        // Set header
+        $mpdf->SetHTMLHeader($kop_surat);
+        
 
-    $no = 1;
-    foreach ($filteredData as $data) {
+        // Create PDF content
+        $html = '<h3 style="text-align: center; ">CCS | REKAP PELAPORAN</h3>';
+        $html .= '<p style="text-align: center;">Rekap Pelaporan dari ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . '</p>';
+        $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse; margin-top: 20px;">';
+        $html .= '<thead>';
         $html .= '<tr>';
-        $html .= '<td>' . $no . '</td>';
-        $html .= '<td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>';
-        $html .= '<td>' . $data['no_tiket'] . '</td>';
-        $html .= '<td>' . $data['nama'] . '</td>';
-        $html .= '<td>' . $data['perihal'] . '</td>';
-        $html .= '<td>' . $data['tags'] . '</td>';
-        $html .= '<td>' . $data['kategori'] . '</td>';
-        $html .= '<td>' . $data['priority'] . '</td>';
-        $html .= '<td>' . $data['impact'] . '</td>';
-        $html .= '<td>' . $data['maxday'] . '</td>';
-        $html .= '<td>' . $data['status_ccs'] . '</td>';
-        $html .= '<td>' . $data['handle_by'] . '</td>';
+        $html .= '<th>No</th>';
+        $html .= '<th>Tanggal</th>';
+        $html .= '<th>No Tiket</th>';
+        $html .= '<th>Nama Klien</th>';
+        $html .= '<th>Perihal</th>';
+        $html .= '<th>Tags</th>';
+        $html .= '<th>Kategori</th>';
+        $html .= '<th>Priority</th>';
+        $html .= '<th>Impact</th>';
+        $html .= '<th>Maxday</th>';
+        $html .= '<th>Status CCS</th>';
+        $html .= '<th>Handle By</th>';
         $html .= '</tr>';
-        $no++;
+        $html .= '</thead>';
+        $html .= '<tbody>';
+
+        $no = 1;
+        foreach ($filteredData as $data) {
+            $html .= '<tr>';
+            $html .= '<td>' . $no . '</td>';
+            $html .= '<td>' . $data['waktu_pelaporan'] . '</td>';
+            $html .= '<td>' . $data['no_tiket'] . '</td>';
+            $html .= '<td>' . $data['nama'] . '</td>';
+            $html .= '<td>' . $data['perihal'] . '</td>';
+            $html .= '<td>' . $data['tags'] . '</td>';
+            $html .= '<td>' . $data['kategori'] . '</td>';
+            $html .= '<td>' . $data['priority'] . '</td>';
+            $html .= '<td>' . $data['impact'] . '</td>';
+            $html .= '<td>' . $data['maxday'] . '</td>';
+            $html .= '<td>' . $data['status_ccs'] . '</td>';
+            $html .= '<td>' . $data['handle_by'] . '</td>';
+            $html .= '</tr>';
+            $no++;
+        }
+
+        $html .= '</tbody>';
+        $html .= '</table>';
+
+        // Set the top margin for the content to avoid overlap with the header
+        $mpdf->SetTopMargin(50);
+        
+        // Write content to PDF
+        $mpdf->WriteHTML($html);
+
+        // Output to browser
+        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
-
-    $html .= '</tbody>';
-    $html .= '</table>';
-
-    // Write content to PDF
-    $mpdf->WriteHTML($html);
-
-    // Output to browser
-    $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
-}
 
 
     public function rekap_pelaporan_excel() {

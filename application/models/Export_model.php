@@ -16,7 +16,6 @@ class Export_model extends CI_Model {
 {
     $this->db->select('*');
     $this->db->from('pelaporan');
-    $this->db->where('status_ccs', 'FINISH');
 
     if ($tanggal_awal && $tanggal_akhir) {
         $this->db->where('waktu_pelaporan >=', $tanggal_awal);
