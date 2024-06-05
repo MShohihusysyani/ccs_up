@@ -35,7 +35,7 @@ class Export extends CI_Controller {
 
     // Create PDF content
     $html = '<h1 style="text-align: center;">CCS | REKAP PELAPORAN</h1>';
-    $html .= '<p style="text-align: center;">Rekap Pelaporan dari ' . tanggal_indo($tanggal_awal) . ' sampai ' . tanggal_indo($tanggal_akhir) . '</p>';
+    $html .= '<p style="text-align: center;">Periode' . tanggal_indo($tanggal_awal) . ' sampai ' . tanggal_indo($tanggal_akhir) . '</p>';
     $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%;">';
     $html .= '<thead>';
     $html .= '<tr>';
