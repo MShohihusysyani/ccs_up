@@ -89,8 +89,22 @@
                                 <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="<?= base_url('export/rekap_pelaporan'); ?>">Export PDF</a></li>
-                                <li><a href="<?= base_url('export/rekap_pelaporan_excel')?>">Export Excel</a></li>
+								<?= form_open('export/rekap_pelaporan_pdf'); ?>
+								<input type="hidden" name="tanggal_awal" id="tanggal_awal" value="<?= $tanggal_awal; ?>">
+								<input type="hidden" name="tanggal_akhir" id="tanggal_akhir" value="<?= $tanggal_akhir; ?>">
+								<input type="hidden" name="nama_klien" id="nama_klien" value="<?= $nama_klien; ?>">
+								<input type="hidden" name="tags" id="tags" value="<?= $tags; ?>">
+								<input type="hidden" name="status_ccs" id="status_ccs" value="<?= $status_ccs; ?>">
+                                <li><button type="submit" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
+								<?= form_close(); ?>
+								<?= form_open('export/rekap_pelaporan_excel'); ?>
+								<input type="hidden" name="tanggal_awal" id="tanggal_awal" value="<?= $tanggal_awal; ?>">
+								<input type="hidden" name="tanggal_akhir" id="tanggal_akhir" value="<?= $tanggal_akhir; ?>">
+								<input type="hidden" name="nama_klien" id="nama_klien" value="<?= $nama_klien; ?>">
+								<input type="hidden" name="tags" id="tags" value="<?= $tags; ?>">
+								<input type="hidden" name="status_ccs" id="status_ccs" value="<?= $status_ccs; ?>">
+                                <li><button type="submit" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
+								<?= form_close(); ?>
                             </ul>
                         </div>
 

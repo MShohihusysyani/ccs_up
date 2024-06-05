@@ -2,7 +2,7 @@
 
 class Export_model extends CI_Model {
 
-	public function getPelaporan()
+	public function getPelaporan1()
     {
 		$data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
@@ -11,6 +11,30 @@ class Export_model extends CI_Model {
             where status_ccs = 'FINISH'";
         return $this->db->query($query)->result_array();
     }
+
+    public function getPelaporan($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
+{
+    $this->db->select('*');
+    $this->db->from('pelaporan');
+    $this->db->where('status_ccs', 'FINISH');
+
+    if ($tanggal_awal && $tanggal_akhir) {
+        $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+        $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+    }
+    if ($status_ccs) {
+        $this->db->where('status_ccs', $status_ccs);
+    }
+    if ($nama_klien) {
+        $this->db->where('nama', $nama_klien);
+    }
+    if ($tags) {
+        $this->db->where('tags', $tags);
+    }
+
+    return $this->db->get()->result_array();
+}
+
 
     public function get_data_by_date_range($start_date, $end_date) {
         $this->db->where('waktu_pelaporan ', $start_date);

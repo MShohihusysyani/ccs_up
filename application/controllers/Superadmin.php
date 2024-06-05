@@ -511,6 +511,13 @@ public function fungsi_reject()
     $this->load->model('Pelaporan_model', 'pelaporan_model');
     $this->load->model('Client_model', 'client_model');
 
+	// var data for view 
+	$data['tanggal_awal'] = '';
+	$data['tanggal_akhir'] = '';
+	$data['status_ccs'] = '';
+	$data['nama_klien'] = '';
+	$data['tags'] = '';
+
     // Get all data from the models
     $data['klien'] = $this->client_model->getClient();
     $data['pencarian_data'] = $this->pelaporan_model->getAllData(); // A method that returns all data
@@ -631,6 +638,13 @@ public function datepelaporan()
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
+
+		// var data for view 
+		$data['tanggal_awal'] = $tanggal_awal;
+		$data['tanggal_akhir'] = $tanggal_akhir;
+		$data['status_ccs'] = $status_ccs;
+		$data['nama_klien'] = $nama_klien;
+		$data['tags'] = $tags;
 
         // Get data from the models
         $data['klien'] = $this->client_model->getClient();

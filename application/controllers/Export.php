@@ -36,6 +36,76 @@ class Export extends CI_Controller {
         $this->load->view('cetak/rekap_pelaporan', $data);
     }
 
+    public function rekap_pelaporan_pdf()
+{
+    $this->load->model('Export_model', 'export_model');
+
+    // Retrieve POST data
+    $tanggal_awal = $this->input->post('tanggal_awal');
+    $tanggal_akhir = $this->input->post('tanggal_akhir');
+    $status_ccs = $this->input->post('status_ccs');
+    $nama_klien = $this->input->post('nama_klien');
+    $tags = $this->input->post('tags');
+
+    // Get filtered data
+    $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+
+    // Load the mPDF library
+    $this->load->library('pdf');
+    $mpdf = new \Mpdf\Mpdf();
+
+    // Create PDF content
+    $html = '<h1>CCS | REKAP PELAPORAN</h1>';
+    $html .= '<p>Rekap Pelaporan dari ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . '</p>';
+    $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%;">';
+    $html .= '<thead>';
+    $html .= '<tr>';
+    $html .= '<th>No</th>';
+    $html .= '<th>Tanggal</th>';
+    $html .= '<th>No Tiket</th>';
+    $html .= '<th>Nama Klien</th>';
+    $html .= '<th>Perihal</th>';
+    $html .= '<th>Tags</th>';
+    $html .= '<th>Kategori</th>';
+    $html .= '<th>Priority</th>';
+    $html .= '<th>Impact</th>';
+    $html .= '<th>Maxday</th>';
+    $html .= '<th>Status CCS</th>';
+    $html .= '<th>Handle By</th>';
+    $html .= '</tr>';
+    $html .= '</thead>';
+    $html .= '<tbody>';
+
+    $no = 1;
+    foreach ($filteredData as $data) {
+        $html .= '<tr>';
+        $html .= '<td>' . $no . '</td>';
+        $html .= '<td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>';
+        $html .= '<td>' . $data['no_tiket'] . '</td>';
+        $html .= '<td>' . $data['nama'] . '</td>';
+        $html .= '<td>' . $data['perihal'] . '</td>';
+        $html .= '<td>' . $data['tags'] . '</td>';
+        $html .= '<td>' . $data['kategori'] . '</td>';
+        $html .= '<td>' . $data['priority'] . '</td>';
+        $html .= '<td>' . $data['impact'] . '</td>';
+        $html .= '<td>' . $data['maxday'] . '</td>';
+        $html .= '<td>' . $data['status_ccs'] . '</td>';
+        $html .= '<td>' . $data['handle_by'] . '</td>';
+        $html .= '</tr>';
+        $no++;
+    }
+
+    $html .= '</tbody>';
+    $html .= '</table>';
+
+    // Write content to PDF
+    $mpdf->WriteHTML($html);
+
+    // Output to browser
+    $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+}
+
+
     public function rekap_pelaporan_excel() {
 
         $spreadsheet = new Spreadsheet();
@@ -140,8 +210,6 @@ class Export extends CI_Controller {
     
         // Get filtered data
         $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-        // Ensure $filteredData is an array of objects
-
         $no = 1;
         $row = 4;
 
