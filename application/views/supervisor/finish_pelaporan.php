@@ -22,7 +22,7 @@
                     <?php echo form_open_multipart('supervisor/fungsi_approve_pelaporan') ?>
                     <form enctype="multipart/form-data">
                         <?php foreach ($datapelaporan as $dp) : ?>
-                        <input type="hidden" id="id_pelaporna" name="id_pelaporna" class="form-control"
+                        <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control"
                             value="<?= $dp['id_pelaporan']; ?>">
 
                         <label for="nama_tiket">No Tiket</label>
@@ -33,11 +33,19 @@
                             </div>
                         </div>
 
+                        <label for="judul">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="nama" name="nama" class="form-control"
+                                    value="<?= $dp['nama']; ?>" readonly>
+                            </div>
+                        </div>
+
                         <label for="judul">Judul</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="judul" name="judul" class="form-control"
-                                    value="<?= $dp['judul']; ?>">
+                                    value="<?= $dp['judul']; ?>" readonly>
                             </div>
                         </div>
 
@@ -45,12 +53,28 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="perihal" name="perihal" class="form-control"
-                                    value="<?= $dp['perihal']; ?>">
+                                    value="<?= $dp['perihal']; ?>" readonly>
+                            </div>
+                        </div>
+
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="priority" name="priority" class="form-control"
+                                    value="<?= $dp['priority']; ?>" readonly>
+                            </div>
+                        </div>
+
+                        <label for="maxday">Maxday</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="maxday" name="maxday" class="form-control"
+                                    value="<?= $dp['maxday']; ?>" readonly>
                             </div>
                         </div>
 
                         <label for="perihal">Catatan Finish</label>
-                        <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish" rows="10" required>
+                        <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish" rows="10" readonly>
                                 <?= $dp['catatan_finish'];?>
                         </textarea>
 
@@ -85,12 +109,12 @@
                         <label for="tags">Tags</label>
                             <div class="form-group demo-tagsinput-area">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" data-role="tagsinput" value="<?= $dp['tags'];?>" id="tags" name="tags">
+                                    <input type="text" class="form-control" data-role="tagsinput" value="<?= $dp['tags'];?>" id="tags" name="tags" readonly>
                                 </div>
                             </div>
 
 
-                        <a href="<?= base_url('supervisor/pelaporan_close') ?>" type="button"
+                        <a href="<?= base_url('supervisor/close') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">Kembali</a>
                             
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">APPROVE</button>

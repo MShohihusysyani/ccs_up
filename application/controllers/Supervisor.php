@@ -382,6 +382,8 @@ class Supervisor extends CI_Controller
         $this->session->set_flashdata('pesan', 'Successfully Approve!');
         redirect('supervisor/finish');
 
+       
+
     }
 
     public function finish_pelaporan($id){
@@ -397,28 +399,35 @@ class Supervisor extends CI_Controller
     }
 
     public function fungsi_approve_pelaporan()
-    { 
+    {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d');
 
-        $id = $this->input->post('id_pelaporan');
-        $data = [
-            'id_pelaporan' => $id,
-            'no_tiket' => $this->input->post('no_tiket'),
-            'perihal'  => $this->input->post('perihal'),
-            'waktu_approve' => $now,
-            'nama'     => $this->input->post('nama'),
-            'kategori' => $this->input->post('kategori'),
-            'priority'   => $this->input->post('priority'),
-            'maxday'     => $this->input->post('maxday'),
-            'catatan_finish' => $this->input->post('catatan_finish'),
-            'status_ccs' => 'FINISH'
-        ];
-        $this->pelaporan_model->approveSPV($id, $data);
+        $id_pelaporan         = $this->input->post('id_pelaporan');
+        $no_tiket   = $this->input->post('no_tiket');
+        $nama       = $this->input->post('nama');
+        $judul      = $this->input->post('judul');
+        $perihal    = $this->input->post('perihal');
+        $status_ccs ='FINISH';
+        $waktu      = date('Y-m-d');
+        $priority   = $this->input->post('priority');
+        $maxday     = $this->input->post('maxday');
+        $kategori   = $this->input->post('kategori');
 
-        // Set a success message and redirect to the submission page
-        $this->session->set_flashdata('pesan', 'Successfully Approve!');
-        redirect('supervisor/finish');
+        $this->db->set('judul', $judul);
+        $this->db->set('no_tiket', $no_tiket);
+        $this->db->set('nama', $nama);
+        $this->db->set('status_ccs', $status_ccs);
+        $this->db->set('waktu_approve', $waktu);
+        $this->db->set('priority', $priority);
+        $this->db->set('perihal', $perihal);
+        $this->db->set('maxday', $maxday);
+        $this->db->set('kategori', $kategori);
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        $this->db->update('pelaporan');
+        $this->session->set_flashdata('pesan', 'Succesfully Approve!');
+        Redirect(base_url('supervisor/close'));
+
     }
 
 
