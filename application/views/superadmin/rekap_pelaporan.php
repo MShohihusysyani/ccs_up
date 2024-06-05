@@ -35,7 +35,7 @@
                                     <div class="form-line">
                                         <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
                                             name="nama_klien" id="nama_klien" placeholder="Pilih BPR"
-                                            class="form-control" value="" autocomplete="off" readonly required>
+                                            class="form-control" value="" autocomplete="off">
                                         <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
@@ -44,14 +44,14 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" name="tags" id="tags" placeholder="Masukkan Tags" class="form-control" required>
+                                        <input type="text" name="tags" id="tags" placeholder="Masukkan Tags" class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <select id="status_ccs" name="status_ccs" class="form-control" required>
+                                        <select id="status_ccs" name="status_ccs" class="form-control" >
                                             <option value="">-- Pilih Status --</option>
                                             <option value="FINISH">FINISH</option>
                                             <option value="CLOSE">CLOSE</option>
@@ -114,49 +114,58 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $no = 1;
-                                foreach ($pencarian_data as $pd) : ?>
+                            <?php if (!empty($pencarian_data)): ?>
+                                <?php $no=1;?>
+                                <?php foreach ($pencarian_data as $data): ?>
+                                    
                                     <tr>
-                                        <td><?= $no++ ?></td>
-                                        <td><?= tanggal_indo($pd['waktu_pelaporan']) ?></td>
-                                        <td><?= $pd['no_tiket']; ?></td>
-                                        <td><?= $pd['nama']; ?></td>
-                                        <td><?= $pd['perihal']; ?></td>
-                                        <td><?= $pd['tags']; ?></td>
-                                        <td><?= $pd['kategori'];?></td>
-                                        <td><?= $pd['impact'];?></td>
+                                        <td><?= $no++?></td>
+                                        <td><?= isset($data->waktu_pelaporan) ? tanggal_indo($data->waktu_pelaporan): ''; ?></td>
+                                        <td><?= isset($data->no_tiket) ? $data->no_tiket: ''; ?></td>
+                                        <td><?= isset($data->nama) ? $data->nama: ''; ?></td>
+                                        <td><?= isset($data->perihal) ? $data->perihal: ''; ?></td>
                                         <td>
-                                            <?php if ($pd['priority'] == 'High') : ?>
-                                                <span class="label label-danger">HIGH</span>
-                                            <?php elseif ($pd['priority'] == 'Medium') : ?>
-                                                <span class="label label-warning">MEDIUM</span>
-                                            <?php elseif ($pd['priority'] == 'Low') : ?>
-                                                <span class="label label-info">LOW</span>
+                                                <span class="label label-info"><?= $data->tags?></span>
+                                        </td>
+                                        <td><?= isset($data->kategori) ? $data->kategori: ''; ?></td>
+                                        <td><?= isset($data->impact) ? $data->impact: ''; ?></td>
+                                        <td>    
+                                            <?php if ($data->priority == 'High') : ?>
+                                                <span class="label label-danger">High</span>
+                                            <?php elseif ($data->priority == 'Medium') : ?>
+                                                <span class="label label-warning">Medium</span>
+                                            <?php elseif ($data->priority == 'Low') : ?>
+                                                <span class="label label-info">Low</span>
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php if ($pd['maxday'] == '7') : ?>
+                                            <?php if ($data->maxday == '7') : ?>
                                                 <span class="label label-danger">7</span>
-                                            <?php elseif ($pd['maxday'] == '60') : ?>
+                                            <?php elseif ($data->maxday == '60') : ?>
                                                 <span class="label label-warning">60</span>
-                                            <?php elseif ($pd['maxday'] == '90') : ?>
+                                            <?php elseif ($data->maxday == '90') : ?>
                                                 <span class="label label-info">90</span>
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php if ($pd['status_ccs'] == 'FINISH') : ?>
+                                            <?php if ($data->status_ccs == 'FINISH') : ?>
                                                 <span class="label label-success">FINISH</span>
-                                            <?php elseif ($pd['status_ccs'] == 'CLOSE') : ?>
+                                            <?php elseif ($data->status_ccs == 'CLOSE') : ?>
                                                 <span class="label label-warning">CLOSE</span>
-                                            <?php elseif ($pd['status_ccs'] == 'HANDLE') : ?>
+                                            <?php elseif ($data->status_ccs == 'HANDLE') : ?>
                                                 <span class="label label-info">HANDLE</span>
-                                            <?php elseif ($pd['status_ccs'] == 'ADDED') : ?>
+                                            <?php elseif ($data->status_ccs == 'ADDED') : ?>
                                                 <span class="label label-primary">ADDED</span>
                                             <?php endif; ?>
+
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="11">No data available</td>
+                                </tr>
+                        <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
