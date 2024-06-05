@@ -15,27 +15,6 @@ class Export extends CI_Controller {
         $this->load->model('Pelaporan_model');
     }
 
-	public function rekap_pelaporan()
-    {
-		$data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Export_model', 'export_model');
-        $data['waktu_pelaporan'] = $this->db->get('pelaporan')->result_array();
-		$data['no_tiket'] = $this->db->get('pelaporan')->result_array();
-		$data['nama'] = $this->db->get('pelaporan')->result_array();
-		// $data['judul'] = $this->db->get('pelaporan')->result_array();
-		$data['perihal'] = $this->db->get('pelaporan')->result_array();
-		$data['tags'] = $this->db->get('pelaporan')->result_array();
-		$data['kategori'] = $this->db->get('pelaporan')->result_array();
-		$data['priority'] = $this->db->get('pelaporan')->result_array();
-		$data['impact'] = $this->db->get('pelaporan')->result_array();
-		$data['maxday'] = $this->db->get('pelaporan')->result_array();
-		$data['status_ccs'] = $this->db->get('pelaporan')->result_array();
-        
-        $data['rekapPelaporan'] = $this->Export_model->getPelaporan();
-
-        $this->load->view('cetak/rekap_pelaporan', $data);
-    }
-
     public function rekap_pelaporan_pdf()
 {
     $this->load->model('Export_model', 'export_model');
@@ -55,8 +34,8 @@ class Export extends CI_Controller {
     $mpdf = new \Mpdf\Mpdf();
 
     // Create PDF content
-    $html = '<h1>CCS | REKAP PELAPORAN</h1>';
-    $html .= '<p>Rekap Pelaporan dari ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . '</p>';
+    $html = '<h1 style="text-align: center;">CCS | REKAP PELAPORAN</h1>';
+    $html .= '<p style="text-align: center;">Rekap Pelaporan dari ' . tanggal_indo($tanggal_awal) . ' sampai ' . tanggal_indo($tanggal_akhir) . '</p>';
     $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%;">';
     $html .= '<thead>';
     $html .= '<tr>';

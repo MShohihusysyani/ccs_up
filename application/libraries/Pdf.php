@@ -5,6 +5,6 @@ class Pdf
 {
     function __construct()
     {
-        include_once APPPATH . '/vendor/autoload.php';
+        include_once APPPATH . '../vendor/autoload.php';
     }
 }
