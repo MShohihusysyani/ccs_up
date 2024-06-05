@@ -140,10 +140,12 @@ class Export extends CI_Controller {
     
         // Get filtered data
         $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+        // Ensure $filteredData is an array of objects
+
         $no = 1;
         $row = 4;
 
-        foreach ($query->result() as $data) {
+        foreach ($query as $data) {
             $sheet->setCellValue('A' . $row, $no);
             $sheet->setCellValue('B' . $row, tanggal_indo($data->waktu_pelaporan));
             $sheet->setCellValue('C' . $row, $data->no_tiket);
