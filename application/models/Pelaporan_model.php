@@ -151,6 +151,7 @@ class Pelaporan_model extends CI_Model
 
     public function getAllData(){
 
+        $this->db->order_by('waktu_pelaporan', 'DESC');
         $query = $this->db->get('pelaporan'); // Assuming 'pelaporan' is the name of your table
         return $query->result(); // Returns an array of object
     }

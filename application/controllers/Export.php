@@ -123,12 +123,23 @@ class Export extends CI_Controller {
         $sheet->getRowDimension('3')->setRowHeight(20);
 
         // Fetch data from database
-        $this->db->select('kategori,id_pelaporan,waktu_pelaporan,status_ccs,priority,maxday,perihal,file,nama,no_tiket,impact,handle_by,status,tags');
-        $this->db->from('pelaporan');
-        $this->db->where('status_ccs', 'FINISH');
-        $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_awal'));
-        $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_akhir'));
-        $query = $this->db->get();
+        // $this->db->select('kategori,id_pelaporan,waktu_pelaporan,status_ccs,priority,maxday,perihal,file,nama,no_tiket,impact,handle_by,status,tags');
+        // $this->db->from('pelaporan');
+        // $this->db->where('status_ccs', 'FINISH');
+        // $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_awal'));
+        // $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_akhir'));
+        // $query = $this->db->get();
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+    
+        // Retrieve POST data
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $status_ccs = $this->input->post('status_ccs');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
+    
+        // Get filtered data
+        $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
         $no = 1;
         $row = 4;
 
