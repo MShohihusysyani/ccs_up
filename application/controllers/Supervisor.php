@@ -384,6 +384,44 @@ class Supervisor extends CI_Controller
 
     }
 
+    public function finish_pelaporan($id){
+
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Supervisor_model', 'supervisor_model');
+        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan_close($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/finish_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_approve_pelaporan()
+    { 
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d');
+
+        $id = $this->input->post('id_pelaporan');
+        $data = [
+            'id_pelaporan' => $id,
+            'no_tiket' => $this->input->post('no_tiket'),
+            'perihal'  => $this->input->post('perihal'),
+            'waktu_approve' => $now,
+            'nama'     => $this->input->post('nama'),
+            'kategori' => $this->input->post('kategori'),
+            'priority'   => $this->input->post('priority'),
+            'maxday'     => $this->input->post('maxday'),
+            'catatan_finish' => $this->input->post('catatan_finish'),
+            'status_ccs' => 'FINISH'
+        ];
+        $this->pelaporan_model->approveSPV($id, $data);
+
+        // Set a success message and redirect to the submission page
+        $this->session->set_flashdata('pesan', 'Successfully Approve!');
+        redirect('supervisor/finish');
+    }
+
+
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)
     {

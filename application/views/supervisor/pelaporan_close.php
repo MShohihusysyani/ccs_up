@@ -134,13 +134,17 @@
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?></td>
 
                                             <td>
-                                            <div class="btn btn-sm btn-info">
+                                            <!-- <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
                                                         class="material-icons">launch</i> <span
                                                         class="icon-name">Approve</span>
                                                 </div>
-                                            </div>
+                                            </div> -->
+                                            <a class="btn btn-sm btn-info"
+                                                href="<?= base_url() ?>supervisor/finish_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                    class="material-icons">launch</i> <span
+                                                    class="icon-name"></span>Approve</a>
                                             <br>
                                             <br>
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>

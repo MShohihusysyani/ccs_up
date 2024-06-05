@@ -126,8 +126,8 @@ class Export extends CI_Controller {
         $this->db->select('kategori,id_pelaporan,waktu_pelaporan,status_ccs,priority,maxday,perihal,file,nama,no_tiket,impact,handle_by,status,tags');
         $this->db->from('pelaporan');
         $this->db->where('status_ccs', 'FINISH');
-        // $this->db->where('waktu_pelaporan ', $this->input->get('tgla'));
-        // $this->db->where('waktu_pelaporan ', $this->input->get('tglb'));
+        $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_awal'));
+        $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_akhir'));
         $query = $this->db->get();
         $no = 1;
         $row = 4;

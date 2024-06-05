@@ -19,7 +19,7 @@ class Export_model extends CI_Model {
         return $query->result();
     }
 
-    public function getPelaporan_datanull($tgla, $tglb)
+    public function getPelaporan_data($tgla, $tglb)
     {
         $this->db->select('*');
         $this->db->from('pelaporan');

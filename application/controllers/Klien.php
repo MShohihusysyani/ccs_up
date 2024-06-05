@@ -97,8 +97,6 @@ public function add_temp_tiket()
     }
 }
 
-        
-
     public function fungsi_delete_temp($id)
     {
         $this->load->model('Temp_model', 'temp_model');
