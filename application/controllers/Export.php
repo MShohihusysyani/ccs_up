@@ -14,91 +14,199 @@ class Export extends CI_Controller {
         $this->load->helper('tanggal_helper');
         $this->load->model('Pelaporan_model');
     }
-
     public function rekap_pelaporan_pdf()
     {
         $this->load->model('Export_model', 'export_model');
-
+    
         // Retrieve POST data
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
-
+    
         // Get filtered data
         $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-
+    
         // Load the mPDF library
         $this->load->library('pdf');
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
-
-        // Kop surat
-        $kop_surat = '
-        <div style="text-align: left; margin-bottom: 20px;">
-            <img src="' . base_url('assets/images/mso.png') . '" style="width: 100px;">
-        </div>
-        <h2>Nama Perusahaan</h2>
-            <p>Alamat Perusahaan</p>
-            <p>Telepon: (021) 12345678 | Email: info@perusahaan.com</p>
+    
+        // Set HTML Header
+        $header = '
+            <div style="text-align: center; font-weight: bold; margin-header: 10px;">
+                <h3>CCS | REKAP PELAPORAN </h3>
+                <p>Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>
+            </div>
         ';
-        // Set header
-        $mpdf->SetHTMLHeader($kop_surat);
-        
+    
+        $mpdf->SetHTMLHeader($header, 'O');
+    
+        // Set HTML Footer
+        $footer = '
+        Dicetak oleh ' . $this->session->userdata('nama_user').'
+        <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 20px; position: relative; ">
+            <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+            <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+            <div style="width: 20%; height: 50px; border: 1px solid black;"></div>
+        </div>
+    ';
 
-        // Create PDF content
-        $html = '<h3 style="text-align: center; ">CCS | REKAP PELAPORAN</h3>';
-        $html .= '<p style="text-align: center;">Rekap Pelaporan dari ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . '</p>';
-        $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse; margin-top: 20px;">';
-        $html .= '<thead>';
-        $html .= '<tr>';
-        $html .= '<th>No</th>';
-        $html .= '<th>Tanggal</th>';
-        $html .= '<th>No Tiket</th>';
-        $html .= '<th>Nama Klien</th>';
-        $html .= '<th>Perihal</th>';
-        $html .= '<th>Tags</th>';
-        $html .= '<th>Kategori</th>';
-        $html .= '<th>Priority</th>';
-        $html .= '<th>Impact</th>';
-        $html .= '<th>Maxday</th>';
-        $html .= '<th>Status CCS</th>';
-        $html .= '<th>Handle By</th>';
-        $html .= '</tr>';
-        $html .= '</thead>';
-        $html .= '<tbody>';
 
+    $mpdf->SetHTMLFooter($footer, 'O');
+
+    $mpdf->SetWatermarkImage('assets/images/mso.png');
+    $mpdf->showWatermarkImage = true;
+    
+        // Create table
+        $tableHtml = '
+            <p style="margin-bottom: 30px;">&nbsp;</p>
+            <table border="1" cellpadding="7" cellspacing="0" style="width:100%; border-collapse: collapse; page-break-inside: auto; ">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>No Tiket</th>
+                        <th>Nama Klien</th>
+                        <th>Perihal</th>
+                        <th>Tags</th>
+                        <th>Kategori</th>
+                        <th>Priority</th>
+                        <th>Impact</th>
+                        <th>Maxday</th>
+                        <th>Status CCS</th>
+                        <th>Handle By</th>
+                    </tr>
+                </thead>
+                <tbody>
+        ';    
+    
+        // Fill table with data
         $no = 1;
         foreach ($filteredData as $data) {
-            $html .= '<tr>';
-            $html .= '<td>' . $no . '</td>';
-            $html .= '<td>' . $data['waktu_pelaporan'] . '</td>';
-            $html .= '<td>' . $data['no_tiket'] . '</td>';
-            $html .= '<td>' . $data['nama'] . '</td>';
-            $html .= '<td>' . $data['perihal'] . '</td>';
-            $html .= '<td>' . $data['tags'] . '</td>';
-            $html .= '<td>' . $data['kategori'] . '</td>';
-            $html .= '<td>' . $data['priority'] . '</td>';
-            $html .= '<td>' . $data['impact'] . '</td>';
-            $html .= '<td>' . $data['maxday'] . '</td>';
-            $html .= '<td>' . $data['status_ccs'] . '</td>';
-            $html .= '<td>' . $data['handle_by'] . '</td>';
-            $html .= '</tr>';
+            $tableHtml .= '
+                <tr>
+                    <td>' . $no . '</td>
+                    <td>' . tanggal_indo($data['waktu_pelaporan']). '</td>
+                    <td>' . $data['no_tiket'] . '</td>
+                    <td>' . $data['nama'] . '</td>
+                    <td>' . $data['perihal'] . '</td>
+                    <td>' . $data['tags'] . '</td>
+                    <td>' . $data['kategori'] . '</td>
+                    <td>' . $data['priority'] . '</td>
+                    <td>' . $data['impact'] . '</td>
+                    <td>' . $data['maxday'] . '</td>
+                    <td>' . $data['status_ccs'] . '</td>
+                    <td>' . $data['handle_by'] . '</td>
+                </tr>';
             $no++;
         }
+    
+        $tableHtml .= '
+                </tbody>
+            </table>
+        ';
+    
+        // Write table to PDF
+        $mpdf->WriteHTML($tableHtml);
 
-        $html .= '</tbody>';
-        $html .= '</table>';
-
-        // Set the top margin for the content to avoid overlap with the header
-        $mpdf->SetTopMargin(50);
-        
-        // Write content to PDF
-        $mpdf->WriteHTML($html);
-
+    
         // Output to browser
         $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
+
+    public function rekap_pelaporan_pdf1()
+{
+    $this->load->model('Export_model', 'export_model');
+
+    // Retrieve POST data
+    $tanggal_awal = $this->input->post('tanggal_awal');
+    $tanggal_akhir = $this->input->post('tanggal_akhir');
+    $status_ccs = $this->input->post('status_ccs');
+    $nama_klien = $this->input->post('nama_klien');
+    $tags = $this->input->post('tags');
+
+    // Get filtered data
+    $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+
+    // Load the mPDF library
+    $this->load->library('pdf');
+    $mpdf = new \Mpdf\Mpdf();
+
+    // Set HTML Header
+    $header = '
+    <div style="text-align: center; font-weight: bold;">
+        <h3>CCS | REKAP PELAPORAN </h3>
+        <p>Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>
+    </div>
+';
+
+$mpdf->SetHTMLHeader($header, 'O');
+
+// Set HTML Footer
+$footer = '
+Dicetak oleh ' . $this->session->userdata('nama_user').'
+<div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 20px; ">
+    <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+    <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+    <div style="width: 20%; height: 50px; border: 1px solid black;"></div>
+</div>
+';
+
+
+$mpdf->SetHTMLFooter($footer, 'O');
+
+    // Create PDF content
+    // $html = '<h3>CCS | REKAP PELAPORAN</h3>';
+    // $html .= '<p style="text-align: center;">Rekap Pelaporan dari ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . '</p>';
+    $html = '<p style="margin-bottom: 30px;">&nbsp;</p>';
+    $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%;">';
+    $html .= '<thead>';
+    $html .= '<tr>';
+    $html .= '<th>No</th>';
+    $html .= '<th>Tanggal</th>';
+    $html .= '<th>No Tiket</th>';
+    $html .= '<th>Nama Klien</th>';
+    $html .= '<th>Perihal</th>';
+    $html .= '<th>Tags</th>';
+    $html .= '<th>Kategori</th>';
+    $html .= '<th>Priority</th>';
+    $html .= '<th>Impact</th>';
+    $html .= '<th>Maxday</th>';
+    $html .= '<th>Status CCS</th>';
+    $html .= '<th>Handle By</th>';
+    $html .= '</tr>';
+    $html .= '</thead>';
+    $html .= '<tbody>';
+
+    $no = 1;
+    foreach ($filteredData as $data) {
+        $html .= '<tr>';
+        $html .= '<td>' . $no . '</td>';
+        $html .= '<td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>';
+        $html .= '<td>' . $data['no_tiket'] . '</td>';
+        $html .= '<td>' . $data['nama'] . '</td>';
+        $html .= '<td>' . $data['perihal'] . '</td>';
+        $html .= '<td>' . $data['tags'] . '</td>';
+        $html .= '<td>' . $data['kategori'] . '</td>';
+        $html .= '<td>' . $data['priority'] . '</td>';
+        $html .= '<td>' . $data['impact'] . '</td>';
+        $html .= '<td>' . $data['maxday'] . '</td>';
+        $html .= '<td>' . $data['status_ccs'] . '</td>';
+        $html .= '<td>' . $data['handle_by'] . '</td>';
+        $html .= '</tr>';
+        $no++;
+    }
+
+    $html .= '</tbody>';
+    $html .= '</table>';
+
+    // Write content to PDF
+    $mpdf->WriteHTML($html);
+
+    // Output to browser
+    $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+}
 
 
     public function rekap_pelaporan_excel() {
@@ -141,13 +249,17 @@ class Export extends CI_Controller {
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-        $current_date = date('Y-m-d H:i:s');
+        $current_date = date('Y-m-d');
 
 		$this->db->where('id_user', $this->session->userdata('id_user')); // Assuming user_id is stored in session
         $user_query = $this->db->get('user');
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+
         $user = $user_query->row_array(); // Fetching the user data
 		$sheet->setCellValue('A2', "CCS | REKAP PELAPORAN");
-        $sheet->setCellValue('A2', 'Rekap Pelaporan dicetak oleh ' . $user['nama_user'] . ' pada Hari ' . format_indo($current_date));
+        $sheet->setCellValue('A2', "Peroide : " .tanggal_indo($tanggal_awal) . " s/d " . tanggal_indo($tanggal_akhir));
+        // $sheet->setCellValue('A2', 'Dicetak Oleh ' . $user['nama_user'] . ' pada tanggal ' . tanggal_indo($current_date));
         $sheet->mergeCells('A2:F2');
         $sheet->getStyle('A2')->getFont()->setBold(true);
         $sheet->getStyle('A2')->getFont()->setSize(15);
@@ -187,13 +299,6 @@ class Export extends CI_Controller {
         $sheet->getRowDimension('2')->setRowHeight(20);
         $sheet->getRowDimension('3')->setRowHeight(20);
 
-        // Fetch data from database
-        // $this->db->select('kategori,id_pelaporan,waktu_pelaporan,status_ccs,priority,maxday,perihal,file,nama,no_tiket,impact,handle_by,status,tags');
-        // $this->db->from('pelaporan');
-        // $this->db->where('status_ccs', 'FINISH');
-        // $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_awal'));
-        // $this->db->where('waktu_pelaporan ', $this->input->get('tanggal_akhir'));
-        // $query = $this->db->get();
         $this->load->model('Pelaporan_model', 'pelaporan_model');
     
         // Retrieve POST data
@@ -256,8 +361,8 @@ class Export extends CI_Controller {
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(15);
         $sheet->getColumnDimension('C')->setWidth(20);
-        $sheet->getColumnDimension('D')->setWidth(35);
-        $sheet->getColumnDimension('E')->setWidth(50);
+        $sheet->getColumnDimension('D')->setWidth(40);
+        $sheet->getColumnDimension('E')->setWidth(235);
         $sheet->getColumnDimension('F')->setWidth(30);
         $sheet->getColumnDimension('G')->setWidth(83);
         $sheet->getColumnDimension('H')->setWidth(10);
