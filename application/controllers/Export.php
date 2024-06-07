@@ -32,36 +32,63 @@ class Export extends CI_Controller {
         $this->load->library('pdf');
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
     
-        // Set HTML Header
-        $header = '
-            <div style="text-align: center; font-weight: bold; margin-header: 10px;">
-                <h3>CCS | REKAP PELAPORAN </h3>
-                <p>Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>
-            </div>
-        ';
+    //     // Set HTML Header
+    //     $header = '
+    //         <div style="text-align: center; font-weight: bold; margin-header: 10px;">
+    //             <h3>CCS | REKAP PELAPORAN </h3>
+    //             <p>Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>
+    //         </div>
+    //     ';
     
-        $mpdf->SetHTMLHeader($header, 'O');
+    //     $mpdf->SetHTMLHeader($header, 'O');
     
-        // Set HTML Footer
-        $footer = '
-        Dicetak oleh ' . $this->session->userdata('nama_user').'
-        <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 20px; position: relative; ">
-            <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
-            <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
-            <div style="width: 20%; height: 50px; border: 1px solid black;"></div>
-        </div>
-    ';
+    //     // Set HTML Footer
+    //     $mpdf->SetHTMLFooter('
+    //     <table width="100%">
+    //         <tr>
+    //             <td width="33%" style="text-align: right;">Dicetak oleh : ' . $this->session->userdata('nama_user') . '</td>
+    //         </tr>
+    //     </table>');
+    //     $footer = '
+    //     <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 20px; position: relative; ">
+    //         <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+    //         <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+    //         <div style="width: 20%; height: 50px; border: 1px solid black;"></div>
+    //     </div>
+    // ';
+    // $mpdf->SetHTMLFooter($footer, 'O');
 
+    $header = '
+    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">
+        <h3>CCS | REKAP PELAPORAN </h3>
+        <p>Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>
+    </div>
+';
 
-    $mpdf->SetHTMLFooter($footer, 'O');
+// Set HTML Footer
+$footer = '
+    <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 20px; position: relative; ">
+        <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+        <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
+        <div style="width: 20%; height: 50px; border: 1px solid black;"></div>
+    </div>
+    <table width="100%">
+        <tr>
+            <td width="33%" style="text-align: right;">Dicetak oleh : ' . $this->session->userdata('nama_user') . '</td>
+        </tr>
+    </table>
+';
+    // Set Header & Footer
+    $mpdf->SetHTMLHeader($header);
+    $mpdf->SetHTMLFooter($footer);
 
-    $mpdf->SetWatermarkImage('assets/images/mso.png');
-    $mpdf->showWatermarkImage = true;
+    // $mpdf->SetWatermarkImage('assets/images/mso.png');
+    // $mpdf->showWatermarkImage = true;
     
         // Create table
         $tableHtml = '
             <p style="margin-bottom: 30px;">&nbsp;</p>
-            <table border="1" cellpadding="7" cellspacing="0" style="width:100%; border-collapse: collapse; page-break-inside: auto; ">
+            <table border="1" cellpadding="7" cellspacing="0" style="width:100%; border-collapse: collapse; overflow: auto; ">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -133,33 +160,16 @@ class Export extends CI_Controller {
     $this->load->library('pdf');
     $mpdf = new \Mpdf\Mpdf();
 
-    // Set HTML Header
-    $header = '
-    <div style="text-align: center; font-weight: bold;">
-        <h3>CCS | REKAP PELAPORAN </h3>
-        <p>Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>
-    </div>
-';
-
-$mpdf->SetHTMLHeader($header, 'O');
-
-// Set HTML Footer
-$footer = '
-Dicetak oleh ' . $this->session->userdata('nama_user').'
-<div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 20px; ">
-    <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
-    <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
-    <div style="width: 20%; height: 50px; border: 1px solid black;"></div>
-</div>
-';
-
-
-$mpdf->SetHTMLFooter($footer, 'O');
+$mpdf->SetHTMLFooter('
+<table width="100%">
+    <tr>
+        <td width="33%" style="text-align: right;">Dicetak oleh : ' . $this->session->userdata('nama_user') . '</td>
+    </tr>
+</table>');
 
     // Create PDF content
-    // $html = '<h3>CCS | REKAP PELAPORAN</h3>';
-    // $html .= '<p style="text-align: center;">Rekap Pelaporan dari ' . $tanggal_awal . ' sampai ' . $tanggal_akhir . '</p>';
-    $html = '<p style="margin-bottom: 30px;">&nbsp;</p>';
+    $html = '<h3 style="text-align: center;">CCS | REKAP PELAPORAN</h3>';
+    $html .= '<p style="text-align: center; font-weight: bold;">Periode  ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>';
     $html .= '<table border="1" cellpadding="5" cellspacing="0" style="width:100%;">';
     $html .= '<thead>';
     $html .= '<tr>';
@@ -203,6 +213,7 @@ $mpdf->SetHTMLFooter($footer, 'O');
 
     // Write content to PDF
     $mpdf->WriteHTML($html);
+
 
     // Output to browser
     $mpdf->Output('Rekap_Pelaporan.pdf', 'D');

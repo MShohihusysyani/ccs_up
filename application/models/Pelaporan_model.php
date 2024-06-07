@@ -149,12 +149,6 @@ class Pelaporan_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function getAllData(){
-
-        $this->db->order_by('waktu_pelaporan', 'DESC');
-        $query = $this->db->get('pelaporan'); // Assuming 'pelaporan' is the name of your table
-        return $query->result(); // Returns an array of object
-    }
 
     public function getDate1($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien)
     {

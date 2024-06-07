@@ -508,7 +508,7 @@ public function fungsi_reject()
 
     public function rekapPelaporan(){
          // Load necessary models
-    $this->load->model('Pelaporan_model', 'pelaporan_model');
+    $this->load->model('Superadmin_model', 'superadmin_model');
     $this->load->model('Client_model', 'client_model');
 
 	// var data for view 
@@ -520,7 +520,7 @@ public function fungsi_reject()
 
     // Get all data from the models
     $data['klien'] = $this->client_model->getClient();
-    $data['pencarian_data'] = $this->pelaporan_model->getAllData(); // A method that returns all data
+    $data['pencarian_data'] = $this->superadmin_model->getAllData(); // A method that returns all data
 
     // Load views with data
     $this->load->view('templates/header');

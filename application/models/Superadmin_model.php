@@ -256,6 +256,13 @@ class Superadmin_model extends CI_Model {
     }
     }
 
+    public function getAllData(){
+
+        $this->db->order_by('waktu_pelaporan', 'DESC');
+        $query = $this->db->get('pelaporan'); // Assuming 'pelaporan' is the name of your table
+        return $query->result(); // Returns an array of object
+    }
+
     public function ambil_id_pelaporan($id)
     { 
         $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status_ccs, kategori, priority, maxday, impact, file  FROM pelaporan WHERE id_pelaporan='$id'";
