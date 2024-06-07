@@ -7,6 +7,7 @@ class Superadmin extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->load->model('Superadmin_model', 'superadmin_model');
     }
 
     public function index()
@@ -207,7 +208,7 @@ class Superadmin extends CI_Controller
         Redirect(Base_url('superadmin/user'));
     }
 
-    // LIST TICKET
+    //LIST TICKET
     public function AllTicket()
     {
         $this->load->model('Superadmin_model', 'superadmin_model');
@@ -221,6 +222,95 @@ class Superadmin extends CI_Controller
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/allticket', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function AllTicket1()
+    {
+
+        
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/allticket');
+        $this->load->view('templates/footer');
+    }
+
+    public function ajax_list()
+    {
+        $list = $this->superadmin_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $pelaporan) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $pelaporan->no_tiket;
+            $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
+            $row[] = $pelaporan->nama; // Sesuaikan dengan kolom yang ada di tabel Anda
+            $row[] = $pelaporan->perihal; // Sesuaikan dengan kolom yang ada di tabel Anda
+            $row[] = $pelaporan->impact;
+            $row[] = $pelaporan->file;
+            $row[] = $pelaporan->kategori;
+            $row[] = $pelaporan->tags;
+           // Proses nilai prioritas di server-side
+            if ($pelaporan->priority == 'Low') {
+            $priority_label = '<span class="label label-info">Low</span>';
+            } elseif ($pelaporan->priority == 'Medium') {
+            $priority_label = '<span class="label label-warning">Medium</span>';
+            } elseif ($pelaporan->priority == 'High') {
+            $priority_label = '<span class="label label-danger">High</span>';
+            } else {
+            $priority_label = $pelaporan->priority;
+            }
+        $row[] = $priority_label;
+            // Proses nilai maxday di server-side
+            if ($pelaporan->maxday == '90') {
+                $maxday_label = '<span class="label label-info">90</span>';
+                } elseif ($pelaporan->maxday == '60') {
+                $maxday_label = '<span class="label label-warning">60</span>';
+                } elseif ($pelaporan->maxday == '7') {
+                $maxday_label = '<span class="label label-danger">7</span>';
+                } else {
+                $maxday_label = $pelaporan->maxday;
+                }
+        $row[] = $maxday_label;
+           // Proses nilai maxday di server-side
+            if ($pelaporan->status_ccs == 'ADDED') {
+            $status_ccs_label = '<span class="label label-primary">ADDED</span>';
+            } elseif ($pelaporan->status_ccs == 'ADDED 2') {
+            $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
+        } elseif ($pelaporan->status_ccs == 'HANDLE') {
+            $status_ccs_label = '<span class="label label-info">HANDLE</span>';
+        } elseif ($pelaporan->status_ccs == 'HANDLE 2') {
+            $status_ccs_label = '<span class="label label-info">HANDLE 2</span>';
+            } elseif ($pelaporan->status_ccs == 'CLOSE') {
+            $status_ccs_label = '<span class="label label-warning">CLOSE</span>';
+        } elseif ($pelaporan->status_ccs == 'FINISH') {
+            $status_ccs_label = '<span class="label label-success">FINISH</span>';
+            } else {
+            $status_ccs_label = $pelaporan->status_ccs;
+            }
+        $row[] = $status_ccs_label;
+        //Gabungkan handle_by, handle_by2, handle_by3
+        $handle_combined = $pelaporan->handle_by;
+        if ($pelaporan->handle_by2) {
+            $handle_combined .= ', ' . $pelaporan->handle_by2;
+        }
+        if ($pelaporan->handle_by3) {
+            $handle_combined .= ', ' . $pelaporan->handle_by3;
+        }
+        $row[] = $handle_combined;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->superadmin_model->count_all(),
+            "recordsFiltered" => $this->superadmin_model->count_filtered(),
+            "data" => $data,
+        );
+        // output dalam format JSON
+        echo json_encode($output);
     }
 
     public function added()

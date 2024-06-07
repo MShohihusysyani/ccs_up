@@ -9,7 +9,14 @@
         </div>
         <!-- jQuery UI CSS -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-     
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+    <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script> -->
         
     
         <!-- Exportable Table -->
@@ -24,8 +31,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                                id="example">
+                            <table id="table_id" class="display" width="100%">
                                 <thead>
                                     <tr>
                                             <th>No</th>
@@ -61,7 +67,7 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php
+                                    <!-- <?php
                                         $no = 1;
                                         foreach ($datapelaporan as $dp) : ?>
                                         <tr>
@@ -133,7 +139,7 @@
                                             <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
                                         
                                         </tr>
-                                        <?php endforeach; ?>
+                                        <?php endforeach; ?> -->
                                 </tbody>
                             </table>
                         </div>
@@ -191,8 +197,46 @@
         </div>
     </div>
 
+
+
+<!-- <script type="text/javascript">
+$(document).ready( function () {
+    $('#table_id').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('superadmin/ajax_list')?>",
+            "type": "POST"
+        },
+        "columnDefs": [
+        { 
+            "targets": [ 0 ], 
+            "orderable": false,
+        },
+        ],
+    });
+});
+</script> -->
+
+<script>
+    $('#table_id').DataTable({
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+        "url": "<?php echo site_url('superadmin/ajax_list')?>",
+        "type": "POST"
+    },
+    "order": [[2, 'desc']], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+    "columnDefs": [
+        { 
+            "targets": [ 0 ], 
+            "orderable": false,
+        },
+    ],
+});
+</script>
     <!-- Script -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
