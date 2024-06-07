@@ -31,7 +31,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table id="table_id" class="display" width="100%">
+                            <table id="table_id" class="display" width="100%" style="padding-right: 20px">
                                 <thead>
                                     <tr>
                                             <th>No</th>
@@ -152,72 +152,6 @@
     <!-- Button trigger modal -->
 </section>
 
-<!-- modal cari kategori -->
-<div class="modal fade" id="defaultModalNamaKategori" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Cari Kategori</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                        width="100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Kategori</th>
-                                <th class="hide">ID</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($category  as $cat) : ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
-                                <td><?= $cat['nama_kategori']; ?></td>
-                                <td class="hide"><?= $cat['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-kategori="<?= $cat['nama_kategori']; ?>" data-id-namakategori="<?= $cat['id']; ?>">
-                                        Pilih</button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        <?php echo form_close() ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-<!-- <script type="text/javascript">
-$(document).ready( function () {
-    $('#table_id').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-            "url": "<?php echo site_url('superadmin/ajax_list')?>",
-            "type": "POST"
-        },
-        "columnDefs": [
-        { 
-            "targets": [ 0 ], 
-            "orderable": false,
-        },
-        ],
-    });
-});
-</script> -->
-
 <script>
     $('#table_id').DataTable({
     "processing": true,
@@ -233,20 +167,5 @@ $(document).ready( function () {
             "orderable": false,
         },
     ],
-});
-</script>
-    <!-- Script -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- jQuery UI -->
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-    $(document).ready(function() {
-    $(document).on('click', '#pilih3', function() {
-        var nama_klas = $(this).data('nama-kategori');
-        var id = $(this).data('id-namakategori');
-        $('#kategori').val(nama_klas);
-        $('#id').val(id);
-        $('#defaultModalNamaKategori').modal('hide');
-    })
 });
 </script>
