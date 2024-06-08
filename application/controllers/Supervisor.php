@@ -596,22 +596,6 @@ class Supervisor extends CI_Controller
             $this->load->view('templates/footer');
         }
 
-        // public function dateKategori()
-        // {
-        
-        //     $tgla = $this->input->post('tgla');
-        //     $tglb = $this->input->post('tglb');
-        //     $nama_kategori = $this->input->post('nama_kategori');
-        //     $this->load->model('Pelaporan_model', 'pelaporan_model');
-    
-        //     $data['category'] = $this->category_model->getCategory();
-        //     $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb, $nama_kategori);
-    
-        //     $this->load->view('templates/header');
-        //     $this->load->view('templates/supervisor_sidebar');
-        //     $this->load->view('supervisor/rekap_kategori', $data);
-        //     $this->load->view('templates/footer');
-        // }
 
 
         // REKAP HANDLE BY HELPDESK

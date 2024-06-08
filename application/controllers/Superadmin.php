@@ -91,7 +91,7 @@ class Superadmin extends CI_Controller
    
         if ($this->form_validation->run() == FALSE)
         {
-            // belum menampilkan pesan error
+            $this->session->set_flashdata('alert', 'Tambah klien gagal! Kode klien tidak boleh sama.');
             redirect('superadmin/client');
         }
         else
@@ -209,22 +209,22 @@ class Superadmin extends CI_Controller
     }
 
     //LIST TICKET
-    public function AllTicket()
-    {
-        $this->load->model('Superadmin_model', 'superadmin_model');
-        // $data['kategori'] = $this->db->get('pelaporan')->result_array();
-        $data['category'] = $this->category_model->getCategory();
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporan();
+    // public function AllTicket()
+    // {
+    //     $this->load->model('Superadmin_model', 'superadmin_model');
+    //     // $data['kategori'] = $this->db->get('pelaporan')->result_array();
+    //     $data['category'] = $this->category_model->getCategory();
+    //     $this->load->model('User_model', 'user_model');
+    //     $data['user'] = $this->user_model->getDataUser();
+    //     $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporan();
         
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/allticket', $data);
-        $this->load->view('templates/footer');
-    }
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/superadmin_sidebar');
+    //     $this->load->view('superadmin/allticket', $data);
+    //     $this->load->view('templates/footer');
+    // }
 
-    public function AllTicket1()
+    public function AllTicket()
     {
 
         
@@ -245,10 +245,10 @@ class Superadmin extends CI_Controller
             $row[] = $no;
             $row[] = $pelaporan->no_tiket;
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
-            $row[] = $pelaporan->nama; // Sesuaikan dengan kolom yang ada di tabel Anda
-            $row[] = $pelaporan->perihal; // Sesuaikan dengan kolom yang ada di tabel Anda
+            $row[] = $pelaporan->nama; 
+            $row[] = $pelaporan->perihal; 
             $row[] = $pelaporan->impact;
-            $row[] = $pelaporan->file;
+            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';$pelaporan->file;
             $row[] = $pelaporan->kategori;
             $row[] = $pelaporan->tags;
            // Proses nilai prioritas di server-side
@@ -261,6 +261,7 @@ class Superadmin extends CI_Controller
             } else {
             $priority_label = $pelaporan->priority;
             }
+
         $row[] = $priority_label;
             // Proses nilai maxday di server-side
             if ($pelaporan->maxday == '90') {
@@ -272,6 +273,7 @@ class Superadmin extends CI_Controller
                 } else {
                 $maxday_label = $pelaporan->maxday;
                 }
+
         $row[] = $maxday_label;
            // Proses nilai maxday di server-side
             if ($pelaporan->status_ccs == 'ADDED') {
@@ -289,6 +291,7 @@ class Superadmin extends CI_Controller
             } else {
             $status_ccs_label = $pelaporan->status_ccs;
             }
+
         $row[] = $status_ccs_label;
         //Gabungkan handle_by, handle_by2, handle_by3
         $handle_combined = $pelaporan->handle_by;
@@ -619,83 +622,7 @@ public function fungsi_reject()
     $this->load->view('templates/footer');
     }
 
-    
 
-    // public function datepelaporan()
-    // {
-    //     // Load the necessary models
-    //     $this->load->model('Pelaporan_model', 'pelaporan_model');
-    //     $this->load->model('Client_model', 'client_model');
-
-    //     // Retrieve and sanitize input data
-    //     $tgla = $this->input->post('tgla', TRUE);
-    //     $tglb = $this->input->post('tglb', TRUE);
-    //     $status_ccs = $this->input->post('status_ccs', TRUE);
-    //     $nama_klien = $this->input->post('nama_klien', TRUE);
-    //     $tags = $this->input->post('tags', TRUE);
-
-    //     // Fetch client data
-    //     $data['klien'] = $this->client_model->getClient();
-
-    //     // Fetch reporting data
-    //     try {
-    //         $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien, $tags);
-    //     } catch (Exception $e) {
-    //         // Handle potential errors
-    //         $data['pencarian_data'] = [];
-    //         $data['error_message'] = $e->getMessage();
-    //     }
-
-    //     // Load the views with the retrieved data
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/superadmin_sidebar');
-    //     $this->load->view('superadmin/rekap_pelaporan', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-//     public function datepelaporan()
-// {
-//     // Load necessary libraries and models
-//     $this->load->library('form_validation');
-//     $this->load->model('Pelaporan_model', 'pelaporan_model');
-//     $this->load->model('Client_model', 'client_model');
-
-//     // Set form validation rules
-//     $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'required');
-//     $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'required');
-//     $this->form_validation->set_rules('status_ccs', 'Status CCS', 'required');
-//     $this->form_validation->set_rules('nama_klien', 'Client Name', 'required');
-//     $this->form_validation->set_rules('tags', 'Tags', 'required');
-
-//     if ($this->form_validation->run() == FALSE) {
-//         // Validation failed, prepare data for the view with error messages
-//         $data['errors'] = validation_errors();
-//         $data['klien'] = $this->client_model->getClient();
-//         $data['pencarian_data'] = [];
-
-//         $this->load->view('templates/header');
-//         $this->load->view('templates/superadmin_sidebar');
-//         $this->load->view('superadmin/rekap_pelaporan', $data);
-//         $this->load->view('templates/footer');
-//     } else {
-//         // Validation passed, retrieve POST data
-//         $tanggal_awal = $this->input->post('tanggal_awal');
-//         $tanggal_akhir = $this->input->post('tanggal_akhir');
-//         $status_ccs = $this->input->post('status_ccs');
-//         $nama_klien = $this->input->post('nama_klien');
-//         $tags = $this->input->post('tags');
-
-//         // Get data from the models
-//         $data['klien'] = $this->client_model->getClient();
-//         $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-
-//         // Load views with data
-//         $this->load->view('templates/header');
-//         $this->load->view('templates/superadmin_sidebar');
-//         $this->load->view('superadmin/rekap_pelaporan', $data);
-//         $this->load->view('templates/footer');
-//     }
-// }
 
 public function datepelaporan()
 {
