@@ -532,48 +532,6 @@ $mpdf->SetHTMLFooter('
     
 
 
-    //     public function rekap_pelaporan_datanull()
-// {
-//     // Fetching user data
-//     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-
-//     // Load the Export model
-//     $this->load->model('Export_model', 'export_model');
-
-//     // Fetch all the data from 'pelaporan' once and use it for all necessary fields
-//     $pelaporanData = $this->db->get('pelaporan')->result_array();
-//     $data['waktu_pelaporan'] = $pelaporanData;
-//     $data['no_tiket'] = $pelaporanData;
-//     $data['nama'] = $pelaporanData;
-//     $data['perihal'] = $pelaporanData;
-//     $data['tags'] = $pelaporanData;
-//     $data['kategori'] = $pelaporanData;
-//     $data['priority'] = $pelaporanData;
-//     $data['impact'] = $pelaporanData;
-//     $data['maxday'] = $pelaporanData;
-//     $data['status_ccs'] = $pelaporanData;
-
-//     // Handle date input and validation
-//     $tgla = $this->input->post('tgla');
-//     $tglb = $this->input->post('tglb');
-
-//     if ($tgla && $tglb && preg_match("/\d{4}-\d{2}-\d{2}/", $tgla) && preg_match("/\d{4}-\d{2}-\d{2}/", $tglb)) {
-//         // Fetch filtered data based on date range
-//         $data['rekapPelaporan'] = $this->export_model->getPelaporan($tgla, $tglb);
-//     } else {
-//         $data['rekapPelaporan'] = []; // or handle the error as needed
-//     }
-
-//     // Pass the dates to the view
-//     $data['tgla'] = $tgla;
-//     $data['tglb'] = $tglb;
-
-//     // Load the view with the data
-//     $this->load->view('cetak/rekap_pelaporan', $data);
-// }
-
-    
-
       // REKAP KATEGORI
     public function rekap_kategori()
     {
