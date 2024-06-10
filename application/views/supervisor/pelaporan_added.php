@@ -125,7 +125,7 @@
                                             <td>
 
                                             <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <div class="btn btn-sm btn-warning">
+                                                <div class="btn btn-sm btn-warning edit-action">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
                                                         data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
@@ -144,7 +144,7 @@
                                                 <br>
 
                                                 <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <div class="btn btn-sm btn-info">
+                                                <div class="btn btn-sm btn-info forward-action">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
                                                         data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
@@ -445,6 +445,20 @@
             $('#modalPilihKategori').modal('hide');
         })
     });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.edit-action').addEventListener('click', function() {
+      console.log('Edit action clicked');
+      // Add your modal opening code here
+    });
+
+    document.querySelector('.forward-action').addEventListener('click', function() {
+      console.log('Forward action clicked');
+      // Add your modal opening code here
+    });
+  });
 </script>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->

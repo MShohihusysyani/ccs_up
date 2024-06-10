@@ -87,6 +87,9 @@ public function add_temp_tiket()
                 return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
             }, $data);
 
+            $pattern = '/<a\s+href="([^"]+)"/i';
+            $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
+
             // Insert the data into the database
             $this->db->insert('tiket_temp', $data);
 
