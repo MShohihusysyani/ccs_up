@@ -25,6 +25,18 @@ class Export extends CI_Controller {
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
+
+        // Get filtered data
+    if (empty($tanggal_awal) && empty($tanggal_akhir)) {
+        // Fetch all data if no date range is selected
+        $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
+        $periode = "Semua Data";
+    } else {
+        // Fetch data based on the selected date range
+        $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+        $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
+    }
+    
     
         // Get filtered data
         $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
@@ -36,8 +48,8 @@ class Export extends CI_Controller {
         // Set HTML Header
         $header = '
             <div style="text-align: center; font-weight: bold; font-size: 10pt; margin-bottom: 10px;">
-                CCS | REKAP PELAPORAN
-                Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '
+                <h3>CCS | REKAP PELAPORAN</h3>
+                <p>' . $periode . '</p>
             </div>
         ';
         $mpdf->SetHTMLHeader($header, 'O');
@@ -57,10 +69,12 @@ class Export extends CI_Controller {
             </table>
         ';
         $mpdf->SetHTMLFooter($footer);
+
+        $mpdf->setAutoTopMargin = 'pad';
+		$mpdf->setAutoBottomMargin = 'pad';
     
         // Create table
         $tableHtml = '
-            <p style="margin-bottom: 30px;">&nbsp;</p>
             <table border="1" cellpadding="7" cellspacing="0" style="width:100%; border-collapse: collapse;">
                 <thead>
                     <tr>

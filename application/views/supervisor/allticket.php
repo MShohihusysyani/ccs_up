@@ -33,8 +33,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="display"
-                                id="example">
+                            <table class="display" id="example">
                                 <thead>
                                     <tr>
                                             <th>No</th>

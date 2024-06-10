@@ -348,6 +348,15 @@ class Superadmin_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+    public function ambil_id_comment2($id){
+        
+        $this->db->select('user.nama_user, user.id_user, comment.body, comment.pelaporan_id, comment.id_comment, comment.file');
+        $this->db->from('comment');
+        $this->db->join('user', 'comment.user_id = user.id_user', 'left');
+        $this->db->where('comment.pelaporan_id', $id);
+
+    }
+
     public function get_latest_comments($id) {
         $query = "SELECT 
                     user.nama_user, 
