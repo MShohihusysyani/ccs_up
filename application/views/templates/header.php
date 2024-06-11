@@ -31,6 +31,10 @@
     <!-- Animation Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/animate-css/animate.css" rel="stylesheet" />
 
+      <!-- Dropzone Css -->
+      <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/dropzone/dropzone.css" rel="stylesheet">
+
+    <!-- Bootstrap Material Datetime Picker Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
 
     <!-- Bootstrap Tagsinput Css -->

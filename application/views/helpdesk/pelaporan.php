@@ -9,6 +9,8 @@
         <link rel="stylesheet"
             href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
+            
+
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
             <?php if ($this->session->flashdata('pesan')) { ?>
@@ -437,6 +439,11 @@
                         <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish" rows="10" required>
 
                         </textarea>
+                        
+                        <div class="container mt-3">
+                            <div class="row" id="upload-images">
+                            </div>
+                        </div>
 
                         <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
@@ -464,6 +471,7 @@
     <?php endforeach ?>
 
 
+   
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 <script type="text/javascript">
     //Get references to the select and input elements
@@ -544,7 +552,7 @@
                         'bulletedList', 'numberedList', 'todoList','|',
                         'fontSize', 'fontFamily', 'fontColor', '', '', '|',
                         'alignment', '|',
-                        'uploadImage','|',
+                        '|',
                         'undo', 'redo',
                     ],
                     shouldNotGroupWhenFull: true

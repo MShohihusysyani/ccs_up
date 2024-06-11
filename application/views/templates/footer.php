@@ -13,6 +13,9 @@
 <!-- Slimscroll Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
+ <!-- Dropzone Plugin Js -->
+ <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/dropzone/dropzone.js"></script>
+
  <!-- Jquery Validation Plugin Css -->
  <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-validation/jquery.validate.js"></script>
 
