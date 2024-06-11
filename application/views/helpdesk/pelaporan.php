@@ -440,10 +440,7 @@
 
                         </textarea>
                         
-                        <div class="container mt-3">
-                            <div class="row" id="upload-images">
-                            </div>
-                        </div>
+            
 
                         <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                         <div class="form-group">
