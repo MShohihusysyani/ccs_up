@@ -16,7 +16,6 @@
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <!-- <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script> -->
-
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script> -->
@@ -172,3 +171,67 @@
     ],
 });
 </script>
+
+<!-- <script>
+$(document).ready(function() {
+    $('#table_id').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('superadmin/ajax_list')?>",
+            "type": "POST"
+        },
+        "order": [[2, 'desc']],
+        "columnDefs": [
+            { 
+                "targets": [0], 
+                "orderable": false
+            },
+            { 
+                "targets": [13], // Index of "Time Left" column
+                "orderable": false,
+                "render": function(data, type, row) {
+                    let maxDay = parseInt(row[10]); // Assuming "Max Day" is at index 10
+                    let reportDateStr = row[2]; // Assuming "Tanggal" is at index 2
+
+                    console.log("Raw Max Day:", row[10]); // Debugging log for Max Day
+                    console.log("Raw date string:", reportDateStr); // Debugging log for date
+
+                    // Check if maxDay is a valid number
+                    if (isNaN(maxDay)) {
+                        console.error("Invalid Max Day: ", row[10]); // Debugging log
+                        return 'Invalid max day';
+                    }
+
+                    // Parse the report date
+                    let reportDate = new Date(reportDateStr);
+
+                    // If the date parsing fails, log the error and return an error message
+                    if (isNaN(reportDate)) {
+                        console.error("Invalid date format: ", reportDateStr); // Debugging log
+                        return 'Invalid date';
+                    }
+
+                    let currentDate = new Date();
+                    let maxDate = new Date(reportDate);
+                    maxDate.setDate(maxDate.getDate() + maxDay);
+
+                    let timeDifference = maxDate - currentDate;
+                    
+                    if (timeDifference < 0) {
+                        return '<span class="label label-danger">Expired</span>';
+                    } else {
+                        let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                        let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+                        return `${days}d ${hours}h ${minutes}m left`;
+                    }
+                }
+            }
+        ]
+    });
+});
+
+</script> -->
+
