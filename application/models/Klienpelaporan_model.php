@@ -182,7 +182,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.no_tiket,
             pelaporan.impact,
             pelaporan.handle_by,
-            pelaporan.status,
+            pelaporan.status_ccs,
             pelaporan.tags
         ');
         $this->db->from('forward');
@@ -235,6 +235,20 @@ class Klienpelaporan_model extends CI_Model
 
         // Execute the query and return the result
         return $this->db->get()->result_array();
+    }
+
+    public function getAllData(){
+
+        $user_id = $this->session->userdata('id_user');
+
+        $this->db->select('pelaporan.*'); // Select fields from both tables
+        $this->db->from('forward'); // Specify the base table
+        $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('forward.user_id', $user_id);
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+        $query = $this->db->get(); // Execute the query
+
+        return $query->result(); // Return the result as an array of objects
     }
 
     //DATA FORWARD PER USER TEKNISI IMPLEMENTATOR

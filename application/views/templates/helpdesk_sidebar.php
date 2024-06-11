@@ -103,7 +103,7 @@
                     </li>
 
                     <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
-                        <a href="<?php echo base_url('helpdesk/data_pelaporan') ?>">
+                        <a href="<?php echo base_url('helpdesk/rekapPelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
                         </a>
