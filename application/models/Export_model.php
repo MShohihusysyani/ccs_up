@@ -95,4 +95,24 @@ class Export_model extends CI_Model {
         $query = "SELECT kategori, COUNT(*) AS 'total', waktu_pelaporan FROM pelaporan WHERE status_ccs='FINISH' GROUP BY kategori";
         return $this->db->query($query)->result_array();
     }
+
+    public function getAllPelaporan($status_ccs = null, $nama_klien = null, $tags = null)
+{
+    $this->db->select('*');
+    $this->db->from('pelaporan');
+    
+    if ($status_ccs) {
+        $this->db->where('status_ccs', $status_ccs);
+    }
+    if ($nama_klien) {
+        $this->db->like('nama', $nama_klien);
+    }
+    if ($tags) {
+        $this->db->like('tags', $tags);
+    }
+    
+    $query = $this->db->get();
+    return $query->result_array();
+}
+
 }
