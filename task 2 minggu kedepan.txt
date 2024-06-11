@@ -1,1 +1,5 @@
-Di dashboard helpdesk ada filter tgl di menu data pelaporan(pencarian data masih semua status, belum bisa status finish dan hanya menampilkan berdasarkan handle by dan user id
+1.Input ccs baru file tidak mandatory(DONE)
+2.Menampilkan data sesuai filter(DONE)
+3.Export semua laporan(DONE)
+4.Di dashboard helpdesk ada filter tgl di menu data pelaporan(pencarian data masih semua status, belum bisa status finish dan hanya menampilkan berdasarkan handle by dan user id)
+5.Setiap ganti  halaman dilaporan, header, nama tabel, judul tabel, tanggal,dan footer tetap ditampilkan(di local sudah bisa, tetapi ketika dihosting export pdfnya jd satu halaman)
