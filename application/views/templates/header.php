@@ -31,6 +31,8 @@
     <!-- Animation Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/animate-css/animate.css" rel="stylesheet" />
 
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
     <!-- Bootstrap Tagsinput Css -->
     <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/');?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
 

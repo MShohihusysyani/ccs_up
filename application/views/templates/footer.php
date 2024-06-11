@@ -25,6 +25,13 @@
 <!-- Waves Effect Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/node-waves/waves.js"></script>
 
+<!-- Moment Plugin Js -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/momentjs/moment.js"></script>
+
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+
 <!-- Jquery CountTo Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-countto/jquery.countTo.js"></script>
 
@@ -84,7 +91,7 @@
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/ckeditor/ckeditor.js"></script>
 
 <!-- TinyMCE -->
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/tinymce/tinymce.js"></script>
+<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/tinymce/tinymce.js"></script> -->
 
 
 </body>
