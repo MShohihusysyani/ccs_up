@@ -55,7 +55,7 @@
                             <label for="exampleInputFile"></label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="file" name="file" required>
+                                    <input type="file" class="custom-file-input" id="file" name="file">
                                     <label for="file" class="custom-file-label">Choose
                                         file</label>
                                 </div>
