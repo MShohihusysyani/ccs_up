@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Jun 2024 pada 11.22
+-- Waktu pembuatan: 11 Jun 2024 pada 11.32
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -134,7 +134,8 @@ INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUE
 (152, 140, 55, NULL),
 (153, 141, 55, NULL),
 (154, 142, 55, NULL),
-(155, 143, 52, NULL);
+(155, 143, 52, NULL),
+(156, 147, 50, NULL);
 
 -- --------------------------------------------------------
 
@@ -196,14 +197,14 @@ CREATE TABLE `pelaporan` (
 --
 
 INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tags`, `waktu_pelaporan`, `status`, `status_ccs`, `priority`, `maxday`, `judul`, `perihal`, `impact`, `file`, `rating`, `nama`, `handle_by`, `handle_by2`, `handle_by3`, `waktu_approve`, `catatan_finish`, `file_finish`) VALUES
-(140, 'TIC00032024050001', 60, 'Proses - Proses Ulang', 'proses ulang', '2024-05-31', 'Forward To Helpdesk', 'FINISH', 'High', 7, 'Coba Preg', 'coba preg', 'kritikal', 'Rekap_Pelaporan.xlsx', NULL, 'PT BPR BKK Purwokerto(Perseroda)', 'Luthfi', NULL, NULL, NULL, '', NULL),
+(140, 'TIC00032024050001', 60, 'Proses - Proses Ulang', 'proses ulang', '2024-05-31', 'Forward To Helpdesk', 'HANDLE', 'High', 7, 'Coba Preg', 'coba preg', 'kritikal', 'Rekap_Pelaporan.xlsx', NULL, 'PT BPR BKK Purwokerto(Perseroda)', 'Luthfi', NULL, NULL, NULL, '', NULL),
 (141, 'TIC00032024060002', 60, 'API - TTF', 'apii', '2024-06-04', 'Solved', 'FINISH', 'Medium', 60, 'tesss', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', 'material', 'Screenshot_2024-06-03_102755.png', NULL, 'PT BPR BKK Purwokerto(Perseroda)', 'Luthfi', NULL, NULL, '2024-06-04', '', NULL),
 (142, 'TIC00032024060003', 60, 'API - TTF', 'api', '2024-06-05', 'Solved', 'FINISH', 'Low', 90, 'coba finish', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum ut necessitatibus quibusdam nostrum labore aliquam voluptate doloremque ipsa suscipit voluptatum? In animi impedit iure fugiat doloribus iste ipsum consequatur cum! Accusantium nihil eius q', 'material', 'Screenshot_2024-04-22_115028.png', NULL, 'PT BPR BKK Purwokerto(Perseroda)', 'Luthfi', NULL, NULL, '2024-06-05', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ipsam, cumque, recusandae, commodi soluta repellat aliquam architecto sit. Quibusdam quis consequuntur totam dolorum cumque. Asperiores, nisi in?', ''),
 (143, 'TIC00012024060001', 58, 'API - TTF', 'API', '2024-06-05', 'Solved', 'FINISH', 'High', 7, 'Lorem ipsum', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', 'kritikal', 'Screenshot_2024-05-28_100649.png', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', 'Eva', 'Implementator PT MSO Purwokerto', NULL, '2024-06-07', '', NULL),
 (144, 'TIC00022024060001', 59, 'Kredit - Agunan', 'agunan', '2024-06-06', 'proses', 'ADDED', NULL, NULL, 'lorem', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'Screenshot_2024-04-22_115120.png', NULL, 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, '', NULL),
 (145, 'TIC00062024060001', 61, 'Kredit - Agunan', 'agunan', '2024-06-06', 'proses', 'ADDED', NULL, NULL, 'lorem ipsum', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'Screenshot_2024-05-13_084149.png', NULL, 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, NULL, '', NULL),
 (146, 'TIC00072024060001', 66, 'Kredit - Agunan', 'agunan', '2024-06-06', 'proses', 'ADDED', NULL, NULL, 'lorem ipsum 50', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'Screenshot_2024-04-22_1150281.png', NULL, 'PT BPR BKK Kebumen(Perseroda)', NULL, NULL, NULL, NULL, '', NULL),
-(147, 'TIC00072024060002', 66, 'Kredit - Agunan', 'agunan', '2024-06-06', 'proses', 'ADDED', NULL, NULL, 'tes pdf', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum ut necessitatibus quibusdam nostrum labore aliquam voluptate doloremque ipsa suscipit voluptatum? In animi impedit iure fugiat doloribus iste ipsum consequatur cum! Accusantium nihil eius q', NULL, 'Screenshot_2024-06-06_141736.png', NULL, 'PT BPR BKK Kebumen(Perseroda)', NULL, NULL, NULL, NULL, '', NULL),
+(147, 'TIC00072024060002', 66, 'Kredit - Agunan', 'agunan', '2024-06-06', 'Forward To Helpdesk', 'HANDLE', 'Medium', 60, 'tes pdf', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum ut necessitatibus quibusdam nostrum labore aliquam voluptate doloremque ipsa suscipit voluptatum? In animi impedit iure fugiat doloribus iste ipsum consequatur cum! Accusantium nihil eius q', NULL, 'Screenshot_2024-06-06_141736.png', NULL, 'PT BPR BKK Kebumen(Perseroda)', 'Ayu', NULL, NULL, NULL, '', NULL),
 (148, 'TIC00012024060002', 58, 'Backdate - Backdate Transaksi', 'backdate', '2024-06-07', 'proses', 'ADDED', NULL, NULL, 'test serverside', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'CCS_Customer_Care_System.xlsx', NULL, 'PT BPR BKK Banjarharjo(Perseroda)', NULL, NULL, NULL, NULL, '', NULL),
 (149, 'TIC00022024060002', 59, 'Backdate - Backdate Transaksi', 'backdate', '2024-06-07', 'proses', 'ADDED', NULL, NULL, 'serverside', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'CCS_Customer_Care_System1.pdf', NULL, 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, NULL, '', NULL),
 (150, 'TIC00072024060003', 66, 'Backdate - Backdate Transaksi', 'backdate', '2024-06-07', 'proses', 'ADDED', NULL, NULL, 'serverside test', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'export-pdf-demo.pdf', NULL, 'PT BPR BKK Kebumen(Perseroda)', NULL, NULL, NULL, NULL, '', NULL);
@@ -319,6 +320,13 @@ CREATE TABLE `tiket_temp` (
   `tags` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tiket_temp`
+--
+
+INSERT INTO `tiket_temp` (`id_temp`, `no_tiket`, `user_id`, `judul`, `perihal`, `file`, `nama`, `kategori`, `tags`) VALUES
+(219, 'TIC00032024060004', 60, 'link', 'https://datatables.net/examples/server_side/simple.html', '', 'PT BPR BKK Purwokerto(Perseroda)', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -345,22 +353,22 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (47, 'Supervisor 2', 'Supervisor 2', 'spv2', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y', '2024-05-31', '2024-06-07 15:03:35'),
 (48, 'Helpdesk 1', 'Ajeng', 'ajeng', '$2y$10$yMDEbxjjlh4oNXdZJw1om.SmuYMqFSzqLe3vycjiXnVFnZVXh7Fli', 2, 'Y', '2024-05-31', '2024-05-31 15:08:48'),
 (49, 'Helpdesk 1', 'Novi', 'novi', '$2y$10$61Gvfbmfq/xELLugqweR3.ITjxqoazOT478NP8hl9ND44iSRndaWO', 2, 'Y', '2024-05-31', '2024-05-31 15:08:57'),
-(50, 'Helpdesk 2', 'Ayu', 'ayu', '$2y$10$CBazdGZC3pDGBYv0WVS6WuqgRQW2SNVhGotgSoR09dL3CpXRLn4Tq', 2, 'Y', '2024-05-31', '2024-05-31 15:09:10'),
+(50, 'Helpdesk 2', 'Ayu', 'ayu', '$2y$10$CBazdGZC3pDGBYv0WVS6WuqgRQW2SNVhGotgSoR09dL3CpXRLn4Tq', 2, 'Y', '2024-05-31', '2024-06-10 16:50:28'),
 (51, 'Helpdesk 2', 'Chintya', 'chintya', '$2y$10$dfuc4GUWd8UHDVpKSDO2z.9G./SV5svEYIThkIB6.ZCFvWnjz6zkC', 2, 'Y', '2024-05-31', '2024-05-31 15:09:26'),
 (52, 'Helpdesk 3', 'Eva', 'eva', '$2y$10$R8oQzXHI8pnwusrmXCTX3e9FWIjfvqgXFekk1yqJNhXIAkFDTY.n.', 2, 'Y', '2024-05-31', '2024-06-07 15:02:57'),
 (53, 'Helpdesk 3', 'Ina', 'ina', '$2y$10$39stpYd9tIjV.jrW/ffns.bVwZtKOyDqHHdZkSSwTmaNjTAS.1Qsi', 2, 'Y', '2024-05-31', '2024-05-31 15:09:55'),
 (54, 'Helpdesk 4', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y', '2024-05-31', '2024-05-31 15:10:43'),
-(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-06-05 08:43:24'),
+(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-06-11 12:26:06'),
 (56, 'Helpdesk 4', 'Khabibah', 'Khabibah', '$2y$10$kMOcFV1oh9PL5kGxkARcW.0q6iPYOTTe/M4OjztfR2dRory9yTwRa', 2, 'Y', '2024-05-31', '2024-05-31 15:10:18'),
-(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-06-07 15:05:58'),
-(58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-31', '2024-06-07 15:46:38'),
+(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-06-11 15:31:49'),
+(58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-31', '2024-06-11 12:32:25'),
 (59, 'Klien', 'PT BPR BKK Karangmalang(Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-31', '2024-06-07 15:50:46'),
-(60, 'Klien', 'PT BPR BKK Purwokerto(Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-31', '2024-06-05 08:08:42'),
+(60, 'Klien', 'PT BPR BKK Purwokerto(Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-31', '2024-06-11 15:33:35'),
 (61, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-31', '2024-06-06 09:52:09'),
 (62, 'Implementator', 'Implementator PT MSO Purwokerto', 'implementator', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-31', '2024-06-07 15:04:58'),
 (63, 'Support', 'Support PT MSO Purwokerto', 'support', '$2y$10$HEztd8wkl66Mpu2EIIRdpuFj/EBs57NLxZiZRGjc0Kg4M1kNpwoUu', 5, 'Y', '2024-05-31', '2024-05-31 15:05:31'),
 (66, 'Klien', 'PT BPR BKK Kebumen(Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-31', '2024-06-07 15:55:52'),
-(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-06-07 15:56:48');
+(68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-06-11 15:48:17');
 
 --
 -- Indexes for dumped tables
@@ -460,7 +468,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT untuk tabel `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT untuk tabel `divisi`
@@ -472,7 +480,7 @@ ALTER TABLE `divisi`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -484,7 +492,7 @@ ALTER TABLE `klien`
 -- AUTO_INCREMENT untuk tabel `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id_pelaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT untuk tabel `rating`
@@ -520,13 +528,13 @@ ALTER TABLE `t2_forward`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
