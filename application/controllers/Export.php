@@ -75,7 +75,22 @@ class Export extends CI_Controller {
     
         // Create table
         $tableHtml = '
-            <table border="1" cellpadding="7" cellspacing="0" style="width:100%; border-collapse: collapse;">
+        <style>
+            .table-bordered {
+                border: 1px solid black;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            .table-bordered th, .table-bordered td {
+                border: 1px solid black;
+                padding: 7px;
+                text-align: left;
+            }
+            .table-bordered tr {
+                page-break-inside: avoid;
+            }
+        </style>
+            <table class="table-bordered">
                 <thead>
                     <tr>
                         <th>No</th>
