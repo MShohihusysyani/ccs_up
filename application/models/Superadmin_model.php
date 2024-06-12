@@ -396,4 +396,13 @@ class Superadmin_model extends CI_Model {
         
     }
 
+    
+    public function getPelaporan($id)
+    {
+    
+        $this->db->where('id_pelaporan', $id);
+        $query = $this->db->get('pelaporan');
+        return $query->row_array();
+    }
+
 }

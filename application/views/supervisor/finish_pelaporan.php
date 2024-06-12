@@ -74,7 +74,7 @@
                         </div>
 
                         <label for="perihal">Catatan Finish</label>
-                        <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish" rows="10" readonly>
+                        <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish"  readonly>
                                 <?= $dp['catatan_finish'];?>
                         </textarea>
 

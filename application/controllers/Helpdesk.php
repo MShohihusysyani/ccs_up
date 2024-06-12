@@ -227,6 +227,32 @@ public function datepelaporan()
             }
         }
 
+        if ($_FILES['catatan_finish']['size'] > 0) {
+            $config['upload_path'] = './assets/filefinish/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '2048'; // 2MB
+            $config['encrypt_name'] = TRUE;
+
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('upload')) {
+                $error = $this->upload->display_errors();
+                log_message('error', 'Upload error: ' . $error);
+                $funcNum = $_GET['CKEditorFuncNum'];
+                echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '', 'Error: $error');</script>";
+            } else {
+                $data = $this->upload->data();
+                $filename = $data['file_name'];
+                $url = base_url('uploads/' . $filename);
+                $funcNum = $_GET['CKEditorFuncNum'];
+
+                log_message('debug', 'Image uploaded: ' . $url);
+                echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', 'Image uploaded successfully');</script>";
+            }
+        } else {
+            log_message('error', 'No file uploaded');
+        }
+
         // Prepare the data for insertion
         $id = $this->input->post('id_pelaporan');
         $data = [

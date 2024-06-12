@@ -436,9 +436,16 @@
                         </div>
 
                         <label for="perihal">Catatan Finish</label>
-                        <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish" rows="10" required>
+                        <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish"  required>
 
                         </textarea>
+
+                        <script>
+                            CKEDITOR.replace('editor', {
+                            filebrowserUploadUrl: '<?php echo base_url('heldesk/finish'); ?>',
+                            filebrowserUploadMethod: 'form'
+                        });
+                        </script>
                         
             
 
@@ -549,7 +556,7 @@
                         'bulletedList', 'numberedList', 'todoList','|',
                         'fontSize', 'fontFamily', 'fontColor', '', '', '|',
                         'alignment', '|',
-                        '|',
+                        'uploadImage','|',
                         'undo', 'redo',
                     ],
                     shouldNotGroupWhenFull: true

@@ -14,6 +14,22 @@ class Export extends CI_Controller {
         $this->load->helper('tanggal_helper');
         $this->load->model('Pelaporan_model');
     }
+
+    public function cetak_tiket()
+    {
+        $this->load->model('superadmin_model', 'superadmin_model');
+        $data['no_tiket'] = $this->db->get('pelaporan')->result_array();
+        $data['nama'] = $this->db->get('pelaporan')->result_array();
+        $data['judul'] = $this->db->get('pelaporan')->result_array();
+        $data['perihal'] = $this->db->get('pelaporan')->result_array();
+        $data['kategori'] = $this->db->get('pelaporan')->result_array();
+        $data['priority'] = $this->db->get('pelaporan')->result_array();
+        $data['status_ccs'] = $this->db->get('pelaporan')->result_array();
+        $data['handle_by'] = $this->db->get('pelaporan')->result_array();
+        $data['datapelaporan'] = $this->superadmin_model->getPelaporan();
+
+        $this->load->view('cetak/print_tiket', $data);
+    }
     
     public function rekap_pelaporan_pdf()
     {
