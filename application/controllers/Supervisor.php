@@ -632,32 +632,77 @@ class Supervisor extends CI_Controller
         //   FILTER LAPORAN
     public function rekapPelaporan()
     {
-            $this->load->model('Client_model', 'client_model');
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['pencarian_data'] = $this->pelaporan_model->getAll();
-            $data['klien'] = $this->client_model->getClient();
-    
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_pelaporan', $data);
-            $this->load->view('templates/footer');
+             // Load necessary models
+        $this->load->model('supervisor_model', 'supervisor_model');
+        $this->load->model('Client_model', 'client_model');
+
+	// var data for view 
+	    $data['tanggal_awal'] = '';
+	    $data['tanggal_akhir'] = '';
+	    $data['status_ccs'] = '';
+	    $data['nama_klien'] = '';
+	    $data['tags'] = '';
+
+    // Get all data from the models
+        $data['klien'] = $this->client_model->getClient();
+        $data['pencarian_data'] = $this->supervisor_model->getAllData(); // A method that returns all data
+
+    // Load views with data
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_pelaporan', $data);
+        $this->load->view('templates/footer');
     }
 
     public function datepelaporan()
     {
-            $tgla       = $this->input->post('tgla');
-            $tglb       = $this->input->post('tglb');
-            $status_ccs = $this->input->post('status_ccs');
-            $nama_klien = $this->input->post('nama_klien');
+           // Load necessary libraries and models
+    $this->load->library('form_validation');
+    $this->load->model('Pelaporan_model', 'pelaporan_model');
+    $this->load->model('Client_model', 'client_model');
 
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['klien'] = $this->client_model->getClient();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tgla, $tglb, $status_ccs, $nama_klien);
+    // Set form validation rules (allow empty)
+    $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
+    $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
+    $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
+    $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
+    $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_pelaporan', $data);
-            $this->load->view('templates/footer');
+    if ($this->form_validation->run() == FALSE) {
+        // Validation failed, prepare data for the view with error messages
+        $data['errors'] = validation_errors();
+        $data['klien'] = $this->client_model->getClient();
+        $data['pencarian_data'] = [];
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_pelaporan', $data);
+        $this->load->view('templates/footer');
+    } else {
+        // Validation passed, retrieve POST data
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $status_ccs = $this->input->post('status_ccs');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
+
+		// var data for view 
+		$data['tanggal_awal'] = $tanggal_awal;
+		$data['tanggal_akhir'] = $tanggal_akhir;
+		$data['status_ccs'] = $status_ccs;
+		$data['nama_klien'] = $nama_klien;
+		$data['tags'] = $tags;
+
+        // Get data from the models
+        $data['klien'] = $this->client_model->getClient();
+        $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+
+        // Load views with data
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
     }
 
         //LAPORAN FILTER KATEGORI

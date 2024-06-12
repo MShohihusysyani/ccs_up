@@ -272,6 +272,13 @@ class Supervisor_model extends CI_Model {
         return $this->db->query($query, array($id))->result_array();
     }
 
+    public function getAllData(){
+
+        $this->db->order_by('waktu_pelaporan', 'DESC');
+        $query = $this->db->get('pelaporan'); // Assuming 'pelaporan' is the name of your table
+        return $query->result(); // Returns an array of object
+    }
+
 
 }
 

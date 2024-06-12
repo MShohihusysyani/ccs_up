@@ -227,11 +227,12 @@ public function datepelaporan()
             }
         }
 
-        if ($_FILES['catatan_finish']['size'] > 0) {
+        if ($_FILES['upload']['size'] > 0) {
             $config['upload_path'] = './assets/filefinish/';
             $config['allowed_types'] = 'gif|jpg|png';
             $config['max_size'] = '2048'; // 2MB
-            $config['encrypt_name'] = TRUE;
+            $config['max_width'] = '1000';
+            $config['max_height'] = '500';
 
             $this->load->library('upload', $config);
 
@@ -252,6 +253,7 @@ public function datepelaporan()
         } else {
             log_message('error', 'No file uploaded');
         }
+
 
         // Prepare the data for insertion
         $id = $this->input->post('id_pelaporan');
