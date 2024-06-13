@@ -19,7 +19,7 @@
                         <form id="sign_in" method="POST" action="<?= base_url('auth/proses_login') ?>">
                             <div class="msg">Sign in to start your session</div>
                             <center>
-                            <img src="assets\images\mso.png" alt="logo PT MSO" width="100" height="80">
+                            <img src="assets\images\mso.png" alt="logo PT MSO" width="120" height="100">
                             </center>
 
                             <br>
