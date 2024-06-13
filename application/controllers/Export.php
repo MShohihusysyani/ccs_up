@@ -34,28 +34,24 @@ class Export extends CI_Controller {
     public function rekap_pelaporan_pdf()
     {
         $this->load->model('Export_model', 'export_model');
-    
+
         // Retrieve POST data
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
-
-        // Get filtered data
-    if (empty($tanggal_awal) && empty($tanggal_akhir)) {
-        // Fetch all data if no date range is selected
-        $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
-        $periode = "Semua Data";
-    } else {
-        // Fetch data based on the selected date range
-        $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-        $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
-    }
-    
     
         // Get filtered data
-        $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+        if (empty($tanggal_awal) && empty($tanggal_akhir)) {
+            // Fetch all data if no date range is selected
+            $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
+            $periode = "Semua Data";
+        } else {
+            // Fetch data based on the selected date range
+            $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+            $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
+        }
     
         // Load the mPDF library
         $this->load->library('pdf');
@@ -73,21 +69,21 @@ class Export extends CI_Controller {
     
         // Set HTML Footer
         $footer = '
-            <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 20px; position: relative;">
-                <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
-                <div style="width: 20%; height: 50px; border: 1px solid black; margin-right: 10px;"></div>
-                <div style="width: 20%; height: 50px; border: 1px solid black;"></div>
-            </div>
             <table width="100%">
                 <tr>
-                    <td width="33%" style="text-align: right; font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</td>
+                    <td width="33%" style="text-align: left; font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</td>
+                    <td width="33%" style="text-align: right;">
+                        <div style="width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+                        <div style="width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+                        <div style="width: 100px; height: 50px; border: 1px solid black;"></div>
+                    </td>
                 </tr>
             </table>
         ';
         $mpdf->SetHTMLFooter($footer);
-
+    
         $mpdf->setAutoTopMargin = 'pad';
-		$mpdf->setAutoBottomMargin = 'pad';
+        $mpdf->setAutoBottomMargin = 'pad';
     
         // Create table
         $tableHtml = '
