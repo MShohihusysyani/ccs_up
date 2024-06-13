@@ -112,7 +112,7 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2024 <a href="javascript:void(0);">Customer Care System | PT MSO</a>.
+                    &copy; <span id="year"></span> <a href="javascript:void(0);">Customer Care System | PT MSO</a>.
                 </div>
                 <div class="version">
 
@@ -121,3 +121,7 @@
             <!-- #Footer -->
 </aside>
         <!-- #END# Left Sidebar -->
+
+        <script>
+            document.getElementById("year").innerHTML = new Date().getFullYear();
+        </script>

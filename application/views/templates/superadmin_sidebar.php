@@ -27,7 +27,6 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                   
                     <!-- Notifications -->
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
@@ -302,7 +301,7 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2024 <a href="javascript:void(0);">Customer Care System | PT MSO</a>.
+                    &copy; <span id="year"></span> <a href="javascript:void(0);">Customer Care System | PT MSO</a>.
                 </div>
                 <div class="version">
 
@@ -311,3 +310,7 @@
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->
+
+        <script>
+            document.getElementById("year").innerHTML = new Date().getFullYear();
+        </script>
