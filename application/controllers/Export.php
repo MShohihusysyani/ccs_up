@@ -55,8 +55,13 @@ class Export extends CI_Controller {
     
         // Load the mPDF library
         $this->load->library('pdf');
-        $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
-    
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 10, // Atur margin atas dalam milimeter
+            'margin_bottom' => 10, // Atur margin bawah dalam milimeter
+            'margin_left' => 15, // Atur margin kiri dalam milimeter
+            'margin_right' => 15, // Atur margin kanan dalam milimeter
+        ]);
         // Set HTML Header
         $header = '
             <div style="text-align: center; font-weight: bold; font-size: 10pt; margin-bottom: 10px;">
@@ -69,7 +74,7 @@ class Export extends CI_Controller {
     
         // Set HTML Footer
         $footer = '
-            <div style="width: 100%; text-align: right; margin-top: 20px;">
+            <div style="width: 100%; text-align: right; margin-top: 25px;">
                 <div style="display: inline-block; width: 100%; text-align: right;">
                     <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
                     <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
