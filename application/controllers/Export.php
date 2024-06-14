@@ -69,19 +69,19 @@ class Export extends CI_Controller {
     
         // Set HTML Footer
         $footer = '
-            <table width="100%">
-                <tr>
-                    <td width="33%" style="text-align: left; font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</td>
-                    <td width="33%" style="text-align: right;">
-                        <div style="width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
-                        <div style="width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
-                        <div style="width: 100px; height: 50px; border: 1px solid black;"></div>
-                    </td>
-                </tr>
-            </table>
+    <div style="width: 100%; text-align: right; margin-top: 20px;">
+        <div style="display: inline-block; width: 100%; text-align: right;">
+            <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+            <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+            <div style="float: right; width: 100px; height: 50px; border: 1px solid black;"></div>
+        </div>
+    </div>
+    <div style="width: 100%; text-align: right;">
+        <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
+    </div>
         ';
+
         $mpdf->SetHTMLFooter($footer);
-    
         $mpdf->setAutoTopMargin = 'pad';
         $mpdf->setAutoBottomMargin = 'pad';
     
@@ -151,6 +151,7 @@ class Export extends CI_Controller {
     
         // Write table to PDF
         $mpdf->WriteHTML($tableHtml);
+        
     
         // Output to browser
         $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
