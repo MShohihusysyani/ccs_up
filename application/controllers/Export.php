@@ -76,7 +76,7 @@ class Export extends CI_Controller {
             <div style="float: right; width: 100px; height: 50px; border: 1px solid black;"></div>
         </div>
     </div>
-    <div style="width: 100%; text-align: right;">
+    <div style="width: 100%; text-align: left;">
         <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
     </div>
         ';

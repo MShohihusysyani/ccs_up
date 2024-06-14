@@ -397,12 +397,10 @@ class Superadmin_model extends CI_Model {
     }
 
     
-    public function getPelaporan($id)
+    public function getPelaporanById($id_pelaporan)
     {
-    
-        $this->db->where('id_pelaporan', $id);
-        $query = $this->db->get('pelaporan');
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        $query = $this->db->get('pelaporan'); // Replace 'pelaporan' with your actual table name
         return $query->row_array();
     }
-
 }
