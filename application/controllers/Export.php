@@ -26,7 +26,7 @@ class Export extends CI_Controller {
         $data['priority'] = $this->db->get('pelaporan')->result_array();
         $data['status_ccs'] = $this->db->get('pelaporan')->result_array();
         $data['handle_by'] = $this->db->get('pelaporan')->result_array();
-        $data['datapelaporan'] = $this->superadmin_model->getPelaporan();
+        $data['datapelaporan'] = $this->superadmin_model->getPelaporanById();
 
         $this->load->view('cetak/print_tiket', $data);
     }
@@ -69,16 +69,16 @@ class Export extends CI_Controller {
     
         // Set HTML Footer
         $footer = '
-    <div style="width: 100%; text-align: right; margin-top: 20px;">
-        <div style="display: inline-block; width: 100%; text-align: right;">
-            <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
-            <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
-            <div style="float: right; width: 100px; height: 50px; border: 1px solid black;"></div>
-        </div>
-    </div>
-    <div style="width: 100%; text-align: left;">
-        <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
-    </div>
+            <div style="width: 100%; text-align: right; margin-top: 20px;">
+                <div style="display: inline-block; width: 100%; text-align: right;">
+                    <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+                    <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+                    <div style="float: right; width: 100px; height: 50px; border: 1px solid black;"></div>
+                </div>
+            </div>
+            <div style="width: 100%; text-align: left;">
+                <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
+            </div>
         ';
 
         $mpdf->SetHTMLFooter($footer);
