@@ -32,135 +32,143 @@ class Export extends CI_Controller {
     }
     
     public function rekap_pelaporan_pdf()
-    {
-        $this->load->model('Export_model', 'export_model');
+{
+    $this->load->model('Export_model', 'export_model');
 
-        // Retrieve POST data
-        $tanggal_awal = $this->input->post('tanggal_awal');
-        $tanggal_akhir = $this->input->post('tanggal_akhir');
-        $status_ccs = $this->input->post('status_ccs');
-        $nama_klien = $this->input->post('nama_klien');
-        $tags = $this->input->post('tags');
-    
-        // Get filtered data
-        if (empty($tanggal_awal) && empty($tanggal_akhir)) {
-            // Fetch all data if no date range is selected
-            $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
-            $periode = "Semua Data";
-        } else {
-            // Fetch data based on the selected date range
-            $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-            $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
-        }
-    
-        // Load the mPDF library
-        $this->load->library('pdf');
-        $mpdf = new \Mpdf\Mpdf([
-            'format' => 'A4',
-            'margin_top' => 10, // Atur margin atas dalam milimeter
-            'margin_bottom' => 10, // Atur margin bawah dalam milimeter
-            'margin_left' => 15, // Atur margin kiri dalam milimeter
-            'margin_right' => 15, // Atur margin kanan dalam milimeter
-        ]);
-        // Set HTML Header
-        $header = '
-            <div style="text-align: center; font-weight: bold; font-size: 10pt; margin-bottom: 10px;">
-                <h3>CCS | REKAP PELAPORAN</h3>
-                <p>' . $periode . '</p>
-            </div>
-        ';
-        $mpdf->SetHTMLHeader($header, 'O');
-        $mpdf->SetHTMLHeader($header, 'E');
-    
-        // Set HTML Footer
-        $footer = '
-            <div style="width: 100%; text-align: right; margin-top: 25px;">
-                <div style="display: inline-block; width: 100%; text-align: right;">
-                    <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
-                    <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
-                    <div style="float: right; width: 100px; height: 50px; border: 1px solid black;"></div>
-                </div>
-            </div>
-            <div style="width: 100%; text-align: left;">
-                <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
-            </div>
-        ';
+    // Retrieve POST data
+    $tanggal_awal = $this->input->post('tanggal_awal');
+    $tanggal_akhir = $this->input->post('tanggal_akhir');
+    $status_ccs = $this->input->post('status_ccs');
+    $nama_klien = $this->input->post('nama_klien');
+    $tags = $this->input->post('tags');
 
-        $mpdf->SetHTMLFooter($footer);
-        $mpdf->setAutoTopMargin = 'pad';
-        $mpdf->setAutoBottomMargin = 'pad';
-    
-        // Create table
-        $tableHtml = '
-        <style>
-            .table-bordered {
-                border: 1px solid black;
-                border-collapse: collapse;
-                width: 100%;
-            }
-            .table-bordered th, .table-bordered td {
-                border: 1px solid black;
-                padding: 7px;
-                text-align: left;
-            }
-            .table-bordered tr {
-                page-break-inside: avoid;
-            }
-        </style>
-            <table class="table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>No Tiket</th>
-                        <th>Nama Klien</th>
-                        <th>Perihal</th>
-                        <th>Tags</th>
-                        <th>Kategori</th>
-                        <th>Priority</th>
-                        <th>Impact</th>
-                        <th>Maxday</th>
-                        <th>Status CCS</th>
-                        <th>Handle By</th>
-                    </tr>
-                </thead>
-                <tbody>
-        ';
-    
-        // Fill table with data
-        $no = 1;
-        foreach ($filteredData as $data) {
-            $tableHtml .= '
-                <tr>
-                    <td>' . $no . '</td>
-                    <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
-                    <td>' . $data['no_tiket'] . '</td>
-                    <td>' . $data['nama'] . '</td>
-                    <td>' . $data['perihal'] . '</td>
-                    <td>' . $data['tags'] . '</td>
-                    <td>' . $data['kategori'] . '</td>
-                    <td>' . $data['priority'] . '</td>
-                    <td>' . $data['impact'] . '</td>
-                    <td>' . $data['maxday'] . '</td>
-                    <td>' . $data['status_ccs'] . '</td>
-                    <td>' . $data['handle_by'] . '</td>
-                </tr>
-            ';
-            $no++;
-        }
-    
-        $tableHtml .= '
-                </tbody>
-            </table>
-        ';
-    
-        // Write table to PDF
-        $mpdf->WriteHTML($tableHtml);
-        
-    
-        // Output to browser
-        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+    // Get filtered data
+    if (empty($tanggal_awal) && empty($tanggal_akhir)) {
+        // Fetch all data if no date range is selected
+        $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
+        $periode = "Semua Data";
+    } else {
+        // Fetch data based on the selected date range
+        $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+        $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
     }
+
+    // Load the mPDF library
+    $this->load->library('pdf');
+    $mpdf = new \Mpdf\Mpdf([
+        'format' => 'A4',
+        'margin_top' => 30, // Margin atas yang cukup untuk header
+        'margin_bottom' => 20, // Adjusted margin bottom
+        'margin_left' => 15,
+        'margin_right' => 15,
+    ]);
+
+    $header = '
+        <div class="pdf-header" style="text-align: center; margin-bottom: 20px;"> <!-- Added margin-bottom -->
+            <h3>CCS | REKAP PELAPORAN</h3>
+            <p>' . $periode . '</p>
+        </div>
+    ';
+    $mpdf->SetHTMLHeader($header, 'O');
+    $mpdf->SetHTMLHeader($header, 'E');
+
+    // Set HTML Footer
+    $footer = '
+        <div style="width: 100%; text-align: right; margin-top: 25px;">
+            <div style="display: inline-block; width: 100%; text-align: right;">
+                <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+                <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+                <div style="float: right; width: 100px; height: 50px; border: 1px solid black;"></div>
+            </div>
+        </div>
+        <div style="width: 100%; text-align: left;">
+            <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
+        </div>';
+
+    $mpdf->SetHTMLFooter($footer);
+    $mpdf->setAutoTopMargin = 'pad';
+    $mpdf->setAutoBottomMargin = 'pad';
+
+    $tableHtml = '
+    <style>
+        .pdf-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 12pt;
+            margin-bottom: 20px; /* Margin bawah untuk header */
+        }
+        .table-bordered {
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px; /* Adjusted margin atas untuk tabel */
+        }
+        .table-bordered th, .table-bordered td {
+            border: 1px solid black;
+            padding: 7px;
+            text-align: left;
+        }
+        .table-bordered tr {
+            page-break-inside: avoid;
+        }
+    </style>
+        <table class="table-bordered">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>No Tiket</th>
+                    <th>Nama Klien</th>
+                    <th>Perihal</th>
+                    <th>Tags</th>
+                    <th>Kategori</th>
+                    <th>Priority</th>
+                    <th>Impact</th>
+                    <th>Maxday</th>
+                    <th>Status CCS</th>
+                    <th>Handle By</th>
+                </tr>
+            </thead>
+            <tbody>
+    ';
+
+    // Isi tabel dengan data
+    $no = 1;
+    foreach ($filteredData as $data) {
+        $tableHtml .= '
+            <tr>
+                <td>' . $no . '</td>
+                <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
+                <td>' . $data['no_tiket'] . '</td>
+                <td>' . $data['nama'] . '</td>
+                <td>' . $data['perihal'] . '</td>
+                <td>' . $data['tags'] . '</td>
+                <td>' . $data['kategori'] . '</td>
+                <td>' . $data['priority'] . '</td>
+                <td>' . $data['impact'] . '</td>
+                <td>' . $data['maxday'] . '</td>
+                <td>' . $data['status_ccs'] . '</td>
+                <td>' . $data['handle_by'] . '</td>
+            </tr>
+        ';
+        $no++;
+    }
+
+    $tableHtml .= '
+            </tbody>
+        </table>
+    ';
+
+    // Tulis Header dan Table ke PDF
+    $mpdf->WriteHTML('<div style="margin-bottom: 10px;"></div>'); // Tambahkan jarak antara header dan tabel
+    $mpdf->WriteHTML($tableHtml);
+
+    // Add additional margin below the table to separate it from the footer
+    $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
+
+    $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+}
+
     
     public function rekap_pelaporan_pdf1()
 {
