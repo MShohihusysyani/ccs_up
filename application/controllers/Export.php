@@ -94,7 +94,7 @@ class Export extends CI_Controller {
         .pdf-header {
             text-align: center;
             font-weight: bold;
-            font-size: 12pt;
+            font-size: 14pt;
             margin-bottom: 20px; /* Margin bawah untuk header */
         }
         .table-bordered {
@@ -107,6 +107,10 @@ class Export extends CI_Controller {
             border: 1px solid black;
             padding: 7px;
             text-align: left;
+        }
+        .table-bordered th {
+            background-color: #f2f2f2; /* Background color for table header */
+            color: #000000; /* Text color for table header */
         }
         .table-bordered tr {
             page-break-inside: avoid;
