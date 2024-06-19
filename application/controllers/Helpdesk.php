@@ -122,16 +122,21 @@ public function datepelaporan()
     $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
     $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
-    if ($this->form_validation->run() == FALSE) {
-        // Validation failed, prepare data for the view with error messages
-        $data['errors'] = validation_errors();
-        $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = [];
+    // Load data for the view
+    $data = array(
+        'errors' => '',
+        'klien' => $this->client_model->getClient(),
+        'pencarian_data' => array(),
+        'tanggal_awal' => '',
+        'tanggal_akhir' => '',
+        'status_ccs' => '',
+        'nama_klien' => '',
+        'tags' => ''
+    );
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/helpdesk_sidebar');
-        $this->load->view('helpdesk/data_pelaporan', $data);
-        $this->load->view('templates/footer');
+    if ($this->form_validation->run() == FALSE) {
+        // Validation failed, prepare error messages
+        $data['errors'] = validation_errors();
     } else {
         // Validation passed, retrieve POST data
         $tanggal_awal = $this->input->post('tanggal_awal');
@@ -140,24 +145,27 @@ public function datepelaporan()
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
 
-		// var data for view 
-		$data['tanggal_awal'] = $tanggal_awal;
-		$data['tanggal_akhir'] = $tanggal_akhir;
-		$data['status_ccs'] = $status_ccs;
-		$data['nama_klien'] = $nama_klien;
-		$data['tags'] = $tags;
+        // Retrieve user division (assuming it's stored in session or from authentication)
+        $user_id = $this->session->userdata('id_user'); // Adjust this based on your actual session logic
 
-        // Get data from the models
-        $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+        // Get data from the models based on division
+        $data['pencarian_data'] = $this->pelaporan_model->getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags, $user_id);
 
-        // Load views with data
-        $this->load->view('templates/header');
-        $this->load->view('templates/helpdesk_sidebar');
-        $this->load->view('helpdesk/data_pelaporan', $data);
-        $this->load->view('templates/footer');
+        // Set the retrieved input data to be passed to the view
+        $data['tanggal_awal'] = $tanggal_awal;
+        $data['tanggal_akhir'] = $tanggal_akhir;
+        $data['status_ccs'] = $status_ccs;
+        $data['nama_klien'] = $nama_klien;
+        $data['tags'] = $tags;
     }
+
+    // Load views with data
+    $this->load->view('templates/header');
+    $this->load->view('templates/helpdesk_sidebar');
+    $this->load->view('helpdesk/data_pelaporan', $data);
+    $this->load->view('templates/footer');
 }
+
 
 
       //FINISH HELPDESK
