@@ -35,49 +35,35 @@ class Export_model extends CI_Model {
 }
 
 
-    public function get_data_by_date_range($start_date, $end_date) {
-        $this->db->where('waktu_pelaporan ', $start_date);
-        $this->db->where('waktu_pelaporan ', $end_date);
-        $query = $this->db->get('pelaporan');
-        return $query->result();
+
+public function getPelaporanHD($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
+{
+    $user_id = $this->session->userdata('id_user');
+
+        $this->db->select('pelaporan.*'); // Select fields from both tables
+        $this->db->from('forward'); // Specify the base table
+        $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('forward.user_id', $user_id);
+        $this->db->where('pelaporan.status_ccs', 'FINISH');
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+
+    if ($tanggal_awal && $tanggal_akhir) {
+        $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+        $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+    }
+    if ($status_ccs) {
+        $this->db->where('status_ccs', $status_ccs);
+    }
+    if ($nama_klien) {
+        $this->db->where('nama', $nama_klien);
+    }
+    if ($tags) {
+        $this->db->where('tags', $tags);
     }
 
-    public function getPelaporan_data($tgla, $tglb)
-    {
-        $this->db->select('*');
-        $this->db->from('pelaporan');
-        $this->db->where('status_ccs', 'FINISH');
-        $this->db->where('waktu_pelaporan >=', $tgla);
-        $this->db->where('waktu_pelaporan <=', $tglb);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
+    return $this->db->get()->result_array();
+}
 
-
-	public function view_all(){
-		return $this->db->get('pelaporan')->result(); // Tampilkan semua data transaksi
-	}
-
-    public function view_by_date($tgla, $tglb){
-        $tgla = $this->db->escape($tgla);
-        $tglb = $this->db->escape($tglb);
-
-        $this->db->where('DATE(waktu_pelaporan) BETWEEN '.$tgla.' AND '.$tglb); // Tambahkan where tanggal nya
-
-		return $this->db->get('pelaporan')->result();// Tampilkan data transaksi sesuai tanggal yang diinput oleh user pada filter
-	}
-
-    function toExcelAll() {
-        $this->db->select("id_pelaporan, nama, kategori, waktu_pelaporan, tags, judul, perihal, impact, maxday, handle_by, status_ccs ");
-        $this->db->from("pelaporan");
-        $this->db->where('waktu_pelaporan >=', $this->input->post('tgla')); //Nama table nya saya asumsikan tanggal_awal yaa gan hehe
-        $this->db->where('waktu_pelaporan <=', $this->input->post('tgla'));
-        $getData = $this->db->get();
-        if($getData->num_rows() > 0)
-        return $getData->result_array();
-        else
-        return null;
-    }
 
 	public function getAll()
     {

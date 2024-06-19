@@ -149,15 +149,6 @@ class Pelaporan_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-
-    public function getDate1($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien)
-    {
-        $query = "SELECT  pelaporan.no_tiket, pelaporan.waktu_pelaporan, pelaporan.id_pelaporan, pelaporan.kategori, pelaporan.status_ccs, pelaporan.priority, pelaporan.perihal, pelaporan.handle_by,pelaporan.waktu_approve, pelaporan.file, pelaporan.nama, pelaporan.user_id, pelaporan.tags, pelaporan.impact, pelaporan.maxday
-        FROM pelaporan
-        where waktu_pelaporan BETWEEN '$tanggal_awal' AND '$tanggal_akhir' AND status_ccs = '$status_ccs' AND nama = '$nama_klien'";
-        return $this->db->query($query)->result_array();
-    }
-
     public function getDate($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
     {
     $this->db->select('*');
@@ -187,7 +178,8 @@ class Pelaporan_model extends CI_Model
     return $query->result();
 }
 
-public function getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags, $id_divisi)
+// Rekap pelaporan per user helpdesk
+public function getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags)
 {
     $user_id = $this->session->userdata('id_user');
 
@@ -224,9 +216,6 @@ public function getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien
     $query = $this->db->get();
     return $query->result();
 }
-
-
-
 
     // LAPORAN KATEGORI
 
