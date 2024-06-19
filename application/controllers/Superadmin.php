@@ -599,30 +599,32 @@ public function fungsi_reject()
             $this->load->view('templates/footer');
     }
 
-    public function rekapPelaporan(){
-         // Load necessary models
-    $this->load->model('Superadmin_model', 'superadmin_model');
-    $this->load->model('Client_model', 'client_model');
-
-	// var data for view 
-	$data['tanggal_awal'] = '';
-	$data['tanggal_akhir'] = '';
-	$data['status_ccs'] = '';
-	$data['nama_klien'] = '';
-	$data['tags'] = '';
-
-    // Get all data from the models
-    $data['klien'] = $this->client_model->getClient();
-    $data['pencarian_data'] = $this->superadmin_model->getAllData(); // A method that returns all data
-
-    // Load views with data
-    $this->load->view('templates/header');
-    $this->load->view('templates/superadmin_sidebar');
-    $this->load->view('superadmin/rekap_pelaporan', $data);
-    $this->load->view('templates/footer');
+    public function rekapPelaporan()
+    {
+        // Load necessary models
+        $this->load->model('Superadmin_model', 'superadmin_model');
+        $this->load->model('Client_model', 'client_model');
+    
+        // Initialize empty data for view
+        $data = [
+            'tanggal_awal' => '',
+            'tanggal_akhir' => '',
+            'status_ccs' => '',
+            'nama_klien' => '',
+            'tags' => '',
+        ];
+    
+        // Fetch data from models
+        $data['klien'] = $this->client_model->getClient();
+        $data['pencarian_data'] = $this->superadmin_model->getAllData(); // Replace with appropriate method
+    
+        // Load views with data
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/rekap_pelaporan', $data); // Pass data to the view
+        $this->load->view('templates/footer');
     }
-
-
+    
 
 public function datepelaporan()
 {
