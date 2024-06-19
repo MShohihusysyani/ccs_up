@@ -6,6 +6,10 @@
                 <div class="header">
                     <h2>FILTER</h2>
                 </div>
+
+                <!-- DataTables CSS -->
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"> -->
+
                 <div class="body">
                     <div class="row clearfix">
                         <?= form_open('superadmin/datepelaporan'); ?>
@@ -248,3 +252,40 @@
         });
     });
 </script>
+
+<!-- DataTables JS
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    $('#dataTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo base_url('superadmin/fetch_data'); ?>",
+            "type": "POST",
+            "data": function (data) {
+                data.tanggal_awal = $('#tanggal_awal').val();
+                data.tanggal_akhir = $('#tanggal_akhir').val();
+                data.status_ccs = $('#status_ccs').val();
+                data.nama_klien = $('#nama_klien').val();
+                data.tags = $('#tags').val();
+            }
+        },
+        "columns": [
+            { "data": "no" },       // Include the 'no' field for serial number
+            { "data": "waktu_pelaporan" },
+            { "data": "no_tiket" },
+            { "data": "nama" },
+            { "data": "perihal" },
+            { "data": "tags" },
+            { "data": "kategori" },
+            { "data": "impact" },
+            { "data": "priority" },
+            { "data": "maxday" },
+            { "data": "status_ccs" }
+        ]
+    });
+});
+
+</script> -->

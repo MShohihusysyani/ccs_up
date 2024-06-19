@@ -403,4 +403,29 @@ class Superadmin_model extends CI_Model {
         $query = $this->db->get('pelaporan'); // Replace 'pelaporan' with your actual table name
         return $query->row_array();
     }
+
+//     public function fetchData($columns)
+// {
+//     $this->db->select('*');
+//     $this->db->from('pelaporan'); // Replace with your table name
+//     // Add your filtering and sorting logic here based on $_POST parameters
+
+//     $query = $this->db->get();
+//     return $query->result_array();
+// }
+
+// public function countAllData()
+// {
+//     return $this->db->count_all('pelaporan'); // Replace with your table name
+// }
+
+// public function countFilteredData()
+// {
+//     $this->db->select('*');
+//     $this->db->from('pelaporan'); // Replace with your table name
+//     // Add your filtering logic here based on $_POST parameters
+
+//     $query = $this->db->get();
+//     return $query->num_rows();
+// }
 }

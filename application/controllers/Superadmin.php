@@ -677,6 +677,67 @@ public function datepelaporan()
     }
 }
 
+// // Superadmin controller (superadmin.php)
+// public function fetch_data()
+// {
+//     // Load necessary models
+//     $this->load->model('Superadmin_model', 'superadmin_model');
+    
+//     // Define columns
+//     $columns = array(
+//         0 => 'waktu_pelaporan',    // Adjust column names based on your actual database structure
+//         1 => 'no_tiket',
+//         2 => 'nama',
+//         3 => 'perihal',
+//         4 => 'tags',
+//         5 => 'kategori',
+//         6 => 'impact',
+//         7 => 'priority',
+//         8 => 'maxday',
+//         9 => 'status_ccs'
+//     );
+
+//     // Fetch data from model
+//     $data = $this->superadmin_model->fetchData($columns);
+
+//     // Initialize array to store formatted data
+//     $formatted_data = array();
+
+//     // Initialize counter
+//     $no = 1;
+
+//     // Format data with incremental 'no' field
+//     foreach ($data as $row) {
+//         $formatted_row = array(
+//             'no' => $no++,  // Increment and assign 'no' field
+//             'waktu_pelaporan' => $row['waktu_pelaporan'],
+//             'no_tiket' => $row['no_tiket'],
+//             'nama' => $row['nama'],
+//             'perihal' => $row['perihal'],
+//             'tags' => $row['tags'],
+//             'kategori' => $row['kategori'],
+//             'impact' => $row['impact'],
+//             'priority' => $row['priority'],
+//             'maxday' => $row['maxday'],
+//             'status_ccs' => $row['status_ccs']
+//         );
+//         $formatted_data[] = $formatted_row;
+//     }
+
+//     // Format data for DataTables
+//     $json_data = array(
+//         "draw" => intval($this->input->post('draw')),
+//         "recordsTotal" => intval($this->superadmin_model->countAllData()),
+//         "recordsFiltered" => intval($this->superadmin_model->countFilteredData()),
+//         "data" => $formatted_data  // Ensure $formatted_data is correctly formatted
+//     );
+
+//     // Output JSON
+//     echo json_encode($json_data);
+//     exit();
+// }
+
+
 
 
     // REKAP KATEGORI
