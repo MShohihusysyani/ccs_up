@@ -113,7 +113,7 @@
                 </div>
                 <div class="body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover js-exportable dataTable" id="example">
+                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
                             <thead>
                                 <tr>
                                     <th>No</th>
