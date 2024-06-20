@@ -178,6 +178,35 @@ class Pelaporan_model extends CI_Model
     return $query->result();
 }
 
+public function getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien, $status_ccs, $tags)
+    {
+        $this->db->select('*');
+        $this->db->from('pelaporan'); // Sesuaikan dengan nama tabel yang sesuai
+
+        // Filter berdasarkan tanggal_awal dan tanggal_akhir jika ada
+        if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+            $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+            $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+        }
+
+        // Filter berdasarkan nama_klien jika ada
+        if (!empty($nama_klien)) {
+            $this->db->like('nama', $nama_klien);
+        }
+
+        if (!empty($status_ccs)) {
+            $this->db->where('status_ccs', $status_ccs);
+        }
+
+        if (!empty($tags)) {
+            $this->db->where('tags', $tags);
+        }
+
+
+        $query = $this->db->get();
+        return $query->result(); // Mengembalikan hasil query
+    }
+
 // Rekap pelaporan per user helpdesk
 public function getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags)
 {

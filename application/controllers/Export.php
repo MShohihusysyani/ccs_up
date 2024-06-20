@@ -30,6 +30,44 @@ class Export extends CI_Controller {
 
         $this->load->view('cetak/print_tiket', $data);
     }
+
+    public function rekap_pelaporan_pdf_server_side() {
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
+        $status_ccs = $this->input->post('status_ccs');
+    
+        $filters = array(
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'nama_klien' => $nama_klien,
+            'tags' => $tags,
+            'status_ccs' => $status_ccs
+        );
+    
+        $data = $this->serverside_model->get_filtered_data($filters);
+        // Generate PDF using $data
+    }
+    
+    public function rekap_pelaporan_excel_server_side() {
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
+        $status_ccs = $this->input->post('status_ccs');
+    
+        $filters = array(
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'nama_klien' => $nama_klien,
+            'tags' => $tags,
+            'status_ccs' => $status_ccs
+        );
+    
+        $data = $this->serverside_model->get_filtered_data($filters);
+        // Generate Excel using $data
+    }
     
     public function rekap_pelaporan_pdf()
 {
@@ -398,6 +436,7 @@ public function rekap_pelaporan_excel()
     // Mendapatkan data berdasarkan filter tanggal jika diisi
     if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
         $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir);
+    
     } else {
         // Mendapatkan semua data jika tanggal tidak diisi
         $query = $this->pelaporan_model->getDate();
