@@ -7,11 +7,12 @@
                     <h2>FILTER</h2>
                 </div>
 
-                <!-- DataTables CSS -->
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"> -->
+                <!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+                <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+                <script type="text/javascript" src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
 
                 <div class="body">
-                    <div class="row clearfix">
+                <div class="row clearfix">
                         <?= form_open('superadmin/datepelaporan'); ?>
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
                                 <label for="dari_tgl">Dari Tanggal</label>
@@ -238,9 +239,38 @@
     </div>
 </div>
 
+<!-- Modal for Selecting Client -->
+<div class="modal fade" id="modalNamaKlien" tabindex="-1" role="dialog" aria-labelledby="modalNamaKlienLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalNamaKlienLabel">Pilih Klien</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="tableNamaKlien" class="table table-bordered table-striped table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Klien</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populate with data from backend -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilih3', function() {
@@ -253,27 +283,18 @@
     });
 </script>
 
-<!-- DataTables JS
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-    $('#dataTable').DataTable({
+<!-- <script type="text/javascript">
+    $(document).ready(function() {
+    // DataTables initialization
+    var table = $('#example').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": "<?php echo base_url('superadmin/fetch_data'); ?>",
-            "type": "POST",
-            "data": function (data) {
-                data.tanggal_awal = $('#tanggal_awal').val();
-                data.tanggal_akhir = $('#tanggal_akhir').val();
-                data.status_ccs = $('#status_ccs').val();
-                data.nama_klien = $('#nama_klien').val();
-                data.tags = $('#tags').val();
-            }
+            "type": "POST"
         },
         "columns": [
-            { "data": "no" },       // Include the 'no' field for serial number
+            { "data": "no" },
             { "data": "waktu_pelaporan" },
             { "data": "no_tiket" },
             { "data": "nama" },
@@ -286,6 +307,62 @@
             { "data": "status_ccs" }
         ]
     });
-});
 
+    // Handle client selection modal
+    $('#nama_klien').click(function() {
+        $('#modalNamaKlien').modal('show');
+    });
+
+    // Handle client selection from DataTables modal
+    $('#tableNamaKlien').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo base_url('superadmin/fetch_clients'); ?>",
+            "type": "POST"
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "nama_klien" },
+            {
+                "data": null,
+                "render": function(data, type, row) {
+                    return '<button class="btn btn-sm btn-info select-client" data-id="' + row.id + '" data-nama-klien="' + row.nama_klien + '">Pilih</button>';
+                }
+            }
+        ]
+    });
+
+    //  // Handle form submission for filtering
+    // $('#filterForm').on('submit', function(e) {
+    //         e.preventDefault();
+    //         table.draw(); // Redraw the DataTable based on new filters
+    //     });
+        $('#formFilter').submit(function(event) {
+    event.preventDefault();
+    var formData = $(this).serialize();
+    
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            // Perbarui tabel dengan data baru
+            table.clear().draw(); // Bersihkan data tabel
+            table.rows.add(response.data).draw(); // Tambahkan data baru dan gambar ulang tabel
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+        }
+    });
+});
+    // Handle client selection
+    $('#tableNamaKlien tbody').on('click', 'button.select-client', function() {
+        var id = $(this).data('id');
+        var namaKlien = $(this).data('nama-klien');
+        $('#nama_klien').val(namaKlien); // Set selected client name
+        $('#modalNamaKlien').modal('hide'); // Hide modal after selection
+    });
+
+});
 </script> -->

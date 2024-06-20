@@ -677,68 +677,94 @@ public function datepelaporan()
     }
 }
 
-// // Superadmin controller (superadmin.php)
-// public function fetch_data()
-// {
-//     // Load necessary models
-//     $this->load->model('Superadmin_model', 'superadmin_model');
-    
-//     // Define columns
-//     $columns = array(
-//         0 => 'waktu_pelaporan',    // Adjust column names based on your actual database structure
-//         1 => 'no_tiket',
-//         2 => 'nama',
-//         3 => 'perihal',
-//         4 => 'tags',
-//         5 => 'kategori',
-//         6 => 'impact',
-//         7 => 'priority',
-//         8 => 'maxday',
-//         9 => 'status_ccs'
-//     );
+public function fetch_data() {
+    $this->load->model('Serverside_model', 'serverside_model');
 
-//     // Fetch data from model
-//     $data = $this->superadmin_model->fetchData($columns);
+    $filters = array(
+        'tanggal_awal' => $this->input->post('tanggal_awal'),
+        'tanggal_akhir' => $this->input->post('tanggal_akhir'),
+        'nama_klien' => $this->input->post('nama_klien') ?: '', // default to empty string if not provided
+        'tags' => $this->input->post('tags') ?: '', // default to empty string if not provided
+        'status_ccs' => $this->input->post('status_ccs') ?: '' // default to empty string if not provided
+    );
 
-//     // Initialize array to store formatted data
-//     $formatted_data = array();
+    $list = $this->serverside_model->get_datatables($filters);
+    $data = array();
+    $no = $_POST['start'];
+    foreach ($list as $dataItem) {
+        $no++;
+        $row = array();
+        $row['no'] = $no;
+        $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
+        $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
+        $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
+        $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
+        $row['tags'] = '<span class="label label-info">'.$dataItem->tags.'</span>';
+        $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
+        $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
+        $row['priority'] = $this->get_priority_label($dataItem->priority);
+        $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
+        $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
+        $data[] = $row;
+    }
 
-//     // Initialize counter
-//     $no = 1;
+    $output = array(
+        "draw" => $_POST['draw'],
+        "recordsTotal" => $this->serverside_model->count_all(),
+        "recordsFiltered" => $this->serverside_model->count_filtered($filters),
+        "data" => $data,
+    );
 
-//     // Format data with incremental 'no' field
-//     foreach ($data as $row) {
-//         $formatted_row = array(
-//             'no' => $no++,  // Increment and assign 'no' field
-//             'waktu_pelaporan' => $row['waktu_pelaporan'],
-//             'no_tiket' => $row['no_tiket'],
-//             'nama' => $row['nama'],
-//             'perihal' => $row['perihal'],
-//             'tags' => $row['tags'],
-//             'kategori' => $row['kategori'],
-//             'impact' => $row['impact'],
-//             'priority' => $row['priority'],
-//             'maxday' => $row['maxday'],
-//             'status_ccs' => $row['status_ccs']
-//         );
-//         $formatted_data[] = $formatted_row;
-//     }
+    echo json_encode($output);
+}
 
-//     // Format data for DataTables
-//     $json_data = array(
-//         "draw" => intval($this->input->post('draw')),
-//         "recordsTotal" => intval($this->superadmin_model->countAllData()),
-//         "recordsFiltered" => intval($this->superadmin_model->countFilteredData()),
-//         "data" => $formatted_data  // Ensure $formatted_data is correctly formatted
-//     );
+private function get_priority_label($priority) {
+    if ($priority == 'High') {
+        return '<span class="label label-danger">High</span>';
+    } elseif ($priority == 'Medium') {
+        return '<span class="label label-warning">Medium</span>';
+    } elseif ($priority == 'Low') {
+        return '<span class="label label-info">Low</span>';
+    }
+}
 
-//     // Output JSON
-//     echo json_encode($json_data);
-//     exit();
-// }
+private function get_maxday_label($maxday) {
+    if ($maxday == '7') {
+        return '<span class="label label-danger">7</span>';
+    } elseif ($maxday == '60') {
+        return '<span class="label label-warning">60</span>';
+    } elseif ($maxday == '90') {
+        return '<span class="label label-info">90</span>';
+    }
+}
 
+private function get_status_label($status) {
+    if ($status == 'FINISH') {
+        return '<span class="label label-success">FINISH</span>';
+    } elseif ($status == 'CLOSE') {
+        return '<span class="label label-warning">CLOSE</span>';
+    } elseif ($status == 'HANDLE') {
+        return '<span class="label label-info">HANDLE</span>';
+    } elseif ($status == 'ADDED') {
+        return '<span class="label label-primary">ADDED</span>';
+    }
+}
 
+// FETCH CLIENT
+public function fetch_clients() {
+    $this->load->model('Serversid_model', 'serverside_model');
+    $data = $this->serverside_model->get_clients(); // Adjust method name as per your model
 
+    //Prepare JSON response as required by DataTables
+    $response = array(
+        "draw" => intval($this->input->post('draw')), // DataTables draw number
+        "recordsTotal" => count($data), // Total records (without filtering)
+        "recordsFiltered" => count($data), // Total records (with filtering, if applied)
+        "data" => $data // Client data
+    );
+
+    echo json_encode($response);
+}
 
     // REKAP KATEGORI
     public function rekapKategori()
