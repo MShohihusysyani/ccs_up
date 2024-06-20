@@ -33,7 +33,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="display" id="example">
+                            <table class="display table table-striped table-bordered table-hover" id="example">
                                 <thead>
                                     <tr>
                                             <th>No</th>
