@@ -231,14 +231,6 @@
                                                     href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>Detail</a>
-
-                                                    <br>
-                                                    <br>
-
-                                                    <a class="btn btn-sm btn-primary"
-                                                    href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i
-                                                    class="material-icons">print</i> <span
-                                                    class="icon-name"></span>Print Detail</a>
                                                 
                                             </td>
                                         </tr>
