@@ -401,6 +401,9 @@ public function rekap_pelaporan_excel()
 
     $tanggal_awal = $this->input->post('tanggal_awal');
     $tanggal_akhir = $this->input->post('tanggal_akhir');
+    $nama_klien = $this->input->post('nama_klien');
+    $tags = $this->input->post('tags');
+    $status_ccs = $this->input->post('status_ccs');
 
     // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
     $periode_text = "Semua Data";
@@ -433,14 +436,16 @@ public function rekap_pelaporan_excel()
 
     $this->load->model('Pelaporan_model', 'pelaporan_model');
 
-    // Mendapatkan data berdasarkan filter tanggal jika diisi
-    if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
-        $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir);
+    // // Mendapatkan data berdasarkan filter tanggal jika diisi
+    // if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+    //     $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir);
     
-    } else {
-        // Mendapatkan semua data jika tanggal tidak diisi
-        $query = $this->pelaporan_model->getDate();
-    }
+    // } else {
+    //     // Mendapatkan semua data jika tanggal tidak diisi
+    //     $query = $this->pelaporan_model->getDate();
+    // }
+
+    $query = $this->pelaporan_model->getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien, $tags, $status_ccs);
 
     $no = 1;
     $row = 4;

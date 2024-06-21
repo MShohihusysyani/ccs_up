@@ -178,7 +178,7 @@ class Pelaporan_model extends CI_Model
     return $query->result();
 }
 
-public function getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien, $status_ccs, $tags)
+public function getDateFiltered($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $tags = null, $status_ccs = null)
     {
         $this->db->select('*');
         $this->db->from('pelaporan'); // Sesuaikan dengan nama tabel yang sesuai
@@ -194,13 +194,14 @@ public function getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien, $sta
             $this->db->like('nama', $nama_klien);
         }
 
+        if (!empty($tags)) {
+            $this->db->where('tags', $tags);
+        }
+
         if (!empty($status_ccs)) {
             $this->db->where('status_ccs', $status_ccs);
         }
 
-        if (!empty($tags)) {
-            $this->db->where('tags', $tags);
-        }
 
 
         $query = $this->db->get();
