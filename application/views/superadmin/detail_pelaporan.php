@@ -37,17 +37,6 @@ margin: 20px auto;
                     <h2>
                         Comment
                     </h2>
-                    <br>
-                    <form action="<?= base_url('export/cetak_tiket'); ?>" method="get"
-                                enctype="multipart/form-data">
-                                <div>
-                                    <button class='btn btn-primary waves-effect m-r-20' type="submit">
-                                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                                        Export Pdf
-                                    </button>
-                                </div>
-                    </form>
-                </div>
                 <div class="body">
                     <?php echo form_open_multipart('supervisor/add_comment') ?>
                     <form>

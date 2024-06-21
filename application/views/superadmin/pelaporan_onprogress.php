@@ -102,7 +102,7 @@
                                         <th>Priority</th>
                                         <th>Impact</th>
                                         <th>Max Day</th>
-                                        <th>Time Left</th>
+                                        <!-- <th>Time Left</th> -->
                                         <th>Status CCS</th>
                                         <th>Status</th>
                                         <th>Handle By</th>
@@ -122,7 +122,7 @@
                                         <th>Priority</th>
                                         <th>Impact</th>
                                         <th>Max Day</th>
-                                        <th>Time Left</th>
+                                        <!-- <th>Time Left</th> -->
                                         <th>Status CCS</th>
                                         <th>Status</th>
                                         <th>Handle By</th>
@@ -178,7 +178,7 @@
                                             <!-- Inside the table body -->
                                             <!-- <td><script>document.write(calculateTimeLeft(<?= $dp['maxday']; ?>));</script> days</td> -->
                                             <!-- Inside the table body -->
-                                            <td class="dynamic-time-left" data-maxday="<?= $dp['maxday']; ?>"></td>
+                                            <!-- <td class="dynamic-time-left" data-maxday="<?= $dp['maxday']; ?>"></td> -->
 
                                             <td>
                                                 <?php if ($dp['status_ccs'] == 'FINISH'): ?>
@@ -223,12 +223,22 @@
                                                         data-target="#editModalCP"> <i class="material-icons">edit</i> <span
                                                         class="icon-name">Edit</span></a>
                                                 </div>
+
                                                 <br>
                                                 <br>
+
                                                 <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
+                                                    href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>Detail</a>
+
+                                                    <br>
+                                                    <br>
+
+                                                    <a class="btn btn-sm btn-primary"
+                                                    href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i
+                                                    class="material-icons">print</i> <span
+                                                    class="icon-name"></span>Print Detail</a>
                                                 
                                             </td>
                                         </tr>

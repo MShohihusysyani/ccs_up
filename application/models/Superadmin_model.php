@@ -404,6 +404,15 @@ class Superadmin_model extends CI_Model {
         return $query->row_array();
     }
 
+    public function getTicketDetail($no_tiket)
+{
+    $this->db->select('*');
+    $this->db->from('pelaporan');
+    $this->db->where('no_tiket', $no_tiket);
+    $query = $this->db->get();
+    return $query->row();
+}
+
 //     public function fetchData($columns)
 // {
 //     $this->db->select('*');

@@ -31,6 +31,21 @@ class Export extends CI_Controller {
         $this->load->view('cetak/print_tiket', $data);
     }
 
+    public function print_detail($no_tiket)
+{
+    $this->load->model('Superadmin_model', 'superadmin_model');
+
+    // Fetch ticket details
+    $ticket = $this->superadmin_model->getTicketDetail($no_tiket);
+
+    if (empty($ticket)) {
+        show_404();
+    }
+
+    // Load the view for printing
+    $this->load->view('cetak/print_tiket', ['ticket' => $ticket]);
+}
+
     public function rekap_pelaporan_pdf_server_side() {
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');

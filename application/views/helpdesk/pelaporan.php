@@ -169,6 +169,14 @@
                                                 <br>
                                                 <br>
 
+                                                <a class="btn btn-sm btn-primary"
+                                                    href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i
+                                                    class="material-icons">print</i> <span
+                                                    class="icon-name"></span>Print Detail</a>
+
+                                                <br>
+                                                <br>
+
                                                 <div class="btn btn-sm btn-info">
                                                     <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i
@@ -176,7 +184,6 @@
                                                         class="icon-name">Finish</span>
                                                     </div>
                                                 </div>
-
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
