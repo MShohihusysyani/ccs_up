@@ -192,6 +192,13 @@
                     data.status_ccs = $('#status_ccs').val();
                 }
             },
+            "order": [[1, 'desc']], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+            "columnDefs": [
+            { 
+            "targets": [ 0 ], 
+            "orderable": false,
+            },
+        ],
             "columns": [
                 { "data": "no" },
                 { "data": "waktu_pelaporan" },
@@ -206,6 +213,7 @@
                 { "data": "status_ccs" }
             ]
         });
+        
 
         // Handle form submission for filtering
         $('#filterForm').on('submit', function(e) {
