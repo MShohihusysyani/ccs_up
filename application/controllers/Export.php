@@ -167,8 +167,12 @@ class Export extends CI_Controller {
         }
         .table-bordered tr {
             page-break-inside: avoid;
-            page-break-before: always;
+            page-break-after: auto;
         }
+        .page-break {
+                page-break-before: always;
+            }
+        
     </style>
         <table class="table-bordered">
             <thead>
@@ -403,7 +407,7 @@ public function rekap_pelaporan_excel()
     ];
 
     $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
-    $sheet->mergeCells('A1:L1');
+    $sheet->mergeCells('A1:E1');
     $sheet->getStyle('A1')->getFont()->setBold(true);
     $sheet->getStyle('A1')->getFont()->setSize(15);
     $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
@@ -443,7 +447,7 @@ public function rekap_pelaporan_excel()
 
     $sheet->getStyle('A2')->getFont()->setBold(true);
     $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-    $sheet->mergeCells('A2:L2');
+    $sheet->mergeCells('A2:E2');
     $sheet->getStyle('A3:L3')->applyFromArray($style_col);
 
     $sheet->getRowDimension('1')->setRowHeight(20);
@@ -563,7 +567,7 @@ public function rekap_pelaporan_excel()
         ];
 
         $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
-        $sheet->mergeCells('A1:F1');
+        $sheet->mergeCells('A1:E1');
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle('A1')->getFont()->setSize(15);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
@@ -576,16 +580,20 @@ public function rekap_pelaporan_excel()
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
 
-        $user = $user_query->row_array(); // Fetching the user data
-		$sheet->setCellValue('A2', "CCS | REKAP PELAPORAN");
-        $sheet->setCellValue('A2', "Peroide : " .tanggal_indo($tanggal_awal) . " s/d " . tanggal_indo($tanggal_akhir));
-        // $sheet->setCellValue('A2', 'Dicetak Oleh ' . $user['nama_user'] . ' pada tanggal ' . tanggal_indo($current_date));
-        $sheet->mergeCells('A2:F2');
-        $sheet->getStyle('A2')->getFont()->setBold(true);
-        $sheet->getStyle('A2')->getFont()->setSize(15);
-        $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
+        $status_ccs = $this->input->post('status_ccs');
+    
+        // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
+        $periode_text = "Semua Data";
+        if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+            $periode_text = "Periode : " . tanggal_indo($tanggal_awal) . " s/d " . tanggal_indo($tanggal_akhir);
+        }
 
         // Buat header tabel pada baris ke 3
+        $sheet->setCellValue('A2', $periode_text);
         $sheet->setCellValue('A3', "NO");
         $sheet->setCellValue('B3', "TANGGAL");
         $sheet->setCellValue('C3', "NO TIKET");
@@ -599,7 +607,10 @@ public function rekap_pelaporan_excel()
         $sheet->setCellValue('K3', "STATUS CCS");
         $sheet->setCellValue('L3', "HANDLE BY");
 
-
+        $sheet->getStyle('A2')->getFont()->setBold(true);
+        $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('A2:E2');
+        $sheet->getStyle('A3:L3')->applyFromArray($style_col);
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
