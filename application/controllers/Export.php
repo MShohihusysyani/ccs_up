@@ -167,6 +167,7 @@ class Export extends CI_Controller {
         }
         .table-bordered tr {
             page-break-inside: avoid;
+            page-break-before: always;
         }
     </style>
         <table class="table-bordered">
