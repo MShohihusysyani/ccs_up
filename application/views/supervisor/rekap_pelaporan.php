@@ -67,9 +67,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">Filter</button><br><br>
-                                <button type="button" id="semuaDataButton" class="btn btn-success btn-lg m-l-15 waves-effect">Semua Data</button>
+                            <div class="form-group mx-sm-3">
+                                <button type="submit" class="btn btn-primary btn-sm m-l-15 waves-effect">
+                                    <i class="material-icons">search</i><span>Filter</span>
+                                </button>
+                            </div>
+                            <div class="form-group mx-sm-3">
+                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm m-l-15 waves-effect">
+                                    <i class="material-icons">restart_alt</i> <span>Reset Filter</span>
+                                </button>
+                            </div>
+                            <div class="form-group mx-sm-3">
+                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm m-l-15 waves-effect">
+                                    <i class="material-icons">sync</i><span>Semua Data</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -234,6 +245,12 @@
 
         $('#exportExcelButton').on('click', function() {
             exportData('excel');
+        });
+
+        // Handle "Reset Filter" button click
+        $('#resetFilterButton').on('click', function() {
+            $('#filterForm')[0].reset();
+            table.draw(); // Redraw the DataTable to reflect reset filters
         });
 
         function exportData(format) {
