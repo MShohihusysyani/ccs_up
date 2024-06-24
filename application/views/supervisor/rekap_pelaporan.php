@@ -81,7 +81,7 @@
                     <h2>LIST PELAPORAN</h2>
                 </div>
                 <br>
-                <div class="btn-group" role="group">
+                <div class="btn-group" role="group" style="margin-left: 20px;">
                     <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
                     </button>
