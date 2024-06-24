@@ -444,11 +444,6 @@
 
                         <label for="perihal">Catatan Finish</label>
                         <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish"  required>
-                            <script>
-                            CKEDITOR.replace('editor', {
-                            filebrowserUploadUrl: '<?php echo base_url('heldesk/finish'); ?>',
-                        });
-                        </script>
 
                         </textarea>
 
