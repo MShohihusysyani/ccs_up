@@ -97,7 +97,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Waktu Pelaporan</th>
+                                    <th>Tanggal</th>
                                     <th>No Tiket</th>
                                     <th>Nama</th>
                                     <th>Perihal</th>
