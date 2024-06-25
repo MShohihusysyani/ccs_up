@@ -208,91 +208,82 @@ class Helpdesk extends CI_Controller
         $this->load->library('form_validation');
 
         // Set validation rules
-        $this->form_validation->set_rules('catatan_finish', 'Catatan Finish', 'required|min_length[50]');
+        $this->form_validation->set_rules('catatan_finish', 'Catatan Finish', 'callback_validateCatatanFinish');
 
         // Check if the form validation passed
         if ($this->form_validation->run() == FALSE) {
             // If validation fails, set an error message and redirect back
-            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter.');
+            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
             redirect('helpdesk/pelaporan');
         } else {
-            // Handle file upload if there is a file
-            $photo = $_FILES['file_finish']['name'];
-
-            if ($photo) {
-                $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
-                $config['max_size'] = '2048';
-                $config['upload_path'] = './assets/filefinish/';
-
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-
-                if ($this->upload->do_upload('file_finish')) {
-                    $photo = $this->upload->data('file_name');
-                } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-                    $referred_from = $this->session->userdata('referred_from');
-                    redirect($referred_from, 'refresh');
-                }
-            }
-
-            if ($_FILES['upload']['size'] > 0) {
-                $config['upload_path'] = './assets/filefinish/';
-                $config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size'] = '2048'; // 2MB
-                $config['max_width'] = '1000';
-                $config['max_height'] = '500';
-
-                $this->load->library('upload', $config);
-
-                if (!$this->upload->do_upload('upload')) {
-                    $error = $this->upload->display_errors();
-                    log_message('error', 'Upload error: ' . $error);
-                    $funcNum = $_GET['CKEditorFuncNum'];
-                    echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '', 'Error: $error');</script>";
-                } else {
-                    $data = $this->upload->data();
-                    $filename = $data['file_name'];
-                    $url = base_url('uploads/' . $filename);
-                    $funcNum = $_GET['CKEditorFuncNum'];
-
-                    log_message('debug', 'Image uploaded: ' . $url);
-                    echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', 'Image uploaded successfully');</script>";
-                }
-            } else {
-                log_message('error', 'No file uploaded');
-            }
-
-
-            // Prepare the data for insertion
-            $id = $this->input->post('id_pelaporan');
-            $data = [
-                'id_pelaporan' => $id,
-                'no_tiket' => $this->input->post('no_tiket'),
-                'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
-                'perihal'  => $this->input->post('perihal'),
-                'file_finish'     => $photo,
-                'nama'     => $this->input->post('nama'),
-                'kategori' => $this->input->post('kategori'),
-                'priority'   => $this->input->post('priority'),
-                'maxday'     => $this->input->post('maxday'),
-                'catatan_finish' => $this->input->post('catatan_finish'),
-                'status'     => 'Solved',
-                'status_ccs' => 'CLOSE'
-            ];
-
-            // Remove unwanted HTML tags from data
-            $data = array_map(function ($value) {
-                return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
-            }, $data);
-
-            // Insert the data into the database
-            $this->pelaporan_model->updateHD($id, $data);
-
-            // Set a success message and redirect to the submission page
-            $this->session->set_flashdata('pesan', 'Successfully Finish!');
-            redirect('helpdesk/pelaporan');
+            $this->processFinish();
         }
+    }
+
+    // Custom validation callback
+    public function validateCatatanFinish($str)
+    {
+        $minLength = 50;
+
+        // Strip tags to get text content and check if length is less than min length
+        $textContent = strip_tags($str);
+        if (strlen($textContent) < $minLength) {
+            $this->form_validation->set_message('validateCatatanFinish', 'Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    private function processFinish()
+    {
+        // Handle file upload if there is a file
+        $photo = $_FILES['file_finish']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/filefinish/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file_finish')) {
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('helpdesk/pelaporan');
+            }
+        }
+
+        // Prepare the data for insertion
+        $id = $this->input->post('id_pelaporan');
+        $data = [
+            'id_pelaporan' => $id,
+            'no_tiket' => $this->input->post('no_tiket'),
+            'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
+            'perihal'  => $this->input->post('perihal'),
+            'file_finish'     => $photo,
+            'nama'     => $this->input->post('nama'),
+            'kategori' => $this->input->post('kategori'),
+            'priority'   => $this->input->post('priority'),
+            'maxday'     => $this->input->post('maxday'),
+            'catatan_finish' => $this->input->post('catatan_finish'),
+            'status'     => 'Solved',
+            'status_ccs' => 'CLOSE'
+        ];
+
+        // Remove unwanted HTML tags from data
+        $data = array_map(function ($value) {
+            return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
+        }, $data);
+
+        // Insert the data into the database
+        $this->pelaporan_model->updateHD($id, $data);
+
+        // Set a success message and redirect to the submission page
+        $this->session->set_flashdata('pesan', 'Successfully Finish!');
+        redirect('helpdesk/pelaporan');
     }
 
 
