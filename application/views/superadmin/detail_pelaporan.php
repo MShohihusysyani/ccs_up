@@ -71,10 +71,10 @@
                                     </div>
                                 </div>
 
-                                <label for="perihal">Perihal </label>
+                                <label for="perihal">Perihal</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" id="perihal" name="perihal" class="form-control" value="<?= $dp['perihal']; ?>" readonly>
+                                        <div id="perihal"><?= $dp['perihal']; ?></div>
                                     </div>
                                 </div>
 

@@ -15,7 +15,7 @@ class Supervisor extends CI_Controller
     {
         $this->load->model('Supervisor_model', 'supervisor_model');
         $data['data_bpr'] = $this->supervisor_model->getKlien();
-        
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/dashboard', $data);
@@ -63,7 +63,7 @@ class Supervisor extends CI_Controller
         );
         $this->category_model->updateKategori($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
-        
+
         Redirect(base_url('supervisor/category'));
     }
 
@@ -73,7 +73,7 @@ class Supervisor extends CI_Controller
         $this->load->model('Client_model', 'client_model');
         $data['no_urut'] = $this->db->get('klien')->result_array();
         $data['nama_klien'] = $this->db->get('klien')->result_array();
-        
+
         $data['klien'] = $this->client_model->getClient();
         $data['user'] = $this->client_model->getUserClient();
         $this->load->view('templates/header');
@@ -90,14 +90,11 @@ class Supervisor extends CI_Controller
         $this->form_validation->set_rules('no_klien', 'No Klien', 'required|is_unique[klien.no_klien]');
         $this->form_validation->set_rules('nama_klien', 'Nama Klient', 'required');
         $this->form_validation->set_rules('nama_user_klien', 'Nama User', 'required');
-   
-        if ($this->form_validation->run() == FALSE)
-        {
+
+        if ($this->form_validation->run() == FALSE) {
             // belum menampilkan pesan error
             redirect('supervisor/client');
-        }
-        else
-        {
+        } else {
 
             $data = [
                 'no_klien'    => $this->input->post('no_klien'),
@@ -108,8 +105,6 @@ class Supervisor extends CI_Controller
             $this->session->set_flashdata('pesan', 'Successfully Added!');
             redirect('supervisor/client');
         }
-
-
     }
 
     public function hapus_klien($id)
@@ -134,7 +129,8 @@ class Supervisor extends CI_Controller
     }
 
     #USER
-    public function user(){
+    public function user()
+    {
 
         $this->load->model('Usermaster_model', 'usermaster_model');
         $data['divisi']     = $this->db->get('user')->result_array();
@@ -150,7 +146,6 @@ class Supervisor extends CI_Controller
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/user', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function tambah_user()
@@ -217,14 +212,15 @@ class Supervisor extends CI_Controller
         $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['nama'] = $this->db->get('pelaporan')->result_array();
         $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporan();
-        
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/pelaporan',$data);
+        $this->load->view('supervisor/pelaporan', $data);
         $this->load->view('templates/footer');
     }
 
-    public function pelaporan2(){
+    public function pelaporan2()
+    {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Category_model', 'category_model');
         $data['nama_kategori'] = $this->db->get('category')->result_array();
@@ -245,7 +241,7 @@ class Supervisor extends CI_Controller
     //     $this->load->model('User_model', 'user_model');
     //     $data['user'] = $this->user_model->getDataUser();
     //     $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporan();
-        
+
     //     $this->load->view('templates/header');
     //     $this->load->view('templates/supervisor_sidebar');
     //     $this->load->view('supervisor/allticket', $data);
@@ -255,7 +251,7 @@ class Supervisor extends CI_Controller
     public function AllTicket()
     {
 
-        
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/allticket');
@@ -273,63 +269,64 @@ class Supervisor extends CI_Controller
             $row[] = $no;
             $row[] = $pelaporan->no_tiket;
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
-            $row[] = $pelaporan->nama; 
-            $row[] = $pelaporan->perihal; 
+            $row[] = $pelaporan->nama;
+            $row[] = $pelaporan->perihal;
             $row[] = $pelaporan->impact;
-            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';$pelaporan->file;
+            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
+            $pelaporan->file;
             $row[] = $pelaporan->kategori;
             $row[] = $pelaporan->tags;
-           // Proses nilai prioritas di server-side
+            // Proses nilai prioritas di server-side
             if ($pelaporan->priority == 'Low') {
-            $priority_label = '<span class="label label-info">Low</span>';
+                $priority_label = '<span class="label label-info">Low</span>';
             } elseif ($pelaporan->priority == 'Medium') {
-            $priority_label = '<span class="label label-warning">Medium</span>';
+                $priority_label = '<span class="label label-warning">Medium</span>';
             } elseif ($pelaporan->priority == 'High') {
-            $priority_label = '<span class="label label-danger">High</span>';
+                $priority_label = '<span class="label label-danger">High</span>';
             } else {
-            $priority_label = $pelaporan->priority;
+                $priority_label = $pelaporan->priority;
             }
 
-        $row[] = $priority_label;
+            $row[] = $priority_label;
             // Proses nilai maxday di server-side
             if ($pelaporan->maxday == '90') {
                 $maxday_label = '<span class="label label-info">90</span>';
-                } elseif ($pelaporan->maxday == '60') {
+            } elseif ($pelaporan->maxday == '60') {
                 $maxday_label = '<span class="label label-warning">60</span>';
-                } elseif ($pelaporan->maxday == '7') {
+            } elseif ($pelaporan->maxday == '7') {
                 $maxday_label = '<span class="label label-danger">7</span>';
-                } else {
-                $maxday_label = $pelaporan->maxday;
-                }
-
-        $row[] = $maxday_label;
-           // Proses nilai maxday di server-side
-            if ($pelaporan->status_ccs == 'ADDED') {
-            $status_ccs_label = '<span class="label label-primary">ADDED</span>';
-            } elseif ($pelaporan->status_ccs == 'ADDED 2') {
-            $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
-        } elseif ($pelaporan->status_ccs == 'HANDLE') {
-            $status_ccs_label = '<span class="label label-info">HANDLE</span>';
-        } elseif ($pelaporan->status_ccs == 'HANDLE 2') {
-            $status_ccs_label = '<span class="label label-info">HANDLE 2</span>';
-            } elseif ($pelaporan->status_ccs == 'CLOSE') {
-            $status_ccs_label = '<span class="label label-warning">CLOSE</span>';
-        } elseif ($pelaporan->status_ccs == 'FINISH') {
-            $status_ccs_label = '<span class="label label-success">FINISH</span>';
             } else {
-            $status_ccs_label = $pelaporan->status_ccs;
+                $maxday_label = $pelaporan->maxday;
             }
 
-        $row[] = $status_ccs_label;
-        //Gabungkan handle_by, handle_by2, handle_by3
-        $handle_combined = $pelaporan->handle_by;
-        if ($pelaporan->handle_by2) {
-            $handle_combined .= ', ' . $pelaporan->handle_by2;
-        }
-        if ($pelaporan->handle_by3) {
-            $handle_combined .= ', ' . $pelaporan->handle_by3;
-        }
-        $row[] = $handle_combined;
+            $row[] = $maxday_label;
+            // Proses nilai maxday di server-side
+            if ($pelaporan->status_ccs == 'ADDED') {
+                $status_ccs_label = '<span class="label label-primary">ADDED</span>';
+            } elseif ($pelaporan->status_ccs == 'ADDED 2') {
+                $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLE') {
+                $status_ccs_label = '<span class="label label-info">HANDLE</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLE 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLE 2</span>';
+            } elseif ($pelaporan->status_ccs == 'CLOSE') {
+                $status_ccs_label = '<span class="label label-warning">CLOSE</span>';
+            } elseif ($pelaporan->status_ccs == 'FINISH') {
+                $status_ccs_label = '<span class="label label-success">FINISH</span>';
+            } else {
+                $status_ccs_label = $pelaporan->status_ccs;
+            }
+
+            $row[] = $status_ccs_label;
+            //Gabungkan handle_by, handle_by2, handle_by3
+            $handle_combined = $pelaporan->handle_by;
+            if ($pelaporan->handle_by2) {
+                $handle_combined .= ', ' . $pelaporan->handle_by2;
+            }
+            if ($pelaporan->handle_by3) {
+                $handle_combined .= ', ' . $pelaporan->handle_by3;
+            }
+            $row[] = $handle_combined;
 
             $data[] = $row;
         }
@@ -398,7 +395,7 @@ class Supervisor extends CI_Controller
         $this->load->view('supervisor/pelaporan_close', $data);
         $this->load->view('templates/footer');
     }
-    
+
     public function finish()
     {
         $this->load->model('Supervisor_model', 'supervisor_model');
@@ -418,7 +415,6 @@ class Supervisor extends CI_Controller
     {
         $id_pelaporan = $this->input->post('id_pelaporan');
         $no_tiket     = $this->input->post('no_tiket');
-        $perihal      = $this->input->post('perihal');
         $status_ccs   = $this->input->post('status_ccs');
         $kategori     = $this->input->post('kategori');
         $priority     = $this->input->post('priority');
@@ -426,7 +422,6 @@ class Supervisor extends CI_Controller
         $tags         = $this->input->post('tags');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
-            'perihal'    => $perihal,
             'status_ccs' => $status_ccs,
             'priority'   => $priority,
             'kategori'   => $kategori,
@@ -453,7 +448,7 @@ class Supervisor extends CI_Controller
         //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
         $nama       = $this->input->post('nama');
         $perihal    = $this->input->post('perihal');
-        $status_ccs ='FINISH';
+        $status_ccs = 'FINISH';
         $waktu      = date('Y-m-d');
         $priority   = $this->input->post('priority');
         $maxday     = $this->input->post('maxday');
@@ -474,12 +469,10 @@ class Supervisor extends CI_Controller
         $this->pelaporan_model->approveSPV($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Approve!');
         redirect('supervisor/finish');
-
-       
-
     }
 
-    public function finish_pelaporan($id){
+    public function finish_pelaporan($id)
+    {
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Supervisor_model', 'supervisor_model');
@@ -501,7 +494,7 @@ class Supervisor extends CI_Controller
         $nama       = $this->input->post('nama');
         $judul      = $this->input->post('judul');
         $perihal    = $this->input->post('perihal');
-        $status_ccs ='FINISH';
+        $status_ccs = 'FINISH';
         $waktu      = date('Y-m-d');
         $priority   = $this->input->post('priority');
         $maxday     = $this->input->post('maxday');
@@ -520,7 +513,6 @@ class Supervisor extends CI_Controller
         $this->db->update('pelaporan');
         $this->session->set_flashdata('pesan', 'Succesfully Approve!');
         Redirect(base_url('supervisor/close'));
-
     }
 
 
@@ -564,8 +556,8 @@ class Supervisor extends CI_Controller
             }
         }
 
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
@@ -577,11 +569,11 @@ class Supervisor extends CI_Controller
             'file' => $photo,
             'created_at' => $create_at
         ];
-        $data = preg_replace("/^<p.*?>/", "",$data);
-        $data = preg_replace("|</p>$|", "",$data);
+        $data = preg_replace("/^<p.*?>/", "", $data);
+        $data = preg_replace("|</p>$|", "", $data);
         $this->db->insert('comment', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('supervisor/detail_pelaporan/'.$id_pelaporan));
+        Redirect(Base_url('supervisor/detail_pelaporan/' . $id_pelaporan));
     }
 
     public function add_reply()
@@ -607,8 +599,8 @@ class Supervisor extends CI_Controller
                 redirect($referred_from, 'refresh');
             }
         }
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
@@ -622,32 +614,32 @@ class Supervisor extends CI_Controller
             'created_at' => $create_at,
             'comment_id' => $comment_id
         ];
-        $data = preg_replace("/^<p.*?>/", "",$data);
-        $data = preg_replace("|</p>$|", "",$data);
+        $data = preg_replace("/^<p.*?>/", "", $data);
+        $data = preg_replace("|</p>$|", "", $data);
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('supervisor/detail_pelaporan/'.$id_pelaporan));
+        Redirect(Base_url('supervisor/detail_pelaporan/' . $id_pelaporan));
     }
 
-        //   FILTER LAPORAN
+    //   FILTER LAPORAN
     public function rekapPelaporan()
     {
-             // Load necessary models
+        // Load necessary models
         $this->load->model('supervisor_model', 'supervisor_model');
         $this->load->model('Client_model', 'client_model');
 
-	// var data for view 
-	    $data['tanggal_awal'] = '';
-	    $data['tanggal_akhir'] = '';
-	    $data['status_ccs'] = '';
-	    $data['nama_klien'] = '';
-	    $data['tags'] = '';
+        // var data for view 
+        $data['tanggal_awal'] = '';
+        $data['tanggal_akhir'] = '';
+        $data['status_ccs'] = '';
+        $data['nama_klien'] = '';
+        $data['tags'] = '';
 
-    // Get all data from the models
+        // Get all data from the models
         $data['klien'] = $this->client_model->getClient();
         $data['pencarian_data'] = $this->supervisor_model->getAllData(); // A method that returns all data
 
-    // Load views with data
+        // Load views with data
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
         $this->load->view('supervisor/rekap_pelaporan', $data);
@@ -656,58 +648,59 @@ class Supervisor extends CI_Controller
 
     public function datepelaporan()
     {
-           // Load necessary libraries and models
-    $this->load->library('form_validation');
-    $this->load->model('Pelaporan_model', 'pelaporan_model');
-    $this->load->model('Client_model', 'client_model');
+        // Load necessary libraries and models
+        $this->load->library('form_validation');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $this->load->model('Client_model', 'client_model');
 
-    // Set form validation rules (allow empty)
-    $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-    $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-    $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
-    $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-    $this->form_validation->set_rules('tags', 'Tags', 'trim');
+        // Set form validation rules (allow empty)
+        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
+        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
+        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
+        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
+        $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
-    if ($this->form_validation->run() == FALSE) {
-        // Validation failed, prepare data for the view with error messages
-        $data['errors'] = validation_errors();
-        $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = [];
+        if ($this->form_validation->run() == FALSE) {
+            // Validation failed, prepare data for the view with error messages
+            $data['errors'] = validation_errors();
+            $data['klien'] = $this->client_model->getClient();
+            $data['pencarian_data'] = [];
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/rekap_pelaporan', $data);
-        $this->load->view('templates/footer');
-    } else {
-        // Validation passed, retrieve POST data
-        $tanggal_awal = $this->input->post('tanggal_awal');
-        $tanggal_akhir = $this->input->post('tanggal_akhir');
-        $status_ccs = $this->input->post('status_ccs');
-        $nama_klien = $this->input->post('nama_klien');
-        $tags = $this->input->post('tags');
+            $this->load->view('templates/header');
+            $this->load->view('templates/supervisor_sidebar');
+            $this->load->view('supervisor/rekap_pelaporan', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Validation passed, retrieve POST data
+            $tanggal_awal = $this->input->post('tanggal_awal');
+            $tanggal_akhir = $this->input->post('tanggal_akhir');
+            $status_ccs = $this->input->post('status_ccs');
+            $nama_klien = $this->input->post('nama_klien');
+            $tags = $this->input->post('tags');
 
-		// var data for view 
-		$data['tanggal_awal'] = $tanggal_awal;
-		$data['tanggal_akhir'] = $tanggal_akhir;
-		$data['status_ccs'] = $status_ccs;
-		$data['nama_klien'] = $nama_klien;
-		$data['tags'] = $tags;
+            // var data for view 
+            $data['tanggal_awal'] = $tanggal_awal;
+            $data['tanggal_akhir'] = $tanggal_akhir;
+            $data['status_ccs'] = $status_ccs;
+            $data['nama_klien'] = $nama_klien;
+            $data['tags'] = $tags;
 
-        // Get data from the models
-        $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+            // Get data from the models
+            $data['klien'] = $this->client_model->getClient();
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
 
-        // Load views with data
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/rekap_pelaporan', $data);
-        $this->load->view('templates/footer');
+            // Load views with data
+            $this->load->view('templates/header');
+            $this->load->view('templates/supervisor_sidebar');
+            $this->load->view('supervisor/rekap_pelaporan', $data);
+            $this->load->view('templates/footer');
+        }
     }
-    }
 
-    public function fetch_data() {
+    public function fetch_data()
+    {
         $this->load->model('Server_model', 'serverside_model');
-    
+
         // Ambil data filter dari POST request
         $filters = array(
             'tanggal_awal' => $this->input->post('tanggal_awal'),
@@ -716,17 +709,17 @@ class Supervisor extends CI_Controller
             'tags' => $this->input->post('tags'),
             'status_ccs' => $this->input->post('status_ccs')
         );
-    
+
         // Periksa apakah tombol "Semua Data" diklik
         if (isset($_POST['semua_data'])) {
             // Kosongkan filter
             $filters = array();
         }
-    
+
         // Panggil model untuk mendapatkan data dengan filter
         $list = $this->serverside_model->get_datatables($filters);
         $data = array();
-    
+
         // Format data sesuai kebutuhan DataTables
         foreach ($list as $key => $dataItem) {
             $row = array();
@@ -735,7 +728,7 @@ class Supervisor extends CI_Controller
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
             $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
             $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
-            $row['tags'] = '<span class="label label-info">'.$dataItem->tags.'</span>';
+            $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
             $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
             $row['priority'] = $this->get_priority_label($dataItem->priority);
@@ -743,7 +736,7 @@ class Supervisor extends CI_Controller
             $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
             $data[] = $row;
         }
-    
+
         // Menyiapkan output JSON untuk DataTables
         $output = array(
             "draw" => $this->input->post('draw'),
@@ -751,129 +744,132 @@ class Supervisor extends CI_Controller
             "recordsFiltered" => $this->serverside_model->count_filtered($filters),
             "data" => $data,
         );
-    
+
         echo json_encode($output);
     }
-    
-        private function get_priority_label($priority) {
-            if ($priority == 'High') {
-                return '<span class="label label-danger">High</span>';
-            } elseif ($priority == 'Medium') {
-                return '<span class="label label-warning">Medium</span>';
-            } elseif ($priority == 'Low') {
-                return '<span class="label label-info">Low</span>';
-            }
+
+    private function get_priority_label($priority)
+    {
+        if ($priority == 'High') {
+            return '<span class="label label-danger">High</span>';
+        } elseif ($priority == 'Medium') {
+            return '<span class="label label-warning">Medium</span>';
+        } elseif ($priority == 'Low') {
+            return '<span class="label label-info">Low</span>';
         }
-    
-        private function get_maxday_label($maxday) {
-            if ($maxday == '7') {
-                return '<span class="label label-danger">7</span>';
-            } elseif ($maxday == '60') {
-                return '<span class="label label-warning">60</span>';
-            } elseif ($maxday == '90') {
-                return '<span class="label label-info">90</span>';
-            }
+    }
+
+    private function get_maxday_label($maxday)
+    {
+        if ($maxday == '7') {
+            return '<span class="label label-danger">7</span>';
+        } elseif ($maxday == '60') {
+            return '<span class="label label-warning">60</span>';
+        } elseif ($maxday == '90') {
+            return '<span class="label label-info">90</span>';
         }
-    
-        private function get_status_label($status) {
-            if ($status == 'FINISH') {
-                return '<span class="label label-success">FINISH</span>';
-            } elseif ($status == 'CLOSE') {
-                return '<span class="label label-warning">CLOSE</span>';
-            } elseif ($status == 'HANDLE') {
-                return '<span class="label label-info">HANDLE</span>';
-            } elseif ($status == 'ADDED') {
-                return '<span class="label label-primary">ADDED</span>';
-            }
+    }
+
+    private function get_status_label($status)
+    {
+        if ($status == 'FINISH') {
+            return '<span class="label label-success">FINISH</span>';
+        } elseif ($status == 'CLOSE') {
+            return '<span class="label label-warning">CLOSE</span>';
+        } elseif ($status == 'HANDLE') {
+            return '<span class="label label-info">HANDLE</span>';
+        } elseif ($status == 'ADDED') {
+            return '<span class="label label-primary">ADDED</span>';
         }
+    }
 
-        //LAPORAN FILTER KATEGORI
-        public function rekapKategori()
-        {
-            $this->load->model('Category_model', 'category_model');
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['pencarian_data'] = $this->pelaporan_model->getAllCategory();
-            $data['category'] = $this->category_model->getCategory();
-    
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_kategori', $data);
-            $this->load->view('templates/footer');
-        }
+    //LAPORAN FILTER KATEGORI
+    public function rekapKategori()
+    {
+        $this->load->model('Category_model', 'category_model');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['pencarian_data'] = $this->pelaporan_model->getAllCategory();
+        $data['category'] = $this->category_model->getCategory();
 
-        public function dateKategori()
-        {
-            $tgla = $this->input->post('tgla');
-            $tglb = $this->input->post('tglb');
-            // $nama_kategori = $this->input->post('nama_kategori');
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['category'] = $this->category_model->getCategory();
-            $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb);
-    
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_kategori', $data);
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_kategori', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function dateKategori()
+    {
+        $tgla = $this->input->post('tgla');
+        $tglb = $this->input->post('tglb');
+        // $nama_kategori = $this->input->post('nama_kategori');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['category'] = $this->category_model->getCategory();
+        $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_kategori', $data);
+        $this->load->view('templates/footer');
+    }
 
 
 
-        // REKAP HANDLE BY HELPDESK
-        public function rekapHelpdesk()
-        {
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['pencarian_data'] = $this->pelaporan_model->getHelpdesk();
+    // REKAP HANDLE BY HELPDESK
+    public function rekapHelpdesk()
+    {
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['pencarian_data'] = $this->pelaporan_model->getHelpdesk();
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_helpdesk', $data);
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_helpdesk', $data);
+        $this->load->view('templates/footer');
+    }
 
-        public function datehelpdesk()
-        {
-            $tgla = $this->input->post('tgla');
-            $tglb = $this->input->post('tglb');
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['pencarian_data'] = $this->pelaporan_model->getDateHelpdesk($tgla, $tglb);
+    public function datehelpdesk()
+    {
+        $tgla = $this->input->post('tgla');
+        $tglb = $this->input->post('tglb');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['pencarian_data'] = $this->pelaporan_model->getDateHelpdesk($tgla, $tglb);
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_helpdesk', $data);
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_helpdesk', $data);
+        $this->load->view('templates/footer');
+    }
 
-        // REKAP PROGRESS
-        public function rekapProgres()
-        {
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['pencarian_data'] = $this->pelaporan_model->getProgres();
+    // REKAP PROGRESS
+    public function rekapProgres()
+    {
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['pencarian_data'] = $this->pelaporan_model->getProgres();
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_progres', $data);
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_progres', $data);
+        $this->load->view('templates/footer');
+    }
 
-        public function dateprogres()
-        {
-            $tgla = $this->input->post('tgla');
-            $tglb = $this->input->post('tglb');
-            $status_ccs = $this->input->post('status_ccs');
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['pencarian_data'] = $this->pelaporan_model->getDateProgres($tgla, $tglb,$status_ccs);
-            
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/rekap_progres', $data);
-            $this->load->view('templates/footer');
-        }
+    public function dateprogres()
+    {
+        $tgla = $this->input->post('tgla');
+        $tglb = $this->input->post('tglb');
+        $status_ccs = $this->input->post('status_ccs');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['pencarian_data'] = $this->pelaporan_model->getDateProgres($tgla, $tglb, $status_ccs);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/rekap_progres', $data);
+        $this->load->view('templates/footer');
+    }
 
     //DISTRIBUSI TO HELPDESK
     public function fungsi_forward()
     {
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namahd');
         $data = [
@@ -898,55 +894,55 @@ class Supervisor extends CI_Controller
 
     public function fungsi_edit()
     {
-    // Load the form validation library
-    $this->load->library('form_validation');
+        // Load the form validation library
+        $this->load->library('form_validation');
 
-    // Set validation rules
-    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+        // Set validation rules
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
 
-    // Check if the form passes validation
-    if ($this->form_validation->run() == FALSE) {
-        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-        redirect(base_url('supervisor/onprogress'));
-    } else {
-        // Retrieve POST data
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namahd');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-        ];
-
-        // Fetch the user name based on the user ID
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-
-        // Check if user exists
-        if ($query->num_rows() > 0) {
-            $user = $query->row();
-            $nama_user = $user->nama_user;
-
-            // Update the forward table
-            $this->db->where('pelaporan_id', $id_pelaporan);
-            $this->db->update('forward', $data);
-
-            // Update the Helpdesk in the supervisor_model
-            $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
-
-            // Set success message
-            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        // Check if the form passes validation
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+            redirect(base_url('supervisor/onprogress'));
         } else {
-            // Set error message if user not found
-            $this->session->set_flashdata('error', 'User not found.');
-        }
+            // Retrieve POST data
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namahd');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
 
-        // Redirect to the onprogress page
-        redirect(base_url('supervisor/onprogress'));
+            // Fetch the user name based on the user ID
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+
+            // Check if user exists
+            if ($query->num_rows() > 0) {
+                $user = $query->row();
+                $nama_user = $user->nama_user;
+
+                // Update the forward table
+                $this->db->where('pelaporan_id', $id_pelaporan);
+                $this->db->update('forward', $data);
+
+                // Update the Helpdesk in the supervisor_model
+                $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
+
+                // Set success message
+                $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+            } else {
+                // Set error message if user not found
+                $this->session->set_flashdata('error', 'User not found.');
+            }
+
+            // Redirect to the onprogress page
+            redirect(base_url('supervisor/onprogress'));
+        }
     }
-}
 
 
     // FUNGSI REJECT
@@ -954,53 +950,52 @@ class Supervisor extends CI_Controller
     {
 
         // Load the form validation library
-    $this->load->library('form_validation');
+        $this->load->library('form_validation');
 
-    // Set validation rules
-    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+        // Set validation rules
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
 
-    // Check if the form passes validation
-    if ($this->form_validation->run() == FALSE) {
-        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-        redirect(base_url('supervisor/onprogress'));
-    } else {
-        // Retrieve POST data
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namahd');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-        ];
-
-        // Fetch the user name based on the user ID
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-
-        // Check if user exists
-        if ($query->num_rows() > 0) {
-            $user = $query->row();
-            $nama_user = $user->nama_user;
-
-            // Update the forward table
-            $this->db->where('pelaporan_id', $id_pelaporan);
-            $this->db->update('forward', $data);
-
-            // Update the Helpdesk in the supervisor_model
-            $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
-
-            // Set success message
-            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        // Check if the form passes validation
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+            redirect(base_url('supervisor/onprogress'));
         } else {
-            // Set error message if user not found
-            $this->session->set_flashdata('error', 'User not found.');
+            // Retrieve POST data
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namahd');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
+
+            // Fetch the user name based on the user ID
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+
+            // Check if user exists
+            if ($query->num_rows() > 0) {
+                $user = $query->row();
+                $nama_user = $user->nama_user;
+
+                // Update the forward table
+                $this->db->where('pelaporan_id', $id_pelaporan);
+                $this->db->update('forward', $data);
+
+                // Update the Helpdesk in the supervisor_model
+                $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
+
+                // Set success message
+                $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+            } else {
+                // Set error message if user not found
+                $this->session->set_flashdata('error', 'User not found.');
+            }
+
+            // Redirect to the onprogress page
+            redirect(base_url('supervisor/close'));
         }
-
-        // Redirect to the onprogress page
-        redirect(base_url('supervisor/close'));
     }
-
-}
 }

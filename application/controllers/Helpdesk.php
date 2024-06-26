@@ -262,7 +262,6 @@ class Helpdesk extends CI_Controller
             'id_pelaporan' => $id,
             'no_tiket' => $this->input->post('no_tiket'),
             'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
-            'perihal'  => $this->input->post('perihal'),
             'file_finish'     => $photo,
             'nama'     => $this->input->post('nama'),
             'kategori' => $this->input->post('kategori'),
@@ -292,12 +291,10 @@ class Helpdesk extends CI_Controller
 
         $id_pelaporan = $this->input->post('id_pelaporan');
         $no_tiket     = $this->input->post('no_tiket');
-        $perihal      = $this->input->post('perihal');
         $status_ccs   = $this->input->post('status_ccs');
         $impact       = $this->input->post('impact');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
-            'perihal'    => $perihal,
             'status_ccs' => $status_ccs,
             'impact'     => $impact
 

@@ -113,7 +113,7 @@ class Klien extends CI_Controller
         $this->pelaporan_model->add_pelaporan();
         $this->session->set_flashdata('pesan', 'Pelaporan Success!');
         $this->pelaporan_model->delete_pelaporan();
-        Redirect(Base_url('klien/datapelaporan'));
+        Redirect(Base_url('klien/added'));
     }
 
 

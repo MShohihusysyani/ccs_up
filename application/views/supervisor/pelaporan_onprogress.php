@@ -144,8 +144,12 @@
                                                 <td>
 
                                                     <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                    <div class="btn btn-sm btn-warning">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal="<?= $dp['perihal']; ?>" data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
+                                                    <div class="btn btn-sm btn-warning edit-action">
+                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name">Edit</span>
+                                                        </a>
+
                                                     </div>
 
                                                     <br>
@@ -207,10 +211,10 @@
                             </div>
                         </div>
 
-                        <label for="perihal">Perihal</label>
                         <div class="form-group">
+                            <label for="perihal">Perihal</label>
                             <div class="form-line">
-                                <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                                <div id="perihal_coba" readonly></div>
                             </div>
                         </div>
 
@@ -355,7 +359,8 @@
             modal.find('#no_tiket').attr("value", div.data('no_tiket'));
             modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
             modal.find('#nama').attr("value", div.data('nama'));
-            modal.find('#perihal').attr("value", div.data('perihal'));
+            // modal.find('#perihal').attr("value", div.data('perihal'));
+            modal.find('#perihal_coba').html(div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
             modal.find('#priority').attr("value", div.data('priority'));
@@ -363,8 +368,9 @@
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
             modal.find('#kategori').attr("value", div.data('kategori'));
+            modal.find('#tags').attr("value", div.data('tags'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
-            modal.find('#namauser option:selected').text(div.data('nama'));
+            // modal.find('#tags').value = div.data('tags');
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));

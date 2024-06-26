@@ -72,7 +72,7 @@ class Superadmin extends CI_Controller
         $this->load->model('Client_model', 'client_model');
         $data['no_urut'] = $this->db->get('klien')->result_array();
         $data['nama_klien'] = $this->db->get('klien')->result_array();
-        
+
         $data['klien'] = $this->client_model->getClient();
         $data['user'] = $this->client_model->getUserClient();
         $this->load->view('templates/header');
@@ -88,14 +88,11 @@ class Superadmin extends CI_Controller
         $this->form_validation->set_rules('no_klien', 'No Klien', 'required|is_unique[klien.no_klien]');
         $this->form_validation->set_rules('nama_klien', 'Nama Klient', 'required');
         $this->form_validation->set_rules('nama_user_klien', 'Nama User', 'required');
-   
-        if ($this->form_validation->run() == FALSE)
-        {
+
+        if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('alert', 'Tambah klien gagal! Kode klien tidak boleh sama.');
             redirect('superadmin/client');
-        }
-        else
-        {
+        } else {
 
             $data = [
                 'no_klien'    => $this->input->post('no_klien'),
@@ -106,8 +103,6 @@ class Superadmin extends CI_Controller
             $this->session->set_flashdata('pesan', 'Successfully Added!');
             redirect('superadmin/client');
         }
-
-
     }
 
     public function hapus_klien($id)
@@ -131,8 +126,9 @@ class Superadmin extends CI_Controller
         Redirect(base_url('superadmin/client'));
     }
 
-     # DATA USER
-     public function user(){
+    # DATA USER
+    public function user()
+    {
 
         $this->load->model('Usermaster_model', 'usermaster_model');
         $data['divisi']     = $this->db->get('user')->result_array();
@@ -148,7 +144,6 @@ class Superadmin extends CI_Controller
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/user', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function tambah_user()
@@ -217,7 +212,7 @@ class Superadmin extends CI_Controller
     //     $this->load->model('User_model', 'user_model');
     //     $data['user'] = $this->user_model->getDataUser();
     //     $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporan();
-        
+
     //     $this->load->view('templates/header');
     //     $this->load->view('templates/superadmin_sidebar');
     //     $this->load->view('superadmin/allticket', $data);
@@ -227,7 +222,7 @@ class Superadmin extends CI_Controller
     public function AllTicket()
     {
 
-        
+
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/allticket');
@@ -245,63 +240,64 @@ class Superadmin extends CI_Controller
             $row[] = $no;
             $row[] = $pelaporan->no_tiket;
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
-            $row[] = $pelaporan->nama; 
-            $row[] = $pelaporan->perihal; 
+            $row[] = $pelaporan->nama;
+            $row[] = $pelaporan->perihal;
             $row[] = $pelaporan->impact;
-            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';$pelaporan->file;
+            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
+            $pelaporan->file;
             $row[] = $pelaporan->kategori;
             $row[] = $pelaporan->tags;
-           // Proses nilai prioritas di server-side
+            // Proses nilai prioritas di server-side
             if ($pelaporan->priority == 'Low') {
-            $priority_label = '<span class="label label-info">Low</span>';
+                $priority_label = '<span class="label label-info">Low</span>';
             } elseif ($pelaporan->priority == 'Medium') {
-            $priority_label = '<span class="label label-warning">Medium</span>';
+                $priority_label = '<span class="label label-warning">Medium</span>';
             } elseif ($pelaporan->priority == 'High') {
-            $priority_label = '<span class="label label-danger">High</span>';
+                $priority_label = '<span class="label label-danger">High</span>';
             } else {
-            $priority_label = $pelaporan->priority;
+                $priority_label = $pelaporan->priority;
             }
 
-        $row[] = $priority_label;
+            $row[] = $priority_label;
             // Proses nilai maxday di server-side
             if ($pelaporan->maxday == '90') {
                 $maxday_label = '<span class="label label-info">90</span>';
-                } elseif ($pelaporan->maxday == '60') {
+            } elseif ($pelaporan->maxday == '60') {
                 $maxday_label = '<span class="label label-warning">60</span>';
-                } elseif ($pelaporan->maxday == '7') {
+            } elseif ($pelaporan->maxday == '7') {
                 $maxday_label = '<span class="label label-danger">7</span>';
-                } else {
-                $maxday_label = $pelaporan->maxday;
-                }
-
-        $row[] = $maxday_label;
-           // Proses nilai maxday di server-side
-            if ($pelaporan->status_ccs == 'ADDED') {
-            $status_ccs_label = '<span class="label label-primary">ADDED</span>';
-            } elseif ($pelaporan->status_ccs == 'ADDED 2') {
-            $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
-        } elseif ($pelaporan->status_ccs == 'HANDLE') {
-            $status_ccs_label = '<span class="label label-info">HANDLE</span>';
-        } elseif ($pelaporan->status_ccs == 'HANDLE 2') {
-            $status_ccs_label = '<span class="label label-info">HANDLE 2</span>';
-            } elseif ($pelaporan->status_ccs == 'CLOSE') {
-            $status_ccs_label = '<span class="label label-warning">CLOSE</span>';
-        } elseif ($pelaporan->status_ccs == 'FINISH') {
-            $status_ccs_label = '<span class="label label-success">FINISH</span>';
             } else {
-            $status_ccs_label = $pelaporan->status_ccs;
+                $maxday_label = $pelaporan->maxday;
             }
 
-        $row[] = $status_ccs_label;
-        //Gabungkan handle_by, handle_by2, handle_by3
-        $handle_combined = $pelaporan->handle_by;
-        if ($pelaporan->handle_by2) {
-            $handle_combined .= ', ' . $pelaporan->handle_by2;
-        }
-        if ($pelaporan->handle_by3) {
-            $handle_combined .= ', ' . $pelaporan->handle_by3;
-        }
-        $row[] = $handle_combined;
+            $row[] = $maxday_label;
+            // Proses nilai maxday di server-side
+            if ($pelaporan->status_ccs == 'ADDED') {
+                $status_ccs_label = '<span class="label label-primary">ADDED</span>';
+            } elseif ($pelaporan->status_ccs == 'ADDED 2') {
+                $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLE') {
+                $status_ccs_label = '<span class="label label-info">HANDLE</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLE 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLE 2</span>';
+            } elseif ($pelaporan->status_ccs == 'CLOSE') {
+                $status_ccs_label = '<span class="label label-warning">CLOSE</span>';
+            } elseif ($pelaporan->status_ccs == 'FINISH') {
+                $status_ccs_label = '<span class="label label-success">FINISH</span>';
+            } else {
+                $status_ccs_label = $pelaporan->status_ccs;
+            }
+
+            $row[] = $status_ccs_label;
+            //Gabungkan handle_by, handle_by2, handle_by3
+            $handle_combined = $pelaporan->handle_by;
+            if ($pelaporan->handle_by2) {
+                $handle_combined .= ', ' . $pelaporan->handle_by2;
+            }
+            if ($pelaporan->handle_by3) {
+                $handle_combined .= ', ' . $pelaporan->handle_by3;
+            }
+            $row[] = $handle_combined;
 
             $data[] = $row;
         }
@@ -369,7 +365,7 @@ class Superadmin extends CI_Controller
         $this->load->view('superadmin/pelaporan_close', $data);
         $this->load->view('templates/footer');
     }
-    
+
     public function finish()
     {
         $this->load->model('Superadmin_model', 'superadmin_model');
@@ -390,7 +386,6 @@ class Superadmin extends CI_Controller
     {
         $id_pelaporan = $this->input->post('id_pelaporan');
         $no_tiket     = $this->input->post('no_tiket');
-        $perihal      = $this->input->post('perihal');
         $status_ccs   = $this->input->post('status_ccs');
         $kategori     = $this->input->post('kategori');
         $priority     = $this->input->post('priority');
@@ -398,7 +393,6 @@ class Superadmin extends CI_Controller
         $tags         = $this->input->post('tags');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
-            'perihal'    => $perihal,
             'status_ccs' => $status_ccs,
             'priority'   => $priority,
             'kategori'   => $kategori,
@@ -411,11 +405,11 @@ class Superadmin extends CI_Controller
         Redirect(base_url('superadmin/added'));
     }
 
-     //DISTRIBUSI TO HELPDESK
+    //DISTRIBUSI TO HELPDESK
     public function fungsi_forward()
     {
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namahd');
         $data = [
@@ -423,7 +417,7 @@ class Superadmin extends CI_Controller
             'user_id' => $id_user
         ];
 
-         // cari nama user berdasarkan id 
+        // cari nama user berdasarkan id 
         $this->db->select('id_user, nama_user');
         $this->db->from('user');
         $this->db->where('id_user', $id_user);
@@ -440,113 +434,112 @@ class Superadmin extends CI_Controller
     // FUNGSI EDIT HELPDESK
     public function fungsi_edit()
     {
-    // Load the form validation library
-    $this->load->library('form_validation');
+        // Load the form validation library
+        $this->load->library('form_validation');
 
-    // Set validation rules
-    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+        // Set validation rules
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
 
-    // Check if the form passes validation
-    if ($this->form_validation->run() == FALSE) {
-        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-        redirect(base_url('supervisor/onprogress'));
-    } else {
-        // Retrieve POST data
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namahd');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-        ];
-
-        // Fetch the user name based on the user ID
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-
-        // Check if user exists
-        if ($query->num_rows() > 0) {
-            $user = $query->row();
-            $nama_user = $user->nama_user;
-
-            // Update the forward table
-            $this->db->where('pelaporan_id', $id_pelaporan);
-            $this->db->update('forward', $data);
-
-            // Update the Helpdesk in the supervisor_model
-            $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
-
-            // Set success message
-            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        // Check if the form passes validation
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+            redirect(base_url('supervisor/onprogress'));
         } else {
-            // Set error message if user not found
-            $this->session->set_flashdata('error', 'User not found.');
+            // Retrieve POST data
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namahd');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
+
+            // Fetch the user name based on the user ID
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+
+            // Check if user exists
+            if ($query->num_rows() > 0) {
+                $user = $query->row();
+                $nama_user = $user->nama_user;
+
+                // Update the forward table
+                $this->db->where('pelaporan_id', $id_pelaporan);
+                $this->db->update('forward', $data);
+
+                // Update the Helpdesk in the supervisor_model
+                $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
+
+                // Set success message
+                $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+            } else {
+                // Set error message if user not found
+                $this->session->set_flashdata('error', 'User not found.');
+            }
+
+            // Redirect to the onprogress page
+            redirect(base_url('superadmin/onprogress'));
         }
-
-        // Redirect to the onprogress page
-        redirect(base_url('superadmin/onprogress'));
     }
-}
 
 
-// FUNGSI REJECT
-public function fungsi_reject()
-{
+    // FUNGSI REJECT
+    public function fungsi_reject()
+    {
 
         // Load the form validation library
-    $this->load->library('form_validation');
+        $this->load->library('form_validation');
 
-    // Set validation rules
-    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+        // Set validation rules
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
 
-    // Check if the form passes validation
-    if ($this->form_validation->run() == FALSE) {
-        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-        redirect(base_url('supervisor/onprogress'));
-    } else {
-        // Retrieve POST data
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namahd');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-        ];
-
-        // Fetch the user name based on the user ID
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-
-        // Check if user exists
-        if ($query->num_rows() > 0) {
-            $user = $query->row();
-            $nama_user = $user->nama_user;
-
-            // Update the forward table
-            $this->db->where('pelaporan_id', $id_pelaporan);
-            $this->db->update('forward', $data);
-
-            // Update the Helpdesk in the supervisor_model
-            $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
-
-            // Set success message
-            $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+        // Check if the form passes validation
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+            redirect(base_url('supervisor/onprogress'));
         } else {
-            // Set error message if user not found
-            $this->session->set_flashdata('error', 'User not found.');
-        }
+            // Retrieve POST data
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namahd');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
 
-        // Redirect to the onprogress page
-        redirect(base_url('superadmin/close'));
+            // Fetch the user name based on the user ID
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+
+            // Check if user exists
+            if ($query->num_rows() > 0) {
+                $user = $query->row();
+                $nama_user = $user->nama_user;
+
+                // Update the forward table
+                $this->db->where('pelaporan_id', $id_pelaporan);
+                $this->db->update('forward', $data);
+
+                // Update the Helpdesk in the supervisor_model
+                $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
+
+                // Set success message
+                $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+            } else {
+                // Set error message if user not found
+                $this->session->set_flashdata('error', 'User not found.');
+            }
+
+            // Redirect to the onprogress page
+            redirect(base_url('superadmin/close'));
+        }
     }
 
-}
-
-  //Approve supervisor
+    //Approve supervisor
     public function approve()
     {
         // date_default_timezone_set('Asia/Jakarta');
@@ -560,7 +553,7 @@ public function fungsi_reject()
         //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
         $nama       = $this->input->post('nama');
         $perihal    = $this->input->post('perihal');
-        $status_ccs ='FINISH';
+        $status_ccs = 'FINISH';
         $waktu      = date('Y-m-d');
         $priority   = $this->input->post('priority');
         $maxday     = $this->input->post('maxday');
@@ -568,7 +561,7 @@ public function fungsi_reject()
         $ArrUpdate  = array(
 
             'no_tiket'       => $no_tiket,
-          //    'waktu_pelaporan' => $waktu_pelaporan,
+            //    'waktu_pelaporan' => $waktu_pelaporan,
             'nama'           => $nama,
             'perihal'        => $perihal,
             'status_ccs'     => $status_ccs,
@@ -581,22 +574,21 @@ public function fungsi_reject()
         $this->pelaporan_model->approveSPV($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Approve!');
         redirect('superadmin/finish');
-
     }
 
-    
+
     //   FILTER LAPORAN
     public function rekapPelaporan1()
     {
-            $this->load->model('Client_model', 'client_model');
-            $this->load->model('Pelaporan_model', 'pelaporan_model');
-            $data['pencarian_data'] = $this->pelaporan_model->getAll();
-            $data['klien'] = $this->client_model->getClient();
-    
-            $this->load->view('templates/header');
-            $this->load->view('templates/superadmin_sidebar');
-            $this->load->view('superadmin/rekap_pelaporan', $data);
-            $this->load->view('templates/footer');
+        $this->load->model('Client_model', 'client_model');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['pencarian_data'] = $this->pelaporan_model->getAll();
+        $data['klien'] = $this->client_model->getClient();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/rekap_pelaporan', $data);
+        $this->load->view('templates/footer');
     }
 
     public function rekapPelaporan()
@@ -604,7 +596,7 @@ public function fungsi_reject()
         // Load necessary models
         $this->load->model('Superadmin_model', 'superadmin_model');
         $this->load->model('Client_model', 'client_model');
-    
+
         // Initialize empty data for view
         $data = [
             'tanggal_awal' => '',
@@ -613,123 +605,125 @@ public function fungsi_reject()
             'nama_klien' => '',
             'tags' => '',
         ];
-    
+
         // Fetch data from models
         $data['klien'] = $this->client_model->getClient();
         $data['pencarian_data'] = $this->superadmin_model->getAllData(); // Replace with appropriate method
-    
+
         // Load views with data
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/rekap_pelaporan', $data); // Pass data to the view
         $this->load->view('templates/footer');
     }
-    
-
-public function datepelaporan()
-{
-    // Load necessary libraries and models
-    $this->load->library('form_validation');
-    $this->load->model('Pelaporan_model', 'pelaporan_model');
-    $this->load->model('Client_model', 'client_model');
-
-    // Set form validation rules (allow empty)
-    $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-    $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-    $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
-    $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-    $this->form_validation->set_rules('tags', 'Tags', 'trim');
-
-    if ($this->form_validation->run() == FALSE) {
-        // Validation failed, prepare data for the view with error messages
-        $data['errors'] = validation_errors();
-        $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = [];
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/rekap_pelaporan', $data);
-        $this->load->view('templates/footer');
-    } else {
-        // Validation passed, retrieve POST data
-        $tanggal_awal = $this->input->post('tanggal_awal');
-        $tanggal_akhir = $this->input->post('tanggal_akhir');
-        $status_ccs = $this->input->post('status_ccs');
-        $nama_klien = $this->input->post('nama_klien');
-        $tags = $this->input->post('tags');
-
-		// var data for view 
-		$data['tanggal_awal'] = $tanggal_awal;
-		$data['tanggal_akhir'] = $tanggal_akhir;
-		$data['status_ccs'] = $status_ccs;
-		$data['nama_klien'] = $nama_klien;
-		$data['tags'] = $tags;
-
-        // Get data from the models
-        $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-
-        // Load views with data
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/rekap_pelaporan', $data);
-        $this->load->view('templates/footer');
-    }
-}
 
 
+    public function datepelaporan()
+    {
+        // Load necessary libraries and models
+        $this->load->library('form_validation');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $this->load->model('Client_model', 'client_model');
 
-public function fetch_data() {
-    $this->load->model('Server_model', 'serverside_model');
+        // Set form validation rules (allow empty)
+        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
+        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
+        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
+        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
+        $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
-    // Ambil data filter dari POST request
-    $filters = array(
-        'tanggal_awal' => $this->input->post('tanggal_awal'),
-        'tanggal_akhir' => $this->input->post('tanggal_akhir'),
-        'nama_klien' => $this->input->post('nama_klien'),
-        'tags' => $this->input->post('tags'),
-        'status_ccs' => $this->input->post('status_ccs')
-    );
+        if ($this->form_validation->run() == FALSE) {
+            // Validation failed, prepare data for the view with error messages
+            $data['errors'] = validation_errors();
+            $data['klien'] = $this->client_model->getClient();
+            $data['pencarian_data'] = [];
 
-    // Periksa apakah tombol "Semua Data" diklik
-    if (isset($_POST['semua_data'])) {
-        // Kosongkan filter
-        $filters = array();
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_pelaporan', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Validation passed, retrieve POST data
+            $tanggal_awal = $this->input->post('tanggal_awal');
+            $tanggal_akhir = $this->input->post('tanggal_akhir');
+            $status_ccs = $this->input->post('status_ccs');
+            $nama_klien = $this->input->post('nama_klien');
+            $tags = $this->input->post('tags');
+
+            // var data for view 
+            $data['tanggal_awal'] = $tanggal_awal;
+            $data['tanggal_akhir'] = $tanggal_akhir;
+            $data['status_ccs'] = $status_ccs;
+            $data['nama_klien'] = $nama_klien;
+            $data['tags'] = $tags;
+
+            // Get data from the models
+            $data['klien'] = $this->client_model->getClient();
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+
+            // Load views with data
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_pelaporan', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
-    // Panggil model untuk mendapatkan data dengan filter
-    $list = $this->serverside_model->get_datatables($filters);
-    $data = array();
 
-    // Format data sesuai kebutuhan DataTables
-    foreach ($list as $key => $dataItem) {
-        $row = array();
-        $row['no'] = $key + 1; // Nomor urutan
-        $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
-        $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
-        $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
-        $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
-        $row['tags'] = '<span class="label label-info">'.$dataItem->tags.'</span>';
-        $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
-        $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
-        $row['priority'] = $this->get_priority_label($dataItem->priority);
-        $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
-        $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
-        $data[] = $row;
+
+    public function fetch_data()
+    {
+        $this->load->model('Server_model', 'serverside_model');
+
+        // Ambil data filter dari POST request
+        $filters = array(
+            'tanggal_awal' => $this->input->post('tanggal_awal'),
+            'tanggal_akhir' => $this->input->post('tanggal_akhir'),
+            'nama_klien' => $this->input->post('nama_klien'),
+            'tags' => $this->input->post('tags'),
+            'status_ccs' => $this->input->post('status_ccs')
+        );
+
+        // Periksa apakah tombol "Semua Data" diklik
+        if (isset($_POST['semua_data'])) {
+            // Kosongkan filter
+            $filters = array();
+        }
+
+        // Panggil model untuk mendapatkan data dengan filter
+        $list = $this->serverside_model->get_datatables($filters);
+        $data = array();
+
+        // Format data sesuai kebutuhan DataTables
+        foreach ($list as $key => $dataItem) {
+            $row = array();
+            $row['no'] = $key + 1; // Nomor urutan
+            $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
+            $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
+            $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
+            $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
+            $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
+            $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
+            $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
+            $row['priority'] = $this->get_priority_label($dataItem->priority);
+            $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
+            $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
+            $data[] = $row;
+        }
+
+        // Menyiapkan output JSON untuk DataTables
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->serverside_model->count_all(),
+            "recordsFiltered" => $this->serverside_model->count_filtered($filters),
+            "data" => $data,
+        );
+
+        echo json_encode($output);
     }
 
-    // Menyiapkan output JSON untuk DataTables
-    $output = array(
-        "draw" => $this->input->post('draw'),
-        "recordsTotal" => $this->serverside_model->count_all(),
-        "recordsFiltered" => $this->serverside_model->count_filtered($filters),
-        "data" => $data,
-    );
-
-    echo json_encode($output);
-}
-
-    private function get_priority_label($priority) {
+    private function get_priority_label($priority)
+    {
         if ($priority == 'High') {
             return '<span class="label label-danger">High</span>';
         } elseif ($priority == 'Medium') {
@@ -739,7 +733,8 @@ public function fetch_data() {
         }
     }
 
-    private function get_maxday_label($maxday) {
+    private function get_maxday_label($maxday)
+    {
         if ($maxday == '7') {
             return '<span class="label label-danger">7</span>';
         } elseif ($maxday == '60') {
@@ -749,7 +744,8 @@ public function fetch_data() {
         }
     }
 
-    private function get_status_label($status) {
+    private function get_status_label($status)
+    {
         if ($status == 'FINISH') {
             return '<span class="label label-success">FINISH</span>';
         } elseif ($status == 'CLOSE') {
@@ -777,8 +773,6 @@ public function fetch_data() {
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/rekap_kategori', $data);
         $this->load->view('templates/footer');
-
-        
     }
 
     public function dateKategori()
@@ -796,41 +790,41 @@ public function fetch_data() {
         // $this->load->view('templates/footer');
 
         //Load necessary libraries and models
-    $this->load->library('form_validation');
-    $this->load->model('Pelaporan_model', 'pelaporan_model');
-    $this->load->model('Category_model', 'category_model');
+        $this->load->library('form_validation');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $this->load->model('Category_model', 'category_model');
 
-    // Set form validation rules
-    $this->form_validation->set_rules('tgla', 'Start Date', 'required');
-    $this->form_validation->set_rules('tglb', 'End Date', 'required');
-    $this->form_validation->set_rules('kategori', 'Category Name', 'required');
+        // Set form validation rules
+        $this->form_validation->set_rules('tgla', 'Start Date', 'required');
+        $this->form_validation->set_rules('tglb', 'End Date', 'required');
+        $this->form_validation->set_rules('kategori', 'Category Name', 'required');
 
-    if ($this->form_validation->run() == FALSE) {
-        // Validation failed, prepare data for the view with error messages
-        $data['errors'] = validation_errors();
-        $data['category'] = $this->category_model->getCategory();
-        $data['pencarian_data'] = [];
+        if ($this->form_validation->run() == FALSE) {
+            // Validation failed, prepare data for the view with error messages
+            $data['errors'] = validation_errors();
+            $data['category'] = $this->category_model->getCategory();
+            $data['pencarian_data'] = [];
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/rekap_kategori', $data);
-        $this->load->view('templates/footer');
-    } else {
-        // Validation passed, retrieve POST data
-        $tgla = $this->input->post('tgla');
-        $tglb = $this->input->post('tglb');
-        $kategori = $this->input->post('kategori');
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_kategori', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Validation passed, retrieve POST data
+            $tgla = $this->input->post('tgla');
+            $tglb = $this->input->post('tglb');
+            $kategori = $this->input->post('kategori');
 
-        // Get data from the models
-        $data['category'] = $this->category_model->getCategory();
-        $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb,  $kategori);
+            // Get data from the models
+            $data['category'] = $this->category_model->getCategory();
+            $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb,  $kategori);
 
-        // Load views with data
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/rekap_kategori', $data);
-        $this->load->view('templates/footer');
-    }
+            // Load views with data
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_kategori', $data);
+            $this->load->view('templates/footer');
+        }
     }
 
     // REKAP HANDLE BY HELPDESK
@@ -858,7 +852,7 @@ public function fetch_data() {
         $this->load->view('templates/footer');
     }
 
-    
+
 
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)
@@ -900,8 +894,8 @@ public function fetch_data() {
             }
         }
 
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
@@ -913,11 +907,11 @@ public function fetch_data() {
             'file' => $photo,
             'created_at' => $create_at
         ];
-        $data = preg_replace("/^<p.*?>/", "",$data);
-        $data = preg_replace("|</p>$|", "",$data);
+        $data = preg_replace("/^<p.*?>/", "", $data);
+        $data = preg_replace("|</p>$|", "", $data);
         $this->db->insert('comment', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('superadmin/detail_pelaporan/'.$id_pelaporan));
+        Redirect(Base_url('superadmin/detail_pelaporan/' . $id_pelaporan));
     }
 
     public function add_reply()
@@ -944,8 +938,8 @@ public function fetch_data() {
                 redirect($referred_from, 'refresh');
             }
         }
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
@@ -959,11 +953,10 @@ public function fetch_data() {
             'created_at' => $create_at,
             'comment_id' => $comment_id
         ];
-        $data = preg_replace("/^<p.*?>/", "",$data);
-        $data = preg_replace("|</p>$|", "",$data);
+        $data = preg_replace("/^<p.*?>/", "", $data);
+        $data = preg_replace("|</p>$|", "", $data);
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('superadmin/detail_pelaporan/'.$id_pelaporan));
+        Redirect(Base_url('superadmin/detail_pelaporan/' . $id_pelaporan));
     }
-
 }
