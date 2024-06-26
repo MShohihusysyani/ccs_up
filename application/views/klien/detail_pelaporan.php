@@ -65,6 +65,23 @@
                                 </div>
                             </div>
 
+                            <label for="handle_by">Handle By</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="handle_by" name="handle_by" class="form-control" value="<?= $dp['handle_by']; ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="handle_by2" name="handle_by2" class="form-control" value="<?= $dp['handle_by2']; ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="handle_by3" name="handle_by3" class="form-control" value="<?= $dp['handle_by3']; ?>" readonly>
+                                </div>
+                            </div>
+
                             <label for="file">File</label>
                             <div class="form-group">
                                 <div class="form-line">
