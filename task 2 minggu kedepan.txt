@@ -1,5 +1,12 @@
-1.Input ccs baru file tidak mandatory(DONE)
-2.Menampilkan data sesuai filter(DONE)
-3.Export semua laporan(DONE)
-4.Di dashboard helpdesk ada filter tgl di menu data pelaporan(pencarian data masih semua status, belum bisa status finish dan hanya menampilkan berdasarkan handle by dan user id)
-5.Setiap ganti  halaman dilaporan, header, nama tabel, judul tabel, tanggal,dan footer tetap ditampilkan(di local sudah bisa, tetapi ketika dihosting export pdfnya jd satu halaman)
+penamabahan kolom judul(DONE)
+penambahan print per tiket semua user(DONE)
+
+ <td>
+                                                    <?= $dp['handle_by']; ?>
+                                                    <?php if (!empty($dp['handle_by2'])) : ?>
+                                                        , <?= $dp['handle_by2']; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($dp['handle_by3'])) : ?>
+                                                        , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
+                                                </td>

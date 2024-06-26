@@ -34,8 +34,7 @@
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="<?php echo base_url('klien') ?>">CCS | KLIEN</a>
             </div>
@@ -60,24 +59,19 @@
                         <?= $this->session->userdata('nama_user'); ?></div>
                     <div class="email"><?= $this->session->userdata('divisi'); ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a
-                                    href="<?= base_url() ?>user/profile_klien/<?= $this->session->userdata('id_user'); ?>"><i
-                                        class="material-icons">person</i>Profile</a>
+                            <li><a href="<?= base_url() ?>user/profile_klien/<?= $this->session->userdata('id_user'); ?>"><i class="material-icons">person</i>Profile</a>
                             </li>
                             <li>
-                            <!-- <?= $this->uri->segment(2) == 'changepassword' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
-                                <a href="<?= base_url('user/changepassword_klien') ?>"><i
-                                        class="material-icons">lock</i>Change Password</a>
+                                <!-- <?= $this->uri->segment(2) == 'changepassword' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                                <a href="<?= base_url('user/changepassword_klien') ?>"><i class="material-icons">lock</i>Change Password</a>
                             </li>
-                                    <!-- <a
+                            <!-- <a
                                     href="<?= base_url('user/changepassword') ?>"><i
                                         class="material-icons">lock</i>Change Password</a> -->
                             <li role="separator" class="divider"></li>
-                            <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i
-                                        class="material-icons">logout</i>Sign Out</a>
+                            <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i class="material-icons">logout</i>Sign Out</a>
                             </li>
                         </ul>
                     </div>
@@ -88,8 +82,7 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN MENU</li>
-                    <li
-                        class="active">
+                    <li class="active">
                         <a href="<?php echo base_url('klien') ?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
@@ -103,12 +96,38 @@
                         </a>
                     </li>
 
-                    <li <?= $this->uri->segment(2) == 'datapelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
+                    <!-- <li <?= $this->uri->segment(2) == 'datapelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('klien/datapelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
                         </a>
+                    </li> -->
+
+                    <li <?= $this->uri->segment(2) == 'AllTicket' || $this->uri->segment(2) == 'added' || $this->uri->segment(2) == 'onprogress' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'close' || $this->uri->segment(2) == 'finish'  ? 'class="active"' : '' ?>>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">confirmation_number</i>
+                            <span>List Ticket</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li <?= $this->uri->segment(2) == 'added' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('klien/added') ?>">Added</a>
+                            </li>
+
+                            <li <?= $this->uri->segment(2) == 'onprogress' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('klien/onprogress') ?>">On Progress</a>
+                            </li>
+
+                            <li <?= $this->uri->segment(2) == 'close' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('klien/close') ?>">Close</a>
+                            </li>
+
+                            <li <?= $this->uri->segment(2) == 'finish' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('klien/finish') ?>">Finish</a>
+                            </li>
+
+                        </ul>
                     </li>
+
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
@@ -121,7 +140,7 @@
                                     <span>Bank Knowlage</span>
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </li>
 

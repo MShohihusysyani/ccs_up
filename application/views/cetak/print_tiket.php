@@ -123,7 +123,12 @@
         <div class="form-group">
             <label class="col-sm-2 control-label"><b>Handle By:</b></label>
             <div class="col-sm-10">
-                <p class="form-control-static"><?= $ticket->handle_by ?></p>
+                <?php
+                // Ambil semua handler
+                $handlers = array_filter([$ticket->handle_by, $ticket->handle_by2, $ticket->handle_by3]);
+                foreach ($handlers as $handler) : ?>
+                    <p class="form-control-static"><?= $handler ?></p>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

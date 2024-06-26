@@ -1,63 +1,3 @@
-<!-- <script>
-    // Function to calculate the time left based on maxday
-    function calculateTimeLeft(maxday) {
-        // Parse maxday as an integer
-        maxday = parseInt(maxday);
-        
-        // Get today's date
-        var today = new Date();
-        
-        // Set the due date by adding maxday days to today's date
-        var dueDate = new Date(today.getTime() + maxday * 24 * 60 * 60 * 1000);
-        
-        // Calculate the difference in milliseconds between due date and today
-        var differenceMs = dueDate - today;
-        
-        // Calculate the number of days remaining
-        var daysRemaining = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
-        
-        return daysRemaining;
-    }
-</script> -->
-
-<!-- Place this script block at the beginning of your view file -->
-<!-- Place this script block at the beginning of your view file -->
-<script>
-    // Function to update the displayed time left dynamically
-    function updateDynamicTimeLeft() {
-        // Select all elements with class "dynamic-time-left"
-        var timeLeftElements = document.getElementsByClassName('dynamic-time-left');
-
-        // Loop through each element and update its content
-        for (var i = 0; i < timeLeftElements.length; i++) {
-            // Get the initial maxday value from the data attribute
-            var maxday = parseInt(timeLeftElements[i].getAttribute('data-maxday'));
-
-            // Calculate the current date
-            var today = new Date();
-
-            // Set the due date by adding maxday days to today's date
-            var dueDate = new Date(today.getTime() + maxday * 24 * 60 * 60 * 1000);
-
-            // Calculate the difference in milliseconds between due date and today
-            var differenceMs = dueDate - today;
-
-            // Calculate the number of days remaining
-            var daysRemaining = Math.max(Math.ceil(differenceMs / (1000 * 60 * 60 * 24)), 0);
-
-            // Update the content of the element
-            timeLeftElements[i].innerText = daysRemaining + " days";
-        }
-    }
-
-    // Call the updateDynamicTimeLeft function initially to update the displayed time left
-    updateDynamicTimeLeft();
-
-    // Set an interval to call the updateDynamicTimeLeft function every day (adjust the interval duration as needed)
-    setInterval(updateDynamicTimeLeft, 24 * 60 * 60 * 1000); // 24 hours
-</script>
-
-
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -80,7 +20,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                ON PROGRESS
+                                CLOSE
                             </h2>
 
                         </div>
@@ -101,11 +41,8 @@
                                             <th>Priority</th>
                                             <th>Impact</th>
                                             <th>Max Day</th>
-                                            <!-- <th>Time Left</th> -->
                                             <th>Status CCS</th>
-                                            <th>Status</th>
                                             <th>Handle By</th>
-                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -122,11 +59,8 @@
                                             <th>Priority</th>
                                             <th>Impact</th>
                                             <th>Max Day</th>
-                                            <!-- <th>Time Left</th> -->
                                             <th>Status CCS</th>
-                                            <th>Status</th>
                                             <th>Handle By</th>
-                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -175,11 +109,6 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <!-- Inside the table body -->
-                                                <!-- <td><script>document.write(calculateTimeLeft(<?= $dp['maxday']; ?>));</script> days</td> -->
-                                                <!-- Inside the table body -->
-                                                <!-- <td class="dynamic-time-left" data-maxday="<?= $dp['maxday']; ?>"></td> -->
-
                                                 <td>
                                                     <?php if ($dp['status_ccs'] == 'FINISH') : ?>
                                                         <span class="label label-success">FINISH</span>
@@ -196,33 +125,20 @@
                                                     <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                         <span class="label label-primary">ADDED</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
-                                                        <span class="label label-primary">ADDED 2</span>
-
                                                     <?php else : ?>
                                                     <?php endif; ?>
 
                                                 </td>
-                                                <td><?= $dp['status']; ?></td>
-                                                <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?> , <?= $dp['handle_by3']; ?></td>
-
                                                 <td>
-
-                                                    <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                    <div class="btn btn-sm btn-warning">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal="<?= $dp['perihal']; ?>" data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
-                                                    </div>
-
-                                                    <br>
-                                                    <br>
-
-                                                    <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
-                                                    <br>
-                                                    <br>
-
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-
+                                                    <?= $dp['handle_by']; ?>
+                                                    <?php if (!empty($dp['handle_by2'])) : ?>
+                                                        , <?= $dp['handle_by2']; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($dp['handle_by3'])) : ?>
+                                                        , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
                                                 </td>
+
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -237,16 +153,100 @@
         <!-- Button trigger modal -->
 </section>
 
+<!-- MODAL APPROVE -->
+<?php
+$no = 0;
+foreach ($datapelaporan as $dp) : $no++; ?>
+    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">APPROVE</h4>
+                </div>
+                <div class="modal-body">
+                    <?= form_open_multipart('superadmin/approve') ?>
+                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
+                    <div class="body">
+                        <form class="form-horizontal">
 
-<!-- MODAL EDIT HELPDESK -->
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                                    <label class="form-label">No tiket</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                                    <label class="form-label">Waktu Pelaporan</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
+                                    <label class="form-label">Nama Klien</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                                    <label class="form-label">Perihal</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                                    <label class="form-label">Status CCS</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['priority']; ?>" type="text" id="priority" name="priority" class="form-control" readonly>
+                                    <label class="form-label">Priority</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['maxday']; ?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                                    <label class="form-label">Max Day</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['kategori']; ?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                                    <label class="form-label">Kategori</label>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-link waves-effect">APPROVE</button>
+                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                <?php echo form_close() ?>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach ?>
+
+<!-- MODAL EDIT -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Edit Helpdesk</h4>
+                <h4 class="modal-title" id="defaultModalLabel">REJECT</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('superadmin/fungsi_edit') ?>
+                <?= form_open_multipart('superadmin/fungsi_reject') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
@@ -279,6 +279,7 @@
                             </div>
                         </div>
 
+
                         <label for="status_ccs">Status CCS</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -307,6 +308,7 @@
                             </div>
                         </div>
 
+
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
@@ -319,10 +321,11 @@
                             </div>
                         </div>
 
+
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
+                            <button type="submit" class="btn btn-link waves-effect">REJECT</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+
                         </div>
 
                 </div>
@@ -332,7 +335,49 @@
     </div>
 </div>
 
-
+<!-- modal cari kategori -->
+<div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Kategori</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Kategori</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($category as $cat) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row">
+                                    <?= $i; ?>
+                                </td>
+                                <td><?= $cat['nama_kategori']; ?></td>
+                                <td class="hide"><?= $cat['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilihKategori" data-nama-kategori="<?= $cat['nama_kategori']; ?>" data-id-kategori="<?= $cat['id']; ?>">
+                                        Pilih</button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                    <?php echo form_close() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- MODAL CARI HELPDESK -->
 <div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
@@ -379,8 +424,8 @@
     </div>
 </div>
 
-
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
+
 <script type="text/javascript">
     //Get references to the select and input elements
     const select = document.getElementById('priority');
@@ -407,6 +452,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilihKategori', function() {
+            var nama_klas = $(this).data('nama-kategori');
+            var id = $(this).data('id-kategori');
+            $('#kategori').val(nama_klas);
+            $('#id').val(id);
+            $('#modalPilihKategori').modal('hide');
+        })
+    });
+</script>
 <script>
     $(document).ready(function() {
 
@@ -443,5 +499,17 @@
 
         });
 
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih3', function() {
+            var nama_klas = $(this).data('nama-divisi');
+            var id = $(this).data('id-divisi');
+            $('#namahd').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaDivisi').modal('hide');
+        })
     });
 </script>

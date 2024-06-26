@@ -1,63 +1,3 @@
-<!-- <script>
-    // Function to calculate the time left based on maxday
-    function calculateTimeLeft(maxday) {
-        // Parse maxday as an integer
-        maxday = parseInt(maxday);
-        
-        // Get today's date
-        var today = new Date();
-        
-        // Set the due date by adding maxday days to today's date
-        var dueDate = new Date(today.getTime() + maxday * 24 * 60 * 60 * 1000);
-        
-        // Calculate the difference in milliseconds between due date and today
-        var differenceMs = dueDate - today;
-        
-        // Calculate the number of days remaining
-        var daysRemaining = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
-        
-        return daysRemaining;
-    }
-</script> -->
-
-<!-- Place this script block at the beginning of your view file -->
-<!-- Place this script block at the beginning of your view file -->
-<script>
-    // Function to update the displayed time left dynamically
-    function updateDynamicTimeLeft() {
-        // Select all elements with class "dynamic-time-left"
-        var timeLeftElements = document.getElementsByClassName('dynamic-time-left');
-
-        // Loop through each element and update its content
-        for (var i = 0; i < timeLeftElements.length; i++) {
-            // Get the initial maxday value from the data attribute
-            var maxday = parseInt(timeLeftElements[i].getAttribute('data-maxday'));
-
-            // Calculate the current date
-            var today = new Date();
-
-            // Set the due date by adding maxday days to today's date
-            var dueDate = new Date(today.getTime() + maxday * 24 * 60 * 60 * 1000);
-
-            // Calculate the difference in milliseconds between due date and today
-            var differenceMs = dueDate - today;
-
-            // Calculate the number of days remaining
-            var daysRemaining = Math.max(Math.ceil(differenceMs / (1000 * 60 * 60 * 24)), 0);
-
-            // Update the content of the element
-            timeLeftElements[i].innerText = daysRemaining + " days";
-        }
-    }
-
-    // Call the updateDynamicTimeLeft function initially to update the displayed time left
-    updateDynamicTimeLeft();
-
-    // Set an interval to call the updateDynamicTimeLeft function every day (adjust the interval duration as needed)
-    setInterval(updateDynamicTimeLeft, 24 * 60 * 60 * 1000); // 24 hours
-</script>
-
-
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -80,7 +20,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                ON PROGRESS
+                                ADDED
                             </h2>
 
                         </div>
@@ -99,13 +39,8 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
                                             <th>Max Day</th>
-                                            <!-- <th>Time Left</th> -->
                                             <th>Status CCS</th>
-                                            <th>Status</th>
-                                            <th>Handle By</th>
-                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -120,19 +55,15 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
                                             <th>Max Day</th>
-                                            <!-- <th>Time Left</th> -->
                                             <th>Status CCS</th>
-                                            <th>Status</th>
-                                            <th>Handle By</th>
-                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+
                                         <?php
                                         $no = 1;
-                                        foreach ($datapelaporan as $dp) : ?>
+                                        foreach ($dataAdded as $dp) : ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $dp['no_tiket']; ?></td>
@@ -144,9 +75,7 @@
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
-                                                    <span class="label label-info">
-                                                        <?= $dp['tags']; ?>
-                                                    </span>
+                                                    <span class="label label-info"><?= $dp['tags']; ?></span>
                                                 </td>
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
@@ -161,7 +90,6 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?= $dp['impact']; ?></td>
                                                 <td>
                                                     <?php if ($dp['maxday'] == '90') : ?>
                                                         <span class="label label-info">90</span>
@@ -175,11 +103,6 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <!-- Inside the table body -->
-                                                <!-- <td><script>document.write(calculateTimeLeft(<?= $dp['maxday']; ?>));</script> days</td> -->
-                                                <!-- Inside the table body -->
-                                                <!-- <td class="dynamic-time-left" data-maxday="<?= $dp['maxday']; ?>"></td> -->
-
                                                 <td>
                                                     <?php if ($dp['status_ccs'] == 'FINISH') : ?>
                                                         <span class="label label-success">FINISH</span>
@@ -189,9 +112,6 @@
 
                                                     <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
                                                         <span class="label label-info">HANDLE</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
-                                                        <span class="label label-info">HANDLE 2</span>
 
                                                     <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                         <span class="label label-primary">ADDED</span>
@@ -203,26 +123,7 @@
                                                     <?php endif; ?>
 
                                                 </td>
-                                                <td><?= $dp['status']; ?></td>
-                                                <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?> , <?= $dp['handle_by3']; ?></td>
 
-                                                <td>
-
-                                                    <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                    <div class="btn btn-sm btn-warning">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal="<?= $dp['perihal']; ?>" data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
-                                                    </div>
-
-                                                    <br>
-                                                    <br>
-
-                                                    <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
-                                                    <br>
-                                                    <br>
-
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-
-                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -237,16 +138,130 @@
         <!-- Button trigger modal -->
 </section>
 
-
-<!-- MODAL EDIT HELPDESK -->
+<!-- MODAL EDIT -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Edit Helpdesk</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Edit Priority and Category</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('superadmin/fungsi_edit') ?>
+                <?= form_open_multipart('superadmin/edit_pelaporan') ?>
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="">
+                <div class="body">
+                    <form class="form-horizontal">
+
+                        <label for="no_tiket">No Tiket</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="waktu_pelaporan">Tanggal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="perihal">Perihal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="status_ccs">Status CCS</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select id="priority" name="priority" class="form-control">
+                                    <option value="">-- Please select Priority--</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="maxday">Max Day</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <div class="form-line">
+                                <select name="kategori" id="kategori" class="form-control">
+                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
+                                    <?php
+                                    foreach ($category as $cat) : ?>
+                                    <option value="<?php echo $cat['nama_kategori']; ?>">
+                                    <?php echo $cat['nama_kategori']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div> -->
+
+                        <label for="kategori">Category</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori" name="kategori" id="kategori" placeholder="" class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
+                                <input type="hidden" id="id" name="id">
+                            </div>
+                        </div>
+
+                        <!-- <label for="tags">Tags</label>
+                            <div class="form-group demo-tagsinput-area">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" data-role="tagsinput" id="tags" name="tags" value="">
+                                </div>
+                            </div> -->
+
+                        <label for="tags">Tags</label>
+                        <div class="form-group demo-tagsinput-area">
+                            <div class="form-line">
+                                <input value="<?= $dp['tags']; ?>" type="text" id="tags" name="tags" class="form-control" data-role="tagsinput">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE
+                                CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+
+                        </div>
+                </div>
+                <?php echo form_close() ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL FORWARD -->
+<div class="modal fade" id="forwardModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Select Helpdesk</h4>
+            </div>
+            <div class="modal-body">
+                <?= form_open_multipart('superadmin/fungsi_forward') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
@@ -320,9 +335,9 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
+                            <button type="submit" class="btn btn-link waves-effect">FORWARD</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+
                         </div>
 
                 </div>
@@ -332,41 +347,38 @@
     </div>
 </div>
 
-
-
-<!-- MODAL CARI HELPDESK -->
-<div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
+<!-- modal cari kategori -->
+<div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Cari Kategori</h4>
             </div>
             <div class="modal-body">
                 <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Helpdesk</th>
+                            <th>Nama Kategori</th>
                             <th class="hide">ID</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>
-                        <?php foreach ($namahd  as $nah) : ?>
+                        <?php foreach ($category as $cat) : ?>
                             <tr>
                                 <td style="text-align:center;" scope="row">
                                     <?= $i; ?>
                                 </td>
-                                <td><?= $nah['nama']; ?></td>
-                                <td class="hide"><?= $div['id']; ?></td>
+                                <td><?= $cat['nama_kategori']; ?></td>
+                                <td class="hide"><?= $cat['id']; ?></td>
                                 <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-divisi="<?= $nah['nama']; ?>" data-id-divisi="<?= $nah['id']; ?>">
+                                    <button class="btn btn-sm btn-info" id="pilihKategori" data-nama-kategori="<?= $cat['nama_kategori']; ?>" data-id-kategori="<?= $cat['id']; ?>">
                                         Pilih</button>
                                 </td>
                             </tr>
                             <?php $i++; ?>
-
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -379,6 +391,22 @@
     </div>
 </div>
 
+
+<!-- Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilihKategori', function() {
+            var nama_klas = $(this).data('nama-kategori');
+            var id = $(this).data('id-kategori');
+            $('#kategori').val(nama_klas);
+            $('#id').val(id);
+            $('#modalPilihKategori').modal('hide');
+        })
+    });
+</script>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 <script type="text/javascript">
@@ -403,10 +431,6 @@
     });
 </script>
 
-<!-- Script -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- jQuery UI -->
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -423,12 +447,52 @@
             modal.find('#perihal').attr("value", div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
+            // modal.find('#priority').attr("value", div.data('priority'));
+            modal.find('#priority').value = div.data('priority');
+            // modal.find('#priority option:selected').text(div.data('priority'));
+            modal.find('#maxday').attr("value", div.data('maxday'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            modal.find('#tags').attr("value", div.data('tags'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+            // modal.find('#tags').value = div.data('tags');
+            // modal.find('#bprnama').attr("value", div.data('bprnama'));
+            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
+            // modal.find('#judul').attr("value", div.data('judul'));
+            // modal.find('#headline').attr("value", div.data('headline'));
+            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
+            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
+            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
+            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
+            // modal.find('#linkberita').val(div.data('linkberita'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function() {
+
+        // Untuk sunting
+        $('#forwardModal').on('show.bs.modal', function(event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
+            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
+            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
+            modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#perihal').attr("value", div.data('perihal'));
+            modal.find('#status').attr("value", div.data('status'));
+            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
             modal.find('#priority').attr("value", div.data('priority'));
             // modal.find('#priority').value = div.data('priority');
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
-            modal.find('#kategori').attr("value", div.data('kategori'));
+            // modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
@@ -443,5 +507,17 @@
 
         });
 
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih3', function() {
+            var nama_klas = $(this).data('nama-divisi');
+            var id = $(this).data('id-divisi');
+            $('#namahd').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaDivisi').modal('hide');
+        })
     });
 </script>
