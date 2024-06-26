@@ -339,3 +339,15 @@ foreach ($datapelaporan as $dp) : $no++; ?>
 
     });
 </script>
+
+<script>
+    // Check if tenggat waktu is empty and display message if true
+    $(document).ready(function() {
+        $('#example tbody tr').each(function() {
+            var tenggatWaktu = $(this).find('td:eq(14)').text().trim(); // Assuming 15th column (index 14) is tenggat waktu
+            if (tenggatWaktu === '') {
+                $(this).find('td:eq(14)').text('Invalid date format'); // Replace with your message or any action you want
+            }
+        });
+    });
+</script>

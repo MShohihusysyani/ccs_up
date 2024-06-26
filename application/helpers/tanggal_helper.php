@@ -79,6 +79,10 @@ if (!function_exists('tanggal')) {
 }
 function tanggal_indo($tanggal)
 {
+    if (empty($tanggal)) {
+        return 'Invalid date format';
+    }
+
     $bulan = array(
         1 => 'Januari',
         'Februari',
@@ -95,7 +99,19 @@ function tanggal_indo($tanggal)
     );
 
     $split = explode('-', $tanggal);
-    $tanggal_indo =  $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+
+    // Check if $split has at least 3 elements
+    if (count($split) < 3) {
+        return 'Invalid date format';
+    }
+
+    // Ensure $split[1] is within valid month range
+    $bulan_index = (int)$split[1];
+    if ($bulan_index < 1 || $bulan_index > 12) {
+        return 'Invalid date format';
+    }
+
+    $tanggal_indo = $split[2] . ' ' . $bulan[$bulan_index] . ' ' . $split[0];
 
     return $tanggal_indo;
 }
@@ -104,33 +120,35 @@ function tanggal_indo($tanggal)
 
 if (!function_exists('format_indo')) {
 
-function format_indo1($date){
-    date_default_timezone_set('Asia/Jakarta');
-    // array hari dan bulan
-    $Hari = array("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
-    $Bulan = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-    
-    // pemisahan tahun, bulan, hari, dan waktu
-    $tahun = substr($date,0,4);
-    $bulan = substr($date,5,2);
-    $tgl = substr($date,8,2);
-    $waktu = substr($date, 11,8);
-    $hari = date("w",strtotime($date));
-    $result = $Hari[$hari].", ".$tgl." ".$Bulan[(int)$bulan-1]." ".$tahun." ".$waktu;
+    function format_indo1($date)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        // array hari dan bulan
+        $Hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+        $Bulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 
-    return $result;
-}
+        // pemisahan tahun, bulan, hari, dan waktu
+        $tahun = substr($date, 0, 4);
+        $bulan = substr($date, 5, 2);
+        $tgl = substr($date, 8, 2);
+        $waktu = substr($date, 11, 8);
+        $hari = date("w", strtotime($date));
+        $result = $Hari[$hari] . ", " . $tgl . " " . $Bulan[(int)$bulan - 1] . " " . $tahun . " " . $waktu;
+
+        return $result;
+    }
 }
 
 if (!function_exists('format_indo')) {
 
-    function format_indo($date){
+    function format_indo($date)
+    {
         date_default_timezone_set('Asia/Jakarta');
-    
+
         // Array hari dan bulan
         $Hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
         $Bulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-    
+
         // Validate input date format (YYYY-MM-DD HH:MM:SS)
         if (preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $date)) {
             // Pemisahan tahun, bulan, hari, dan waktu
@@ -138,7 +156,7 @@ if (!function_exists('format_indo')) {
             $bulan = substr($date, 5, 2);
             $tgl = substr($date, 8, 2);
             $waktu = substr($date, 11, 8);
-    
+
             // Validate extracted values
             if (checkdate((int)$bulan, (int)$tgl, (int)$tahun)) {
                 $hari = date("w", strtotime($date));
@@ -151,10 +169,4 @@ if (!function_exists('format_indo')) {
             return "Invalid date format.";
         }
     }
-    
-    }
-    
-
-
-
-
+}

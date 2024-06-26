@@ -12,3 +12,5 @@ penambahan print per tiket semua user(DONE)
                                                     <?php endif; ?>
                                                 </td>
 penambahan kolom handle by diklien (DONE)
+
+Menambahkan keterangan ketika tengat waktu tidak diisi oleh spv 2(DONE)
