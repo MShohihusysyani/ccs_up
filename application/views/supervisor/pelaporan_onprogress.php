@@ -39,10 +39,8 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
-                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -59,15 +57,14 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
-                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+
                                         <?php
                                         $no = 1;
                                         foreach ($datapelaporan as $dp) : ?>
@@ -82,9 +79,7 @@
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
-                                                    <span class="label label-info">
-                                                        <?= $dp['tags']; ?>
-                                                    </span>
+                                                    <span class="label label-info"><?= $dp['tags']; ?></span>
                                                 </td>
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
@@ -99,7 +94,6 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?= $dp['impact']; ?></td>
                                                 <td>
                                                     <?php if ($dp['maxday'] == '90') : ?>
                                                         <span class="label label-info">90</span>
@@ -136,8 +130,16 @@
                                                     <?php endif; ?>
 
                                                 </td>
-                                                <td><?= $dp['status']; ?></td>
-                                                <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?> , <?= $dp['handle_by3']; ?></td>
+                                                <td>
+                                                    <?= $dp['handle_by']; ?>
+                                                    <?php if (!empty($dp['handle_by2'])) : ?>
+                                                        , <?= $dp['handle_by2']; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($dp['handle_by3'])) : ?>
+                                                        , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
+                                                </td>
+
 
                                                 <td>
 
@@ -145,6 +147,7 @@
                                                     <div class="btn btn-sm btn-warning">
                                                         <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal="<?= $dp['perihal']; ?>" data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
                                                     </div>
+
                                                     <br>
                                                     <br>
 
@@ -155,6 +158,7 @@
                                                     <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
 
                                                 </td>
+
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -168,7 +172,6 @@
         </div>
         <!-- Button trigger modal -->
 </section>
-
 
 <!-- MODAL EDIT HELPDESK -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
@@ -265,6 +268,7 @@
 </div>
 
 
+
 <!-- MODAL CARI HELPDESK -->
 <div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -309,6 +313,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 <script type="text/javascript">
@@ -373,17 +378,5 @@
 
         });
 
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        $(document).on('click', '#pilih3', function() {
-            var nama_klas = $(this).data('nama-divisi');
-            var id = $(this).data('id-divisi');
-            $('#namahd').val(nama_klas);
-            $('#id').val(id);
-            $('#defaultModalNamaDivisi').modal('hide');
-        })
     });
 </script>

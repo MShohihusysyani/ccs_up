@@ -1,63 +1,3 @@
-<!-- <script>
-    // Function to calculate the time left based on maxday
-    function calculateTimeLeft(maxday) {
-        // Parse maxday as an integer
-        maxday = parseInt(maxday);
-        
-        // Get today's date
-        var today = new Date();
-        
-        // Set the due date by adding maxday days to today's date
-        var dueDate = new Date(today.getTime() + maxday * 24 * 60 * 60 * 1000);
-        
-        // Calculate the difference in milliseconds between due date and today
-        var differenceMs = dueDate - today;
-        
-        // Calculate the number of days remaining
-        var daysRemaining = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
-        
-        return daysRemaining;
-    }
-</script> -->
-
-<!-- Place this script block at the beginning of your view file -->
-<!-- Place this script block at the beginning of your view file -->
-<script>
-    // Function to update the displayed time left dynamically
-    function updateDynamicTimeLeft() {
-        // Select all elements with class "dynamic-time-left"
-        var timeLeftElements = document.getElementsByClassName('dynamic-time-left');
-
-        // Loop through each element and update its content
-        for (var i = 0; i < timeLeftElements.length; i++) {
-            // Get the initial maxday value from the data attribute
-            var maxday = parseInt(timeLeftElements[i].getAttribute('data-maxday'));
-
-            // Calculate the current date
-            var today = new Date();
-
-            // Set the due date by adding maxday days to today's date
-            var dueDate = new Date(today.getTime() + maxday * 24 * 60 * 60 * 1000);
-
-            // Calculate the difference in milliseconds between due date and today
-            var differenceMs = dueDate - today;
-
-            // Calculate the number of days remaining
-            var daysRemaining = Math.max(Math.ceil(differenceMs / (1000 * 60 * 60 * 24)), 0);
-
-            // Update the content of the element
-            timeLeftElements[i].innerText = daysRemaining + " days";
-        }
-    }
-
-    // Call the updateDynamicTimeLeft function initially to update the displayed time left
-    updateDynamicTimeLeft();
-
-    // Set an interval to call the updateDynamicTimeLeft function every day (adjust the interval duration as needed)
-    setInterval(updateDynamicTimeLeft, 24 * 60 * 60 * 1000); // 24 hours
-</script>
-
-
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -99,11 +39,8 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
                                             <th>Max Day</th>
-                                            <!-- <th>Time Left</th> -->
                                             <th>Status CCS</th>
-                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -120,16 +57,14 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
                                             <th>Max Day</th>
-                                            <!-- <th>Time Left</th> -->
                                             <th>Status CCS</th>
-                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+
                                         <?php
                                         $no = 1;
                                         foreach ($datapelaporan as $dp) : ?>
@@ -144,9 +79,7 @@
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
-                                                    <span class="label label-info">
-                                                        <?= $dp['tags']; ?>
-                                                    </span>
+                                                    <span class="label label-info"><?= $dp['tags']; ?></span>
                                                 </td>
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
@@ -161,7 +94,6 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?= $dp['impact']; ?></td>
                                                 <td>
                                                     <?php if ($dp['maxday'] == '90') : ?>
                                                         <span class="label label-info">90</span>
@@ -175,11 +107,6 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <!-- Inside the table body -->
-                                                <!-- <td><script>document.write(calculateTimeLeft(<?= $dp['maxday']; ?>));</script> days</td> -->
-                                                <!-- Inside the table body -->
-                                                <!-- <td class="dynamic-time-left" data-maxday="<?= $dp['maxday']; ?>"></td> -->
-
                                                 <td>
                                                     <?php if ($dp['status_ccs'] == 'FINISH') : ?>
                                                         <span class="label label-success">FINISH</span>
@@ -203,8 +130,16 @@
                                                     <?php endif; ?>
 
                                                 </td>
-                                                <td><?= $dp['status']; ?></td>
-                                                <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?> , <?= $dp['handle_by3']; ?></td>
+                                                <td>
+                                                    <?= $dp['handle_by']; ?>
+                                                    <?php if (!empty($dp['handle_by2'])) : ?>
+                                                        , <?= $dp['handle_by2']; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($dp['handle_by3'])) : ?>
+                                                        , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
+                                                </td>
+
 
                                                 <td>
 
@@ -223,6 +158,7 @@
                                                     <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
 
                                                 </td>
+
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -236,7 +172,6 @@
         </div>
         <!-- Button trigger modal -->
 </section>
-
 
 <!-- MODAL EDIT HELPDESK -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
