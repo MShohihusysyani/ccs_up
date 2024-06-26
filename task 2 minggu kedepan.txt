@@ -14,3 +14,5 @@ penambahan print per tiket semua user(DONE)
 penambahan kolom handle by diklien (DONE)
 
 Menambahkan keterangan ketika tengat waktu tidak diisi oleh spv 2(DONE)
+
+penambahan kolom catatan finish pada handle 2(DONE)

@@ -13,144 +13,149 @@
             <?php if ($this->session->flashdata('pesan')) { ?>
 
             <?php } ?>
-            <!-- #END# Basic Examples -->
-            <!-- Exportable Table -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                PELAPORAN
-                            </h2>
+            <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>">
+                <?php if ($this->session->flashdata('pesan')) { ?>
 
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Perihal</th>
-                                            <th>Impact</th>
-                                            <th>Attachment</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Subtask</th>
-                                            <th>Tenggat waktu</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Perihal</th>
-                                            <th>Impact</th>
-                                            <th>Attachment</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Subtask</th>
-                                            <th>Tenggat waktu</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
+                <?php } ?>
+                <?= validation_errors(); ?>
+                <!-- #END# Basic Examples -->
+                <!-- Exportable Table -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    PELAPORAN
+                                </h2>
 
-                                        <?php
-                                        $no = 1;
-                                        foreach ($datapelaporan as $dp) : ?>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                                        <thead>
                                             <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $dp['no_tiket']; ?></td>
-                                                <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
-                                                <td><?= $dp['nama']; ?></td>
-                                                <td><?= $dp['perihal']; ?></td>
-                                                <td><?= $dp['impact']; ?></td>
-                                                <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                </td>
-                                                <td><?= $dp['kategori']; ?></td>
-                                                <td>
-                                                    <span class="label label-info"><?= $dp['tags']; ?></span>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['priority'] == 'Low') : ?>
-                                                        <span class="label label-info">Low</span>
+                                                <th>No</th>
+                                                <th>No Tiket</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Klien</th>
+                                                <th>Perihal</th>
+                                                <th>Impact</th>
+                                                <th>Attachment</th>
+                                                <th>Category</th>
+                                                <th>Tags</th>
+                                                <th>Priority</th>
+                                                <th>Max Day</th>
+                                                <th>Status CCS</th>
+                                                <th>Handle By</th>
+                                                <th>Subtask</th>
+                                                <th>Tenggat waktu</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>No Tiket</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Klien</th>
+                                                <th>Perihal</th>
+                                                <th>Impact</th>
+                                                <th>Attachment</th>
+                                                <th>Category</th>
+                                                <th>Tags</th>
+                                                <th>Priority</th>
+                                                <th>Max Day</th>
+                                                <th>Status CCS</th>
+                                                <th>Handle By</th>
+                                                <th>Subtask</th>
+                                                <th>Tenggat waktu</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
 
-                                                    <?php elseif ($dp['priority'] == 'Medium') : ?>
-                                                        <span class="label label-warning">Medium</span>
+                                            <?php
+                                            $no = 1;
+                                            foreach ($datapelaporan as $dp) : ?>
+                                                <tr>
+                                                    <td><?= $no++ ?></td>
+                                                    <td><?= $dp['no_tiket']; ?></td>
+                                                    <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
+                                                    <td><?= $dp['nama']; ?></td>
+                                                    <td><?= $dp['perihal']; ?></td>
+                                                    <td><?= $dp['impact']; ?></td>
+                                                    <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                    </td>
+                                                    <td><?= $dp['kategori']; ?></td>
+                                                    <td>
+                                                        <span class="label label-info"><?= $dp['tags']; ?></span>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($dp['priority'] == 'Low') : ?>
+                                                            <span class="label label-info">Low</span>
 
-                                                    <?php elseif ($dp['priority'] == 'High') : ?>
-                                                        <span class="label label-danger">High</span>
+                                                        <?php elseif ($dp['priority'] == 'Medium') : ?>
+                                                            <span class="label label-warning">Medium</span>
 
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['maxday'] == '90') : ?>
-                                                        <span class="label label-info">90</span>
+                                                        <?php elseif ($dp['priority'] == 'High') : ?>
+                                                            <span class="label label-danger">High</span>
 
-                                                    <?php elseif ($dp['maxday'] == '60') : ?>
-                                                        <span class="label label-warning">60</span>
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($dp['maxday'] == '90') : ?>
+                                                            <span class="label label-info">90</span>
 
-                                                    <?php elseif ($dp['maxday'] == '7') : ?>
-                                                        <span class="label label-danger">7</span>
+                                                        <?php elseif ($dp['maxday'] == '60') : ?>
+                                                            <span class="label label-warning">60</span>
 
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['status_ccs'] == 'FINISH') : ?>
-                                                        <span class="label label-success">FINISH</span>
+                                                        <?php elseif ($dp['maxday'] == '7') : ?>
+                                                            <span class="label label-danger">7</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
-                                                        <span class="label label-warning">CLOSE</span>
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($dp['status_ccs'] == 'FINISH') : ?>
+                                                            <span class="label label-success">FINISH</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
-                                                        <span class="label label-info">HANDLE</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
+                                                            <span class="label label-warning">CLOSE</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
-                                                        <span class="label label-info">HANDLE 2</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
+                                                            <span class="label label-info">HANDLE</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
-                                                        <span class="label label-primary">ADDED</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
+                                                            <span class="label label-info">HANDLE 2</span>
 
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
+                                                        <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
+                                                            <span class="label label-primary">ADDED</span>
 
-                                                </td>
-                                                <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?>, <?= $dp['handle_by3']; ?></td>
-                                                <td><?= $dp['subtask']; ?></td>
-                                                <td><?= tanggal_indo($dp['tanggal']) ?></td>
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
 
-                                                <td>
+                                                    </td>
+                                                    <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?>, <?= $dp['handle_by3']; ?></td>
+                                                    <td><?= $dp['subtask']; ?></td>
+                                                    <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>implementator/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-                                                    <br>
-                                                    <br>
+                                                    <td>
 
-                                                    <div class="btn btn-sm btn-info">
-                                                        <div class="demo-google-material-icon" data-toggle="modal" data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i class="material-icons">done</i> <span class="icon-name">Finish</span>
+                                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>implementator/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
+                                                        <br>
+                                                        <br>
+
+                                                        <div class="btn btn-sm btn-info">
+                                                            <div class="demo-google-material-icon" data-toggle="modal" data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i class="material-icons">done</i> <span class="icon-name">Finish</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <br>
-                                                    <br>
+                                                        <br>
+                                                        <br>
 
-                                                    <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
+                                                        <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
 
-                                                    <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                        <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -166,7 +171,7 @@
                                                             class="icon-name">Forward</span></a>
                                                 </div> -->
 
-                                                    <!-- <a class="btn btn-sm btn-info"
+                                                        <!-- <a class="btn btn-sm btn-info"
                                                 href="<?= base_url() ?>supervisor2/pilih_helpdesk/<?= $dp['id']; ?>"><i
                                                     class="material-icons"></i> <span class="icon-name"></span>
                                                 edit</a>
@@ -174,19 +179,19 @@
                                                 <br>
                                                 <br> -->
 
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- #END# Exportable Table -->
             </div>
-            <!-- #END# Exportable Table -->
-        </div>
-        <!-- Button trigger modal -->
+            <!-- Button trigger modal -->
 </section>
 
 <!-- MODAL FINISH -->
@@ -197,7 +202,7 @@ foreach ($datapelaporan as $dp) : $no++; ?>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">FINISH</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">FINISH CCS</h4>
                 </div>
                 <div class="modal-body">
                     <?= form_open_multipart('implementator/finish') ?>
@@ -226,6 +231,12 @@ foreach ($datapelaporan as $dp) : $no++; ?>
                                 </div>
                             </div>
 
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['judul']; ?>" type="text" id="judul" name="judul" class="form-control" readonly>
+                                    <label class="form-label">Judul</label>
+                                </div>
+                            </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
@@ -261,6 +272,23 @@ foreach ($datapelaporan as $dp) : $no++; ?>
                                 </div>
                             </div>
 
+                            <label for="perihal">Catatan Finish</label>
+                            <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish" required>
+
+                        </textarea>
+
+
+                            <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                            <div class="form-group">
+                                <label for="exampleInputFile"></label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file_finish" name="file_finish">
+                                        <label for="file" class="custom-file-label">Choose
+                                            file</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-link waves-effect">FINISH</button>
                                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
@@ -350,4 +378,186 @@ foreach ($datapelaporan as $dp) : $no++; ?>
             }
         });
     });
+</script>
+
+<script>
+    // This sample still does not showcase all CKEditor&nbsp;5 features (!)
+    // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
+    CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+        // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+        toolbar: {
+            items: [
+                'findAndReplace', 'selectAll', '|',
+                'heading', '|',
+                'bold', 'italic', 'strikethrough', 'underline', '', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'fontSize', 'fontFamily', 'fontColor', '', '', '|',
+                'alignment', '|',
+                'uploadImage', '|',
+                'undo', 'redo',
+            ],
+            shouldNotGroupWhenFull: true
+        },
+        // Changing the language of the interface requires loading the language file using the <script> tag.
+        // language: 'es',
+        list: {
+            properties: {
+                styles: true,
+                startIndex: true,
+                reversed: true
+            }
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+        heading: {
+            options: [{
+                    model: 'paragraph',
+                    title: 'Paragraph',
+                    class: 'ck-heading_paragraph'
+                },
+                {
+                    model: 'heading1',
+                    view: 'h1',
+                    title: 'Heading 1',
+                    class: 'ck-heading_heading1'
+                },
+                {
+                    model: 'heading2',
+                    view: 'h2',
+                    title: 'Heading 2',
+                    class: 'ck-heading_heading2'
+                },
+                {
+                    model: 'heading3',
+                    view: 'h3',
+                    title: 'Heading 3',
+                    class: 'ck-heading_heading3'
+                },
+                {
+                    model: 'heading4',
+                    view: 'h4',
+                    title: 'Heading 4',
+                    class: 'ck-heading_heading4'
+                },
+                {
+                    model: 'heading5',
+                    view: 'h5',
+                    title: 'Heading 5',
+                    class: 'ck-heading_heading5'
+                },
+                {
+                    model: 'heading6',
+                    view: 'h6',
+                    title: 'Heading 6',
+                    class: 'ck-heading_heading6'
+                }
+            ]
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+        placeholder: '',
+        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+        fontFamily: {
+            options: [
+                'default',
+                'Arial, Helvetica, sans-serif',
+                'Courier New, Courier, monospace',
+                'Georgia, serif',
+                'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                'Tahoma, Geneva, sans-serif',
+                'Times New Roman, Times, serif',
+                'Trebuchet MS, Helvetica, sans-serif',
+                'Verdana, Geneva, sans-serif'
+            ],
+            supportAllValues: true
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+        fontSize: {
+            options: [10, 12, 14, 'default', 18, 20, 22],
+            supportAllValues: true
+        },
+        // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+        // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+        htmlSupport: {
+            allow: [{
+                name: /.*/,
+                attributes: true,
+                classes: true,
+                styles: true
+            }]
+        },
+        // Be careful with enabling previews
+        // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+        htmlEmbed: {
+            showPreviews: true
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+        link: {
+            decorators: {
+                addTargetToExternalLinks: true,
+                defaultProtocol: 'https://',
+                toggleDownloadable: {
+                    mode: 'manual',
+                    label: 'Downloadable',
+                    attributes: {
+                        download: 'file'
+                    }
+                }
+            }
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+        mention: {
+            feeds: [{
+                marker: '@',
+                feed: [
+                    '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                    '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                    '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                    '@sugar', '@sweet', '@topping', '@wafer'
+                ],
+                minimumCharacters: 1
+            }]
+        },
+        // The "superbuild" contains more premium features that require additional configuration, disable them below.
+        // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+        removePlugins: [
+            // These two are commercial, but you can try them out without registering to a trial.
+            // 'ExportPdf',
+            // 'ExportWord',
+            'AIAssistant',
+            'CKBox',
+            'CKFinder',
+            'EasyImage',
+            // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+            // Storing images as Base64 is usually a very bad idea.
+            // Replace it on production website with other solutions:
+            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+            // 'Base64UploadAdapter',
+            'MultiLevelList',
+            'RealTimeCollaborativeComments',
+            'RealTimeCollaborativeTrackChanges',
+            'RealTimeCollaborativeRevisionHistory',
+            'PresenceList',
+            'Comments',
+            'TrackChanges',
+            'TrackChangesData',
+            'RevisionHistory',
+            'Pagination',
+            'WProofreader',
+            // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+            // from a local file system (file://) - load this site via HTTP server if you enable MathType.
+            'MathType',
+            // The following features are part of the Productivity Pack and require additional license.
+            'SlashCommand',
+            'Template',
+            'DocumentOutline',
+            'FormatPainter',
+            'TableOfContents',
+            'PasteFromOfficeEnhanced',
+            'CaseChange'
+        ]
+    });
+    RemoveFormat: [
+        'paragraph'
+
+    ]
 </script>
