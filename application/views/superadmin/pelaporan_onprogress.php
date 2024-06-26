@@ -27,32 +27,32 @@
     function updateDynamicTimeLeft() {
         // Select all elements with class "dynamic-time-left"
         var timeLeftElements = document.getElementsByClassName('dynamic-time-left');
-        
+
         // Loop through each element and update its content
         for (var i = 0; i < timeLeftElements.length; i++) {
             // Get the initial maxday value from the data attribute
             var maxday = parseInt(timeLeftElements[i].getAttribute('data-maxday'));
-            
+
             // Calculate the current date
             var today = new Date();
-            
+
             // Set the due date by adding maxday days to today's date
             var dueDate = new Date(today.getTime() + maxday * 24 * 60 * 60 * 1000);
-            
+
             // Calculate the difference in milliseconds between due date and today
             var differenceMs = dueDate - today;
-            
+
             // Calculate the number of days remaining
             var daysRemaining = Math.max(Math.ceil(differenceMs / (1000 * 60 * 60 * 24)), 0);
-            
+
             // Update the content of the element
             timeLeftElements[i].innerText = daysRemaining + " days";
         }
     }
-    
+
     // Call the updateDynamicTimeLeft function initially to update the displayed time left
     updateDynamicTimeLeft();
-    
+
     // Set an interval to call the updateDynamicTimeLeft function every day (adjust the interval duration as needed)
     setInterval(updateDynamicTimeLeft, 24 * 60 * 60 * 1000); // 24 hours
 </script>
@@ -66,185 +66,171 @@
             </h2>
         </div>
         <!-- jQuery UI CSS -->
-        <link rel="stylesheet"
-            href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-        <?php if ($this->session->flashdata('pesan')) { ?>
+            <?php if ($this->session->flashdata('pesan')) { ?>
 
-        <?php } ?>
-        <!-- #END# Basic Examples -->
-        <!-- Exportable Table -->
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>
-                            ON PROGRESS
-                        </h2>
+            <?php } ?>
+            <!-- #END# Basic Examples -->
+            <!-- Exportable Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                ON PROGRESS
+                            </h2>
 
-                    </div>
-                    <div class="body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                                id="example">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Klien</th>
-                                        <th>Perihal</th>
-                                        <th>Attachment</th>
-                                        <th>Category</th>
-                                        <th>Tags</th>
-                                        <th>Priority</th>
-                                        <th>Impact</th>
-                                        <th>Max Day</th>
-                                        <!-- <th>Time Left</th> -->
-                                        <th>Status CCS</th>
-                                        <th>Status</th>
-                                        <th>Handle By</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Klien</th>
-                                        <th>Perihal</th>
-                                        <th>Attachment</th>
-                                        <th>Category</th>
-                                        <th>Tags</th>
-                                        <th>Priority</th>
-                                        <th>Impact</th>
-                                        <th>Max Day</th>
-                                        <!-- <th>Time Left</th> -->
-                                        <th>Status CCS</th>
-                                        <th>Status</th>
-                                        <th>Handle By</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($datapelaporan as $dp): ?>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                                    <thead>
                                         <tr>
-                                            <td><?= $no++ ?></td>
-                                            <td><?= $dp['no_tiket']; ?></td>
-                                            <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
-                                            <td><?= $dp['nama']; ?></td>
-                                            <td><?= $dp['perihal']; ?></td>
-                                            <td> <a
-                                                    href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                            </td>
-                                            <td><?= $dp['kategori']; ?></td>
-                                            <td>
-                                                <span class="label label-info">
-                                                    <?= $dp['tags'];?>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <?php if ($dp['priority'] == 'Low'): ?>
-                                                    <span class="label label-info">Low</span>
-
-                                                <?php elseif ($dp['priority'] == 'Medium'): ?>
-                                                    <span class="label label-warning">Medium</span>
-
-                                                <?php elseif ($dp['priority'] == 'High'): ?>
-                                                    <span class="label label-danger">High</span>
-
-                                                <?php else: ?>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td><?= $dp['impact'];?></td>
-                                            <td>
-                                                <?php if ($dp['maxday'] == '90'): ?>
-                                                    <span class="label label-info">90</span>
-
-                                                <?php elseif ($dp['maxday'] == '60'): ?>
-                                                    <span class="label label-warning">60</span>
-
-                                                <?php elseif ($dp['maxday'] == '7'): ?>
-                                                    <span class="label label-danger">7</span>
-
-                                                <?php else: ?>
-                                                <?php endif; ?>
-                                            </td>
-                                            <!-- Inside the table body -->
-                                            <!-- <td><script>document.write(calculateTimeLeft(<?= $dp['maxday']; ?>));</script> days</td> -->
-                                            <!-- Inside the table body -->
-                                            <!-- <td class="dynamic-time-left" data-maxday="<?= $dp['maxday']; ?>"></td> -->
-
-                                            <td>
-                                                <?php if ($dp['status_ccs'] == 'FINISH'): ?>
-                                                    <span class="label label-success">FINISH</span>
-
-                                                <?php elseif ($dp['status_ccs'] == 'CLOSE'): ?>
-                                                    <span class="label label-warning">CLOSE</span>
-
-                                                <?php elseif ($dp['status_ccs'] == 'HANDLE'): ?>
-                                                    <span class="label label-info">HANDLE</span>
-
-                                                <?php elseif ($dp['status_ccs'] == 'HANDLE 2'): ?>
-                                                    <span class="label label-info">HANDLE 2</span>
-
-                                                <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
-                                                    <span class="label label-primary">ADDED</span>
-
-                                                <?php elseif ($dp['status_ccs'] == 'ADDED 2'): ?>
-                                                    <span class="label label-primary">ADDED 2</span>
-
-                                                <?php else: ?>
-                                                <?php endif; ?>
-
-                                            </td>
-                                            <td><?= $dp['status']; ?></td>
-                                            <td><?= $dp['handle_by'];?> , <?= $dp['handle_by2'];?> , <?= $dp['handle_by3'];?></td>
-
-                                            <td>
-
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <div class="btn btn-sm btn-warning">
-                                                    <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
-                                                        data-no_tiket="<?= $dp['no_tiket']; ?>"
-                                                        data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>"
-                                                        data-nama="<?= $dp['nama']; ?>"
-                                                        data-perihal="<?= $dp['perihal']; ?>"
-                                                        data-status="<?= $dp['status']; ?>"
-                                                        data-status_ccs="<?= $dp['status_ccs']; ?>"
-                                                        data-kategori="<?= $dp['kategori']; ?>"
-                                                        data-priority="<?= $dp['priority']; ?>"
-                                                        data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal"
-                                                        data-target="#editModalCP"> <i class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span></a>
-                                                </div>
-
-                                                <br>
-                                                <br>
-
-                                                <a class="btn btn-sm btn-info"
-                                                    href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i
-                                                    class="material-icons">visibility</i> <span
-                                                    class="icon-name"></span>Detail</a>
-                                                
-                                            </td>
+                                            <th>No</th>
+                                            <th>No Tiket</th>
+                                            <th>Tanggal</th>
+                                            <th>Nama Klien</th>
+                                            <th>Judul</th>
+                                            <th>Perihal</th>
+                                            <th>Attachment</th>
+                                            <th>Category</th>
+                                            <th>Tags</th>
+                                            <th>Priority</th>
+                                            <th>Impact</th>
+                                            <th>Max Day</th>
+                                            <!-- <th>Time Left</th> -->
+                                            <th>Status CCS</th>
+                                            <th>Status</th>
+                                            <th>Handle By</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>No Tiket</th>
+                                            <th>Tanggal</th>
+                                            <th>Nama Klien</th>
+                                            <th>Judul</th>
+                                            <th>Perihal</th>
+                                            <th>Attachment</th>
+                                            <th>Category</th>
+                                            <th>Tags</th>
+                                            <th>Priority</th>
+                                            <th>Impact</th>
+                                            <th>Max Day</th>
+                                            <!-- <th>Time Left</th> -->
+                                            <th>Status CCS</th>
+                                            <th>Status</th>
+                                            <th>Handle By</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <?php
+                                        $no = 1;
+                                        foreach ($datapelaporan as $dp) : ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $dp['no_tiket']; ?></td>
+                                                <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
+                                                <td><?= $dp['nama']; ?></td>
+                                                <td><?= $dp['judul']; ?></td>
+                                                <td><?= $dp['perihal']; ?></td>
+                                                <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                </td>
+                                                <td><?= $dp['kategori']; ?></td>
+                                                <td>
+                                                    <span class="label label-info">
+                                                        <?= $dp['tags']; ?>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <?php if ($dp['priority'] == 'Low') : ?>
+                                                        <span class="label label-info">Low</span>
+
+                                                    <?php elseif ($dp['priority'] == 'Medium') : ?>
+                                                        <span class="label label-warning">Medium</span>
+
+                                                    <?php elseif ($dp['priority'] == 'High') : ?>
+                                                        <span class="label label-danger">High</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td><?= $dp['impact']; ?></td>
+                                                <td>
+                                                    <?php if ($dp['maxday'] == '90') : ?>
+                                                        <span class="label label-info">90</span>
+
+                                                    <?php elseif ($dp['maxday'] == '60') : ?>
+                                                        <span class="label label-warning">60</span>
+
+                                                    <?php elseif ($dp['maxday'] == '7') : ?>
+                                                        <span class="label label-danger">7</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <!-- Inside the table body -->
+                                                <!-- <td><script>document.write(calculateTimeLeft(<?= $dp['maxday']; ?>));</script> days</td> -->
+                                                <!-- Inside the table body -->
+                                                <!-- <td class="dynamic-time-left" data-maxday="<?= $dp['maxday']; ?>"></td> -->
+
+                                                <td>
+                                                    <?php if ($dp['status_ccs'] == 'FINISH') : ?>
+                                                        <span class="label label-success">FINISH</span>
+
+                                                    <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
+                                                        <span class="label label-warning">CLOSE</span>
+
+                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
+                                                        <span class="label label-info">HANDLE</span>
+
+                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
+                                                        <span class="label label-info">HANDLE 2</span>
+
+                                                    <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
+                                                        <span class="label label-primary">ADDED</span>
+
+                                                    <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
+                                                        <span class="label label-primary">ADDED 2</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+
+                                                </td>
+                                                <td><?= $dp['status']; ?></td>
+                                                <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?> , <?= $dp['handle_by3']; ?></td>
+
+                                                <td>
+
+                                                    <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                    <div class="btn btn-sm btn-warning">
+                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal="<?= $dp['perihal']; ?>" data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
+                                                    </div>
+
+                                                    <br>
+                                                    <br>
+
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
+
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- #END# Exportable Table -->
         </div>
-        <!-- #END# Exportable Table -->
-    </div>
-    <!-- Button trigger modal -->
+        <!-- Button trigger modal -->
 </section>
 
 
@@ -260,13 +246,13 @@
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
-                                                    
+
                         <label for="no_tiket">No Tiket</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
                             </div>
-                        </div> 
+                        </div>
 
                         <label for="waktu_pelaporan">Tanggal</label>
                         <div class="form-group">
@@ -281,7 +267,7 @@
                                 <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
                             </div>
                         </div>
-                        
+
                         <label for="perihal">Perihal</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -320,21 +306,21 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
-                                <option value=""> -- Pilih Helpdesk -- </option>
+                                    <option value=""> -- Pilih Helpdesk -- </option>
                                     <?php
-                                        foreach ($namahd as $nah): ?>
+                                    foreach ($namahd as $nah) : ?>
                                         <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">SAVE
                                 CHANGES</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                         </div>
-                    
+
                 </div>
                 <?php echo form_close() ?>
             </div>
@@ -346,25 +332,24 @@
 
 <!-- MODAL CARI HELPDESK -->
 <div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                        width="100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Helpdesk</th>
-                                <th class="hide">ID</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($namahd  as $nah) : ?>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Helpdesk</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($namahd  as $nah) : ?>
                             <tr>
                                 <td style="text-align:center;" scope="row">
                                     <?= $i; ?>
@@ -372,25 +357,23 @@
                                 <td><?= $nah['nama']; ?></td>
                                 <td class="hide"><?= $div['id']; ?></td>
                                 <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3"
-                                        data-nama-divisi="<?= $nah['nama']; ?>"
-                                        data-id-divisi="<?= $nah['id']; ?>">
+                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-divisi="<?= $nah['nama']; ?>" data-id-divisi="<?= $nah['id']; ?>">
                                         Pilih</button>
                                 </td>
                             </tr>
                             <?php $i++; ?>
 
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        <?php echo form_close() ?>
-                    </div>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                    <?php echo form_close() ?>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
@@ -400,7 +383,7 @@
     const input = document.getElementById('maxday');
 
     // Add event listener to the select element
-    select.addEventListener('change', function () {
+    select.addEventListener('change', function() {
         // Set the value of the input field to the selected option's value
         if (select.value == "Low") {
             input.value = "90";
@@ -421,10 +404,10 @@
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         // Untuk sunting
-        $('#editModalCP').on('show.bs.modal', function (event) {
+        $('#editModalCP').on('show.bs.modal', function(event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
             var modal = $(this)
 

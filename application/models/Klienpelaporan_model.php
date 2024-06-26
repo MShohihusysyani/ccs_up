@@ -11,7 +11,7 @@ class Klienpelaporan_model extends CI_Model
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-    
+
         // Build the query using Query Builder
         $this->db->select('
             pelaporan.id_pelaporan,
@@ -32,7 +32,7 @@ class Klienpelaporan_model extends CI_Model
         $this->db->from('pelaporan');
         $this->db->where('user_id', $user_id);
         $this->db->order_by('waktu_pelaporan', 'DESC');
-    
+
         // Execute the query and return the result
         return $this->db->get()->result_array();
     }
@@ -41,7 +41,7 @@ class Klienpelaporan_model extends CI_Model
     // {
     //     // Retrieve current user data based on the username stored in the session
     //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    
+
     //     // Retrieve the current user's ID from session data
     //     $user_id = $this->session->userdata('id_user');
 
@@ -50,7 +50,7 @@ class Klienpelaporan_model extends CI_Model
     //         FROM pelaporan 
     //         WHERE user_id = ? 
     //         ORDER BY waktu_pelaporan DESC";
-    
+
     // // Execute the query with the user_id as the bound parameter
     // return $this->db->query($sql, array($user_id))->result_array();
     // }
@@ -92,6 +92,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
+            pelaporan.judul,
             pelaporan.perihal,
             pelaporan.file,
             pelaporan.nama,
@@ -134,6 +135,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
+            pelaporan.judul,
             pelaporan.perihal,
             pelaporan.file,
             pelaporan.nama,
@@ -176,6 +178,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
+            pelaporan.judul,
             pelaporan.perihal,
             pelaporan.file,
             pelaporan.nama,
@@ -218,6 +221,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
+            pelaporan.judul,
             pelaporan.perihal,
             pelaporan.file,
             pelaporan.nama,
@@ -237,7 +241,8 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function getAllData(){
+    public function getAllData()
+    {
 
         $user_id = $this->session->userdata('id_user');
 
@@ -275,6 +280,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
+            pelaporan.judul,
             pelaporan.perihal,
             pelaporan.file,
             pelaporan.nama,
@@ -299,7 +305,7 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-     //DATA PELAPORAN TEKNISI IMPLEMENTATOR FINISH
+    //DATA PELAPORAN TEKNISI IMPLEMENTATOR FINISH
     public function getDataPelaporanImplementator()
     {
         // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -314,7 +320,7 @@ class Klienpelaporan_model extends CI_Model
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-    // Build the query using Query Builder
+        // Build the query using Query Builder
         $this->db->select('
             pelaporan.kategori,
             pelaporan.id_pelaporan,
@@ -322,6 +328,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
+            pelaporan.judul,
             pelaporan.perihal,
             pelaporan.file,
             pelaporan.nama,
@@ -337,8 +344,8 @@ class Klienpelaporan_model extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'FINISH');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-    // Execute the query and return the result
-    return $this->db->get()->result_array();
+        // Execute the query and return the result
+        return $this->db->get()->result_array();
     }
 
     // DATA PER USER TEKNISI SUPPORT
@@ -364,6 +371,7 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
+            pelaporan.judul,
             pelaporan.perihal,
             pelaporan.file,
             pelaporan.nama,
@@ -425,23 +433,24 @@ class Klienpelaporan_model extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'FINISH');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-    // Execute the query and return the result
-    return $this->db->get()->result_array();
+        // Execute the query and return the result
+        return $this->db->get()->result_array();
     }
 
     public function ambil_id_pelaporan($id)
-    { 
-        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, nama, status_ccs, kategori, priority, maxday, impact, file  FROM pelaporan WHERE id_pelaporan='$id'";
+    {
+        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, judul, nama, status_ccs, kategori, priority, maxday, impact, file  FROM pelaporan WHERE id_pelaporan='$id'";
         return $this->db->query($query)->result_array();
     }
 
     public function ambil_id_temp($id)
-    { 
+    {
         $query = "SELECT  id_temp, no_tiket, judul, perihal, nama, kategori, tags, file  FROM tiket_temp WHERE id_temp='$id'";
         return $this->db->query($query)->result_array();
     }
 
-    public function get_latest_comments($id) {
+    public function get_latest_comments($id)
+    {
         $query = "SELECT 
                     user.nama_user, 
                     user.id_user, 
@@ -459,7 +468,8 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->query($query, array($id))->result_array();
     }
 
-    public function get_replies_by_pelaporan_id($id) {
+    public function get_replies_by_pelaporan_id($id)
+    {
         $query = "SELECT 
                     user.nama_user, 
                     user.id_user, 
@@ -471,36 +481,37 @@ class Klienpelaporan_model extends CI_Model
                 LEFT JOIN user ON reply.user_id = user.id_user
                 WHERE reply.pelaporan_id = $id
                 ORDER BY reply.created_at DESC";
-        
+
         return $this->db->query($query, array($id))->result_array();
     }
 
 
     //FUNGSI FORWARD KE SUPERVISOR 2
-    public function updateForward($id_pelaporan){
+    public function updateForward($id_pelaporan)
+    {
 
-        $query = "UPDATE pelaporan SET status_ccs='ADDED 2', status='Forward To Supervisor 2' WHERE id_pelaporan=$id_pelaporan" ;
+        $query = "UPDATE pelaporan SET status_ccs='ADDED 2', status='Forward To Supervisor 2' WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 
     // RATING KLIEN
-    public function tambah_rating(){
+    public function tambah_rating()
+    {
 
         $query = "INSERT INTO pelaporan(rating)";
         $this->db->query($query);
     }
 
-    public function updateRate($id_pelaporan, $rating){
+    public function updateRate($id_pelaporan, $rating)
+    {
 
-        $query = "UPDATE pelaporan SET rating = '$rating'  WHERE id_pelaporan=$id_pelaporan" ;
+        $query = "UPDATE pelaporan SET rating = '$rating'  WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 
-    public function update_data($table,$data,$id_pelaporan)
-	{
-		$this->db->where('id_pelaporan', $id_pelaporan);
-		return $this->db->update($table, $data);
+    public function update_data($table, $data, $id_pelaporan)
+    {
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        return $this->db->update($table, $data);
     }
-
-
 }

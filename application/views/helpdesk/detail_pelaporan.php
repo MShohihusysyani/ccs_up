@@ -55,6 +55,15 @@
                                     value="<?= $dp['nama']; ?>" readonly>
                             </div>
                         </div>
+
+                        <label for="judul">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="judul" name="judul" class="form-control"
+                                    value="<?= $dp['judul']; ?>" readonly>
+                            </div>
+                        </div>
+
                         <label for="perihal">Perihal </label>
                         <div class="form-group">
                             <div class="form-line">
