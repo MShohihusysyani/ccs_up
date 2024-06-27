@@ -146,9 +146,14 @@
                                                         <br>
                                                         <br>
 
-                                                        <div class="btn btn-sm btn-info">
+                                                        <!-- <div class="btn btn-sm btn-info">
                                                             <div class="demo-google-material-icon" data-toggle="modal" data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i class="material-icons">done</i> <span class="icon-name">Finish</span>
                                                             </div>
+                                                        </div> -->
+
+                                                        <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                        <div class="btn btn-sm btn-info">
+                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-judul="<?= $dp['judul']; ?>" data-toggle="modal" data-target="#finishModal"> <i class="material-icons">done</i> <span class="icon-name">Finish</span></a>
                                                         </div>
                                                         <br>
                                                         <br>
@@ -194,7 +199,7 @@
             <!-- Button trigger modal -->
 </section>
 
-<!-- MODAL FINISH -->
+<!-- MODAL FINISH
 <?php
 $no = 0;
 foreach ($datapelaporan as $dp) : $no++; ?>
@@ -300,7 +305,115 @@ foreach ($datapelaporan as $dp) : $no++; ?>
             </div>
         </div>
     </div>
-<?php endforeach ?>
+<?php endforeach ?> -->
+
+<!-- MODAL FORWARD TO SPV 2 -->
+<div class="modal fade" id="finishModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Finish CCS</h4>
+            </div>
+            <div class="modal-body">
+                <?= form_open_multipart('implementator/finish') ?>
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan">
+                <div class="body">
+                    <form class="form-horizontal">
+
+                        <label for="no_tiket">No Tiket</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="waktu_pelaporan">Tanggal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="judul">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="perihal">Perihal</label>
+                            <div class="form-line">
+                                <div id="perihal_coba" readonly></div>
+                            </div>
+                        </div>
+
+                        <label for="status_ccs">Status CCS</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="maxday">Max Day</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="kategori">Kategori</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="perihal">Catatan Finish</label>
+                        <textarea id="editor" class="form-control" name="catatan_finish" id="catatan_finish" required>
+
+                        </textarea>
+
+
+                        <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                        <div class="form-group">
+                            <label for="exampleInputFile"></label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file_finish" name="file_finish">
+                                    <label for="file" class="custom-file-label">Choose
+                                        file</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">FINISH</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+
+                        </div>
+
+                </div>
+                <?php echo form_close() ?>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 <script type="text/javascript">
@@ -352,6 +465,46 @@ foreach ($datapelaporan as $dp) : $no++; ?>
             // modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
+            // modal.find('#bprnama').attr("value", div.data('bprnama'));
+            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
+            // modal.find('#judul').attr("value", div.data('judul'));
+            // modal.find('#headline').attr("value", div.data('headline'));
+            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
+            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
+            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
+            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
+            // modal.find('#linkberita').val(div.data('linkberita'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
+
+        });
+
+    });
+</script>
+
+
+<script>
+    $(document).ready(function() {
+
+        // Untuk sunting
+        $('#finishModal').on('show.bs.modal', function(event) {
+            var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+            var modal = $(this)
+
+            // Isi nilai pada field
+            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
+            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
+            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
+            modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#judul').attr("value", div.data('judul'));
+            modal.find('#perihal_coba').html(div.data('perihal'));
+            modal.find('#status').attr("value", div.data('status'));
+            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
+            modal.find('#priority').attr("value", div.data('priority'));
+            // modal.find('#priority').value = div.data('priority');
+            // modal.find('#priority option:selected').text(div.data('priority'));
+            modal.find('#maxday').attr("value", div.data('maxday'));
+            modal.find('#kategori').attr("value", div.data('kategori'));
+            // modal.find('#kategori option:selected').text(div.data('kategori'));
             // modal.find('#bprnama').attr("value", div.data('bprnama'));
             // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
             // modal.find('#judul').attr("value", div.data('judul'));

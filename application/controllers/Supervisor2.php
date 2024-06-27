@@ -14,7 +14,7 @@ class Supervisor2 extends CI_Controller
     {
         $this->load->model('Supervisor_model', 'supervisor_model');
         $data['data_bpr'] = $this->supervisor_model->getKlien();
-        
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/dashboard', $data);
@@ -29,7 +29,7 @@ class Supervisor2 extends CI_Controller
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->spv2_model->getKlienPelaporan();
-        
+
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/allticket', $data);
@@ -89,7 +89,7 @@ class Supervisor2 extends CI_Controller
         $this->load->view('supervisor2/pelaporan_close', $data);
         $this->load->view('templates/footer');
     }
-    
+
     public function finish()
     {
         $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
@@ -117,7 +117,7 @@ class Supervisor2 extends CI_Controller
         $no_tiket   = $this->input->post('no_tiket');
         $nama       = $this->input->post('nama');
         $perihal    = $this->input->post('perihal');
-        $status_ccs ='FINISH';
+        $status_ccs = 'FINISH';
         $waktu      = date('Y-m-d');
         $priority   = $this->input->post('priority');
         $maxday     = $this->input->post('maxday');
@@ -135,21 +135,20 @@ class Supervisor2 extends CI_Controller
         $this->pelaporan_model->approveSPV($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Approve!');
         redirect('supervisor2/finish');
-
     }
 
     public function edit_pelaporan()
     {
         $id_pelaporan = $this->input->post('id_pelaporan');
         $no_tiket     = $this->input->post('no_tiket');
-        $perihal      = $this->input->post('perihal');
+        // $perihal      = $this->input->post('perihal');
         $kategori     = $this->input->post('kategori');
         $priority     = $this->input->post('priority');
         $maxday       = $this->input->post('maxday');
         $tags         = $this->input->post('tags');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
-            'perihal'    => $perihal,
+            // 'perihal'    => $perihal,
             'priority'   => $priority,
             'kategori'   => $kategori,
             'maxday'     => $maxday,
@@ -161,7 +160,8 @@ class Supervisor2 extends CI_Controller
         Redirect(base_url('supervisor2/added'));
     }
 
-    public function pilih_helpdesk($id){
+    public function pilih_helpdesk($id)
+    {
 
         $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
         $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
@@ -213,7 +213,7 @@ class Supervisor2 extends CI_Controller
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d H:i:s');
-       //jika ada gambar
+        //jika ada gambar
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
@@ -233,8 +233,8 @@ class Supervisor2 extends CI_Controller
             }
         }
 
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
@@ -246,11 +246,11 @@ class Supervisor2 extends CI_Controller
             'file' => $photo,
             'created_at' => $create_at
         ];
-        $data = preg_replace("/^<p.*?>/", "",$data);
-        $data = preg_replace("|</p>$|", "",$data);
+        $data = preg_replace("/^<p.*?>/", "", $data);
+        $data = preg_replace("|</p>$|", "", $data);
         $this->db->insert('comment', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('supervisor2/detail_pelaporan/'.$id_pelaporan));
+        Redirect(Base_url('supervisor2/detail_pelaporan/' . $id_pelaporan));
     }
 
     public function add_reply()
@@ -277,33 +277,33 @@ class Supervisor2 extends CI_Controller
                 redirect($referred_from, 'refresh');
             }
         }
-            $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-            $this->form_validation->set_rules('user_id','Helpdesk', 'required');
-            $id_pelaporan = $this->input->post('id_pelaporan');
-            $id_user = $this->input->post('user_id');
-            $body = $this->input->post('body');
-            $create_at  = date('Y-m-d H:i:s');
-            $comment_id = $this->input->post('id_comment');
-            $data = [
-                'pelaporan_id' => $id_pelaporan,
-                'user_id' => $id_user,
-                'body' => $body,
-                'file' => $photo,
-                'created_at' => $create_at,
-                'comment_id' => $comment_id
-            ];
-            $data = preg_replace("/^<p.*?>/", "",$data);
-            $data = preg_replace("|</p>$|", "",$data);
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('user_id');
+        $body = $this->input->post('body');
+        $create_at  = date('Y-m-d H:i:s');
+        $comment_id = $this->input->post('id_comment');
+        $data = [
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user,
+            'body' => $body,
+            'file' => $photo,
+            'created_at' => $create_at,
+            'comment_id' => $comment_id
+        ];
+        $data = preg_replace("/^<p.*?>/", "", $data);
+        $data = preg_replace("|</p>$|", "", $data);
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('supervisor2/detail_pelaporan/'.$id_pelaporan));
+        Redirect(Base_url('supervisor2/detail_pelaporan/' . $id_pelaporan));
     }
 
     // FORWARD KE TEKNISI
     public function fungsi_forward()
     {
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namateknisi');
         $judul   = $this->input->post('judul');
@@ -334,61 +334,61 @@ class Supervisor2 extends CI_Controller
     //EDIT TEKNISI
     public function fungsi_edit()
     {
-         // Load the form validation library
-    $this->load->library('form_validation');
+        // Load the form validation library
+        $this->load->library('form_validation');
 
-    // Set validation rules
-    $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    $this->form_validation->set_rules('namateknisi', 'Helpdesk', 'required');
+        // Set validation rules
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namateknisi', 'Helpdesk', 'required');
 
-    // Check if the form passes validation
-    if ($this->form_validation->run() == FALSE) {
-        $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-        redirect(base_url('supervisor2/onprogress'));
-    } else {
-        // Retrieve POST data
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namateknisi');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-        ];
-
-        // Fetch the user name based on the user ID
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-
-        // Check if user exists
-        if ($query->num_rows() > 0) {
-            $user = $query->row();
-            $nama_user = $user->nama_user;
-
-            // Update the forward table
-            $this->db->where('pelaporan_id', $id_pelaporan);
-            $this->db->update('t1_forward', $data);
-
-            // Update the Helpdesk in the supervisor_model
-            $this->supervisor_model->updateTeknisi($id_pelaporan, $nama_user);
-
-            // Set success message
-            $this->session->set_flashdata('pesan', 'Teknisi has been updated!');
+        // Check if the form passes validation
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+            redirect(base_url('supervisor2/onprogress'));
         } else {
-            // Set error message if user not found
-            $this->session->set_flashdata('error', 'User not found.');
-        }
+            // Retrieve POST data
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namateknisi');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
 
-        // Redirect to the onprogress page
-        redirect(base_url('supervisor2/onprogress'));
-    }
+            // Fetch the user name based on the user ID
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+
+            // Check if user exists
+            if ($query->num_rows() > 0) {
+                $user = $query->row();
+                $nama_user = $user->nama_user;
+
+                // Update the forward table
+                $this->db->where('pelaporan_id', $id_pelaporan);
+                $this->db->update('t1_forward', $data);
+
+                // Update the Helpdesk in the supervisor_model
+                $this->supervisor_model->updateTeknisi($id_pelaporan, $nama_user);
+
+                // Set success message
+                $this->session->set_flashdata('pesan', 'Teknisi has been updated!');
+            } else {
+                // Set error message if user not found
+                $this->session->set_flashdata('error', 'User not found.');
+            }
+
+            // Redirect to the onprogress page
+            redirect(base_url('supervisor2/onprogress'));
+        }
     }
 
     //TAMBAH TEKNISI
     public function fungsi_tambah()
     {
-        $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd','Helpdesk', 'required');
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('namateknisi');
         $judul   = $this->input->post('judul2');

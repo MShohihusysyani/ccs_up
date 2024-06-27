@@ -111,7 +111,7 @@ class Implementator extends CI_Controller
             'id_pelaporan' => $id,
             'no_tiket' => $this->input->post('no_tiket'),
             'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
-            'perihal'  => $this->input->post('perihal'),
+            // 'perihal'  => $this->input->post('perihal'),
             'file_finish'     => $photo,
             'nama'     => $this->input->post('nama'),
             'kategori' => $this->input->post('kategori'),

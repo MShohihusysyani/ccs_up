@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Spv2_model extends CI_Model {
+class Spv2_model extends CI_Model
+{
 
     public function getKlienPelaporan()
     {
@@ -111,6 +112,7 @@ class Spv2_model extends CI_Model {
         $this->db->join('s_forward', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('s_forward.user_id', $user_id);
         $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
         return $this->db->get()->result_array();
@@ -130,7 +132,7 @@ class Spv2_model extends CI_Model {
     //     return $this->db->query($query)->result_array();
     // }
 
-      // public function getKlienPelaporanOP(){
+    // public function getKlienPelaporanOP(){
     //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
     //     $user_id = $this->session->userdata('id_user');
     //     $query = "SELECT * 
@@ -163,28 +165,25 @@ class Spv2_model extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
-    
-    public function updateForward($id_pelaporan, $nama_user){
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2',  handle_by2 = '$nama_user',  status='Forward To Teknisi' WHERE id_pelaporan=$id_pelaporan" ;
+    public function updateForward($id_pelaporan, $nama_user)
+    {
+
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2',  handle_by2 = '$nama_user',  status='Forward To Teknisi' WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 
-    public function updateTeknisi($id_pelaporan, $nama_user){
+    public function updateTeknisi($id_pelaporan, $nama_user)
+    {
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by2 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan" ;
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by2 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 
-    public function tambahTeknisi($id_pelaporan, $nama_user){
+    public function tambahTeknisi($id_pelaporan, $nama_user)
+    {
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by3 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan" ;
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by3 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
-
-
 }
-
-
-
-

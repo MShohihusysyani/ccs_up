@@ -493,7 +493,7 @@ class Supervisor extends CI_Controller
         $no_tiket   = $this->input->post('no_tiket');
         $nama       = $this->input->post('nama');
         $judul      = $this->input->post('judul');
-        $perihal    = $this->input->post('perihal');
+        // $perihal    = $this->input->post('perihal');
         $status_ccs = 'FINISH';
         $waktu      = date('Y-m-d');
         $priority   = $this->input->post('priority');
@@ -506,7 +506,7 @@ class Supervisor extends CI_Controller
         $this->db->set('status_ccs', $status_ccs);
         $this->db->set('waktu_approve', $waktu);
         $this->db->set('priority', $priority);
-        $this->db->set('perihal', $perihal);
+        // $this->db->set('perihal', $perihal);
         $this->db->set('maxday', $maxday);
         $this->db->set('kategori', $kategori);
         $this->db->where('id_pelaporan', $id_pelaporan);
