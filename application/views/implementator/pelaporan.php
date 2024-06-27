@@ -136,7 +136,15 @@
                                                         <?php endif; ?>
 
                                                     </td>
-                                                    <td><?= $dp['handle_by']; ?> , <?= $dp['handle_by2']; ?>, <?= $dp['handle_by3']; ?></td>
+                                                    <td>
+                                                    <?= $dp['handle_by']; ?>
+                                                    <?php if (!empty($dp['handle_by2'])) : ?>
+                                                        , <?= $dp['handle_by2']; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($dp['handle_by3'])) : ?>
+                                                        , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
+                                                </td>
                                                     <td><?= $dp['subtask']; ?></td>
                                                     <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
