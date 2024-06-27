@@ -6,7 +6,6 @@ function is_logged_in()
     if (!$ci->session->userdata('username')) {
         redirect('auth');
     }
-      
 }
 if (!function_exists('bulan')) {
     function bulan()
@@ -210,10 +209,20 @@ function total_bpr()
     return $kodeBaru;
 }
 
+// COUNT TIKET PER HELPDESK USER
+function total_ticket_progres()
+{
+    $ci = get_instance();
+    $query = "SELECT u.*, COUNT(p.user_id) AS ticket_count
+                FROM pelaporan p
+                JOIN user u ON p.user_id = u.id_user
+                WHERE p.status_ccs IN ('HANDLE', 'HANDLE 2')
+                AND u.divisi IN ('Helpdesk 1', 'Helpdesk 2', 'Helpdesk 3', 'Helpdesk 4')
+                GROUP BY u.id_user";
 
+    $result = $ci->db->query($query)->result_array();
 
+    $data['user_ticket_counts'] = $result; // Store the query result in a different variable
 
-
-
-
-
+    return $data;
+}

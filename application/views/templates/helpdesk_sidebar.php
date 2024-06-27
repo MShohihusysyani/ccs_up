@@ -20,8 +20,7 @@
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="<?php echo base_url('helpdesk') ?>">CCS | HELPDESK</a>
             </div>
@@ -46,20 +45,14 @@
                         <?= $this->session->userdata('nama_user'); ?></div>
                     <div class="email"><?= $this->session->userdata('divisi'); ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a
-                                    href="<?= base_url() ?>user/profile_hd/<?= $this->session->userdata('id_user'); ?>"><i
-                                        class="material-icons">person</i>Profile</a>
+                            <li><a href="<?= base_url() ?>user/profile_hd/<?= $this->session->userdata('id_user'); ?>"><i class="material-icons">person</i>Profile</a>
                             </li>
-                            <li class="<?= $this->uri->segment(2) == 'changepassword_hd' ? 'active' : ' ' ?>"><a
-                                    href="<?= base_url('user/changepassword_hd') ?>"><i
-                                        class="material-icons">lock</i>Change Password</a>
+                            <li class="<?= $this->uri->segment(2) == 'changepassword_hd' ? 'active' : ' ' ?>"><a href="<?= base_url('user/changepassword_hd') ?>"><i class="material-icons">lock</i>Change Password</a>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i
-                                        class="material-icons">logout</i>Sign Out</a>
+                            <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i class="material-icons">logout</i>Sign Out</a>
                             </li>
                         </ul>
                     </div>
@@ -70,42 +63,44 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN MENU</li>
-                    <li
-                        class="active">
+                    <li class="active">
                         <a href="<?php echo base_url('helpdesk') ?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
 
-                    <li
-                        <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
+                    <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">confirmation_number</i>
                             <span>List Ticket</span>
                         </a>
                         <ul class="ml-menu">
-                            <li
-                                <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
+                            <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('helpdesk/pelaporan') ?>">Handle</a>
                             </li>
 
-                            <li
-                                <?= $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' ? 'class="active"' : '' ?>>
+                            <li <?= $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('helpdesk/forward') ?>">Forward</a>
                             </li>
 
-                            <li
-                                <?= $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                            <li <?= $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('helpdesk/reject') ?>">Close</a>
                             </li>
                         </ul>
                     </li>
 
-                    <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                    <!-- <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('helpdesk/rekapPelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
+                        </a>
+                    </li> -->
+
+                    <li <?= $this->uri->segment(2) == 'statistik' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                        <a href="<?php echo base_url('helpdesk/statistik') ?>">
+                            <i class="material-icons">monitoring</i>
+                            <span>Statistik</span>
                         </a>
                     </li>
 
