@@ -102,10 +102,15 @@ class Klien extends CI_Controller
 
     public function fungsi_delete_temp($id)
     {
-        $this->load->model('Temp_model', 'temp_model');
-        $this->temp_model->hapus_temp($id);
-        $this->session->set_flashdata('pesan', 'Data Deleted!');
-        Redirect(Base_url('klien/pengajuan'));
+        $result = $this->temp_model->hapus_temp($id);
+        if ($result) {
+            $this->session->set_flashdata('pesan', 'Data Deleted!');
+        } else {
+            $this->session->set_flashdata('alert', 'Failed to delete!');
+        }
+        // var_dump($result);
+        // die();
+        redirect(base_url('klien/pengajuan'));
     }
 
     public function fungsi_pengajuan()
