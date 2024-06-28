@@ -695,7 +695,7 @@ foreach ($datapelaporan as $dp) : $no++; ?>
                 'bulletedList', 'numberedList', 'todoList', '|',
                 'fontSize', 'fontFamily', 'fontColor', '', '', '|',
                 'alignment', '|',
-                'uploadImage', '|',
+                'uploadImage', 'ckfinder', '|',
                 'undo', 'redo',
             ],
             shouldNotGroupWhenFull: true
@@ -805,6 +805,13 @@ foreach ($datapelaporan as $dp) : $no++; ?>
                 }
             }
         },
+        // uploadImage: {
+        //     types: ['jpeg', 'png', 'gif', 'bmp', 'webp', 'jpg'],
+        //     previewsInData: true
+        // },
+        ckfinder: {
+            uploadUrl: "<?= base_url('helpdesk/upload') ?>"
+        },
         // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         mention: {
             feeds: [{
@@ -857,6 +864,7 @@ foreach ($datapelaporan as $dp) : $no++; ?>
             'PasteFromOfficeEnhanced',
             'CaseChange'
         ]
+
     });
     RemoveFormat: [
         'paragraph'
