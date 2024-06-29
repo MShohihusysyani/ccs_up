@@ -135,6 +135,39 @@ class Implementator extends CI_Controller
         redirect('implementator/pelaporan');
     }
 
+    public function upload()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/filefinish/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/filefinish/' . $photo);
+                $this->load->helper('url');
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
+        }
+    }
+
     public function detail_pelaporan($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
