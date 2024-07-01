@@ -97,6 +97,13 @@
                         </a>
                     </li> -->
 
+                    <li <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                        <a href="<?php echo base_url('helpdesk/rekapPelaporan') ?>">
+                            <i class="material-icons">archive</i>
+                            <span>Data Pelaporan</span>
+                        </a>
+                    </li>
+
                     <li <?= $this->uri->segment(2) == 'statistik' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('helpdesk/statistik') ?>">
                             <i class="material-icons">monitoring</i>
