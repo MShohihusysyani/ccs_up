@@ -12,6 +12,13 @@
     .star.selected {
         color: gold;
     }
+
+    .star-rating .star.selected {
+        font-size: 30px;
+        /* Sesuaikan ukuran sesuai kebutuhan Anda */
+        color: gold;
+        /* Warna emas untuk bintang */
+    }
 </style>
 <!-- Button trigger modal -->
 <section class="content">
