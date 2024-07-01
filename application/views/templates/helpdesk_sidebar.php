@@ -70,7 +70,7 @@
                         </a>
                     </li>
 
-                    <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
+                    <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'data_finish' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">confirmation_number</i>
                             <span>List Ticket</span>
@@ -85,7 +85,11 @@
                             </li>
 
                             <li <?= $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('helpdesk/reject') ?>">Close</a>
+                                <a href="<?php echo base_url('helpdesk/reject') ?>">Reject</a>
+                            </li>
+
+                            <li <?= $this->uri->segment(2) == 'data_finish' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('helpdesk/data_finish') ?>">Finish</a>
                             </li>
                         </ul>
                     </li>

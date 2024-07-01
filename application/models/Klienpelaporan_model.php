@@ -186,7 +186,9 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.impact,
             pelaporan.handle_by,
             pelaporan.status_ccs,
-            pelaporan.tags
+            pelaporan.tags,
+            pelaporan.rating,
+            pelaporan.has_rated
         ');
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
@@ -336,7 +338,8 @@ class Klienpelaporan_model extends CI_Model
             pelaporan.impact,
             pelaporan.handle_by2,
             pelaporan.status,
-            pelaporan.tags
+            pelaporan.tags,
+            pelaporan.rating
         ');
         $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');

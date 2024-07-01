@@ -152,7 +152,9 @@ class M_Klien extends CI_Model
             pelaporan.handle_by,
             pelaporan.handle_by2,
             pelaporan.handle_by3,
-            pelaporan.impact
+            pelaporan.impact,
+            pelaporan.rating,
+            pelaporan.has_rated
         ');
         $this->db->from('pelaporan');
         $this->db->where('user_id', $user_id);
@@ -162,4 +164,43 @@ class M_Klien extends CI_Model
         // Execute the query and return the result
         return $this->db->get()->result_array();
     }
+
+    public function update_rating($id, $rating)
+    {
+        $data = [
+            'rating' => $rating,
+            'has_rated' => TRUE
+        ];
+
+        $this->db->where('id_pelaporan', $id);
+        $result = $this->db->update('pelaporan', $data);
+
+        if ($result === FALSE) {
+            log_message('error', 'Failed to update rating: ' . $this->db->last_query());
+        } else {
+            log_message('debug', 'Rating updated successfully: ' . $this->db->last_query());
+        }
+
+        return $result;
+    }
+
+
+
+    // public function update_rating($id, $rating)
+    // {
+    //     // Log data received
+    //     log_message('info', 'Update Rating - ID: ' . $id . ', Rating: ' . $rating);
+
+    //     $this->db->where('id_pelaporan', $id);
+    //     $this->db->update('pelaporan', ['rating' => $rating]);
+
+    //     // Log query executed
+    //     log_message('info', 'Executed Query: ' . $this->db->last_query());
+    //     // Check affected rows
+    //     if ($this->db->affected_rows() > 0) {
+    //         log_message('info', 'Rating updated successfully.');
+    //     } else {
+    //         log_message('error', 'Failed to update rating.');
+    //     }
+    // }
 }

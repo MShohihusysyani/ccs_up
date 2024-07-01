@@ -229,6 +229,154 @@ class Klien extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function save_rating()
+    {
+        $id = $this->input->post('id_pelaporan');
+        $rating = $this->input->post('rating');
+
+        log_message('info', 'ID: ' . $id . ', Rating: ' . $rating);
+
+        // Check if data received is not empty
+        if (empty($id) || empty($rating)) {
+            log_message('error', 'ID or Rating is empty.');
+            echo json_encode(['status' => 'error', 'message' => 'ID or Rating is empty.']);
+            return;
+        }
+
+        $this->load->model('M_Klien');
+        $this->M_Klien->update_rating($id, $rating);
+
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function rating1()
+    {
+        header('Content-Type: application/json');
+
+        $this->load->model('M_Klien');
+        try {
+            // Validasi input
+            $id = $this->input->post('id_pelaporan');
+            $rating = $this->input->post('rating');
+
+            if (empty($id) || empty($rating)) {
+                throw new Exception('ID Pelaporan dan Rating harus diisi.');
+            }
+
+            // Perform validation and update the rating in the database
+            if (!$this->M_Klien->update_rating($id, $rating)) {
+                throw new Exception('Failed to update rating.');
+            }
+
+            // Update the rating status
+            $this->db->where('id_pelaporan', $id);
+            if (!$this->db->update('pelaporan', ['has_rated' => TRUE])) {
+                throw new Exception('Failed to update rating status.');
+            }
+
+            echo json_encode(['status' => 'success']);
+            exit;
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Internal Server Error: ' . $e->getMessage()]);
+            exit;
+        }
+    }
+
+    public function rating()
+    {
+        header('Content-Type: application/json');
+        $this->load->model('M_Klien');
+        try {
+            $id = $this->input->post('id_pelaporan');
+            $rating = $this->input->post('rating');
+
+            // Log input data
+            log_message('debug', 'Received rating data: ID = ' . $id . ', Rating = ' . $rating);
+
+            // Check if the user has already rated
+            $this->db->where('id_pelaporan', $id);
+            $query = $this->db->get('pelaporan');
+            if ($query === FALSE) {
+                log_message('error', 'Database query failed: ' . $this->db->last_query());
+                throw new Exception('Database query failed');
+            }
+
+            $row = $query->row();
+
+            if ($row->has_rated) {
+                // User has already rated
+                echo json_encode(['status' => 'error', 'message' => 'You have already rated this item.']);
+                return;
+            }
+
+            // Perform validation and update the rating in the database
+            if (!$this->M_Klien->update_rating($id, $rating)) {
+                log_message('error', 'Failed to update rating');
+                throw new Exception('Failed to update rating');
+            }
+
+            // Update the rating status
+            $this->db->where('id_pelaporan', $id);
+            if (!$this->db->update('pelaporan', ['has_rated' => TRUE])) {
+                log_message('error', 'Failed to update rating status: ' . $this->db->last_query());
+                throw new Exception('Failed to update rating status');
+            }
+
+            echo json_encode(['status' => 'success']);
+        } catch (Exception $e) {
+            log_message('error', 'Error in method_to_handle_rating: ' . $e->getMessage());
+            echo json_encode(['status' => 'error', 'message' => 'Internal Server Error: ' . $e->getMessage()]);
+        }
+    }
+
+
+
+
+    // public function rating()
+    // {
+    //     header('Content-Type: application/json');
+
+    //     $id = $this->input->post('id_pelaporan');
+    //     $rating = $this->input->post('rating');
+
+    //     // Log input data
+    //     log_message('debug', 'Received rating data: ID = ' . $id . ', Rating = ' . $rating);
+
+    //     // Check if the user has already rated
+    //     $this->db->where('id_pelaporan', $id);
+    //     $query = $this->db->get('pelaporan');
+    //     if (!$query) {
+    //         log_message('error', 'Database query failed: ' . $this->db->last_query());
+    //         echo json_encode(['status' => 'error', 'message' => 'Database query failed']);
+    //         return;
+    //     }
+
+    //     $row = $query->row();
+
+    //     if ($row->has_rated) {
+    //         // User has already rated
+    //         echo json_encode(['status' => 'error', 'message' => 'You have already rated this item.']);
+    //         return;
+    //     }
+
+    //     // Perform validation and update the rating in the database
+    //     if ($this->model->update_rating($id, $rating)) {
+    //         // Update the rating status
+    //         $this->db->where('id_pelaporan', $id);
+    //         $update = $this->db->update('pelaporan', ['has_rated' => TRUE]);
+    //         if (!$update) {
+    //             log_message('error', 'Failed to update rating status: ' . $this->db->last_query());
+    //             echo json_encode(['status' => 'error', 'message' => 'Failed to update rating status']);
+    //             return;
+    //         }
+
+    //         echo json_encode(['status' => 'success']);
+    //     } else {
+    //         log_message('error', 'Failed to update rating');
+    //         echo json_encode(['status' => 'error', 'message' => 'Failed to update rating']);
+    //     }
+    // }
+
     public function bank_knowlage()
     {
         // $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
@@ -418,50 +566,6 @@ class Klien extends CI_Controller
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('klien/detail_pelaporan/' . $id_pelaporan));
-    }
-
-
-    public function rate_item()
-    {
-
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $rating = $this->input->post('rating');
-        $data = [
-            'rating'    => $rating
-        ];
-        $this->db->update('rating', $data);
-        $this->klienpelaporan_model->updateRate($id_pelaporan, $rating);
-    }
-
-    public function insert_rating()
-    {
-
-        $data['rating_name']    = $this->db->get('rating')->result_array();
-
-        $this->form_validation->set_rules('rating_name', 'Rating', 'required');
-        $data = [
-            'rating_name'    => $this->input->post('rating_name')
-        ];
-        $this->db->insert('rating', $data);
-    }
-
-    public function insert_rating2()
-    {
-
-        // $data['rating']    = $this->db->get('pelaporan')->result_array();
-        // $data['id_pelaporan']    = $this->db->get('pelaporan')->result_array();
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $rating = $this->input->post('rating');
-
-        $this->form_validation->set_rules('rating', 'Rating', 'required');
-        $data = [
-            'rating'    => $rating
-        ];
-        $this->db->where('id_pelaporan', $id_pelaporan);
-        $this->db->update('pelaporan', $data);
-        // $this->klienpelaporan_model->updateRate($id_pelaporan, $rating);
-
-
     }
 
     public function update()

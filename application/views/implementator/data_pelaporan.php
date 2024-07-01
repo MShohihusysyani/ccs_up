@@ -1,6 +1,20 @@
-  
-    <!-- Button trigger modal -->
-    <section class="content">
+<style>
+    .star-rating {
+        display: inline-block;
+    }
+
+    .star {
+        cursor: pointer;
+        color: gray;
+        font-size: 20px;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+</style>
+<!-- Button trigger modal -->
+<section class="content">
     <div class="container-fluid">
         <div class="block-header">
             <h2>
@@ -22,38 +36,38 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-exportable dataTable"
-                                id="example">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
                                 <thead>
                                     <tr>
-                                            <th>No</th>
-                                            <th>Waktu Pelaporan</th>
-                                            <th>No Tiket</th>
-                                            <th>Nama Klien</th>
-                                            <th>Perihal</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
+                                        <th>No</th>
+                                        <th>Tanggal</th>
+                                        <th>No Tiket</th>
+                                        <th>Nama Klien</th>
+                                        <th>Perihal</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status CCS</th>
+                                        <th>Handle By</th>
+                                        <th>Rating</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                <?php
-                                        $no = 1;
-                                        foreach ($datapelaporan as $dp) : ?>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($datapelaporan as $dp) : ?>
                                         <tr>
-                                            <td><?= $no++?></td>
+                                            <td><?= $no++ ?></td>
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
-                                            <td><?= $dp['no_tiket'];?></td>
-                                            <td><?= $dp['nama'];?></td>
-                                            <td><?= $dp['perihal'];?></td>
-                                            <td><?= $dp['kategori'];?></td>
+                                            <td><?= $dp['no_tiket']; ?></td>
+                                            <td><?= $dp['nama']; ?></td>
+                                            <td><?= $dp['perihal']; ?></td>
+                                            <td><?= $dp['kategori']; ?></td>
                                             <td>
                                                 <span class="label label-info">
-                                                <?= $dp['tags'];?>
+                                                    <?= $dp['tags']; ?>
                                                 </span>
                                             </td>
                                             <td>
@@ -70,17 +84,17 @@
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <?php if ($dp['maxday'] == '90' ) : ?>
+                                                <?php if ($dp['maxday'] == '90') : ?>
                                                     <span class="label label-info">90</span>
 
-                                                <?php elseif($dp['maxday'] == '60' ) :?>
+                                                <?php elseif ($dp['maxday'] == '60') : ?>
                                                     <span class="label label-warning">60</span>
 
-                                                <?php elseif ($dp['maxday'] == '7' ) : ?>
+                                                <?php elseif ($dp['maxday'] == '7') : ?>
                                                     <span class="label label-danger">7</span>
 
                                                 <?php else : ?>
-                                                <?php endif?>
+                                                <?php endif ?>
                                             </td>
                                             <td>
                                                 <?php if ($dp['status_ccs'] == 'FINISH') : ?>
@@ -97,15 +111,54 @@
 
                                                 <?php else : ?>
                                                 <?php endif; ?>
-                                            
+
                                             </td>
-                                            <td><?= $dp['handle_by2'];?></td>
-                                            <!-- <td> <a
-                                                href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                            </td> -->
+                                            <td>
+                                                <?php
+                                                // Contoh penanganan multiple handle by
+                                                $handleByList = [
+                                                    // $dp['handle_by'],
+                                                    $dp['handle_by2'],
+                                                    // $dp['handle_by3']
+                                                ];
+
+                                                // Loop untuk setiap user yang menghandle tiket
+                                                // $first = true;
+                                                foreach ($handleByList as $handleBy) :
+                                                    if (!empty($handleBy)) :
+                                                        // Tampilkan koma di antara nama-nama pengguna jika bukan pengguna pertama
+                                                        // if (!$first) {
+                                                        //     echo ', ';
+                                                        // }
+                                                        // $first = false;
+                                                ?>
+                                                        <div class="handle-by-item">
+                                                            <?= $handleBy; ?>
+                                                        </div>
+                                                <?php
+                                                    endif;
+                                                endforeach;
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <!-- Tampilkan rating dalam bentuk bintang di kolom Rating -->
+                                                <?php if ($dp['rating'] !== null) : ?>
+                                                    <div class="star-rating">
+                                                        <?php
+                                                        // Tampilkan bintang sesuai dengan rating yang diberikan
+                                                        $rating = $dp['rating'];
+                                                        for ($i = 1; $i <= 5; $i++) {
+                                                            if ($i <= $rating) {
+                                                                echo '<span class="star selected">&#9733;</span>';
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </td>
 
                                         </tr>
-                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

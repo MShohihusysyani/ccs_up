@@ -1,3 +1,5 @@
+<!-- Button trigger modal -->
+<!-- Button trigger modal -->
 <style>
     .star-rating {
         display: inline-block;
@@ -13,7 +15,6 @@
         color: gold;
     }
 </style>
-<!-- Button trigger modal -->
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -36,18 +37,21 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-exportable dataTable" id="example">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Waktu Pelaporan</th>
+                                        <th>Tanggal</th>
                                         <th>No Tiket</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
                                         <th>Category</th>
+                                        <th>Tags</th>
                                         <th>Priority</th>
+                                        <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
+                                        <th>Rating</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -63,6 +67,11 @@
                                             <td><?= $dp['perihal']; ?></td>
                                             <td><?= $dp['kategori']; ?></td>
                                             <td>
+                                                <span class="label label-info">
+                                                    <?= $dp['tags']; ?>
+                                                </span>
+                                            </td>
+                                            <td>
                                                 <?php if ($dp['priority'] == 'Low') : ?>
                                                     <span class="label label-info">Low</span>
 
@@ -73,8 +82,20 @@
                                                     <span class="label label-danger">High</span>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($dp['maxday'] == '90') : ?>
+                                                    <span class="label label-info">90</span>
+
+                                                <?php elseif ($dp['maxday'] == '60') : ?>
+                                                    <span class="label label-warning">60</span>
+
+                                                <?php elseif ($dp['maxday'] == '7') : ?>
+                                                    <span class="label label-danger">7</span>
+
+                                                <?php else : ?>
+                                                <?php endif ?>
                                             </td>
                                             <td>
                                                 <?php if ($dp['status_ccs'] == 'FINISH') : ?>
@@ -90,7 +111,6 @@
                                                     <span class="label label-primary">ADDED</span>
 
                                                 <?php else : ?>
-
                                                 <?php endif; ?>
 
                                             </td>
@@ -98,8 +118,8 @@
                                                 <?php
                                                 // Contoh penanganan multiple handle by
                                                 $handleByList = [
-                                                    // $dp['handle_by'],
-                                                    $dp['handle_by2'],
+                                                    $dp['handle_by'],
+                                                    // $dp['handle_by2'],
                                                     // $dp['handle_by3']
                                                 ];
 
@@ -111,7 +131,7 @@
                                                         // if (!$first) {
                                                         //     echo ', ';
                                                         // }
-                                                        // $first = false;
+                                                        //$first = false;
                                                 ?>
                                                         <div class="handle-by-item">
                                                             <?= $handleBy; ?>
@@ -137,6 +157,7 @@
                                                     </div>
                                                 <?php endif; ?>
                                             </td>
+
 
                                         </tr>
                                     <?php endforeach; ?>
