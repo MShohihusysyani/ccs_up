@@ -8,6 +8,9 @@
         </div>
         <!-- jQuery UI CSS -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+        <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
         <!-- Basic Examples -->
 
@@ -37,7 +40,7 @@
                                         <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
-                                        <th>Status CCS</th>
+                                        <th>Status</th>
                                         <th>Handle By</th>
                                     </tr>
                                 </thead>
@@ -53,15 +56,15 @@
                                         <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
-                                        <th>Status CCS</th>
+                                        <th>Status</th>
                                         <th>Handle By</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
 
-                                    <?php
-                                    $no = 1;
-                                    foreach ($datapelaporan as $dp) : ?>
+                                    <!-- <?php
+                                            $no = 1;
+                                            foreach ($datapelaporan as $dp) : ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
                                             <td><?= $dp['no_tiket']; ?></td>
@@ -139,55 +142,9 @@
                                                     , <?= $dp['handle_by3']; ?>
                                                 <?php endif; ?>
                                             </td>
-                                            <!--                                            
-                                            <td>
-                                            <div class="btn btn-sm btn-warning">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id']; ?>"><i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
-                                                </div>
-                                            </div>
-                                            
-                                            <br>
-                                            <br>
-                                            
-                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span
-                                                        class="icon-name"></span>
-                                                    Forward 1</a>
-                                                    <br>
-                                                    <br>
-
-                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD2/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span
-                                                        class="icon-name"></span>
-                                                    Forward 2</a>
-                                                    <br>
-                                                    <br>
-                                                    <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD3/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span
-                                                        class="icon-name"></span>
-                                                    Forward 3</a>
-
-                                                    <br>
-                                                    <br>
-                                                    <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <a class="btn btn-sm btn-info tombol-usulkan"
-                                                    href="<?= base_url() ?>supervisor/forwardtoHD4/<?= $dp['id']; ?>"><i
-                                                        class="material-icons">forward</i> <span
-                                                        class="icon-name"></span>
-                                                    Forward 4</a>
-                        
-                                            </td> -->
+        
                                         </tr>
-                                    <?php endforeach; ?>
+                                    <?php endforeach; ?> -->
                                 </tbody>
                             </table>
                         </div>
@@ -199,186 +156,20 @@
     </div>
     <!-- Button trigger modal -->
 </section>
-
-
-<!-- MODAL EDIT -->
-<?php
-$no = 0;
-foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Edit Priority and Category</h4>
-                </div>
-                <div class="modal-body">
-                    <?= form_open_multipart('supervisor/edit_pelaporan') ?>
-                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                    <div class="body">
-                        <form class="form-horizontal">
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                    <label class="form-label">No tiket</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                    <label class="form-label">Waktu Pelaporan</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                    <label class="form-label">Nama Klien</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
-                                    <label class="form-label">Perihal</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['status']; ?>" type="text" id="status" name="status" class="form-control" readonly>
-                                    <label class="form-label">Status</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                    <label class="form-label">Status CCS</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <select id="priority" name="priority" class="form-control">
-                                    <option value="">-- Please select Priority--</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                </select>
-                            </div>
-
-                            <!-- <div class="form-group form-float">
-                        <select name="kategori" id="kategori" class="form-control">
-                            
-                                    <option value=""><?= $dp['kategori']; ?></option>
-                                    <?php
-                                    foreach ($category as $cat) : ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                        <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                        </div> -->
-                            <!-- 
-                        <div class="form-group form-float">
-                                
-                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaKategori"
-                                    name="kategori" id="kategori" placeholder="category"
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id">
-                            
-                        </div> -->
-
-                            <!-- <label for="jenis_barang">Category</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaKategori"
-                                    name="kategori" id="kategori" placeholder="Pilih Kategori" 
-                                    class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id" name="id">
-                            </div>
-                        </div> -->
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" data-toggle="modal" data-target="#defaultModalNamaKategori" name="kategori" id="kategori" placeholder="" class="form-control ui-autocomplete-input" value="" autocomplete="on" readonly>
-                                    <input type="hidden" id="id" name="id">
-                                    <label class="form-label">Category</label>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
-                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                <?php echo form_close() ?>
-
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endforeach ?>
-
-
-<!-- modal cari kategori -->
-<div class="modal fade" id="defaultModalNamaKategori" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Cari Kategori</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Kategori</th>
-                            <th class="hide">ID</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($category  as $cat) : ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
-                                <td><?= $cat['nama_kategori']; ?></td>
-                                <td class="hide"><?= $cat['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-kategori="<?= $cat['nama_kategori']; ?>" data-id-namakategori="<?= $cat['id']; ?>">
-                                        Pilih</button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                    <?php echo form_close() ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Script -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- jQuery UI -->
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $(document).on('click', '#pilih3', function() {
-            var nama_klas = $(this).data('nama-kategori');
-            var id = $(this).data('id-namakategori');
-            $('#kategori').val(nama_klas);
-            $('#id').val(id);
-            $('#defaultModalNamaKategori').modal('hide');
-        })
+    $('#example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('supervisor2/ajax_list') ?>",
+            "type": "POST"
+        },
+        "order": [
+            [2, 'desc']
+        ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+        "columnDefs": [{
+            "targets": [0],
+            "orderable": false,
+        }, ],
     });
 </script>
