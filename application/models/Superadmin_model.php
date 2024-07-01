@@ -295,7 +295,8 @@ class Superadmin_model extends CI_Model
                 handle_by2, 
                 handle_by3, 
                 impact, 
-                tags
+                tags,
+                rating
             FROM 
                 pelaporan 
             WHERE 

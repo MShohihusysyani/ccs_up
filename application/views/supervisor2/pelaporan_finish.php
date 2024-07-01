@@ -1,3 +1,18 @@
+<style>
+    .star-rating {
+        display: inline-block;
+    }
+
+    .star {
+        cursor: pointer;
+        color: gray;
+        font-size: 20px;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+</style>
 <!-- Button trigger modal -->
 <section class="content">
     <div class="container-fluid">
@@ -40,6 +55,7 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
+                                            <th>Rating</th>
                                             <!-- <th>Tanggal Approve</th> -->
 
                                         </tr>
@@ -58,6 +74,7 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
+                                            <th>Rating</th>
                                             <!-- <th>Tanggal Approve</th> -->
                                         </tr>
                                     </tfoot>
@@ -124,6 +141,50 @@
                                                 </td>
 
                                                 <td>
+                                                    <?php
+                                                    // Contoh penanganan multiple handle by
+                                                    $handleByList = [
+                                                        $dp['handle_by'],
+                                                        $dp['handle_by2'],
+                                                        $dp['handle_by3']
+                                                    ];
+
+                                                    // Loop untuk setiap user yang menghandle tiket
+                                                    $first = true;
+                                                    foreach ($handleByList as $handleBy) :
+                                                        if (!empty($handleBy)) :
+                                                            // Tampilkan koma di antara nama-nama pengguna jika bukan pengguna pertama
+                                                            if (!$first) {
+                                                                echo ', ';
+                                                            }
+                                                            $first = false;
+                                                    ?>
+                                                            <div class="handle-by-item">
+                                                                <?= $handleBy; ?>
+                                                            </div>
+                                                    <?php
+                                                        endif;
+                                                    endforeach;
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <!-- Tampilkan rating dalam bentuk bintang di kolom Rating -->
+                                                    <?php if ($dp['rating'] !== null) : ?>
+                                                        <div class="star-rating">
+                                                            <?php
+                                                            // Tampilkan bintang sesuai dengan rating yang diberikan
+                                                            $rating = $dp['rating'];
+                                                            for ($i = 1; $i <= 5; $i++) {
+                                                                if ($i <= $rating) {
+                                                                    echo '<span class="star selected">&#9733;</span>';
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </td>
+
+                                                <!-- <td>
                                                     <?= $dp['handle_by']; ?>
                                                     <?php if (!empty($dp['handle_by2'])) : ?>
                                                         , <?= $dp['handle_by2']; ?>
@@ -131,7 +192,7 @@
                                                     <?php if (!empty($dp['handle_by3'])) : ?>
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
-                                                </td>
+                                                </td> -->
                                                 <!-- <td><?= tanggal_indo($dp['waktu_approve']); ?></td> -->
                                             </tr>
                                         <?php endforeach; ?>

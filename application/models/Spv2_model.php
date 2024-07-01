@@ -159,10 +159,61 @@ class Spv2_model extends CI_Model
     //FINISH
     public function getKlienPelaporanFinish()
     {
+        // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, maxday, waktu_approve, handle_by2, handle_by3, impact, tags  FROM pelaporan WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC";
-        return $this->db->query($query)->result_array();
+
+        // Ensure the user is retrieved
+        if ($data['user']) {
+            // User ID from session
+            $user_id = $this->session->userdata('id_user');
+
+            // SQL query to retrieve reports with status_ccs='FINISH'
+            $query = "
+            SELECT DISTINCT
+                nama, 
+                id_pelaporan, 
+                user_id, 
+                kategori,
+                judul, 
+                perihal, 
+                waktu_pelaporan, 
+                status_ccs, 
+                file, 
+                status, 
+                no_tiket, 
+                priority,
+                handle_by, 
+                maxday, 
+                waktu_approve, 
+                handle_by2, 
+                handle_by3, 
+                impact, 
+                tags,
+                rating
+            FROM 
+                pelaporan 
+            WHERE 
+                status_ccs = 'FINISH' 
+            ORDER BY 
+                waktu_pelaporan DESC
+        ";
+
+            // Execute the query and return the result as an array
+            $result = $this->db->query($query);
+
+            // Check for query execution errors
+            if ($result) {
+                return $result->result_array();
+            } else {
+                // Handle the error appropriately (e.g., log the error, return a message)
+                log_message('error', 'Query failed: ' . $this->db->last_query());
+                return []; // Return an empty array or handle as needed
+            }
+        } else {
+            // Handle case when user data is not found
+            log_message('error', 'User not found in session.');
+            return []; // Return an empty array or handle as needed
+        }
     }
 
 

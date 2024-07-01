@@ -139,16 +139,6 @@
                                                     <?php endif; ?>
 
                                                 </td>
-
-                                                <!-- <td>
-                                                    <?= $dp['handle_by']; ?>
-                                                    <?php if (!empty($dp['handle_by2'])) : ?>
-                                                        , <?= $dp['handle_by2']; ?>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($dp['handle_by3'])) : ?>
-                                                        , <?= $dp['handle_by3']; ?>
-                                                    <?php endif; ?>
-                                                </td> -->
                                                 <td>
                                                     <?php
                                                     // Contoh penanganan multiple handle by
@@ -194,7 +184,15 @@
                                                 </td>
 
 
-
+                                                <!-- <td>
+                                                <?= $dp['handle_by']; ?>
+                                                    <?php if (!empty($dp['handle_by2'])) : ?>
+                                                        , <?= $dp['handle_by2']; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($dp['handle_by3'])) : ?>
+                                                        , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
+                                                </td> -->
                                                 <!-- <td><?= tanggal_indo($dp['waktu_approve']); ?></td> -->
                                             </tr>
                                         <?php endforeach; ?>
