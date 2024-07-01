@@ -104,6 +104,13 @@
                         </a>
                     </li>
 
+                    <li <?= $this->uri->segment(2) == 'pengajuan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                        <a href="<?php echo base_url('helpdesk/pengajuan') ?>">
+                            <i class="material-icons">confirmation_number</i>
+                            <span>New Ticket</span>
+                        </a>
+                    </li>
+
                     <li class="header">LABELS</li>
                     <li>
                         <a href="javascript:void(0);">

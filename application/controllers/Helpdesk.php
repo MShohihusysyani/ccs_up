@@ -17,6 +17,30 @@ class Helpdesk extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function pengajuan()
+    {
+        // $data['noTiket'] = $this->client_model->getkodeticket();
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        // $this->load->model('Category_model', 'category_model');
+        // $data['nama_kategori'] = $this->db->get('category')->result_array();
+        $this->load->model('Temp_model', 'temp_model');
+        // $data['nama_kategori'] = $this->db->get('tiket_temp')->result_array();
+        $data['category']      = $this->category_model->getCategory();
+        $data['tiket_temp'] = $this->temp_model->getTiketTemp1();
+        $id_user = $this->session->userdata('id_user');
+        $no_klien = $this->client_model->getNoKlien($id_user);
+        $no_urut = $this->client_model->getNoUrut($id_user);
+        $bulan = $time = date("m");
+        $tahun = $time = date("Y");
+
+        $data['tiket'] = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/pengajuan', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
