@@ -20,8 +20,7 @@
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="<?php echo base_url('implementator') ?>">CCS | IMPLEMENTATOR</a>
             </div>
@@ -46,20 +45,14 @@
                         <?= $this->session->userdata('nama_user'); ?></div>
                     <div class="email"><?= $this->session->userdata('divisi'); ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a
-                                    href="<?= base_url() ?>user/profile_implementator/<?= $this->session->userdata('id_user'); ?>"><i
-                                        class="material-icons">person</i>Profile</a>
+                            <li><a href="<?= base_url() ?>user/profile_implementator/<?= $this->session->userdata('id_user'); ?>"><i class="material-icons">person</i>Profile</a>
                             </li>
-                            <li class="<?= $this->uri->segment(2) == 'changepassword_hd' ? 'active' : ' ' ?>"><a
-                                    href="<?= base_url('user/changepassword_implementator') ?>"><i
-                                        class="material-icons">lock</i>Change Password</a>
+                            <li class="<?= $this->uri->segment(2) == 'changepassword_hd' ? 'active' : ' ' ?>"><a href="<?= base_url('user/changepassword_implementator') ?>"><i class="material-icons">lock</i>Change Password</a>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i
-                                        class="material-icons">logout</i>Sign Out</a>
+                            <li><a href="<?php echo site_url('auth/logout') ?>" class="tombol-logout"><i class="material-icons">logout</i>Sign Out</a>
                             </li>
                         </ul>
                     </div>
@@ -70,14 +63,13 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN MENU</li>
-                    <li
-                        class="active">
+                    <li class="active">
                         <a href="<?php echo base_url('implementator') ?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
-                    
+
                     <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('implementator/pelaporan') ?>">
                             <i class="material-icons">confirmation_number</i>
@@ -96,6 +88,13 @@
                         <a href="<?php echo base_url('implementator/data_pelaporan') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
+                        </a>
+                    </li>
+
+                    <li <?= $this->uri->segment(2) == 'statistik' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                        <a href="<?php echo base_url('implementator/statistik') ?>">
+                            <i class="material-icons">computer</i>
+                            <span>Statistik</span>
                         </a>
                     </li>
 
@@ -119,7 +118,7 @@
                 </div>
             </div>
             <!-- #Footer -->
-</aside>
+        </aside>
         <!-- #END# Left Sidebar -->
 
         <script>

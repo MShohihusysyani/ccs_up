@@ -272,4 +272,16 @@ class Implementator extends CI_Controller
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('implementator/detail_pelaporan/' . $id_pelaporan));
     }
+
+    public function statistik()
+    {
+        // // Fetch total active data from the model
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('user_id');
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/statistik');
+        $this->load->view('templates/footer');
+    }
 }
