@@ -526,26 +526,31 @@ class Helpdesk extends CI_Controller
     //     Redirect(Base_url('helpdesk/pelaporan'));
     // }
 
+    // public function statistik()
+    // {
+
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+
+    //     $this->load->model('Pelaporan_model', 'pelaporan_model');
+    //     $data['tickets_per_user'] = $this->pelaporan_model->get_tickets_count_per_user();
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/helpdesk_sidebar');
+    //     $this->load->view('helpdesk/statistik', $data);
+    //     $this->load->view('templates/footer');
+    // }
+
+
+
+
     public function statistik()
     {
-
-
+        // // Fetch total active data from the model
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('user_id');
 
-        $this->load->model('Pelaporan_model', 'pelaporan_model');
-        // Menghitung jumlah tiket untuk status HANDLE dan HANDLE 2
-        $data['handle_count'] = $this->pelaporan_model->count_tickets_by_status($user_id, ['HANDLE', 'HANDLE 2']);
-
-        // Menghitung jumlah tiket untuk status CLOSE
-        $data['close_count'] = $this->pelaporan_model->count_tickets_by_status($user_id, ['CLOSE']);
-
-        // Menghitung jumlah tiket untuk status FINISH
-        $data['finish_count'] = $this->pelaporan_model->count_tickets_by_status($user_id, ['FINISH']);
-
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
-        $this->load->view('helpdesk/statistik', $data);
+        $this->load->view('helpdesk/statistik');
         $this->load->view('templates/footer');
     }
 }

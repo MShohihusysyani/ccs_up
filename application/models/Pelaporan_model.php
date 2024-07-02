@@ -305,20 +305,49 @@ class Pelaporan_model extends CI_Model
         BETWEEN '$tgla' AND '$tglb' AND status_ccs='$status_ccs'  GROUP BY status_ccs";
         return $this->db->query($query)->result_array();
     }
-
     public function count_tickets_by_status($user_id, $status)
     {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        // Ambil data pengguna dari sesi
         $user_id = $this->session->userdata('user_id');
+
+        // Bangun query untuk menghitung jumlah tiket berdasarkan status
         $this->db->select('COUNT(*) as ticket_count');
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
         $this->db->where_in('pelaporan.status_ccs', $status);
 
+        // Eksekusi query
         $query = $this->db->get();
         $result = $query->row_array();
 
-        return $result['ticket_count'];
+        // Ambil jumlah tiket dari hasil query
+        $ticket_count = isset($result['ticket_count']) ? $result['ticket_count'] : 0;
+
+        return $ticket_count;
+    }
+
+
+    public function get_total_active()
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $query = "
+            SELECT handle_by, COUNT(*) AS 'totalF'
+            FROM forward
+            LEFT JOIN pelaporan ON forward.pelaporan_id = pelaporan.id_pelaporan
+            WHERE forward.user_id = ? AND pelaporan.status_ccs = 'FINISH'
+            GROUP BY handle_by
+        ";
+
+        $result = $this->db->query($query, array($user_id))->result_array();
+
+        // Debugging: Print the result
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        exit; // Stop further execution to check the printed result
+
+        return $result;
     }
 }
