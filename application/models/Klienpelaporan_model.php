@@ -69,49 +69,6 @@ class Klienpelaporan_model extends CI_Model
     }
 
 
-    //DATA PER USER HELPDESK
-    public function getKlienPelaporanHD()
-    {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.tags
-        // FROM forward
-        // LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        // WHERE forward.user_id=$user_id AND status_ccs='HANDLE' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
-
-        // Get user data from the session
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id_user');
-
-        // Build the query using Query Builder
-        $this->db->select('
-            pelaporan.kategori,
-            pelaporan.id_pelaporan,
-            pelaporan.waktu_pelaporan,
-            pelaporan.status_ccs,
-            pelaporan.priority,
-            pelaporan.maxday,
-            pelaporan.judul,
-            pelaporan.perihal,
-            pelaporan.file,
-            pelaporan.nama,
-            pelaporan.no_tiket,
-            pelaporan.impact,
-            pelaporan.handle_by,
-            pelaporan.status,
-            pelaporan.tags
-        ');
-        $this->db->from('forward');
-        $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE');
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
-
-        // Execute the query and return the result
-        return $this->db->get()->result_array();
-    }
-
     //DATA HELPDESK FORWARD 
     public function getKlienPelaporanHDForward()
     {
@@ -155,50 +112,6 @@ class Klienpelaporan_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    //DATA PELAPORAN HELPDESK FINISH
-    public function getDataPelaporanHD()
-    {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
-        // FROM forward
-        // LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        // WHERE forward.user_id=$user_id AND  status_ccs='FINISH' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
-
-        // Get user data from the session
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id_user');
-
-        // Build the query using Query Builder
-        $this->db->select('
-            pelaporan.kategori,
-            pelaporan.id_pelaporan,
-            pelaporan.waktu_pelaporan,
-            pelaporan.status_ccs,
-            pelaporan.priority,
-            pelaporan.maxday,
-            pelaporan.judul,
-            pelaporan.perihal,
-            pelaporan.file,
-            pelaporan.nama,
-            pelaporan.no_tiket,
-            pelaporan.impact,
-            pelaporan.handle_by,
-            pelaporan.status_ccs,
-            pelaporan.tags,
-            pelaporan.rating,
-            pelaporan.has_rated
-        ');
-        $this->db->from('forward');
-        $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'FINISH');
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
-
-        // Execute the query and return the result
-        return $this->db->get()->result_array();
-    }
 
     //DATA HELPDESK REJECT
     public function getKlienPelaporanHDReject()

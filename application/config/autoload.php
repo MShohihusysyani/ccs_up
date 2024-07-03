@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('session', 'database', 'form_validation', 'email', 'cart', 'excel', 'upload','pdf');
+$autoload['libraries'] = array('session', 'database', 'form_validation', 'email', 'cart', 'excel', 'upload', 'pdf');
 
 
 /*
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('login_model','category_model','client_model', 'usermaster_model','pelaporan_model','klienpelaporan_model','M_Klien','supervisor_model', 'spv2_model', 'superadmin_model', 'temp_model', 'user_model', 'export_model', 'serverside_model');
+$autoload['model'] = array('login_model', 'category_model', 'client_model', 'usermaster_model', 'pelaporan_model', 'klienpelaporan_model', 'M_Klien', 'supervisor_model', 'spv2_model', 'superadmin_model', 'helpdesk_model', 'temp_model', 'user_model', 'export_model', 'serverside_model');

@@ -1,5 +1,4 @@
-  
-    <section class="content">
+<section class="content">
     <div class="container-fluid">
         <div class="block-header"></div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -7,26 +6,31 @@
                 <div class="header">
                     <h2>FILTER</h2>
                 </div>
+
+                <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+                <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+                <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
                 <div class="body">
                     <div class="row clearfix">
-                        <?= form_open('helpdesk/datepelaporan'); ?>
+                        <form id="filterForm">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
-                                <label for="dari_tgl">Dari Tanggal</label>
+                                <label for="filter_tanggal_awal">Dari Tanggal</label>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="date" value="" name="tanggal_awal" id="tanggal_awal" class="form-control" required>
+                                        <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
-                                <label for="sampai_tgl">Sampai Tanggal</label>
+                                <label for="filter_tanggal_akhir">Sampai Tanggal</label>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="date" value="" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
+                                        <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -34,163 +38,94 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
-                                            name="nama_klien" id="nama_klien" placeholder="Pilih BPR"
-                                            class="form-control" value="" autocomplete="off">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih BPR" class="form-control" value="" autocomplete="off">
                                         <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" name="tags" id="tags" placeholder="Masukkan Tags" class="form-control">
+                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Pilih Tags">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <select id="status_ccs" name="status_ccs" class="form-control" >
+                                        <select id="status_ccs" name="status_ccs" class="form-control">
                                             <option value="">-- Pilih Status --</option>
                                             <option value="FINISH">FINISH</option>
                                             <option value="CLOSE">CLOSE</option>
                                             <option value="HANDLE">HANDLE</option>
-                                            <option value="HANDLE 2">HANDLE 2</option>  
+                                            <option value="ADDED">ADDED</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-control-label" style="text-align: left;">
-                                <button type="submit" class="btn btn-sm btn-info" name="tampilkan" value="proses">
-                                    <i class="material-icons">search</i> <span class="icon-name"></span>
+
+                            <div class="form-group mx-sm-3">
+                                <button type="submit" class="btn btn-primary btn-sm m-l-15 waves-effect">
+                                    <i class="material-icons">search</i><span>Filter</span>
                                 </button>
                             </div>
-                            <br>
-                        <?= form_close(); ?>
-                        <?= form_open('helpdesk/rekapPelaporan'); ?>
-                            <div class="form-control-label" style="text-align: left;">
-                                <button type="submit" class="btn btn-sm btn-success" name="tampilkan" value="proses">
-                                    Semua Data
+                            <div class="form-group mx-sm-3">
+                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm m-l-15 waves-effect">
+                                    <i class="material-icons">restart_alt</i> <span>Reset Filter</span>
                                 </button>
                             </div>
-                        <?= form_close(); ?>
+
+                            <div class="form-group mx-sm-3">
+                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm m-l-15 waves-effect">
+                                    <i class="material-icons">sync</i><span>Semua Data</span></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-                <div class="card">
-                    <div class="header">
-                        <h2>
-                            Data Pelaporan
-                        </h2>
-                        <br>
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-								<?= form_open('export/rekap_pelaporan_pdf_hd'); ?>
-								<input type="hidden" name="tanggal_awal" id="tanggal_awal" value="<?= $tanggal_awal; ?>">
-								<input type="hidden" name="tanggal_akhir" id="tanggal_akhir" value="<?= $tanggal_akhir; ?>">
-								<input type="hidden" name="nama_klien" id="nama_klien" value="<?= $nama_klien; ?>">
-								<input type="hidden" name="tags" id="tags" value="<?= $tags; ?>">
-								<input type="hidden" name="status_ccs" id="status_ccs" value="<?= $status_ccs; ?>">
-                                <li><button type="submit" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
-								<?= form_close(); ?>
-								<?= form_open('export/rekap_pelaporan_excel_hd'); ?>
-								<input type="hidden" name="tanggal_awal" id="tanggal_awal" value="<?= $tanggal_awal; ?>">
-								<input type="hidden" name="tanggal_akhir" id="tanggal_akhir" value="<?= $tanggal_akhir; ?>">
-								<input type="hidden" name="nama_klien" id="nama_klien" value="<?= $nama_klien; ?>">
-								<input type="hidden" name="tags" id="tags" value="<?= $tags; ?>">
-								<input type="hidden" name="status_ccs" id="status_ccs" value="<?= $status_ccs; ?>">
-                                <li><button type="submit" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
-								<?= form_close(); ?>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="body">
+
+            <div class="card">
+                <div class="header">
+                    <h2>LIST PELAPORAN</h2>
+                </div>
+                <br>
+                <div class="btn-group" role="group" style="margin-left: 20px;">
+                    <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
+                        <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
+                    </ul>
+                </div>
+
+                <div class="body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example " id="example">
+                        <table class="display table table-bordered table-striped table-hover" id="example">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal</th>
                                     <th>No Tiket</th>
-                                    <th>Nama Klien</th>
+                                    <th>Nama</th>
                                     <th>Perihal</th>
                                     <th>Tags</th>
                                     <th>Kategori</th>
                                     <th>Impact</th>
                                     <th>Priority</th>
-                                    <th>Maxday</th>
+                                    <th>Max Day</th>
                                     <th>Status</th>
                                     <th>Handle By</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            <?php if (!empty($pencarian_data)): ?>
-                                <?php $no=1;?>
-                                <?php foreach ($pencarian_data as $data): ?>
-                                    
-                                    <tr>
-                                        <td><?= $no++?></td>
-                                        <td><?= isset($data->waktu_pelaporan) ? tanggal_indo($data->waktu_pelaporan): ''; ?></td>
-                                        <td><?= isset($data->no_tiket) ? $data->no_tiket: ''; ?></td>
-                                        <td><?= isset($data->nama) ? $data->nama: ''; ?></td>
-                                        <td><?= isset($data->perihal) ? $data->perihal: ''; ?></td>
-                                        <td>
-                                                <span class="label label-info"><?= $data->tags?></span>
-                                        </td>
-                                        <td><?= isset($data->kategori) ? $data->kategori: ''; ?></td>
-                                        <td><?= isset($data->impact) ? $data->impact: ''; ?></td>
-                                        <td>    
-                                            <?php if ($data->priority == 'High') : ?>
-                                                <span class="label label-danger">High</span>
-                                            <?php elseif ($data->priority == 'Medium') : ?>
-                                                <span class="label label-warning">Medium</span>
-                                            <?php elseif ($data->priority == 'Low') : ?>
-                                                <span class="label label-info">Low</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <?php if ($data->maxday == '7') : ?>
-                                                <span class="label label-danger">7</span>
-                                            <?php elseif ($data->maxday == '60') : ?>
-                                                <span class="label label-warning">60</span>
-                                            <?php elseif ($data->maxday == '90') : ?>
-                                                <span class="label label-info">90</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <?php if ($data->status_ccs == 'FINISH') : ?>
-                                                <span class="label label-success">FINISH</span>
-                                            <?php elseif ($data->status_ccs == 'CLOSE') : ?>
-                                                <span class="label label-warning">CLOSE</span>
-                                            <?php elseif ($data->status_ccs == 'HANDLE') : ?>
-                                                <span class="label label-info">HANDLE</span>
-                                            <?php elseif ($data->status_ccs == 'ADDED') : ?>
-                                                <span class="label label-primary">ADDED</span>
-                                            <?php endif; ?>
-
-                                        </td>
-                                        <td><?= isset($data->handle_by) ? $data->handle_by: ''; ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="12">No data available</td>
-                                </tr>
-                        <?php endif; ?>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- #END# Exportable Table -->
     </div>
-    <!-- Button trigger modal -->
 </section>
 
 <!-- Modal Cari Klien -->
@@ -238,6 +173,7 @@
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilih3', function() {
@@ -247,5 +183,130 @@
             $('#id').val(id);
             $('#defaultModalNamaKlien').modal('hide');
         });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "<?php echo base_url('helpdesk/fetch_data'); ?>",
+                "type": "POST",
+                "data": function(data) {
+                    data.tanggal_awal = $('#tanggal_awal').val();
+                    data.tanggal_akhir = $('#tanggal_akhir').val();
+                    data.nama_klien = $('#nama_klien').val();
+                    data.tags = $('#tags').val();
+                    data.status_ccs = $('#status_ccs').val();
+                }
+            },
+            "order": [
+                [1, 'desc']
+            ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+            "columns": [{
+                    "data": "no"
+                },
+                {
+                    "data": "waktu_pelaporan"
+                },
+                {
+                    "data": "no_tiket"
+                },
+                {
+                    "data": "nama"
+                },
+                {
+                    "data": "perihal"
+                },
+                {
+                    "data": "tags"
+                },
+                {
+                    "data": "kategori"
+                },
+                {
+                    "data": "impact"
+                },
+                {
+                    "data": "priority"
+                },
+                {
+                    "data": "maxday"
+                },
+                {
+                    "data": "status_ccs"
+                },
+                {
+                    "data": "handle_by"
+                }
+            ]
+        });
+
+
+        // Handle form submission for filtering
+        $('#filterForm').on('submit', function(e) {
+            e.preventDefault();
+            table.draw(); // Redraw the DataTable based on new filters
+        });
+
+        // Handle "Semua Data" button click
+        $('#semuaDataButton').on('click', function() {
+            $('#filterForm')[0].reset();
+            table.ajax.reload(); // Reload DataTables to show all data
+        });
+
+        // Handle export buttons
+        $('#exportPdfButton').on('click', function() {
+            exportData('pdf');
+        });
+
+        $('#exportExcelButton').on('click', function() {
+            exportData('excel');
+        });
+
+        // Handle "Reset Filter" button click
+        $('#resetFilterButton').on('click', function() {
+            $('#filterForm')[0].reset();
+            table.draw(); // Redraw the DataTable to reflect reset filters
+        });
+
+        function exportData(format) {
+            var filters = {
+                tanggal_awal: $('#tanggal_awal').val(),
+                tanggal_akhir: $('#tanggal_akhir').val(),
+                nama_klien: $('#nama_klien').val(),
+                tags: $('#tags').val(),
+                status_ccs: $('#status_ccs').val()
+            };
+
+            var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf_hd'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_hd'); ?>';
+
+            var form = $('<form>', {
+                action: actionUrl,
+                method: 'POST',
+                target: '_blank'
+            }).appendTo('body');
+
+            $.each(filters, function(key, value) {
+                form.append($('<input>', {
+                    type: 'hidden',
+                    name: key,
+                    value: value
+                }));
+            });
+
+            form.submit();
+
+            // Remove the form after a slight delay to ensure the submission goes through
+            setTimeout(function() {
+                form.remove();
+            }, 100);
+        }
     });
 </script>
