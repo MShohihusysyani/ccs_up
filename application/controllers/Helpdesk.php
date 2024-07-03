@@ -61,10 +61,10 @@ class Helpdesk extends CI_Controller
     public function reject()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanHDReject();
+        $data['datapelaporan'] = $this->helpdesk_model->getKlienPelaporanHDReject();
 
         $this->load->model('User_model', 'user_model');
         $data['namaspv'] = $this->user_model->getNamaSpv();
@@ -78,10 +78,10 @@ class Helpdesk extends CI_Controller
     public function forward()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanHDForward();
+        $data['datapelaporan'] = $this->helpdesk_model->getKlienPelaporanHDForward();
 
         $this->load->model('User_model', 'user_model');
         $data['namaspv'] = $this->user_model->getNamaSpv();
@@ -110,12 +110,12 @@ class Helpdesk extends CI_Controller
     public function data_pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
         $data['category'] = $this->category_model->getNamakategori();
 
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanHD();
+        $data['datapelaporan'] = $this->helpdesk_model->getDataPelaporanHD();
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
@@ -293,39 +293,6 @@ class Helpdesk extends CI_Controller
     }
 
 
-    //FINISH HELPDESK
-    public function finish1()
-    {
-        // date_default_timezone_set('Asia/Jakarta');
-        # add your city to set local time zone
-
-        $id              = $this->input->post('id_pelaporan');
-        $no_tiket        = $this->input->post('no_tiket');
-        $waktu_pelaporan = $this->input->post('waktu_pelaporan');
-        $nama            = $this->input->post('nama');
-        $perihal         = $this->input->post('perihal');
-        $status          = 'Solved';
-        $status_ccs      = 'CLOSE';
-        $priority        = $this->input->post('priority');
-        $maxday          = $this->input->post('maxday');
-        $kategori        = $this->input->post('kategori');
-        $ArrUpdate       = array(
-
-            'no_tiket'        => $no_tiket,
-            'waktu_pelaporan' => $waktu_pelaporan,
-            'nama'            => $nama,
-            'perihal'         => $perihal,
-            'status'          => $status,
-            'status_ccs'      => $status_ccs,
-            'priority'        => $priority,
-            'maxday'          => $maxday,
-            'kategori'        => $kategori
-        );
-        $this->pelaporan_model->updateHD($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Finish!');
-        redirect('helpdesk/data_pelaporan');
-    }
-
     public function finish()
     {
         // Load the form validation library
@@ -482,10 +449,10 @@ class Helpdesk extends CI_Controller
     public function detail_pelaporan($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-        $data['datacomment']   = $this->klienpelaporan_model->get_latest_comments($id);
-        $data['datareply']     = $this->klienpelaporan_model->get_replies_by_pelaporan_id($id);
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
+        $data['datacomment']   = $this->helpdesk_model->get_latest_comments($id);
+        $data['datareply']     = $this->helpdesk_model->get_replies_by_pelaporan_id($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
@@ -496,10 +463,10 @@ class Helpdesk extends CI_Controller
     public function detail_pelaporann($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-        $data['datacomment']   = $this->klienpelaporan_model->get_latest_comments($id);
-        $data['datareply']     = $this->klienpelaporan_model->get_replies_by_pelaporan_id($id);
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
+        $data['datacomment']   = $this->helpdesk_model->get_latest_comments($id);
+        $data['datareply']     = $this->helpdesk_model->get_replies_by_pelaporan_id($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
