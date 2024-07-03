@@ -219,7 +219,7 @@ class Pelaporan_model extends CI_Model
         $this->db->from('forward'); // Specify the base table
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'FINISH');
+        // $this->db->where('pelaporan.status_ccs', 'FINISH');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
 
         // Apply date filters

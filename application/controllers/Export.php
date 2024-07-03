@@ -1,14 +1,16 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
-class Export extends CI_Controller {
+class Export extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('Export_model');
         $this->load->helper('tanggal_helper');
@@ -32,27 +34,28 @@ class Export extends CI_Controller {
     }
 
     public function print_detail($no_tiket)
-{
-    $this->load->model('Superadmin_model', 'superadmin_model');
+    {
+        $this->load->model('Superadmin_model', 'superadmin_model');
 
-    // Fetch ticket details
-    $ticket = $this->superadmin_model->getTicketDetail($no_tiket);
+        // Fetch ticket details
+        $ticket = $this->superadmin_model->getTicketDetail($no_tiket);
 
-    if (empty($ticket)) {
-        show_404();
+        if (empty($ticket)) {
+            show_404();
+        }
+
+        // Load the view for printing
+        $this->load->view('cetak/print_tiket', ['ticket' => $ticket]);
     }
 
-    // Load the view for printing
-    $this->load->view('cetak/print_tiket', ['ticket' => $ticket]);
-}
-
-    public function rekap_pelaporan_pdf_server_side() {
+    public function rekap_pelaporan_pdf_server_side()
+    {
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
         $status_ccs = $this->input->post('status_ccs');
-    
+
         $filters = array(
             'tanggal_awal' => $tanggal_awal,
             'tanggal_akhir' => $tanggal_akhir,
@@ -60,18 +63,19 @@ class Export extends CI_Controller {
             'tags' => $tags,
             'status_ccs' => $status_ccs
         );
-    
+
         $data = $this->serverside_model->get_filtered_data($filters);
         // Generate PDF using $data
     }
-    
-    public function rekap_pelaporan_excel_server_side() {
+
+    public function rekap_pelaporan_excel_server_side()
+    {
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
         $status_ccs = $this->input->post('status_ccs');
-    
+
         $filters = array(
             'tanggal_awal' => $tanggal_awal,
             'tanggal_akhir' => $tanggal_akhir,
@@ -79,54 +83,54 @@ class Export extends CI_Controller {
             'tags' => $tags,
             'status_ccs' => $status_ccs
         );
-    
+
         $data = $this->serverside_model->get_filtered_data($filters);
         // Generate Excel using $data
     }
-    
+
     public function rekap_pelaporan_pdf()
-{
-    $this->load->model('Export_model', 'export_model');
+    {
+        $this->load->model('Export_model', 'export_model');
 
-    // Retrieve POST data
-    $tanggal_awal = $this->input->post('tanggal_awal');
-    $tanggal_akhir = $this->input->post('tanggal_akhir');
-    $status_ccs = $this->input->post('status_ccs');
-    $nama_klien = $this->input->post('nama_klien');
-    $tags = $this->input->post('tags');
+        // Retrieve POST data
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $status_ccs = $this->input->post('status_ccs');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
 
-    // Get filtered data
-    if (empty($tanggal_awal) && empty($tanggal_akhir)) {
-        // Fetch all data if no date range is selected
-        $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
-        $periode = "Semua Data";
-    } else {
-        // Fetch data based on the selected date range
-        $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-        $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
-    }
+        // Get filtered data
+        if (empty($tanggal_awal) && empty($tanggal_akhir)) {
+            // Fetch all data if no date range is selected
+            $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
+            $periode = "Semua Data";
+        } else {
+            // Fetch data based on the selected date range
+            $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+            $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
+        }
 
-    // Load the mPDF library
-    $this->load->library('pdf');
-    $mpdf = new \Mpdf\Mpdf([
-        'format' => 'A4',
-        'margin_top' => 30, // Margin atas yang cukup untuk header
-        'margin_bottom' => 20, // Adjusted margin bottom
-        'margin_left' => 15,
-        'margin_right' => 15,
-    ]);
+        // Load the mPDF library
+        $this->load->library('pdf');
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 30, // Margin atas yang cukup untuk header
+            'margin_bottom' => 20, // Adjusted margin bottom
+            'margin_left' => 15,
+            'margin_right' => 15,
+        ]);
 
-    $header = '
+        $header = '
         <div class="pdf-header" style="text-align: center; margin-bottom: 20px;"> <!-- Added margin-bottom -->
             <h3>CCS | REKAP PELAPORAN</h3>
             <p>' . $periode . '</p>
         </div>
     ';
-    $mpdf->SetHTMLHeader($header, 'O');
-    $mpdf->SetHTMLHeader($header, 'E');
+        $mpdf->SetHTMLHeader($header, 'O');
+        $mpdf->SetHTMLHeader($header, 'E');
 
-    // Set HTML Footer
-    $footer = '
+        // Set HTML Footer
+        $footer = '
         <div style="width: 100%; text-align: right; margin-top: 25px;">
             <div style="display: inline-block; width: 100%; text-align: right;">
                 <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
@@ -138,11 +142,11 @@ class Export extends CI_Controller {
             <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
         </div>';
 
-    $mpdf->SetHTMLFooter($footer);
-    $mpdf->setAutoTopMargin = 'pad';
-    $mpdf->setAutoBottomMargin = 'pad';
+        $mpdf->SetHTMLFooter($footer);
+        $mpdf->setAutoTopMargin = 'pad';
+        $mpdf->setAutoBottomMargin = 'pad';
 
-    $tableHtml = '
+        $tableHtml = '
     <style>
         .pdf-header {
             text-align: center;
@@ -194,10 +198,10 @@ class Export extends CI_Controller {
             <tbody>
     ';
 
-    // Isi tabel dengan data
-    $no = 1;
-    foreach ($filteredData as $data) {
-        $tableHtml .= '
+        // Isi tabel dengan data
+        $no = 1;
+        foreach ($filteredData as $data) {
+            $tableHtml .= '
             <tr>
                 <td>' . $no . '</td>
                 <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
@@ -213,67 +217,67 @@ class Export extends CI_Controller {
                 <td>' . $data['handle_by'] . '</td>
             </tr>
         ';
-        $no++;
-    }
+            $no++;
+        }
 
-    $tableHtml .= '
+        $tableHtml .= '
             </tbody>
         </table>
     ';
 
-    // Tulis Header dan Table ke PDF
-    $mpdf->WriteHTML('<div style="margin-bottom: 10px;"></div>'); // Tambahkan jarak antara header dan tabel
-    $mpdf->WriteHTML($tableHtml);
+        // Tulis Header dan Table ke PDF
+        $mpdf->WriteHTML('<div style="margin-bottom: 10px;"></div>'); // Tambahkan jarak antara header dan tabel
+        $mpdf->WriteHTML($tableHtml);
 
-    // Add additional margin below the table to separate it from the footer
-    $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
+        // Add additional margin below the table to separate it from the footer
+        $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
-    $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
-}
-
-public function rekap_pelaporan_pdf_hd()
-{
-    $this->load->model('Export_model', 'export_model');
-
-    // Retrieve POST data
-    $tanggal_awal = $this->input->post('tanggal_awal');
-    $tanggal_akhir = $this->input->post('tanggal_akhir');
-    $status_ccs = $this->input->post('status_ccs');
-    $nama_klien = $this->input->post('nama_klien');
-    $tags = $this->input->post('tags');
-
-    // Get filtered data
-    if (empty($tanggal_awal) && empty($tanggal_akhir)) {
-        // Fetch all data if no date range is selected
-        $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
-        $periode = "Semua Data";
-    } else {
-        // Fetch data based on the selected date range
-        $filteredData = $this->export_model->getPelaporanHD($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-        $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
+        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
 
-    // Load the mPDF library
-    $this->load->library('pdf');
-    $mpdf = new \Mpdf\Mpdf([
-        'format' => 'A4',
-        'margin_top' => 30, // Margin atas yang cukup untuk header
-        'margin_bottom' => 20, // Adjusted margin bottom
-        'margin_left' => 15,
-        'margin_right' => 15,
-    ]);
+    public function rekap_pelaporan_pdf_hd()
+    {
+        $this->load->model('Export_model', 'export_model');
 
-    $header = '
+        // Retrieve POST data
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $status_ccs = $this->input->post('status_ccs');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
+
+        // Get filtered data
+        if (empty($tanggal_awal) && empty($tanggal_akhir)) {
+            // Fetch all data if no date range is selected
+            $filteredData = $this->export_model->getAllPelaporanHD($status_ccs, $nama_klien, $tags);
+            $periode = "Semua Data";
+        } else {
+            // Fetch data based on the selected date range
+            $filteredData = $this->export_model->getPelaporanHD($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+            $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
+        }
+
+        // Load the mPDF library
+        $this->load->library('pdf');
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 30, // Margin atas yang cukup untuk header
+            'margin_bottom' => 20, // Adjusted margin bottom
+            'margin_left' => 15,
+            'margin_right' => 15,
+        ]);
+
+        $header = '
         <div class="pdf-header" style="text-align: center; margin-bottom: 20px;"> <!-- Added margin-bottom -->
             <h3>CCS | REKAP PELAPORAN</h3>
             <p>' . $periode . '</p>
         </div>
     ';
-    $mpdf->SetHTMLHeader($header, 'O');
-    $mpdf->SetHTMLHeader($header, 'E');
+        $mpdf->SetHTMLHeader($header, 'O');
+        $mpdf->SetHTMLHeader($header, 'E');
 
-    // Set HTML Footer
-    $footer = '
+        // Set HTML Footer
+        $footer = '
         <div style="width: 100%; text-align: right; margin-top: 25px;">
             <div style="display: inline-block; width: 100%; text-align: right;">
                 <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
@@ -285,11 +289,11 @@ public function rekap_pelaporan_pdf_hd()
             <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
         </div>';
 
-    $mpdf->SetHTMLFooter($footer);
-    $mpdf->setAutoTopMargin = 'pad';
-    $mpdf->setAutoBottomMargin = 'pad';
+        $mpdf->SetHTMLFooter($footer);
+        $mpdf->setAutoTopMargin = 'pad';
+        $mpdf->setAutoBottomMargin = 'pad';
 
-    $tableHtml = '
+        $tableHtml = '
     <style>
         .pdf-header {
             text-align: center;
@@ -336,10 +340,10 @@ public function rekap_pelaporan_pdf_hd()
             <tbody>
     ';
 
-    // Isi tabel dengan data
-    $no = 1;
-    foreach ($filteredData as $data) {
-        $tableHtml .= '
+        // Isi tabel dengan data
+        $no = 1;
+        foreach ($filteredData as $data) {
+            $tableHtml .= '
             <tr>
                 <td>' . $no . '</td>
                 <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
@@ -355,185 +359,186 @@ public function rekap_pelaporan_pdf_hd()
                 <td>' . $data['handle_by'] . '</td>
             </tr>
         ';
-        $no++;
-    }
+            $no++;
+        }
 
-    $tableHtml .= '
+        $tableHtml .= '
             </tbody>
         </table>
     ';
 
-    // Tulis Header dan Table ke PDF
-    $mpdf->WriteHTML('<div style="margin-bottom: 10px;"></div>'); // Tambahkan jarak antara header dan tabel
-    $mpdf->WriteHTML($tableHtml);
+        // Tulis Header dan Table ke PDF
+        $mpdf->WriteHTML('<div style="margin-bottom: 10px;"></div>'); // Tambahkan jarak antara header dan tabel
+        $mpdf->WriteHTML($tableHtml);
 
-    // Add additional margin below the table to separate it from the footer
-    $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
+        // Add additional margin below the table to separate it from the footer
+        $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
-    $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
-}
-
-public function rekap_pelaporan_excel()
-{
-    $spreadsheet = new Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
-
-    // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
-    $style_col = [
-        'font' => ['bold' => true],
-        'alignment' => [
-            'horizontal' => Alignment::HORIZONTAL_CENTER,
-            'vertical'   => Alignment::VERTICAL_CENTER
-        ],
-        'borders' => [
-            'top' => ['borderStyle'    => Border::BORDER_THIN],
-            'right' => ['borderStyle'  => Border::BORDER_THIN],
-            'bottom' => ['borderStyle' => Border::BORDER_THIN],
-            'left' => ['borderStyle'   => Border::BORDER_THIN]
-        ]
-    ];
-
-    // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
-    $style_row = [
-        'alignment' => [
-            'vertical' => Alignment::VERTICAL_CENTER
-        ],
-        'borders' => [
-            'top' => ['borderStyle'    => Border::BORDER_THIN],
-            'right' => ['borderStyle'  => Border::BORDER_THIN],
-            'bottom' => ['borderStyle' => Border::BORDER_THIN],
-            'left' => ['borderStyle'   => Border::BORDER_THIN]
-        ]
-    ];
-
-    $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
-    $sheet->mergeCells('A1:E1');
-    $sheet->getStyle('A1')->getFont()->setBold(true);
-    $sheet->getStyle('A1')->getFont()->setSize(15);
-    $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
-    $current_date = date('Y-m-d');
-
-    // Mendapatkan informasi user dari sesi
-    $this->db->where('id_user', $this->session->userdata('id_user'));
-    $user_query = $this->db->get('user');
-    $user = $user_query->row_array();
-
-    $tanggal_awal = $this->input->post('tanggal_awal');
-    $tanggal_akhir = $this->input->post('tanggal_akhir');
-    $nama_klien = $this->input->post('nama_klien');
-    $tags = $this->input->post('tags');
-    $status_ccs = $this->input->post('status_ccs');
-
-    // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
-    $periode_text = "Semua Data";
-    if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
-        $periode_text = "Periode : " . tanggal_indo($tanggal_awal) . " s/d " . tanggal_indo($tanggal_akhir);
+        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
 
-    $sheet->setCellValue('A2', $periode_text);
-    $sheet->setCellValue('A3', "NO");
-    $sheet->setCellValue('B3', "TANGGAL");
-    $sheet->setCellValue('C3', "NO TIKET");
-    $sheet->setCellValue('D3', "NAMA KLIEN");
-    $sheet->setCellValue('E3', "PERIHAL");
-    $sheet->setCellValue('F3', "TAGS");
-    $sheet->setCellValue('G3', "KATEGORI");
-    $sheet->setCellValue('H3', "PRIORITY");
-    $sheet->setCellValue('I3', "IMPACT");
-    $sheet->setCellValue('J3', "MAXDAY");
-    $sheet->setCellValue('K3', "STATUS CCS");
-    $sheet->setCellValue('L3', "HANDLE BY");
+    public function rekap_pelaporan_excel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
 
-    $sheet->getStyle('A2')->getFont()->setBold(true);
-    $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-    $sheet->mergeCells('A2:E2');
-    $sheet->getStyle('A3:L3')->applyFromArray($style_col);
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical'   => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
+            ]
+        ];
 
-    $sheet->getRowDimension('1')->setRowHeight(20);
-    $sheet->getRowDimension('2')->setRowHeight(20);
-    $sheet->getRowDimension('3')->setRowHeight(20);
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
+            ]
+        ];
 
-    $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
+        $sheet->mergeCells('A1:E1');
+        $sheet->getStyle('A1')->getFont()->setBold(true);
+        $sheet->getStyle('A1')->getFont()->setSize(15);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-    // // Mendapatkan data berdasarkan filter tanggal jika diisi
-    // if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
-    //     $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir);
-    
-    // } else {
-    //     // Mendapatkan semua data jika tanggal tidak diisi
-    //     $query = $this->pelaporan_model->getDate();
-    // }
+        $current_date = date('Y-m-d');
 
-    $query = $this->pelaporan_model->getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien, $tags, $status_ccs);
+        // Mendapatkan informasi user dari sesi
+        $this->db->where('id_user', $this->session->userdata('id_user'));
+        $user_query = $this->db->get('user');
+        $user = $user_query->row_array();
 
-    $no = 1;
-    $row = 4;
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $nama_klien = $this->input->post('nama_klien');
+        $tags = $this->input->post('tags');
+        $status_ccs = $this->input->post('status_ccs');
 
-    foreach ($query as $data) {
-        $sheet->setCellValue('A' . $row, $no);
-        $sheet->setCellValue('B' . $row, tanggal_indo($data->waktu_pelaporan));
-        $sheet->setCellValue('C' . $row, $data->no_tiket);
-        $sheet->setCellValue('D' . $row, $data->nama);
-        $sheet->setCellValue('E' . $row, $data->perihal);
-        $sheet->setCellValue('F' . $row, $data->tags);
-        $sheet->setCellValue('G' . $row, $data->kategori);
-        $sheet->setCellValue('H' . $row, $data->priority);
-        $sheet->setCellValue('I' . $row, $data->impact);
-        $sheet->setCellValue('J' . $row, $data->maxday);
-        $sheet->setCellValue('K' . $row, $data->status_ccs);
-        $sheet->setCellValue('L' . $row, $data->handle_by);
+        // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
+        $periode_text = "Semua Data";
+        if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+            $periode_text = "Periode : " . tanggal_indo($tanggal_awal) . " s/d " . tanggal_indo($tanggal_akhir);
+        }
 
-        // Apply style untuk setiap sel data
-        $sheet->getStyle('A' . $row . ':L' . $row)->applyFromArray($style_row);
+        $sheet->setCellValue('A2', $periode_text);
+        $sheet->setCellValue('A3', "NO");
+        $sheet->setCellValue('B3', "TANGGAL");
+        $sheet->setCellValue('C3', "NO TIKET");
+        $sheet->setCellValue('D3', "NAMA KLIEN");
+        $sheet->setCellValue('E3', "PERIHAL");
+        $sheet->setCellValue('F3', "TAGS");
+        $sheet->setCellValue('G3', "KATEGORI");
+        $sheet->setCellValue('H3', "PRIORITY");
+        $sheet->setCellValue('I3', "IMPACT");
+        $sheet->setCellValue('J3', "MAXDAY");
+        $sheet->setCellValue('K3', "STATUS CCS");
+        $sheet->setCellValue('L3', "HANDLE BY");
 
-        $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('D' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('E' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('F' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('G' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('I' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('K' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('L' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-        $sheet->getRowDimension($row)->setRowHeight(20);
+        $sheet->getStyle('A2')->getFont()->setBold(true);
+        $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('A2:E2');
+        $sheet->getStyle('A3:L3')->applyFromArray($style_col);
 
-        $no++;
-        $row++;
+        $sheet->getRowDimension('1')->setRowHeight(20);
+        $sheet->getRowDimension('2')->setRowHeight(20);
+        $sheet->getRowDimension('3')->setRowHeight(20);
+
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+
+        // // Mendapatkan data berdasarkan filter tanggal jika diisi
+        // if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+        //     $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir);
+
+        // } else {
+        //     // Mendapatkan semua data jika tanggal tidak diisi
+        //     $query = $this->pelaporan_model->getDate();
+        // }
+
+        $query = $this->pelaporan_model->getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien, $tags, $status_ccs);
+
+        $no = 1;
+        $row = 4;
+
+        foreach ($query as $data) {
+            $sheet->setCellValue('A' . $row, $no);
+            $sheet->setCellValue('B' . $row, tanggal_indo($data->waktu_pelaporan));
+            $sheet->setCellValue('C' . $row, $data->no_tiket);
+            $sheet->setCellValue('D' . $row, $data->nama);
+            $sheet->setCellValue('E' . $row, $data->perihal);
+            $sheet->setCellValue('F' . $row, $data->tags);
+            $sheet->setCellValue('G' . $row, $data->kategori);
+            $sheet->setCellValue('H' . $row, $data->priority);
+            $sheet->setCellValue('I' . $row, $data->impact);
+            $sheet->setCellValue('J' . $row, $data->maxday);
+            $sheet->setCellValue('K' . $row, $data->status_ccs);
+            $sheet->setCellValue('L' . $row, $data->handle_by);
+
+            // Apply style untuk setiap sel data
+            $sheet->getStyle('A' . $row . ':L' . $row)->applyFromArray($style_row);
+
+            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('D' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('E' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('F' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('G' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('I' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('K' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('L' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getRowDimension($row)->setRowHeight(20);
+
+            $no++;
+            $row++;
+        }
+
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(15);
+        $sheet->getColumnDimension('C')->setWidth(20);
+        $sheet->getColumnDimension('D')->setWidth(40);
+        $sheet->getColumnDimension('E')->setWidth(235);
+        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('G')->setWidth(83);
+        $sheet->getColumnDimension('H')->setWidth(10);
+        $sheet->getColumnDimension('I')->setWidth(10);
+        $sheet->getColumnDimension('J')->setWidth(10);
+        $sheet->getColumnDimension('K')->setWidth(15);
+        $sheet->getColumnDimension('L')->setWidth(10);
+
+        // Set orientasi halaman dan judul sheet
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->setTitle("Data Rekap Pelaporan");
+
+        // Set header untuk mendownload file Excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Simpan file Excel
+        $writer = new Xlsx($spreadsheet);
+        ob_end_clean(); //digunakan ketika file tidak bisa dibuka diexcel
+        $writer->save('php://output');
     }
 
-    $sheet->getColumnDimension('A')->setWidth(5);
-    $sheet->getColumnDimension('B')->setWidth(15);
-    $sheet->getColumnDimension('C')->setWidth(20);
-    $sheet->getColumnDimension('D')->setWidth(40);
-    $sheet->getColumnDimension('E')->setWidth(235);
-    $sheet->getColumnDimension('F')->setWidth(30);
-    $sheet->getColumnDimension('G')->setWidth(83);
-    $sheet->getColumnDimension('H')->setWidth(10);
-    $sheet->getColumnDimension('I')->setWidth(10);
-    $sheet->getColumnDimension('J')->setWidth(10);
-    $sheet->getColumnDimension('K')->setWidth(15);
-    $sheet->getColumnDimension('L')->setWidth(10);
-
-    // Set orientasi halaman dan judul sheet
-    $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-    $sheet->setTitle("Data Rekap Pelaporan");
-
-    // Set header untuk mendownload file Excel
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
-    header('Cache-Control: max-age=0');
-
-    // Simpan file Excel
-    $writer = new Xlsx($spreadsheet);
-    ob_end_clean();//digunakan ketika file tidak bisa dibuka diexcel
-    $writer->save('php://output');
-}
-
-    public function rekap_pelaporan_excel_hd() {
+    public function rekap_pelaporan_excel_hd()
+    {
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -572,10 +577,10 @@ public function rekap_pelaporan_excel()
         $sheet->getStyle('A1')->getFont()->setSize(15);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $current_date = date('Y-m-d');
 
-		$this->db->where('id_user', $this->session->userdata('id_user')); // Assuming user_id is stored in session
+        $this->db->where('id_user', $this->session->userdata('id_user')); // Assuming user_id is stored in session
         $user_query = $this->db->get('user');
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
@@ -585,7 +590,7 @@ public function rekap_pelaporan_excel()
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
         $status_ccs = $this->input->post('status_ccs');
-    
+
         // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
         $periode_text = "Semua Data";
         if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
@@ -631,14 +636,14 @@ public function rekap_pelaporan_excel()
         $sheet->getRowDimension('3')->setRowHeight(20);
 
         $this->load->model('Pelaporan_model', 'pelaporan_model');
-    
+
         // Retrieve POST data
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
-    
+
         // Get filtered data
         $query = $this->pelaporan_model->getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
         $no = 1;
@@ -710,7 +715,7 @@ public function rekap_pelaporan_excel()
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
-		ob_end_clean();//digunakan ketika file tidak bisa dibuka diexcel
+        ob_end_clean(); //digunakan ketika file tidak bisa dibuka diexcel
         $writer->save('php://output');
     }
 
@@ -720,7 +725,7 @@ public function rekap_pelaporan_excel()
             // Load PhpSpreadsheet
             $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
-    
+
             // Define column and row styles
             $style_col = [
                 'font' => ['bold' => true],
@@ -735,7 +740,7 @@ public function rekap_pelaporan_excel()
                     'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
                 ],
             ];
-    
+
             $style_row = [
                 'alignment' => [
                     'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
@@ -747,28 +752,28 @@ public function rekap_pelaporan_excel()
                     'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
                 ],
             ];
-    
+
             // Set header title
             $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
             $sheet->mergeCells('A1:L1');
             $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(15);
             $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-    
+
             // Set timezone and get current date
             date_default_timezone_set('Asia/Jakarta');
             $current_date = date('Y-m-d H:i:s');
-            
+
             // Get user information
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $user_query = $this->db->get('user');
             $user = $user_query->row_array();
-    
+
             // Print user and date information
             $sheet->setCellValue('A2', 'Rekap Pelaporan dicetak oleh ' . $user['nama_user'] . ' pada ' . format_indo($current_date));
             $sheet->mergeCells('A2:L2');
             $sheet->getStyle('A2')->getFont()->setBold(true)->setSize(15);
             $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-    
+
             // Set table headers
             $headers = ["NO", "TANGGAL", "NO TIKET", "NAMA KLIEN", "PERIHAL", "TAGS", "KATEGORI", "PRIORITY", "IMPACT", "MAXDAY", "STATUS CCS", "HANDLE BY"];
             $column = 'A';
@@ -780,18 +785,18 @@ public function rekap_pelaporan_excel()
             $sheet->getRowDimension('1')->setRowHeight(20);
             $sheet->getRowDimension('2')->setRowHeight(20);
             $sheet->getRowDimension('3')->setRowHeight(20);
-    
+
             // Fetch data based on date range
             $tanggal_awal = $this->input->post('tanggal_awal');
             $tanggal_akhir = $this->input->post('tanggal_akhir');
-    
+
             if (empty($tanggal_awal) || empty($tanggal_akhir)) {
                 throw new Exception('Tanggal awal dan akhir harus diisi.');
             }
-    
+
             $query = "SELECT * FROM pelaporan WHERE waktu_pelaporan BETWEEN '$tanggal_awal' AND  '$tanggal_akhir'";
             $data = $this->db->query($query, [$tanggal_awal, $tanggal_akhir])->result_array();
-    
+
             // Display data or message if no data found
             if (empty($data)) {
                 $sheet->setCellValue('A4', 'Tidak ada data ditemukan untuk rentang tanggal yang dipilih.');
@@ -822,26 +827,26 @@ public function rekap_pelaporan_excel()
                 }
                 var_dump($data);
                 die;
-    
+
                 // Set column widths
                 $columnWidths = [5, 15, 20, 35, 50, 30, 20, 10, 10, 10, 15, 10];
                 foreach (range('A', 'L') as $index => $columnID) {
                     $sheet->getColumnDimension($columnID)->setWidth($columnWidths[$index]);
                 }
-    
+
                 // Set page orientation
                 $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
             }
-    
+
             // Output the file
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
             ob_end_clean();
             $filename = 'Rekap_Pelaporan_' . date('Y-m-d_H:i:s') . '.xlsx';
-    
+
             header('Content-Type: application/vnd.ms-excel');
             header('Content-Disposition: attachment;filename="' . $filename . '"');
             header('Cache-Control: max-age=0');
-    
+
             $writer->save('php://output');
         } catch (Exception $e) {
             // Improved error handling
@@ -849,10 +854,10 @@ public function rekap_pelaporan_excel()
             echo 'Error generating report. Please try again later.';
         }
     }
-    
 
 
-      // REKAP KATEGORI
+
+    // REKAP KATEGORI
     public function rekap_kategori()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -863,10 +868,11 @@ public function rekap_pelaporan_excel()
         $this->load->view('cetak/rekap_kategori', $data);
     }
 
-    public function rekap_kategori_excel() {
+    public function rekap_kategori_excel()
+    {
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-    
+
         // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
         $style_col = [
             'font' => ['bold' => true],
@@ -881,7 +887,7 @@ public function rekap_pelaporan_excel()
                 'left' => ['borderStyle'   => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
             ]
         ];
-    
+
         // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
         $style_row = [
             'alignment' => [
@@ -890,78 +896,78 @@ public function rekap_pelaporan_excel()
             'borders' => [
                 'top'   => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
                 'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                'bottom'=> ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
                 'left'  => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]
             ]
         ];
-    
+
         $sheet->setCellValue('A1', "CCS | REKAP KATEGORI");
         $sheet->mergeCells('A1:F1');
         $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(15);
-    
+
         date_default_timezone_set('Asia/Jakarta'); // Set local time zone
         $current_date = date('Y-m-d H:i:s');
-    
+
         $this->db->where('id_user', $this->session->userdata('id_user')); // Assuming user_id is stored in session
         $user_query = $this->db->get('user');
         $user = $user_query->row_array(); // Fetching the user data
-    
+
         $sheet->setCellValue('A2', "Rekap Pelaporan dicetak oleh " . $user['nama_user'] . " pada tanggal " . format_indo($current_date));
         $sheet->mergeCells('A2:F2');
         $sheet->getStyle('A2')->getFont()->setBold(true)->setSize(15);
-    
+
         // Buat header tabel pada baris ke 3
         $sheet->setCellValue('A3', "NO");
         $sheet->setCellValue('B3', "KATEGORI");
         $sheet->setCellValue('C3', "TOTAL");
-    
+
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
         $sheet->getStyle('C3')->applyFromArray($style_col);
-    
+
         $sheet->getRowDimension('1')->setRowHeight(20);
         $sheet->getRowDimension('2')->setRowHeight(20);
         $sheet->getRowDimension('3')->setRowHeight(20);
-    
+
         // Fetch data from database
         $this->db->select('kategori, COUNT(*) AS total');
         $this->db->from('pelaporan');
         $this->db->where('status_ccs', 'FINISH');
         $this->db->group_by('kategori');
         $query = $this->db->get();
-    
+
         $no = 1;
         $row = 4;
-    
+
         foreach ($query->result() as $data) {
             $sheet->setCellValue('A' . $row, $no);
             $sheet->setCellValue('B' . $row, $data->kategori);
             $sheet->setCellValue('C' . $row, $data->total);
-    
+
             $sheet->getStyle('A' . $row)->applyFromArray($style_row);
             $sheet->getStyle('B' . $row)->applyFromArray($style_row);
             $sheet->getStyle('C' . $row)->applyFromArray($style_row);
-    
+
             $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
             $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getRowDimension($row)->setRowHeight(20);
-    
+
             $no++;
             $row++;
         }
-    
+
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(20);
         $sheet->getColumnDimension('C')->setWidth(10);
-    
+
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->setTitle("Data Rekap Kategori");
-    
+
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="Rekap_Kategori.xlsx"');
         header('Cache-Control: max-age=0');
-    
+
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         ob_end_clean(); // Used to fix issue with file not opening in Excel
         $writer->save('php://output');
@@ -971,28 +977,28 @@ public function rekap_pelaporan_excel()
     public function rekap_pelaporan_pdf1()
     {
         $this->load->model('Export_model', 'export_model');
-    
+
         // Retrieve POST data
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $status_ccs = $this->input->post('status_ccs');
         $nama_klien = $this->input->post('nama_klien');
         $tags = $this->input->post('tags');
-    
+
         // Get filtered data
         $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
-    
+
         // Load the mPDF library
         $this->load->library('pdf');
         $mpdf = new \Mpdf\Mpdf();
-    
-    $mpdf->SetHTMLFooter('
+
+        $mpdf->SetHTMLFooter('
     <table width="100%">
         <tr>
             <td width="33%" style="text-align: right;">Dicetak oleh : ' . $this->session->userdata('nama_user') . '</td>
         </tr>
     </table>');
-    
+
         // Create PDF content
         $html = '<h3 style="text-align: center;">CCS | REKAP PELAPORAN</h3>';
         $html .= '<p style="text-align: center; font-weight: bold;">Periode  ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir) . '</p>';
@@ -1014,7 +1020,7 @@ public function rekap_pelaporan_excel()
         $html .= '</tr>';
         $html .= '</thead>';
         $html .= '<tbody>';
-    
+
         $no = 1;
         foreach ($filteredData as $data) {
             $html .= '<tr>';
@@ -1033,16 +1039,15 @@ public function rekap_pelaporan_excel()
             $html .= '</tr>';
             $no++;
         }
-    
+
         $html .= '</tbody>';
         $html .= '</table>';
-    
+
         // Write content to PDF
         $mpdf->WriteHTML($html);
-    
-    
+
+
         // Output to browser
         $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
-
 }

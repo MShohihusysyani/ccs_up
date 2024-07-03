@@ -55,6 +55,9 @@
                                         <select id="status_ccs" name="status_ccs" class="form-control" >
                                             <option value="">-- Pilih Status --</option>
                                             <option value="FINISH">FINISH</option>
+                                            <option value="CLOSE">CLOSE</option>
+                                            <option value="HANDLE">HANDLE</option>
+                                            <option value="HANDLE 2">HANDLE 2</option>  
                                         </select>
                                     </div>
                                 </div>
