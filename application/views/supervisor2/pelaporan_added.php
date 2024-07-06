@@ -126,14 +126,14 @@
 
                                                     <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                     <div class="btn btn-sm btn-warning">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
+                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
                                                     </div>
                                                     <br>
                                                     <br>
 
                                                     <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                     <div class="btn btn-sm btn-info">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name">Forward</span></a>
+                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name">Forward</span></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -181,6 +181,13 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -296,6 +303,13 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -479,6 +493,7 @@
             modal.find('#no_tiket').attr("value", div.data('no_tiket'));
             modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
             modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#judul').attr("value", div.data('judul'));
             modal.find('#perihal_coba').html(div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
@@ -518,6 +533,7 @@
             modal.find('#no_tiket').attr("value", div.data('no_tiket'));
             modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
             modal.find('#nama').attr("value", div.data('nama'));
+            modal.find('#judul').attr("value", div.data('judul'));
             modal.find('#perihal_coba').html(div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));

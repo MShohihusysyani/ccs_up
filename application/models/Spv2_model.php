@@ -118,6 +118,7 @@ class Spv2_model extends CI_Model
             pelaporan.id_pelaporan,
             pelaporan.waktu_pelaporan,
             pelaporan.status_ccs,
+            pelaporan.judul,
             pelaporan.priority,
             pelaporan.maxday,
             pelaporan.perihal,
