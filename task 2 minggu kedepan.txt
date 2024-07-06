@@ -1,6 +1,4 @@
-penamabahan kolom judul(DONE)
-penambahan print per tiket semua user(DONE)
-
+penambahan status tiket (closed) pada handle 1(DONE)
 
  						<td>
                                                     <?= $dp['handle_by']; ?>
@@ -11,10 +9,3 @@ penambahan print per tiket semua user(DONE)
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
                                                 </td>
-penambahan kolom handle by diklien (DONE)
-
-Menambahkan keterangan ketika tengat waktu tidak diisi oleh spv 2(DONE)
-
-penambahan kolom catatan finish pada handle 2(DONE)
-
-lanjut besok, periksa pelaporan added, onprogres, edit, forward, finish, untuk memastikan media embed tidak eror

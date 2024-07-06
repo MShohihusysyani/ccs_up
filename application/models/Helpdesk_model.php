@@ -88,10 +88,42 @@ class Helpdesk_model extends CI_Model
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLE 2']);
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
+        return $this->db->get()->result_array();
+    }
+
+    public function getKlienPelaporanHDClose()
+    {
+
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+
+        $this->db->select('
+            pelaporan.kategori,
+            pelaporan.id_pelaporan,
+            pelaporan.waktu_pelaporan,
+            pelaporan.status_ccs,
+            pelaporan.priority,
+            pelaporan.maxday,
+            pelaporan.judul,
+            pelaporan.perihal,
+            pelaporan.file,
+            pelaporan.nama,
+            pelaporan.no_tiket,
+            pelaporan.impact,
+            pelaporan.handle_by,
+            pelaporan.status,
+            pelaporan.tags
+        ');
+        $this->db->from('forward');
+        $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('forward.user_id', $user_id);
+        $this->db->where('pelaporan.status_ccs', 'CLOSE');
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+
         return $this->db->get()->result_array();
     }
 

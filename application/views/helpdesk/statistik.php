@@ -59,7 +59,7 @@
                                         FROM forward
                                         LEFT JOIN pelaporan ON forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE forward.user_id = $user_id
-                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')")->result_array();
+                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2', 'ADDED 2')")->result_array();
                                 foreach ($handle as $hd) : ?>
                                     <div class="row clearfix">
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
