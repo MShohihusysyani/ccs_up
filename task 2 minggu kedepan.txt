@@ -1,4 +1,6 @@
 penambahan status tiket (closed) pada handle 1(DONE)
+pada saat login user helpdesk, muncul data ccs yang statusnya di forward ke handle2 (implementator) dan added2 (spv2)(DONE)
+approve pada spv2 disamakan dengan spv1 (DONE)
 
  						<td>
                                                     <?= $dp['handle_by']; ?>

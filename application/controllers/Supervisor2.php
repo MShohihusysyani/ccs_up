@@ -182,6 +182,50 @@ class Supervisor2 extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function finish_pelaporan($id)
+    {
+
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Spv2_model', 'spv2_model');
+        $data['datapelaporan'] = $this->spv2_model->ambil_id_pelaporan_close($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor2_sidebar');
+        $this->load->view('supervisor2/finish_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_approve_pelaporan()
+    {
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $now = date('Y-m-d');
+
+        $id_pelaporan         = $this->input->post('id_pelaporan');
+        $no_tiket   = $this->input->post('no_tiket');
+        $nama       = $this->input->post('nama');
+        $judul      = $this->input->post('judul');
+        // $perihal    = $this->input->post('perihal');
+        $status_ccs = 'FINISH';
+        $waktu      = date('Y-m-d');
+        $priority   = $this->input->post('priority');
+        $maxday     = $this->input->post('maxday');
+        $kategori   = $this->input->post('kategori');
+
+        $this->db->set('judul', $judul);
+        $this->db->set('no_tiket', $no_tiket);
+        $this->db->set('nama', $nama);
+        $this->db->set('status_ccs', $status_ccs);
+        $this->db->set('waktu_approve', $waktu);
+        $this->db->set('priority', $priority);
+        // $this->db->set('perihal', $perihal);
+        $this->db->set('maxday', $maxday);
+        $this->db->set('kategori', $kategori);
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        $this->db->update('pelaporan');
+        $this->session->set_flashdata('pesan', 'Succesfully Approve!');
+        Redirect(base_url('supervisor2/close'));
+    }
+
     public function finish()
     {
         $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');

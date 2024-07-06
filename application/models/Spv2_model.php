@@ -216,6 +216,12 @@ class Spv2_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function ambil_id_pelaporan_close($id)
+    {
+        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, judul, nama, status_ccs, kategori, priority, maxday, impact, judul, catatan_finish, file_finish, tags  FROM pelaporan WHERE id_pelaporan='$id'";
+        return $this->db->query($query)->result_array();
+    }
+
     //FINISH
     public function getKlienPelaporanFinish()
     {
