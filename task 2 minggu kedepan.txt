@@ -1,4 +1,5 @@
 penambahan status tiket (closed) pada handle 1(DONE)
+Penambahan status tiket (handle,closed, finish, reject) pada handle2 (DONE)
 pada saat login user helpdesk, muncul data ccs yang statusnya di forward ke handle2 (implementator) dan added2 (spv2)(DONE)
 approve pada spv2 disamakan dengan spv1 (DONE)
 pada saat finish, media youtube menggabung dengan button reject. seharusnya terpisah(DONE)

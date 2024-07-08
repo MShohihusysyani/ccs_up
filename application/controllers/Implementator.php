@@ -20,14 +20,14 @@ class Implementator extends CI_Controller
     public function pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Implementator_model', 'Implementator_model');
 
         // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         // $data['category'] = $this->category_model->getNamakategori();
 
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanImplementator();
+        $data['datapelaporan'] = $this->Implementator_model->getKlienPelaporanImplementator();
 
         $this->load->view('templates/header');
         $this->load->view('templates/implementator_sidebar');
@@ -35,15 +35,49 @@ class Implementator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function close()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Implementator_model', 'implementator_model');
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['datapelaporan'] = $this->implementator_model->getKlienPelaporanClose();
+
+        $this->load->model('User_model', 'user_model');
+        $data['namaspv'] = $this->user_model->getNamaSpv();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/close', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function reject()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Implementator_model', 'implementator_model');
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['datapelaporan'] = $this->implementator_model->getPelaporanReject();
+
+        $this->load->model('User_model', 'user_model');
+        $data['namaspv'] = $this->user_model->getNamaSpv();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/reject', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function data_pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $this->load->model('Implementator_model', 'implementator_model');
         $data['category'] = $this->category_model->getNamakategori();
 
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getDataPelaporanImplementator();
+        $data['datapelaporan'] = $this->implementator_model->getDataPelaporanImplementator();
 
         $this->load->view('templates/header');
         $this->load->view('templates/implementator_sidebar');
@@ -171,10 +205,10 @@ class Implementator extends CI_Controller
     public function detail_pelaporan($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-        $data['datacomment']   = $this->klienpelaporan_model->get_latest_comments($id);
-        $data['datareply']     = $this->klienpelaporan_model->get_replies_by_pelaporan_id($id);
+        $this->load->model('Implementator_model', 'implementator_model');
+        $data['datapelaporan'] = $this->implementator_model->ambil_id_pelaporan($id);
+        $data['datacomment']   = $this->implementator_model->get_latest_comments($id);
+        $data['datareply']     = $this->implementator_model->get_replies_by_pelaporan_id($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/implementator_sidebar');
