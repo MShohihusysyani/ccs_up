@@ -489,7 +489,7 @@ class Supervisor2 extends CI_Controller
 
         // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namateknisi', 'Helpdesk', 'required');
+        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
 
         // Check if the form passes validation
         if ($this->form_validation->run() == FALSE) {
@@ -538,32 +538,44 @@ class Supervisor2 extends CI_Controller
     public function fungsi_tambah()
     {
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namateknisi');
-        $judul   = $this->input->post('judul2');
-        $subtask = $this->input->post('subtask2');
-        $tanggal = $this->input->post('tanggal2');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user,
-            'judul2'   => $judul,
-            'subtask2' => $subtask,
-            'tanggal2' => $tanggal
-        ];
+        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
+        $this->form_validation->set_rules('judul', 'Judul', 'required');
+        $this->form_validation->set_rules('subtask', 'Subtask', 'required');
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        $this->form_validation->set_rules('priority', 'Priority', 'required');
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required');
 
-        // cari nama user berdasarkan id 
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-        $user = $query->row();
-        $nama_user = $user->nama_user;
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, redirect back to the form with error messages
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('supervisor2/onprogress');
+        } else {
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namateknisi');
+            $judul   = $this->input->post('judul2');
+            $subtask = $this->input->post('subtask2');
+            $tanggal = $this->input->post('tanggal2');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user,
+                'judul2'   => $judul,
+                'subtask2' => $subtask,
+                'tanggal2' => $tanggal
+            ];
 
-        $this->db->insert('t2_forward', $data);
-        $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Teknisi has been added!');
-        Redirect(Base_url('supervisor2/onprogress'));
+            // cari nama user berdasarkan id 
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+            $user = $query->row();
+            $nama_user = $user->nama_user;
+
+            $this->db->insert('t2_forward', $data);
+            $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
+            $this->session->set_flashdata('pesan', 'Teknisi has been added!');
+            Redirect(Base_url('supervisor2/onprogress'));
+        }
     }
 
     //   FILTER LAPORAN
