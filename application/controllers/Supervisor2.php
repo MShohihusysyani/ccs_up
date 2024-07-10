@@ -438,33 +438,47 @@ class Supervisor2 extends CI_Controller
     // FORWARD KE TEKNISI
     public function fungsi_forward()
     {
+        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namateknisi');
-        $judul   = $this->input->post('judul');
-        $subtask = $this->input->post('subtask');
-        $tanggal = $this->input->post('tanggal');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user,
-            'judul'   => $judul,
-            'subtask' => $subtask,
-            'tanggal' => $tanggal
-        ];
+        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
+        $this->form_validation->set_rules('judul', 'Judul', 'required');
+        $this->form_validation->set_rules('subtask', 'Subtask', 'required');
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        $this->form_validation->set_rules('priority', 'Priority', 'required');
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required');
 
-        // cari nama user berdasarkan id 
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-        $user = $query->row();
-        $nama_user = $user->nama_user;
+        // Check if validation is successful
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, redirect back to the form with error messages
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('supervisor2/added');
+        } else {
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namateknisi');
+            $judul   = $this->input->post('judul');
+            $subtask = $this->input->post('subtask');
+            $tanggal = $this->input->post('tanggal');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user,
+                'judul'   => $judul,
+                'subtask' => $subtask,
+                'tanggal' => $tanggal
+            ];
 
-        $this->db->insert('t1_forward', $data);
-        $this->spv2_model->updateForward($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Successfully Forward!');
-        Redirect(Base_url('supervisor2/added'));
+            // cari nama user berdasarkan id 
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+            $user = $query->row();
+            $nama_user = $user->nama_user;
+
+            $this->db->insert('t1_forward', $data);
+            $this->spv2_model->updateForward($id_pelaporan, $nama_user);
+            $this->session->set_flashdata('pesan', 'Successfully Forward!');
+            Redirect(Base_url('supervisor2/added'));
+        }
     }
 
     //EDIT TEKNISI

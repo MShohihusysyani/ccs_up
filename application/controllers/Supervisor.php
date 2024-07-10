@@ -870,25 +870,34 @@ class Supervisor extends CI_Controller
     {
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namahd');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-        ];
+        $this->form_validation->set_rules('priority', 'Priority', 'required');
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required');
 
-        // cari nama user berdasarkan id 
-        $this->db->select('id_user, nama_user');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
-        $user = $query->row();
-        $nama_user = $user->nama_user;
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, redirect back to the form with error messages
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('supervisor/added');
+        } else {
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namahd');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
 
-        $this->db->insert('forward', $data);
-        $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
-        $this->session->set_flashdata('pesan', 'Successfully Forward!');
-        Redirect(Base_url('supervisor/added'));
+            // cari nama user berdasarkan id 
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+            $user = $query->row();
+            $nama_user = $user->nama_user;
+
+            $this->db->insert('forward', $data);
+            $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
+            $this->session->set_flashdata('pesan', 'Successfully Forward!');
+            Redirect(Base_url('supervisor/added'));
+        }
     }
 
 
