@@ -98,14 +98,6 @@ class Spv2_model extends CI_Model
     }
 
 
-    // public function getKlienPelaporan()
-    // {
-    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    //     $user_id = $this->session->userdata('id_user');
-    //     $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, handle_by2, handle_by3, tags, maxday  FROM pelaporan ORDER BY waktu_pelaporan DESC";
-    //     return $this->db->query($query)->result_array();
-    // }
-
     public function getKlienPelaporanAdd()
     {
         // Get user data from the session
@@ -140,17 +132,6 @@ class Spv2_model extends CI_Model
     }
 
 
-    // public function getKlienPelaporanAdd(){
-
-    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    //     $user_id = $this->session->userdata('id_user');
-    //     $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.status, pelaporan.handle_by, pelaporan.impact, pelaporan.tags
-    //     FROM s_forward
-    //     LEFT JOIN pelaporan ON s_forward.pelaporan_id=pelaporan.id_pelaporan
-    //     WHERE s_forward.user_id=$user_id AND status_ccs='ADDED 2'";
-    //     return $this->db->query($query)->result_array();
-    // }
-
     public function getKlienPelaporanOP()
     {
         // Get user data from the session
@@ -160,12 +141,12 @@ class Spv2_model extends CI_Model
         // Build the query using Query Builder
         $this->db->select('
             pelaporan.*,
-            t1_forward.judul AS judul1,
-            t1_forward.subtask AS subtask1,
-            t1_forward.tanggal AS tanggal1,
-            t2_forward.judul2 AS judul2,
-            t2_forward.subtask2 AS subtask2,
-            t2_forward.tanggal2 AS tanggal2
+            GROUP_CONCAT(DISTINCT t1_forward.judul ORDER BY t1_forward.tanggal SEPARATOR ", ") AS judul1,
+            GROUP_CONCAT(DISTINCT t1_forward.subtask ORDER BY t1_forward.tanggal SEPARATOR ", ") AS subtask1,
+            GROUP_CONCAT(DISTINCT t1_forward.tanggal ORDER BY t1_forward.tanggal SEPARATOR ", ") AS tanggal1,
+            GROUP_CONCAT(DISTINCT t2_forward.judul2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS judul2,
+            GROUP_CONCAT(DISTINCT t2_forward.subtask2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS subtask2,
+            GROUP_CONCAT(DISTINCT t2_forward.tanggal2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS tanggal2
         ');
         $this->db->from('pelaporan');
         $this->db->join('t1_forward', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
@@ -173,40 +154,13 @@ class Spv2_model extends CI_Model
         $this->db->join('s_forward', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('s_forward.user_id', $user_id);
         $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
-
-    // public function getKlienPelaporanOP()
-    // {
-    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    //     $user_id = $this->session->userdata('id_user');
-    //     $query = "SELECT pelaporan.*, pelaporan.no_tiket, pelaporan.kategori, pelaporan.tags, pelaporan.nama, pelaporan.waktu_pelaporan, pelaporan.status, pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.impact, pelaporan.file, pelaporan.handle_by, pelaporan.handle_by2, pelaporan.handle_by3, t1_forward.judul, t1_forward.subtask, t1_forward.tanggal, t2_forward.judul2, t2_forward.subtask2, t2_forward.tanggal2
-    //     FROM pelaporan
-    //     left join t1_forward ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
-    //     left join t2_forward ON t2_forward.pelaporan_id = pelaporan.id_pelaporan
-    //     left join s_forward  ON s_forward.pelaporan_id  = pelaporan.id_pelaporan
-    //     WHERE s_forward.user_id = $user_id AND status_ccs='HANDLE 2' ";
-    //     return $this->db->query($query)->result_array();
-    // }
-
-    // public function getKlienPelaporanOP(){
-    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    //     $user_id = $this->session->userdata('id_user');
-    //     $query = "SELECT * 
-    //     FROM pelaporan
-    //     INNER JOIN t1_forward
-    //     ON pelaporan.id_pelaporan = t1_forward.pelaporan_id
-    //     INNER JOIN t2_forward
-    //     ON pelaporan.id_pelaporan = t2_forward.pelaporan_id
-    //     INNER JOIN s_forward
-    //     ON pelaporan.id_pelaporan = s_forward.pelaporan_id
-    //     WHERE s_forward.user_id = $user_id AND status_ccs='HANDLE 2'";
-    //     return $this->db->query($query)->result_array();
-    // }
 
 
     public function getKlienPelaporanClose()

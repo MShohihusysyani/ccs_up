@@ -539,9 +539,9 @@ class Supervisor2 extends CI_Controller
     {
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
-        $this->form_validation->set_rules('judul', 'Judul', 'required');
-        $this->form_validation->set_rules('subtask', 'Subtask', 'required');
-        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        $this->form_validation->set_rules('judul2', 'Judul', 'required');
+        $this->form_validation->set_rules('subtask2', 'Subtask', 'required');
+        $this->form_validation->set_rules('tanggal2', 'Tanggal', 'required');
         $this->form_validation->set_rules('priority', 'Priority', 'required');
         $this->form_validation->set_rules('maxday', 'Max Day', 'required');
 

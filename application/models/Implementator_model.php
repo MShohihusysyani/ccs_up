@@ -4,52 +4,117 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Implementator_model extends CI_Model
 {
     // HANDLE
+    // public function getKlienPelaporanImplementator()
+    // {
+
+    //     // Get user data from the session
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $user_id = $this->session->userdata('id_user');
+
+    //     // Build the query using Query Builder
+    //     $this->db->select('
+    //         pelaporan.kategori,
+    //         pelaporan.id_pelaporan,
+    //         pelaporan.waktu_pelaporan,
+    //         pelaporan.status_ccs,
+    //         pelaporan.priority,
+    //         pelaporan.maxday,
+    //         pelaporan.judul,
+    //         pelaporan.perihal,
+    //         pelaporan.file,
+    //         pelaporan.nama,
+    //         pelaporan.no_tiket,
+    //         pelaporan.impact,
+    //         pelaporan.handle_by,
+    //         pelaporan.handle_by2,
+    //         pelaporan.handle_by3,
+    //         pelaporan.status,
+    //         pelaporan.tags,
+    //         t1_forward.subtask,
+    //         t1_forward.tanggal,
+    //         t1_forward.judul
+    //     ');
+    //     $this->db->from('t1_forward');
+    //     $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+    //     $this->db->where('t1_forward.user_id', $user_id);
+    //     $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+    //     $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+
+    //     // Execute the query and return the result
+    //     return $this->db->get()->result_array();
+    // }
+
     public function getKlienPelaporanImplementator()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.handle_by2, pelaporan.handle_by3, pelaporan.tags, t1_forward.subtask, t1_forward.tanggal, t1_forward.judul
-        // FROM t1_forward
-        // LEFT JOIN pelaporan ON t1_forward.pelaporan_id=pelaporan.id_pelaporan
-        // WHERE t1_forward.user_id=$user_id AND status_ccs='HANDLE 2' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
-
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        // Build the query using Query Builder
-        $this->db->select('
-            pelaporan.kategori,
-            pelaporan.id_pelaporan,
-            pelaporan.waktu_pelaporan,
-            pelaporan.status_ccs,
-            pelaporan.priority,
-            pelaporan.maxday,
-            pelaporan.judul,
-            pelaporan.perihal,
-            pelaporan.file,
-            pelaporan.nama,
-            pelaporan.no_tiket,
-            pelaporan.impact,
-            pelaporan.handle_by,
-            pelaporan.handle_by2,
-            pelaporan.handle_by3,
-            pelaporan.status,
-            pelaporan.tags,
-            t1_forward.subtask,
-            t1_forward.tanggal,
-            t1_forward.judul
-        ');
-        $this->db->from('t1_forward');
-        $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        $this->db->where('t1_forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+        // Build the first query for t1_forward
+        $query1 = $this->db->select('
+        pelaporan.kategori,
+        pelaporan.id_pelaporan,
+        pelaporan.waktu_pelaporan,
+        pelaporan.status_ccs,
+        pelaporan.priority,
+        pelaporan.maxday,
+        pelaporan.judul,
+        pelaporan.perihal,
+        pelaporan.file,
+        pelaporan.nama,
+        pelaporan.no_tiket,
+        pelaporan.impact,
+        pelaporan.handle_by,
+        pelaporan.handle_by2,
+        pelaporan.handle_by3,
+        pelaporan.status,
+        pelaporan.tags,
+        t1_forward.subtask,
+        t1_forward.tanggal,
+        t1_forward.judul as t1_judul
+    ')
+            ->from('t1_forward')
+            ->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left')
+            ->where('t1_forward.user_id', $user_id)
+            ->where('pelaporan.status_ccs', 'HANDLE 2')
+            ->get_compiled_select();
 
-        // Execute the query and return the result
-        return $this->db->get()->result_array();
+        // Build the second query for t2_forward
+        $query2 = $this->db->select('
+        pelaporan.kategori,
+        pelaporan.id_pelaporan,
+        pelaporan.waktu_pelaporan,
+        pelaporan.status_ccs,
+        pelaporan.priority,
+        pelaporan.maxday,
+        pelaporan.judul,
+        pelaporan.perihal,
+        pelaporan.file,
+        pelaporan.nama,
+        pelaporan.no_tiket,
+        pelaporan.impact,
+        pelaporan.handle_by,
+        pelaporan.handle_by2,
+        pelaporan.handle_by3,
+        pelaporan.status,
+        pelaporan.tags,
+        t2_forward.subtask2,
+        t2_forward.tanggal2,
+        t2_forward.judul2 as t2_judul
+    ')
+            ->from('t2_forward')
+            ->join('pelaporan', 't2_forward.pelaporan_id = pelaporan.id_pelaporan', 'left')
+            ->where('t2_forward.user_id', $user_id)
+            ->where('pelaporan.status_ccs', 'HANDLE 2')
+            ->get_compiled_select();
+
+        // Combine the two queries using UNION
+        $final_query = $this->db->query($query1 . ' UNION ' . $query2 . ' ORDER BY waktu_pelaporan DESC');
+
+        // Execute the final query and return the result
+        return $final_query->result_array();
     }
+
 
     // CLOSE
     public function getKlienPelaporanClose()
