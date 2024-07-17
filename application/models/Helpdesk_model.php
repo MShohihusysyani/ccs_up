@@ -82,6 +82,8 @@ class Helpdesk_model extends CI_Model
             pelaporan.no_tiket,
             pelaporan.impact,
             pelaporan.handle_by,
+            pelaporan.handle_by2,
+            pelaporan.handle_by3,
             pelaporan.status,
             pelaporan.tags
         ');
@@ -115,6 +117,8 @@ class Helpdesk_model extends CI_Model
             pelaporan.no_tiket,
             pelaporan.impact,
             pelaporan.handle_by,
+            pelaporan.handle_by2,
+            pelaporan.handle_by3,
             pelaporan.status,
             pelaporan.tags
         ');
@@ -157,6 +161,8 @@ class Helpdesk_model extends CI_Model
             pelaporan.no_tiket,
             pelaporan.impact,
             pelaporan.handle_by,
+            pelaporan.handle_by2,
+            pelaporan.handle_by3,
             pelaporan.status_ccs,
             pelaporan.tags,
             pelaporan.rating,

@@ -59,7 +59,9 @@
                                             <option value="FINISH">FINISH</option>
                                             <option value="CLOSE">CLOSE</option>
                                             <option value="HANDLE">HANDLE</option>
+                                            <option value="HANDLE 2">HANDLE 2</option>
                                             <option value="ADDED">ADDED</option>
+                                            <option value="ADDED 2">ADDED 2</option>
                                         </select>
                                     </div>
                                 </div>
