@@ -53,13 +53,26 @@
                             <div class="body">
 
                                 <?php
-                                $user_id =  $this->session->userdata('id_user');
-                                $handle = $this->db->query("SELECT 
-                                        COUNT(*) as ticket_active
+                                $user_id = $this->db->escape('id_user'); // Pastikan user_id di-escape untuk keamanan
+
+                                $query = "
+                                    SELECT COUNT(*) AS ticket_active
+                                    FROM (
+                                        SELECT t1_forward.pelaporan_id
                                         FROM t1_forward
                                         LEFT JOIN pelaporan ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE t1_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')")->result_array();
+                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')
+                                    
+                                        UNION ALL
+                                        SELECT t2_forward.pelaporan_id
+                                        FROM t2_forward
+                                        LEFT JOIN pelaporan ON t2_forward.pelaporan_id = pelaporan.id_pelaporan
+                                        WHERE t2_forward.user_id = $user_id
+                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')
+                                    ) AS combined_forwards";
+
+                                $handle = $this->db->query($query)->result_array();
                                 foreach ($handle as $hd) : ?>
                                     <div class="row clearfix">
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
