@@ -53,7 +53,7 @@
                             <div class="body">
 
                                 <?php
-                                $user_id = $this->db->escape('id_user'); // Pastikan user_id di-escape untuk keamanan
+                                $user_id = $this->session->userdata('id_user'); // Pastikan user_id di-escape untuk keamanan
 
                                 $query = "
                                     SELECT COUNT(*) AS ticket_active
