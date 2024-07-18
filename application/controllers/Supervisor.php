@@ -868,10 +868,17 @@ class Supervisor extends CI_Controller
     //DISTRIBUSI TO HELPDESK
     public function fungsi_forward()
     {
+        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
-        $this->form_validation->set_rules('priority', 'Priority', 'required');
-        $this->form_validation->set_rules('maxday', 'Max Day', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required', [
+            'required' => 'Kolom Helpdesk wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('priority', 'Priority', 'required', [
+            'required' => 'Kolom Priority wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
+            'required' => 'Kolom Max Day wajib diisi.'
+        ]);
 
         if ($this->form_validation->run() == FALSE) {
             // If validation fails, redirect back to the form with error messages
@@ -906,14 +913,22 @@ class Supervisor extends CI_Controller
         // Load the form validation library
         $this->load->library('form_validation');
 
-        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required', [
+            'required' => 'Kolom Helpdesk wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('priority', 'Priority', 'required', [
+            'required' => 'Kolom Priority wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
+            'required' => 'Kolom Max Day wajib diisi.'
+        ]);
 
-        // Check if the form passes validation
+
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-            redirect(base_url('supervisor/onprogress'));
+            // If validation fails, redirect back to the form with error messages
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('supervisor/added');
         } else {
             // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');

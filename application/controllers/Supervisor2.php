@@ -440,12 +440,24 @@ class Supervisor2 extends CI_Controller
     {
         // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
-        $this->form_validation->set_rules('judul', 'Judul', 'required');
-        $this->form_validation->set_rules('subtask', 'Subtask', 'required');
-        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
-        $this->form_validation->set_rules('priority', 'Priority', 'required');
-        $this->form_validation->set_rules('maxday', 'Max Day', 'required');
+        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
+            'required' => 'Kolom Teknisi wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('judul', 'Judul', 'required', [
+            'required' => 'Kolom Judul wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('subtask', 'Subtask', 'required', [
+            'required' => 'Kolom Subtask wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required', [
+            'required' => 'Kolom Tenggat waktu wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('priority', 'Priority', 'required', [
+            'required' => 'Kolom Priority wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
+            'required' => 'Kolom Max Day wajib diisi.'
+        ]);
 
         // Check if validation is successful
         if ($this->form_validation->run() == FALSE) {
@@ -477,9 +489,10 @@ class Supervisor2 extends CI_Controller
             $this->db->insert('t1_forward', $data);
             $this->spv2_model->updateForward($id_pelaporan, $nama_user);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
-            Redirect(Base_url('supervisor2/added'));
+            redirect(base_url('supervisor2/added'));
         }
     }
+
 
     //EDIT TEKNISI
     public function fungsi_edit()
@@ -537,13 +550,26 @@ class Supervisor2 extends CI_Controller
     //TAMBAH TEKNISI
     public function fungsi_tambah()
     {
+        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
-        $this->form_validation->set_rules('judul2', 'Judul', 'required');
-        $this->form_validation->set_rules('subtask2', 'Subtask', 'required');
-        $this->form_validation->set_rules('tanggal2', 'Tanggal', 'required');
-        $this->form_validation->set_rules('priority', 'Priority', 'required');
-        $this->form_validation->set_rules('maxday', 'Max Day', 'required');
+        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
+            'required' => 'Kolom Teknisi wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('judul2', 'Judul', 'required', [
+            'required' => 'Kolom Judul wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('subtask2', 'Subtask', 'required', [
+            'required' => 'Kolom Subtask wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('tanggal2', 'Tanggal', 'required', [
+            'required' => 'Kolom Tenggat waktu wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('priority', 'Priority', 'required', [
+            'required' => 'Kolom Priority wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
+            'required' => 'Kolom Max Day wajib diisi.'
+        ]);
 
         if ($this->form_validation->run() == FALSE) {
             // If validation fails, redirect back to the form with error messages
