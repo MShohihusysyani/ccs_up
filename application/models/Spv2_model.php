@@ -144,7 +144,7 @@ class Spv2_model extends CI_Model
             GROUP_CONCAT(DISTINCT t1_forward.judul ORDER BY t1_forward.tanggal SEPARATOR ", ") AS judul1,
             GROUP_CONCAT(DISTINCT t1_forward.subtask ORDER BY t1_forward.tanggal SEPARATOR ", ") AS subtask1,
             GROUP_CONCAT(DISTINCT t1_forward.tanggal ORDER BY t1_forward.tanggal SEPARATOR ", ") AS tanggal1,
-            GROUP_CONCAT(DISTINCT t2_forward.judul2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS judul2,
+            GROUP_CONCAT(DISTINCT t2_forward.judul ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS judul2,
             GROUP_CONCAT(DISTINCT t2_forward.subtask2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS subtask2,
             GROUP_CONCAT(DISTINCT t2_forward.tanggal2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS tanggal2
         ');

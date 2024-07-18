@@ -425,21 +425,21 @@
                         <label for="judul">Judul</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="text" id="judul2" name="judul2" class="form-control">
+                                <input value="" type="text" id="judul" name="judul" class="form-control">
                             </div>
                         </div>
 
                         <label for="subtask">Subtask</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="text" id="subtask2" name="subtask2" class="form-control">
+                                <input value="" type="text" id="subtask" name="subtask" class="form-control">
                             </div>
                         </div>
 
                         <label for="tanggal">Tenggat waktu</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="date" id="tanggal2" name="tanggal2" class="form-control">
+                                <input value="" type="date" id="tanggal" name="tanggal" class="form-control">
                             </div>
                         </div>
 

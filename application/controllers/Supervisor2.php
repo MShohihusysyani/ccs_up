@@ -533,7 +533,7 @@ class Supervisor2 extends CI_Controller
                 $this->db->update('t1_forward', $data);
 
                 // Update the Helpdesk in the supervisor_model
-                $this->supervisor_model->updateTeknisi($id_pelaporan, $nama_user);
+                $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
 
                 // Set success message
                 $this->session->set_flashdata('pesan', 'Teknisi has been updated!');
@@ -547,6 +547,10 @@ class Supervisor2 extends CI_Controller
         }
     }
 
+
+
+
+
     //TAMBAH TEKNISI
     public function fungsi_tambah()
     {
@@ -555,13 +559,13 @@ class Supervisor2 extends CI_Controller
         $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
             'required' => 'Kolom Teknisi wajib diisi.'
         ]);
-        $this->form_validation->set_rules('judul2', 'Judul', 'required', [
+        $this->form_validation->set_rules('judul', 'Judul', 'required', [
             'required' => 'Kolom Judul wajib diisi.'
         ]);
-        $this->form_validation->set_rules('subtask2', 'Subtask', 'required', [
+        $this->form_validation->set_rules('subtask', 'Subtask', 'required', [
             'required' => 'Kolom Subtask wajib diisi.'
         ]);
-        $this->form_validation->set_rules('tanggal2', 'Tanggal', 'required', [
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required', [
             'required' => 'Kolom Tenggat waktu wajib diisi.'
         ]);
         $this->form_validation->set_rules('priority', 'Priority', 'required', [
@@ -578,15 +582,15 @@ class Supervisor2 extends CI_Controller
         } else {
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namateknisi');
-            $judul   = $this->input->post('judul2');
-            $subtask = $this->input->post('subtask2');
-            $tanggal = $this->input->post('tanggal2');
+            $judul   = $this->input->post('judul');
+            $subtask = $this->input->post('subtask');
+            $tanggal = $this->input->post('tanggal');
             $data = [
                 'pelaporan_id' => $id_pelaporan,
                 'user_id' => $id_user,
-                'judul2'   => $judul,
-                'subtask2' => $subtask,
-                'tanggal2' => $tanggal
+                'judul'   => $judul,
+                'subtask' => $subtask,
+                'tanggal' => $tanggal
             ];
 
             // cari nama user berdasarkan id 
@@ -597,12 +601,68 @@ class Supervisor2 extends CI_Controller
             $user = $query->row();
             $nama_user = $user->nama_user;
 
-            $this->db->insert('t2_forward', $data);
+            $this->db->insert('t1_forward', $data);
             $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
             $this->session->set_flashdata('pesan', 'Teknisi has been added!');
             Redirect(Base_url('supervisor2/onprogress'));
         }
     }
+
+    // public function fungsi_tambah()
+    // {
+    //     // Set validation rules
+    //     $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+    //     $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
+    //         'required' => 'Kolom Teknisi wajib diisi.'
+    //     ]);
+    //     $this->form_validation->set_rules('judul', 'Judul', 'required', [
+    //         'required' => 'Kolom Judul wajib diisi.'
+    //     ]);
+    //     $this->form_validation->set_rules('subtask2', 'Subtask', 'required', [
+    //         'required' => 'Kolom Subtask wajib diisi.'
+    //     ]);
+    //     $this->form_validation->set_rules('tanggal2', 'Tanggal', 'required', [
+    //         'required' => 'Kolom Tenggat waktu wajib diisi.'
+    //     ]);
+    //     $this->form_validation->set_rules('priority', 'Priority', 'required', [
+    //         'required' => 'Kolom Priority wajib diisi.'
+    //     ]);
+    //     $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
+    //         'required' => 'Kolom Max Day wajib diisi.'
+    //     ]);
+
+    //     if ($this->form_validation->run() == FALSE) {
+    //         // If validation fails, redirect back to the form with error messages
+    //         $this->session->set_flashdata('alert', validation_errors());
+    //         redirect('supervisor2/onprogress');
+    //     } else {
+    //         $id_pelaporan = $this->input->post('id_pelaporan');
+    //         $id_user = $this->input->post('namateknisi');
+    //         $judul   = $this->input->post('judul');
+    //         $subtask = $this->input->post('subtask2');
+    //         $tanggal = $this->input->post('tanggal2');
+    //         $data = [
+    //             'pelaporan_id' => $id_pelaporan,
+    //             'user_id' => $id_user,
+    //             'judul'   => $judul,
+    //             'subtask2' => $subtask,
+    //             'tanggal2' => $tanggal
+    //         ];
+
+    //         // cari nama user berdasarkan id 
+    //         $this->db->select('id_user, nama_user');
+    //         $this->db->from('user');
+    //         $this->db->where('id_user', $id_user);
+    //         $query = $this->db->get();
+    //         $user = $query->row();
+    //         $nama_user = $user->nama_user;
+
+    //         $this->db->insert('t2_forward', $data);
+    //         $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
+    //         $this->session->set_flashdata('pesan', 'Teknisi has been added!');
+    //         Redirect(Base_url('supervisor2/onprogress'));
+    //     }
+    // }
 
     //   FILTER LAPORAN
     public function rekapPelaporan()

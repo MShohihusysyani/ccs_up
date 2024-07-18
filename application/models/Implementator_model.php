@@ -100,7 +100,7 @@ class Implementator_model extends CI_Model
         pelaporan.tags,
         t2_forward.subtask2,
         t2_forward.tanggal2,
-        t2_forward.judul2 as t2_judul
+        t2_forward.judul as t2_judul
     ')
             ->from('t2_forward')
             ->join('pelaporan', 't2_forward.pelaporan_id = pelaporan.id_pelaporan', 'left')

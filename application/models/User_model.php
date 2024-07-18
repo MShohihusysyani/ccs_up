@@ -30,21 +30,24 @@ class User_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function getNamaUser(){
+    public function getNamaUser()
+    {
 
         $query = "SELECT id_user, nama_user FROM user WHERE divisi='Helpdesk 1' OR divisi='Helpdesk 2' OR divisi='Helpdesk 3' OR divisi='Helpdesk 4' ORDER by nama_user ASC";
         return $this->db->query($query)->result_array();
     }
 
-    public function getNamaSpv(){
+    public function getNamaSpv()
+    {
 
         $query = "SELECT id_user, nama_user FROM user WHERE divisi='Supervisor 2' ORDER by nama_user ASC";
         return $this->db->query($query)->result_array();
     }
 
-    public function getNamaTeknisi(){
+    public function getNamaTeknisi()
+    {
 
-        $query = "SELECT id_user, nama_user FROM user WHERE divisi='Support' OR divisi='Implementator' ORDER by nama_user ASC";
+        $query = "SELECT id_user, nama_user FROM user WHERE divisi='Implementator' ORDER by nama_user ASC";
         return $this->db->query($query)->result_array();
     }
 
@@ -66,7 +69,8 @@ class User_model extends CI_Model
     //     $this->db->update('user', ['last_login' => date('Y-m-d H:i:s')]);
     // }
 
-    public function update_last_login($user_id){
+    public function update_last_login($user_id)
+    {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d H:i:s');
 
@@ -76,6 +80,4 @@ class User_model extends CI_Model
         $this->db->where('id_user', $user_id);
         return $this->db->update('user', $data);
     }
-    
-    
 }
