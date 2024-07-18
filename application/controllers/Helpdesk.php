@@ -453,18 +453,28 @@ class Helpdesk extends CI_Controller
     public function fungsi_forward()
     {
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('namaspv');
-        $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user
-        ];
+        $this->form_validation->set_rules('namaspv', 'Supervisor 2', 'required', [
+            'required' => 'Kolom Supervisor 2 wajib diisi.'
+        ]);
 
-        $this->db->insert('s_forward', $data);
-        $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
-        $this->session->set_flashdata('pesan', 'Successfully Forward!');
-        Redirect(Base_url('helpdesk/pelaporan'));
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, redirect back to the form with error messages
+            $errors = strip_tags(validation_errors());
+            $this->session->set_flashdata('alert', $errors);
+            redirect('helpdesk/pelaporan');
+        } else {
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namaspv');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
+
+            $this->db->insert('s_forward', $data);
+            $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
+            $this->session->set_flashdata('pesan', 'Successfully Forward!');
+            Redirect(Base_url('helpdesk/pelaporan'));
+        }
     }
 
     public function detail_pelaporan($id)
@@ -586,34 +596,6 @@ class Helpdesk extends CI_Controller
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('helpdesk/detail_pelaporan/' . $id_pelaporan));
     }
-
-    // public function fungsi_forward()
-    // {
-    //     $this->form_validation->set_rules('id_pelaporan','Pelaporan', 'required');
-    //     $this->form_validation->set_rules('namahd','Helpdesk', 'required');
-    //     $data = [
-    //         'pelaporan_id' => $this->input->post('id_pelaporan'),
-    //         'user_id' => $this->input->post('namaspv')
-    //     ];
-    //     $this->db->insert('forward', $data);
-    //     $this->session->set_flashdata('pesan', 'Success Forward!');
-    //     Redirect(Base_url('helpdesk/pelaporan'));
-    // }
-
-    // public function statistik()
-    // {
-
-    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-
-    //     $this->load->model('Pelaporan_model', 'pelaporan_model');
-    //     $data['tickets_per_user'] = $this->pelaporan_model->get_tickets_count_per_user();
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/helpdesk_sidebar');
-    //     $this->load->view('helpdesk/statistik', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-
 
 
     public function statistik()
