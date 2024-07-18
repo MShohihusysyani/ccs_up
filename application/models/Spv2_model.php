@@ -248,7 +248,7 @@ class Spv2_model extends CI_Model
     public function updateTeknisi($id_pelaporan, $nama_user)
     {
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by2 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
+        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by3 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 

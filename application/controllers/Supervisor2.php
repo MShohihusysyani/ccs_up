@@ -495,6 +495,57 @@ class Supervisor2 extends CI_Controller
 
 
     //EDIT TEKNISI
+    // public function fungsi_edit()
+    // {
+    //     // Load the form validation library
+    //     $this->load->library('form_validation');
+
+    //     // Set validation rules
+    //     $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+    //     $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
+
+    //     // Check if the form passes validation
+    //     if ($this->form_validation->run() == FALSE) {
+    //         $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+    //         redirect(base_url('supervisor2/onprogress'));
+    //     } else {
+    //         // Retrieve POST data
+    //         $id_pelaporan = $this->input->post('id_pelaporan');
+    //         $id_user = $this->input->post('namateknisi');
+    //         $data = [
+    //             'pelaporan_id' => $id_pelaporan,
+    //             'user_id' => $id_user
+    //         ];
+
+    //         // Fetch the user name based on the user ID
+    //         $this->db->select('id_user, nama_user');
+    //         $this->db->from('user');
+    //         $this->db->where('id_user', $id_user);
+    //         $query = $this->db->get();
+
+    //         // Check if user exists
+    //         if ($query->num_rows() > 0) {
+    //             $user = $query->row();
+    //             $nama_user = $user->nama_user;
+
+    //             // Update the forward table
+    //             $this->db->where('pelaporan_id', $id_pelaporan);
+    //             $this->db->update('t1_forward', $data);
+
+    //             // Update the Helpdesk in the supervisor_model
+    //             $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
+
+    //             // Set success message
+    //             $this->session->set_flashdata('pesan', 'Teknisi has been updated!');
+    //         } else {
+    //             // Set error message if user not found
+    //             $this->session->set_flashdata('error', 'User not found.');
+    //         }
+
+    //         // Redirect to the onprogress page
+    //         redirect(base_url('supervisor2/onprogress'));
+    //     }
+    // }
     public function fungsi_edit()
     {
         // Load the form validation library
@@ -512,10 +563,6 @@ class Supervisor2 extends CI_Controller
             // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namateknisi');
-            $data = [
-                'pelaporan_id' => $id_pelaporan,
-                'user_id' => $id_user
-            ];
 
             // Fetch the user name based on the user ID
             $this->db->select('id_user, nama_user');
@@ -528,18 +575,33 @@ class Supervisor2 extends CI_Controller
                 $user = $query->row();
                 $nama_user = $user->nama_user;
 
-                // Update the forward table
+                // Find the second entry for the pelaporan_id
+                $this->db->select('id_forward');
+                $this->db->from('t1_forward');
                 $this->db->where('pelaporan_id', $id_pelaporan);
-                $this->db->update('t1_forward', $data);
+                $this->db->order_by('id_forward', 'ASC'); // Order by id to get the entries in order
+                $query = $this->db->get();
+                $result = $query->result();
 
-                // Update the Helpdesk in the supervisor_model
-                $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
+                if (count($result) >= 2) { // Ensure there are at least two entries
+                    $second_technician_id = $result[1]->id_forward; // Get the ID of the second technician entry
 
-                // Set success message
-                $this->session->set_flashdata('pesan', 'Teknisi has been updated!');
+                    // Update the second technician
+                    $this->db->where('id_forward', $second_technician_id);
+                    $this->db->update('t1_forward', ['user_id' => $id_user]);
+
+                    // Update the Helpdesk in the supervisor_model
+                    $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
+
+                    // Set success message
+                    $this->session->set_flashdata('pesan', 'Teknisi kedua telah diperbarui!');
+                } else {
+                    // Set error message if there are less than two entries
+                    $this->session->set_flashdata('error', 'Teknisi kedua tidak ditemukan.');
+                }
             } else {
                 // Set error message if user not found
-                $this->session->set_flashdata('error', 'User not found.');
+                $this->session->set_flashdata('error', 'User tidak ditemukan.');
             }
 
             // Redirect to the onprogress page
