@@ -313,6 +313,22 @@ class Helpdesk extends CI_Controller
         }
     }
 
+    private function contains_only_images($content)
+    {
+        $doc = new DOMDocument();
+        @$doc->loadHTML($content);
+        $body = $doc->getElementsByTagName('body')->item(0);
+
+        foreach ($body->childNodes as $node) {
+            if ($node->nodeType === XML_TEXT_NODE && trim($node->textContent) !== '') {
+                return false;
+            }
+            if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName !== 'img') {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public function finish()
     {
@@ -322,10 +338,27 @@ class Helpdesk extends CI_Controller
         // Set validation rules
         $this->form_validation->set_rules('catatan_finish', 'Catatan Finish', 'callback_validateCatatanFinish');
 
+        // Get catatan finish content from the request
+        $catatan_finish = $this->input->post('catatan_finish');
+
+        // Check if catatan finish only contains images
+        if ($this->contains_only_images($catatan_finish)) {
+            // If only images, set an error message and redirect back
+            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish tidak boleh hanya berisi gambar.');
+
+            // Remove uploaded images
+            $this->remove_uploaded_images();
+            redirect('helpdesk/pelaporan');
+            return;
+        }
+
         // Check if the form validation passed
         if ($this->form_validation->run() == FALSE) {
             // If validation fails, set an error message and redirect back
             $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+
+            // Remove uploaded images
+            $this->remove_uploaded_images();
             redirect('helpdesk/pelaporan');
         } else {
             $this->processFinish();
@@ -342,9 +375,9 @@ class Helpdesk extends CI_Controller
         if (strlen($textContent) < $minLength) {
             $this->form_validation->set_message('validateCatatanFinish', 'Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
             return FALSE;
-        } else {
-            return TRUE;
         }
+
+        return TRUE;
     }
 
     private function processFinish()
@@ -365,7 +398,19 @@ class Helpdesk extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
                 redirect('helpdesk/pelaporan');
+                return;
             }
+        }
+
+        // Validate the note content
+        $catatan_finish = $this->input->post('catatan_finish');
+        if ($this->contains_only_images($catatan_finish) || strlen(strip_tags($catatan_finish)) < 50) {
+            if ($photo) {
+                unlink('./assets/filefinish/' . $photo);
+            }
+            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+            redirect('helpdesk/pelaporan');
+            return;
         }
 
         // Prepare the data for insertion
@@ -379,7 +424,7 @@ class Helpdesk extends CI_Controller
             'kategori' => $this->input->post('kategori'),
             'priority'   => $this->input->post('priority'),
             'maxday'     => $this->input->post('maxday'),
-            'catatan_finish' => $this->input->post('catatan_finish'),
+            'catatan_finish' => $catatan_finish,
             'status'     => 'Solved',
             'status_ccs' => 'CLOSE'
         ];
@@ -392,10 +437,27 @@ class Helpdesk extends CI_Controller
         // Insert the data into the database
         $this->pelaporan_model->updateHD($id, $data);
 
+        // Clear session images after successful finish
+        $this->session->unset_userdata('uploaded_images');
+
         // Set a success message and redirect to the submission page
         $this->session->set_flashdata('pesan', 'Successfully Finish!');
         redirect('helpdesk/pelaporan');
     }
+
+    private function remove_uploaded_images()
+    {
+        $uploaded_images = $this->session->userdata('uploaded_images');
+        if ($uploaded_images) {
+            foreach ($uploaded_images as $image) {
+                if (file_exists('./assets/filefinish/' . $image)) {
+                    unlink('./assets/filefinish/' . $image);
+                }
+            }
+            $this->session->unset_userdata('uploaded_images');
+        }
+    }
+
 
     public function upload()
     {
@@ -411,6 +473,11 @@ class Helpdesk extends CI_Controller
                 $photo = $this->upload->data('file_name');
                 $url = base_url('assets/filefinish/' . $photo);
                 $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
 
                 $data = array(
                     'fileName' => $photo,
@@ -429,6 +496,7 @@ class Helpdesk extends CI_Controller
             }
         }
     }
+
 
 
     public function edit_pelaporan()
