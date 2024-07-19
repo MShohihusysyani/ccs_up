@@ -409,20 +409,20 @@ class Superadmin extends CI_Controller
         $this->session->set_flashdata('pesan', 'Succesfully Approve!');
         Redirect(base_url('superadmin/close'));
     }
-    // public function finish()
-    // {
-    //     $this->load->model('Superadmin_model', 'superadmin_model');
-    //     // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-    //     $data['category'] = $this->category_model->getNamakategori();
-    //     $this->load->model('User_model', 'user_model');
-    //     $data['user'] = $this->user_model->getDataUser();
-    //     $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporanFinish();
+    public function finish()
+    {
+        $this->load->model('Superadmin_model', 'superadmin_model');
+        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
+        $data['category'] = $this->category_model->getNamakategori();
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporanFinish();
 
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/superadmin_sidebar');
-    //     $this->load->view('superadmin/pelaporan_finish', $data);
-    //     $this->load->view('templates/footer');
-    // }
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/pelaporan_finish', $data);
+        $this->load->view('templates/footer');
+    }
 
     // EDIT PELAPORAN
     public function edit_pelaporan()
