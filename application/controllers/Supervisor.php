@@ -928,7 +928,7 @@ class Supervisor extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
-            redirect('supervisor/added');
+            redirect('supervisor/onprogress');
         } else {
             // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');

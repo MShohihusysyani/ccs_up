@@ -13,168 +13,173 @@
             <?php if ($this->session->flashdata('pesan')) { ?>
 
             <?php } ?>
-            <!-- #END# Basic Examples -->
-            <!-- Exportable Table -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                ON PROGRESS
-                            </h2>
+            <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert')) ?>">
+                <?php if ($this->session->flashdata('pesan')) { ?>
 
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <th>Perihal</th>
-                                            <th>Attachment</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <th>Perihal</th>
-                                            <th>Attachment</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
+                <?php } ?>
+                <?= validation_errors(); ?>
+                <!-- #END# Basic Examples -->
+                <!-- Exportable Table -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    ON PROGRESS
+                                </h2>
 
-                                        <?php
-                                        $no = 1;
-                                        foreach ($datapelaporan as $dp) : ?>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                                        <thead>
                                             <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $dp['no_tiket']; ?></td>
-                                                <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
-                                                <td><?= $dp['nama']; ?></td>
-                                                <td><?= $dp['judul']; ?></td>
-                                                <td><?= $dp['perihal']; ?></td>
-                                                <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                </td>
-                                                <td><?= $dp['kategori']; ?></td>
-                                                <td>
-                                                    <span class="label label-info"><?= $dp['tags']; ?></span>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['priority'] == 'Low') : ?>
-                                                        <span class="label label-info">Low</span>
-
-                                                    <?php elseif ($dp['priority'] == 'Medium') : ?>
-                                                        <span class="label label-warning">Medium</span>
-
-                                                    <?php elseif ($dp['priority'] == 'High') : ?>
-                                                        <span class="label label-danger">High</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['maxday'] == '90') : ?>
-                                                        <span class="label label-info">90</span>
-
-                                                    <?php elseif ($dp['maxday'] == '60') : ?>
-                                                        <span class="label label-warning">60</span>
-
-                                                    <?php elseif ($dp['maxday'] == '7') : ?>
-                                                        <span class="label label-danger">7</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['status_ccs'] == 'FINISH') : ?>
-                                                        <span class="label label-success">FINISH</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
-                                                        <span class="label label-warning">CLOSE</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
-                                                        <span class="label label-info">HANDLE</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
-                                                        <span class="label label-info">HANDLE 2</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
-                                                        <span class="label label-primary">ADDED</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
-                                                        <span class="label label-primary">ADDED 2</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-
-                                                </td>
-                                                <td>
-                                                    <?= $dp['handle_by']; ?>
-                                                    <?php if (!empty($dp['handle_by2'])) : ?>
-                                                        , <?= $dp['handle_by2']; ?>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($dp['handle_by3'])) : ?>
-                                                        , <?= $dp['handle_by3']; ?>
-                                                    <?php endif; ?>
-                                                </td>
-
-
-                                                <td>
-
-                                                    <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                    <div class="btn btn-sm btn-warning edit-action">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP">
-                                                            <i class="material-icons">edit</i>
-                                                            <span class="icon-name">Edit</span>
-                                                        </a>
-
-                                                    </div>
-
-                                                    <br>
-                                                    <br>
-
-                                                    <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
-                                                    <br>
-                                                    <br>
-
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-
-                                                </td>
-
+                                                <th>No</th>
+                                                <th>No Tiket</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Klien</th>
+                                                <th>Judul</th>
+                                                <th>Perihal</th>
+                                                <th>Attachment</th>
+                                                <th>Category</th>
+                                                <th>Tags</th>
+                                                <th>Priority</th>
+                                                <th>Max Day</th>
+                                                <th>Status CCS</th>
+                                                <th>Handle By</th>
+                                                <th>Aksi</th>
                                             </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>No Tiket</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Klien</th>
+                                                <th>Judul</th>
+                                                <th>Perihal</th>
+                                                <th>Attachment</th>
+                                                <th>Category</th>
+                                                <th>Tags</th>
+                                                <th>Priority</th>
+                                                <th>Max Day</th>
+                                                <th>Status CCS</th>
+                                                <th>Handle By</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+
+                                            <?php
+                                            $no = 1;
+                                            foreach ($datapelaporan as $dp) : ?>
+                                                <tr>
+                                                    <td><?= $no++ ?></td>
+                                                    <td><?= $dp['no_tiket']; ?></td>
+                                                    <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
+                                                    <td><?= $dp['nama']; ?></td>
+                                                    <td><?= $dp['judul']; ?></td>
+                                                    <td><?= $dp['perihal']; ?></td>
+                                                    <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                    </td>
+                                                    <td><?= $dp['kategori']; ?></td>
+                                                    <td>
+                                                        <span class="label label-info"><?= $dp['tags']; ?></span>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($dp['priority'] == 'Low') : ?>
+                                                            <span class="label label-info">Low</span>
+
+                                                        <?php elseif ($dp['priority'] == 'Medium') : ?>
+                                                            <span class="label label-warning">Medium</span>
+
+                                                        <?php elseif ($dp['priority'] == 'High') : ?>
+                                                            <span class="label label-danger">High</span>
+
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($dp['maxday'] == '90') : ?>
+                                                            <span class="label label-info">90</span>
+
+                                                        <?php elseif ($dp['maxday'] == '60') : ?>
+                                                            <span class="label label-warning">60</span>
+
+                                                        <?php elseif ($dp['maxday'] == '7') : ?>
+                                                            <span class="label label-danger">7</span>
+
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($dp['status_ccs'] == 'FINISH') : ?>
+                                                            <span class="label label-success">FINISH</span>
+
+                                                        <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
+                                                            <span class="label label-warning">CLOSE</span>
+
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
+                                                            <span class="label label-info">HANDLE</span>
+
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
+                                                            <span class="label label-info">HANDLE 2</span>
+
+                                                        <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
+                                                            <span class="label label-primary">ADDED</span>
+
+                                                        <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
+                                                            <span class="label label-primary">ADDED 2</span>
+
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+
+                                                    </td>
+                                                    <td>
+                                                        <?= $dp['handle_by']; ?>
+                                                        <?php if (!empty($dp['handle_by2'])) : ?>
+                                                            , <?= $dp['handle_by2']; ?>
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($dp['handle_by3'])) : ?>
+                                                            , <?= $dp['handle_by3']; ?>
+                                                        <?php endif; ?>
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                        <div class="btn btn-sm btn-warning edit-action">
+                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP">
+                                                                <i class="material-icons">edit</i>
+                                                                <span class="icon-name">Edit</span>
+                                                            </a>
+
+                                                        </div>
+
+                                                        <br>
+                                                        <br>
+
+                                                        <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
+                                                        <br>
+                                                        <br>
+
+                                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
+
+                                                    </td>
+
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- #END# Exportable Table -->
             </div>
-            <!-- #END# Exportable Table -->
-        </div>
-        <!-- Button trigger modal -->
+            <!-- Button trigger modal -->
 </section>
 
 <!-- MODAL EDIT HELPDESK -->

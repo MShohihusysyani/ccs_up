@@ -553,12 +553,22 @@ class Supervisor2 extends CI_Controller
 
         // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
+        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
+            'required' => 'Kolom Teknisi wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('priority', 'Priority', 'required', [
+            'required' => 'Kolom Priority wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
+            'required' => 'Kolom Max Day wajib diisi.'
+        ]);
 
         // Check if the form passes validation
+
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-            redirect(base_url('supervisor2/onprogress'));
+            // If validation fails, redirect back to the form with error messages
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('supervisor2/onprogress');
         } else {
             // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
