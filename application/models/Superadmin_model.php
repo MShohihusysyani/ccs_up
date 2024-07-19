@@ -68,10 +68,6 @@ class Superadmin_model extends CI_Model
     //ALL TICKET
     public function getKlienPelaporan()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, impact, maxday, handle_by2, handle_by3, tags  FROM pelaporan ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
 
         // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -129,10 +125,6 @@ class Superadmin_model extends CI_Model
     //ADDED
     public function getKlienPelaporanAdd()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, maxday, handle_by, tags  FROM pelaporan WHERE status_ccs='ADDED' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
 
         // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -189,10 +181,6 @@ class Superadmin_model extends CI_Model
     //ON PROGRESS/HANDLE
     public function getKlienPelaporanOP()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by, impact, handle_by2, handle_by3, tags  FROM pelaporan WHERE status_ccs='HANDLE' OR status_ccs='HANDLE 2' OR status_ccs='ADDED 2'  ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
 
         // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -261,10 +249,6 @@ class Superadmin_model extends CI_Model
     //FINISH
     public function getKlienPelaporanFinish()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, maxday, waktu_approve, handle_by2, handle_by3, impact, tags  FROM pelaporan WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
 
         // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();

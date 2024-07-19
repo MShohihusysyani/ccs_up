@@ -3,16 +3,6 @@
 class Export_model extends CI_Model
 {
 
-    public function getPelaporan1()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $user_id = $this->session->userdata('id_user');
-
-        $query = "SELECT * FROM pelaporan
-            where status_ccs = 'FINISH'";
-        return $this->db->query($query)->result_array();
-    }
-
     public function getPelaporan($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
     {
         $this->db->select('*');

@@ -12,14 +12,6 @@ class Helpdesk_model extends CI_Model
     //DATA PER USER HELPDESK
     public function getKlienPelaporanHD()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status, pelaporan.tags
-        // FROM forward
-        // LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        // WHERE forward.user_id=$user_id AND status_ccs='HANDLE' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
-
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
@@ -55,14 +47,6 @@ class Helpdesk_model extends CI_Model
     //DATA HELPDESK FORWARD 
     public function getKlienPelaporanHDForward()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
-        // FROM forward
-        // LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        // WHERE forward.user_id=$user_id AND status_ccs='HANDLE 2' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
-
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
@@ -134,14 +118,6 @@ class Helpdesk_model extends CI_Model
     //DATA PELAPORAN HELPDESK FINISH
     public function getDataPelaporanHD()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
-        // FROM forward
-        // LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        // WHERE forward.user_id=$user_id AND  status_ccs='FINISH' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
-
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
@@ -181,14 +157,6 @@ class Helpdesk_model extends CI_Model
     //DATA HELPDESK REJECT
     public function getKlienPelaporanHDReject()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT pelaporan.kategori, pelaporan.id_pelaporan, pelaporan.waktu_pelaporan , pelaporan.status_ccs, pelaporan.priority, pelaporan.maxday, pelaporan.perihal, pelaporan.file, pelaporan.nama, pelaporan.no_tiket, pelaporan.impact, pelaporan.handle_by, pelaporan.status
-        // FROM forward
-        // LEFT JOIN pelaporan ON forward.pelaporan_id=pelaporan.id_pelaporan
-        // WHERE forward.user_id=$user_id AND status_ccs='REJECT'";
-        // return $this->db->query($query)->result_array();
-
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');

@@ -366,49 +366,6 @@ class Superadmin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function finish_pelaporan($id)
-    {
-
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Superadmin_model', 'superadmin_model');
-        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan_close($id);
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/finish_pelaporan', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function fungsi_approve_pelaporan()
-    {
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-        $now = date('Y-m-d');
-
-        $id_pelaporan         = $this->input->post('id_pelaporan');
-        $no_tiket   = $this->input->post('no_tiket');
-        $nama       = $this->input->post('nama');
-        $judul      = $this->input->post('judul');
-        // $perihal    = $this->input->post('perihal');
-        $status_ccs = 'FINISH';
-        $waktu      = date('Y-m-d');
-        $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday');
-        $kategori   = $this->input->post('kategori');
-
-        $this->db->set('judul', $judul);
-        $this->db->set('no_tiket', $no_tiket);
-        $this->db->set('nama', $nama);
-        $this->db->set('status_ccs', $status_ccs);
-        $this->db->set('waktu_approve', $waktu);
-        $this->db->set('priority', $priority);
-        // $this->db->set('perihal', $perihal);
-        $this->db->set('maxday', $maxday);
-        $this->db->set('kategori', $kategori);
-        $this->db->where('id_pelaporan', $id_pelaporan);
-        $this->db->update('pelaporan');
-        $this->session->set_flashdata('pesan', 'Succesfully Approve!');
-        Redirect(base_url('superadmin/close'));
-    }
     public function finish()
     {
         $this->load->model('Superadmin_model', 'superadmin_model');
@@ -605,41 +562,49 @@ class Superadmin extends CI_Controller
         }
     }
 
-    //Approve supervisor
-    public function approve()
+    //Approve Tiket
+    public function finish_pelaporan($id)
     {
-        // date_default_timezone_set('Asia/Jakarta');
-        # add your city to set local time zone
+
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Superadmin_model', 'superadmin_model');
+        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan_close($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/finish_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_approve_pelaporan()
+    {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d');
 
-
-        $id         = $this->input->post('id_pelaporan');
+        $id_pelaporan         = $this->input->post('id_pelaporan');
         $no_tiket   = $this->input->post('no_tiket');
-        //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
         $nama       = $this->input->post('nama');
-        $perihal    = $this->input->post('perihal');
+        $judul      = $this->input->post('judul');
+        // $perihal    = $this->input->post('perihal');
         $status_ccs = 'FINISH';
         $waktu      = date('Y-m-d');
         $priority   = $this->input->post('priority');
         $maxday     = $this->input->post('maxday');
         $kategori   = $this->input->post('kategori');
-        $ArrUpdate  = array(
 
-            'no_tiket'       => $no_tiket,
-            //    'waktu_pelaporan' => $waktu_pelaporan,
-            'nama'           => $nama,
-            'perihal'        => $perihal,
-            'status_ccs'     => $status_ccs,
-            'waktu_approve'  => $waktu,
-            'priority'       => $priority,
-            'maxday'         => $maxday,
-            'kategori'       => $kategori
-
-        );
-        $this->pelaporan_model->approveSPV($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Approve!');
-        redirect('superadmin/finish');
+        $this->db->set('judul', $judul);
+        $this->db->set('no_tiket', $no_tiket);
+        $this->db->set('nama', $nama);
+        $this->db->set('status_ccs', $status_ccs);
+        $this->db->set('waktu_approve', $waktu);
+        $this->db->set('priority', $priority);
+        // $this->db->set('perihal', $perihal);
+        $this->db->set('maxday', $maxday);
+        $this->db->set('kategori', $kategori);
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        $this->db->update('pelaporan');
+        $this->session->set_flashdata('pesan', 'Succesfully Approve!');
+        Redirect(base_url('superadmin/close'));
     }
 
 

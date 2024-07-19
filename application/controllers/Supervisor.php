@@ -205,52 +205,9 @@ class Supervisor extends CI_Controller
         Redirect(Base_url('supervisor/user'));
     }
 
-    #PELAPORAN
-    public function pelaporan1()
-    {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        $data['nama'] = $this->db->get('pelaporan')->result_array();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporan();
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/pelaporan', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function pelaporan2()
-    {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Category_model', 'category_model');
-        $data['nama_kategori'] = $this->db->get('category')->result_array();
-        $data['category'] = $this->category_model->getCategory();
-        $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporan();
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/pelaporan', $data);
-        $this->load->view('templates/footer');
-    }
-
-    // public function AllTicket()
-    // {
-    //     $this->load->model('Supervisor_model', 'supervisor_model');
-    //     // $data['kategori'] = $this->db->get('pelaporan')->result_array();
-    //     $data['category'] = $this->category_model->getCategory();
-    //     $this->load->model('User_model', 'user_model');
-    //     $data['user'] = $this->user_model->getDataUser();
-    //     $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporan();
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/supervisor_sidebar');
-    //     $this->load->view('supervisor/allticket', $data);
-    //     $this->load->view('templates/footer');
-    // }
 
     public function AllTicket()
     {
-
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
@@ -434,43 +391,7 @@ class Supervisor extends CI_Controller
         Redirect(base_url('supervisor/added'));
     }
 
-    //   Approve supervisor
-    public function approve()
-    {
-        // date_default_timezone_set('Asia/Jakarta');
-        # add your city to set local time zone
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-        $now = date('Y-m-d');
-
-
-        $id         = $this->input->post('id_pelaporan');
-        $no_tiket   = $this->input->post('no_tiket');
-        //$waktu_pelaporan = $this->input->post('waktu_pelaporan');
-        $nama       = $this->input->post('nama');
-        $perihal    = $this->input->post('perihal');
-        $status_ccs = 'FINISH';
-        $waktu      = date('Y-m-d');
-        $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday');
-        $kategori   = $this->input->post('kategori');
-        $ArrUpdate  = array(
-
-            'no_tiket'       => $no_tiket,
-            //    'waktu_pelaporan' => $waktu_pelaporan,
-            'nama'           => $nama,
-            'perihal'        => $perihal,
-            'status_ccs'     => $status_ccs,
-            'waktu_approve'  => $waktu,
-            'priority'       => $priority,
-            'maxday'         => $maxday,
-            'kategori'       => $kategori
-
-        );
-        $this->pelaporan_model->approveSPV($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Approve!');
-        redirect('supervisor/finish');
-    }
-
+    //   Approve Tiket
     public function finish_pelaporan($id)
     {
 

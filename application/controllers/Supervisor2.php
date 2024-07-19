@@ -21,21 +21,6 @@ class Supervisor2 extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // public function AllTicket()
-    // {
-    //     $this->load->model('Spv2_model', 'spv2_model');
-    //     // $data['kategori'] = $this->db->get('pelaporan')->result_array();
-    //     $data['category'] = $this->category_model->getCategory();
-    //     $this->load->model('User_model', 'user_model');
-    //     $data['user'] = $this->user_model->getDataUser();
-    //     $data['datapelaporan'] = $this->spv2_model->getKlienPelaporan();
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/supervisor2_sidebar');
-    //     $this->load->view('supervisor2/allticket', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
     public function AllTicket()
     {
 
@@ -182,6 +167,21 @@ class Supervisor2 extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function finish()
+    {
+        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
+        $data['category'] = $this->category_model->getNamakategori();
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanFinish();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor2_sidebar');
+        $this->load->view('supervisor2/pelaporan_finish', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function finish_pelaporan($id)
     {
 
@@ -195,6 +195,7 @@ class Supervisor2 extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    //Approve Tiket
     public function fungsi_approve_pelaporan()
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
@@ -226,53 +227,6 @@ class Supervisor2 extends CI_Controller
         Redirect(base_url('supervisor2/close'));
     }
 
-    public function finish()
-    {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        $data['category'] = $this->category_model->getNamakategori();
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanFinish();
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor2_sidebar');
-        $this->load->view('supervisor2/pelaporan_finish', $data);
-        $this->load->view('templates/footer');
-    }
-
-    //FUNGSI APPROVE
-    public function approve()
-    {
-        // date_default_timezone_set('Asia/Jakarta');
-        # add your city to set local time zone
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-        $now = date('Y-m-d');
-
-        $id         = $this->input->post('id_pelaporan');
-        $no_tiket   = $this->input->post('no_tiket');
-        $nama       = $this->input->post('nama');
-        $perihal    = $this->input->post('perihal');
-        $status_ccs = 'FINISH';
-        $waktu      = date('Y-m-d');
-        $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday');
-        $kategori   = $this->input->post('kategori');
-        $ArrUpdate  = array(
-            'no_tiket'       => $no_tiket,
-            'nama'           => $nama,
-            'perihal'        => $perihal,
-            'status_ccs'     => $status_ccs,
-            'waktu_approve'  => $waktu,
-            'priority'       => $priority,
-            'maxday'         => $maxday,
-            'kategori'       => $kategori
-        );
-        $this->pelaporan_model->approveSPV($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Approve!');
-        redirect('supervisor2/finish');
-    }
-
     public function edit_pelaporan()
     {
         $id_pelaporan = $this->input->post('id_pelaporan');
@@ -296,39 +250,6 @@ class Supervisor2 extends CI_Controller
         Redirect(base_url('supervisor2/added'));
     }
 
-    public function pilih_helpdesk($id)
-    {
-
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
-
-        // $this->load->model('Divisi_model', 'divisi_model');
-        // $data['divisi'] = $this->divisi_model->getDivisi();
-
-        $this->load->model('User_model', 'user_model');
-        $data['namahd'] = $this->user_model->getNamaUser();
-
-        $this->load->model('Category_model', 'category_model');
-        $data['category'] = $this->category_model->getNamaKategori();
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor2_sidebar');
-        $this->load->view('supervisor2/pilih_helpdesk', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function fungsi_edit_helpedesk()
-    {
-        $this->load->model('User_model', 'user_model');
-        $data['namahd'] = $this->user_model->getNamaUser();
-
-        $this->load->model('Category_model', 'category_model');
-        $data['category'] = $this->category_model->getNamaKategori();
-
-        $this->db->where('id_pelaporan');
-        $this->db->update('pelaporan');
-        Redirect(base_url('supervisor2/added'));
-    }
 
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)
