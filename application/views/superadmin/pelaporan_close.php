@@ -142,15 +142,19 @@
                                                 </td>
 
                                                 <td>
-                                                    <div class="btn btn-sm btn-info">
-                                                        <div class="demo-google-material-icon" data-toggle="modal" data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i class="material-icons">launch</i> <span class="icon-name">Approve</span>
-                                                        </div>
-                                                    </div>
+                                                    <!-- <div class="btn btn-sm btn-info">
+                                                <div class="demo-google-material-icon" data-toggle="modal"
+                                                    data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
+                                                        class="material-icons">launch</i> <span
+                                                        class="icon-name">Approve</span>
+                                                </div>
+                                            </div> -->
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/finish_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">launch</i> <span class="icon-name"></span>Approve</a>
                                                     <br>
                                                     <br>
                                                     <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                     <div class="btn btn-sm btn-warning">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal="<?= $dp['perihal']; ?>" data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">cancel</i> <span class="icon-name">Reject</span></a>
+                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">cancel</i> <span class="icon-name">Reject</span></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -167,90 +171,6 @@
         <!-- Button trigger modal -->
 </section>
 
-<!-- MODAL APPROVE -->
-<?php
-$no = 0;
-foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">APPROVE</h4>
-                </div>
-                <div class="modal-body">
-                    <?= form_open_multipart('superadmin/approve') ?>
-                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                    <div class="body">
-                        <form class="form-horizontal">
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                    <label class="form-label">No tiket</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                    <label class="form-label">Waktu Pelaporan</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                    <label class="form-label">Nama Klien</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
-                                    <label class="form-label">Perihal</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                    <label class="form-label">Status CCS</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['priority']; ?>" type="text" id="priority" name="priority" class="form-control" readonly>
-                                    <label class="form-label">Priority</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['maxday']; ?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
-                                    <label class="form-label">Max Day</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['kategori']; ?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
-                                    <label class="form-label">Kategori</label>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">APPROVE</button>
-                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                <?php echo form_close() ?>
-                            </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endforeach ?>
 
 <!-- MODAL EDIT -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
