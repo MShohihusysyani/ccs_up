@@ -318,4 +318,96 @@ class Implementator extends CI_Controller
         $this->load->view('implementator/statistik');
         $this->load->view('templates/footer');
     }
+
+    public function subtask()
+    {
+        // // Fetch total active data from the model
+
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Implementator_model', 'Implementator_model');
+
+        $this->load->model('User_model', 'user_model');
+        $data['user'] = $this->user_model->getDataUser();
+        $data['subtask'] = $this->Implementator_model->getSubtask();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/subtask', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // FINISH SUBTASK
+    public function finish_subtask()
+    {
+        $this->load->model('Implementator_model', 'implementator_model');
+        // Load the form validation library
+        $this->load->library('form_validation');
+
+        // No validation rule for id_forward, assuming other validation rules are set
+        // if any other validation rules are needed, set them here
+
+        // Check if the form passes validation
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, redirect back to the form with error messages
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('implementator/subtask');
+        } else {
+            // Retrieve POST data
+            $id_forward = $this->input->post('id_forward');
+
+            // Set status and tanggal_finish directly
+            $status = 'Completed'; // Set the status you want to use
+            $tanggal_finish = date('Y-m-d'); // Set the current date and time as the finish date
+
+            // Proceed only if id_forward is provided
+            if (!empty($id_forward)) {
+                // Debug: Check if id_forward is retrieved correctly
+                log_message('debug', 'ID Forward: ' . $id_forward);
+
+                // Check if the entry exists in the t1_forward table
+                $this->db->select('id_forward');
+                $this->db->from('t1_forward');
+                $this->db->where('id_forward', $id_forward);
+                $query = $this->db->get();
+
+                // Debug: Check the query result
+                log_message('debug', 'Query Result: ' . $query->num_rows());
+
+                // Check if the entry exists
+                if ($query->num_rows() > 0) {
+                    // Update the status and tanggal_finish for the given id_forward
+                    $this->db->where('id_forward', $id_forward);
+                    $data = [
+                        'status' => $status,
+                        'tanggal_finish' => $tanggal_finish
+                    ];
+
+                    if ($this->db->update('t1_forward', $data)) {
+                        // Call to model function to update subtask
+                        if ($this->Implementator_model->updateSubtask($id_forward, $data)) {
+                            // Set success message
+                            $this->session->set_flashdata('pesan', 'Status dan Tanggal Finish telah diperbarui!');
+                        } else {
+                            // Log if updateSubtask fails
+                            log_message('error', 'Failed to update subtask in model.');
+                            $this->session->set_flashdata('error', 'Gagal memperbarui subtask.');
+                        }
+                    } else {
+                        // Log if DB update fails
+                        log_message('error', 'Failed to update t1_forward table.');
+                        $this->session->set_flashdata('error', 'Gagal memperbarui t1_forward.');
+                    }
+                } else {
+                    // Set error message if the entry is not found
+                    $this->session->set_flashdata('error', 'Entry tidak ditemukan.');
+                }
+            } else {
+                // Set error message if id_forward is not provided
+                $this->session->set_flashdata('error', 'ID Forward tidak ditemukan.');
+            }
+
+            // Redirect to the onprogress page
+            redirect(base_url('implementator/subtask'));
+        }
+    }
 }
