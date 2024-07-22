@@ -100,6 +100,7 @@ class Helpdesk extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->helpdesk_model->getKlienPelaporanHDForward();
 
+
         $this->load->model('User_model', 'user_model');
         $data['namaspv'] = $this->user_model->getNamaSpv();
 

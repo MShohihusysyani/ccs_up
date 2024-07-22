@@ -41,6 +41,8 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
+                                            <th>Subtask</th>
+                                            <th>Status Subtask</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -58,6 +60,8 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
+                                            <th>Subtask</th>
+                                            <th>Status Subtask</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
@@ -73,7 +77,12 @@
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['perihal']; ?></td>
                                                 <td><?= $dp['impact']; ?></td>
-                                                <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                <td>
+                                                    <?php if (!empty($dp['file'])) : ?>
+                                                        <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                    <?php else : ?>
+
+                                                    <?php endif; ?>
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
@@ -134,20 +143,22 @@
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
                                                 </td>
+                                                <td>
+                                                    <?= $dp['subtask2']; ?>
+                                                </td>
+                                                <td>
+                                                    <?= $dp['status2']; ?>
+                                                </td>
+                                                <!-- <td>
+                                                    <?= $dp['subtask3']; ?>
+                                                </td>
+                                                <td>
+                                                    <?= $dp['status3']; ?>
+                                                </td> -->
 
                                                 <td>
                                                     <a class="btn btn-xs btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
                                                         Detail</a>
-
-                                                    <!-- <div class="btn btn-sm btn-info">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <br> -->
 
                                                 </td>
                                             </tr>

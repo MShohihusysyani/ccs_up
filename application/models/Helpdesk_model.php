@@ -45,6 +45,7 @@ class Helpdesk_model extends CI_Model
     }
 
     //DATA HELPDESK FORWARD 
+
     public function getKlienPelaporanHDForward()
     {
         // Get user data from the session
@@ -53,33 +54,78 @@ class Helpdesk_model extends CI_Model
 
         // Build the query using Query Builder
         $this->db->select('
-            pelaporan.kategori,
-            pelaporan.id_pelaporan,
-            pelaporan.waktu_pelaporan,
-            pelaporan.status_ccs,
-            pelaporan.priority,
-            pelaporan.maxday,
-            pelaporan.judul,
-            pelaporan.perihal,
-            pelaporan.file,
-            pelaporan.nama,
-            pelaporan.no_tiket,
-            pelaporan.impact,
-            pelaporan.handle_by,
-            pelaporan.handle_by2,
-            pelaporan.handle_by3,
-            pelaporan.status,
-            pelaporan.tags
-        ');
+        pelaporan.kategori,
+        pelaporan.id_pelaporan,
+        pelaporan.waktu_pelaporan,
+        pelaporan.status_ccs,
+        pelaporan.priority,
+        pelaporan.maxday,
+        pelaporan.judul,
+        pelaporan.perihal,
+        pelaporan.file,
+        pelaporan.nama,
+        pelaporan.no_tiket,
+        pelaporan.impact,
+        pelaporan.handle_by,
+        pelaporan.handle_by2,
+        pelaporan.handle_by3,
+        pelaporan.status,
+        pelaporan.tags,
+        GROUP_CONCAT(DISTINCT t1_forward2.subtask ORDER BY t1_forward2.subtask SEPARATOR ", ") as subtask2,
+        GROUP_CONCAT(DISTINCT t1_forward2.status ORDER BY t1_forward2.status SEPARATOR ", ") as status2,
+        GROUP_CONCAT(DISTINCT t1_forward3.subtask ORDER BY t1_forward3.subtask SEPARATOR ", ") as subtask3,
+        GROUP_CONCAT(DISTINCT t1_forward3.status ORDER BY t1_forward3.status SEPARATOR ", ") as status3
+    ');
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
         $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLE 2']);
+        $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
         return $this->db->get()->result_array();
     }
+
+
+
+    // public function getKlienPelaporanHDForward()
+    // {
+    //     // Get user data from the session
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $user_id = $this->session->userdata('id_user');
+
+    //     // Build the query using Query Builder
+    //     $this->db->select('
+    //         pelaporan.kategori,
+    //         pelaporan.id_pelaporan,
+    //         pelaporan.waktu_pelaporan,
+    //         pelaporan.status_ccs,
+    //         pelaporan.priority,
+    //         pelaporan.maxday,
+    //         pelaporan.judul,
+    //         pelaporan.perihal,
+    //         pelaporan.file,
+    //         pelaporan.nama,
+    //         pelaporan.no_tiket,
+    //         pelaporan.impact,
+    //         pelaporan.handle_by,
+    //         pelaporan.handle_by2,
+    //         pelaporan.handle_by3,
+    //         pelaporan.status,
+    //         pelaporan.tags
+    //     ');
+    //     $this->db->from('forward');
+    //     $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+    //     $this->db->where('forward.user_id', $user_id);
+    //     $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLE 2']);
+    //     $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+
+    //     // Execute the query and return the result
+    //     return $this->db->get()->result_array();
+    // }
 
     public function getKlienPelaporanHDClose()
     {

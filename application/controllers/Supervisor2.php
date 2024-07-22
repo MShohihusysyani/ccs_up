@@ -391,12 +391,14 @@ class Supervisor2 extends CI_Controller
             $judul   = $this->input->post('judul');
             $subtask = $this->input->post('subtask');
             $tanggal = $this->input->post('tanggal');
+            $status  = 'PENDING';
             $data = [
                 'pelaporan_id' => $id_pelaporan,
                 'user_id' => $id_user,
                 'judul'   => $judul,
                 'subtask' => $subtask,
-                'tanggal' => $tanggal
+                'tanggal' => $tanggal,
+                'status'  => $status
             ];
 
             // cari nama user berdasarkan id 
@@ -578,12 +580,14 @@ class Supervisor2 extends CI_Controller
             $judul   = $this->input->post('judul');
             $subtask = $this->input->post('subtask');
             $tanggal = $this->input->post('tanggal');
+            $status  = 'PENDING';
             $data = [
                 'pelaporan_id' => $id_pelaporan,
                 'user_id' => $id_user,
                 'judul'   => $judul,
                 'subtask' => $subtask,
-                'tanggal' => $tanggal
+                'tanggal' => $tanggal,
+                'status'  => $status
             ];
 
             // cari nama user berdasarkan id 
