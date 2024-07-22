@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jul 2024 pada 11.09
+-- Waktu pembuatan: 22 Jul 2024 pada 11.38
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -128,7 +128,8 @@ INSERT INTO `forward` (`id_forward`, `pelaporan_id`, `user_id`, `subtask`) VALUE
 (168, 178, 50, NULL),
 (169, 148, 50, NULL),
 (170, 153, 52, NULL),
-(171, 154, 50, NULL);
+(171, 154, 50, NULL),
+(172, 155, 55, NULL);
 
 -- --------------------------------------------------------
 
@@ -206,7 +207,7 @@ INSERT INTO `pelaporan` (`id_pelaporan`, `no_tiket`, `user_id`, `kategori`, `tag
 (150, 'TIC00072024060003', 66, 'Backdate - Backdate Transaksi', 'backdate', '2024-06-07', 'Forward To Helpdesk', 'HANDLE ', 'Low', 90, 'serverside test', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati provident, quasi quae recusandae magni, tempore illo voluptatem nam voluptatibus ducimus quod minima ullam. Obcaecati, modi. Ducimus perspiciatis quaerat iure, atque magni porro natus ill', NULL, 'export-pdf-demo.pdf', 'PT BPR BKK Kebumen(Perseroda)', 'Luthfi', NULL, NULL, 0, NULL, '', NULL, 0),
 (153, 'TIC00062024060002', 61, 'API - TTF', 'api', '2024-06-14', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, 'tes', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', NULL, '', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Eva', 'Implementator PT MSO Purwokerto', 'Implementator baru', 0, NULL, '', NULL, 0),
 (154, 'TIC00062024060003', 61, 'Backdate - Backdate Transaksi', 'backdate', '2024-06-14', 'Solved', 'HANDLE', 'High', 7, 'tes', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', NULL, '', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Ayu', NULL, NULL, 0, NULL, '<span style=\"background-color:rgb(255,255,255);color:rgb(119,119,119);font-family:Roboto, Arial, Tahoma, sans-serif;font-size:14px;\"><span style=\"-webkit-text-stroke-width:0px;display:inline !important;float:none;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est</span></span></p><figure class=\"image\"><img style=\"aspect-ratio:1744/900;\" src=\"http://localhost/ccs_up/assets/filefinish/code.png\" width=\"1744\" height=\"900\"></figure>', '', 0),
-(155, 'TIC00062024060004', 61, 'C6', 'C6', '2024-06-14', 'proses', 'ADDED', 'Medium', 60, 'tes', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', NULL, '', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, 0, NULL, '', NULL, 0),
+(155, 'TIC00062024060004', 61, 'C6', 'C6', '2024-06-14', 'Forward To Teknisi', 'HANDLE 2', 'Medium', 60, 'tes', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', 'material', '', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'Luthfi', 'Implementator PT MSO Purwokerto', 'Implementator baru 2', 0, NULL, '', NULL, 0),
 (156, 'TIC00062024060005', 61, 'Kredit - Agunan', 'agunan', '2024-06-14', 'proses', 'ADDED', NULL, NULL, 'tes', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', NULL, '', 'PT BPR BKK Kab. Pekalongan(Perseroda)', NULL, NULL, NULL, 0, NULL, '', NULL, 0),
 (157, 'TIC00022024060003', 59, 'API - TTF', 'api', '2024-06-14', 'proses', 'ADDED', NULL, NULL, 'testes', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', NULL, '', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, 0, NULL, '', NULL, 0),
 (158, 'TIC00022024060004', 59, 'Backdate - Backdate Transaksi', 'backdate', '2024-06-14', 'proses', 'ADDED', NULL, NULL, 'testes', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ', NULL, '', 'PT BPR BKK Karangmalang(Perseroda)', NULL, NULL, NULL, 0, NULL, '', NULL, 0),
@@ -285,7 +286,8 @@ INSERT INTO `s_forward` (`id_forward`, `pelaporan_id`, `user_id`) VALUES
 (15, 178, 47),
 (16, 148, 47),
 (17, 150, 47),
-(18, 153, 47);
+(18, 153, 47),
+(19, 155, 47);
 
 -- --------------------------------------------------------
 
@@ -299,16 +301,20 @@ CREATE TABLE `t1_forward` (
   `user_id` int(11) NOT NULL,
   `judul` text DEFAULT NULL,
   `subtask` text DEFAULT NULL,
-  `tanggal` date DEFAULT NULL
+  `tanggal` date DEFAULT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'PENDING',
+  `tanggal_finish` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `t1_forward`
 --
 
-INSERT INTO `t1_forward` (`id_forward`, `pelaporan_id`, `user_id`, `judul`, `subtask`, `tanggal`) VALUES
-(26, 153, 62, 'tes', 'tessssssssss', '2024-07-20'),
-(27, 153, 78, 'tes', 'testsssssssss', '2024-07-20');
+INSERT INTO `t1_forward` (`id_forward`, `pelaporan_id`, `user_id`, `judul`, `subtask`, `tanggal`, `status`, `tanggal_finish`) VALUES
+(26, 153, 62, 'tes', 'tesssss', '2024-07-20', 'PENDING', '0000-00-00'),
+(27, 153, 78, 'tes', 'testtttt', '2024-07-20', 'PENDING', '0000-00-00'),
+(28, 155, 62, 'tes', 'tes status ', '2024-07-24', 'PENDING', '0000-00-00'),
+(29, 155, 79, 'tes', 'tes status 2', '2024-07-24', 'PENDING', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -374,7 +380,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `role`, `active`, `tgl_register`, `last_login`) VALUES
-(47, 'Supervisor 2', 'Supervisor 2', 'spv2', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y', '2024-05-31', '2024-07-19 09:05:35'),
+(47, 'Supervisor 2', 'Supervisor 2', 'spv2', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y', '2024-05-31', '2024-07-22 09:04:41'),
 (48, 'Helpdesk 1', 'Ajeng', 'ajeng', '$2y$10$yMDEbxjjlh4oNXdZJw1om.SmuYMqFSzqLe3vycjiXnVFnZVXh7Fli', 2, 'Y', '2024-05-31', '2024-05-31 15:08:48'),
 (49, 'Helpdesk 1', 'Novi', 'novi', '$2y$10$61Gvfbmfq/xELLugqweR3.ITjxqoazOT478NP8hl9ND44iSRndaWO', 2, 'Y', '2024-05-31', '2024-05-31 15:08:57'),
 (50, 'Helpdesk 2', 'Ayu', 'ayu', '$2y$10$CBazdGZC3pDGBYv0WVS6WuqgRQW2SNVhGotgSoR09dL3CpXRLn4Tq', 2, 'Y', '2024-05-31', '2024-07-19 09:42:03'),
@@ -382,19 +388,19 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (52, 'Helpdesk 3', 'Eva', 'eva', '$2y$10$R8oQzXHI8pnwusrmXCTX3e9FWIjfvqgXFekk1yqJNhXIAkFDTY.n.', 2, 'Y', '2024-05-31', '2024-07-10 10:06:13'),
 (53, 'Helpdesk 3', 'Ina', 'ina', '$2y$10$39stpYd9tIjV.jrW/ffns.bVwZtKOyDqHHdZkSSwTmaNjTAS.1Qsi', 2, 'Y', '2024-05-31', '2024-05-31 15:09:55'),
 (54, 'Helpdesk 4', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y', '2024-05-31', '2024-06-26 16:11:57'),
-(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-07-18 08:36:25'),
+(55, 'Helpdesk 4', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-07-22 10:53:30'),
 (56, 'Helpdesk 4', 'Khabibah', 'Khabibah', '$2y$10$kMOcFV1oh9PL5kGxkARcW.0q6iPYOTTe/M4OjztfR2dRory9yTwRa', 2, 'Y', '2024-05-31', '2024-05-31 15:10:18'),
-(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-07-19 09:09:22'),
+(57, 'Supervisor', 'Supervisor', 'supervisor', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-07-22 08:55:19'),
 (58, 'Klien', 'PT BPR BKK Banjarharjo(Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-31', '2024-07-19 09:47:38'),
 (59, 'Klien', 'PT BPR BKK Karangmalang(Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-31', '2024-07-01 14:37:06'),
 (60, 'Klien', 'PT BPR BKK Purwokerto(Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-31', '2024-07-03 14:01:20'),
 (61, 'Klien', 'PT BPR BKK Kab. Pekalongan(Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-31', '2024-06-14 14:21:31'),
-(62, 'Implementator', 'Implementator PT MSO Purwokerto', 'implementator', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-31', '2024-07-19 09:37:55'),
+(62, 'Implementator', 'Implementator PT MSO Purwokerto', 'implementator', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-31', '2024-07-22 11:31:25'),
 (63, 'Support', 'Support PT MSO Purwokerto', 'support', '$2y$10$HEztd8wkl66Mpu2EIIRdpuFj/EBs57NLxZiZRGjc0Kg4M1kNpwoUu', 5, 'Y', '2024-05-31', '2024-06-26 08:56:50'),
 (66, 'Klien', 'PT BPR BKK Kebumen(Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-31', '2024-07-03 13:59:45'),
 (68, 'Superadmin', 'Superadmin', 'superadmin', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-07-19 09:16:42'),
-(78, 'Implementator', 'Implementator baru', 'implementatorbaru1', '$2y$10$8etE1d5OKw9.Gbyz58eyjuGIfU.O0MyFH0r6XZ8oY4bQek.ujQChK', 4, 'Y', '2024-06-28', '2024-07-19 09:37:28'),
-(79, 'Implementator', 'Implementator baru 2', 'implementatorbaru2', '$2y$10$Vbg7uz5gPOgYBEcSJUt2Jef5ox//0yFYSCtS60mPzC2irwkmbSPzW', 4, 'Y', '2024-07-01', '2024-07-18 16:24:40');
+(78, 'Implementator', 'Implementator baru', 'implementatorbaru1', '$2y$10$8etE1d5OKw9.Gbyz58eyjuGIfU.O0MyFH0r6XZ8oY4bQek.ujQChK', 4, 'Y', '2024-06-28', '2024-07-22 08:39:53'),
+(79, 'Implementator', 'Implementator baru 2', 'implementatorbaru2', '$2y$10$Vbg7uz5gPOgYBEcSJUt2Jef5ox//0yFYSCtS60mPzC2irwkmbSPzW', 4, 'Y', '2024-07-01', '2024-07-22 14:12:12');
 
 --
 -- Indexes for dumped tables
@@ -494,7 +500,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT untuk tabel `forward`
 --
 ALTER TABLE `forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT untuk tabel `klien`
@@ -524,13 +530,13 @@ ALTER TABLE `reply`
 -- AUTO_INCREMENT untuk tabel `s_forward`
 --
 ALTER TABLE `s_forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `t1_forward`
 --
 ALTER TABLE `t1_forward`
-  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_forward` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `t2_forward`
