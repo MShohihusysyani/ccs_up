@@ -152,7 +152,7 @@
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-info">
-                                                            <a href="javascript:;" data-id_pelaporan="<?= $st['id_pelaporan']; ?>" data-no_tiket="<?= $st['no_tiket']; ?>" data-waktu_pelaporan="<?= $st['waktu_pelaporan']; ?>" data-nama="<?= $st['nama']; ?>" data-perihal='<?= $st['perihal']; ?>' data-status="<?= $st['status']; ?>" data-status_ccs="<?= $st['status_ccs']; ?>" data-kategori="<?= $st['kategori']; ?>" data-priority="<?= $st['priority']; ?>" data-maxday="<?= $st['maxday']; ?>" data-judul="<?= $st['judul']; ?>" data-subtask="<?= $st['subtask']; ?>" data-tanggal="<?= $st['tanggal']; ?>" data-toggle="modal" data-target="#finishModal"> <i class="material-icons">done</i> <span class="icon-name">Finish</span></a>
+                                                            <a href="javascript:;" data-id_forward="<?= $st['id_forward']; ?>" data-no_tiket="<?= $st['no_tiket']; ?>" data-waktu_pelaporan="<?= $st['waktu_pelaporan']; ?>" data-nama="<?= $st['nama']; ?>" data-perihal='<?= $st['perihal']; ?>' data-status="<?= $st['status']; ?>" data-status_ccs="<?= $st['status_ccs']; ?>" data-kategori="<?= $st['kategori']; ?>" data-priority="<?= $st['priority']; ?>" data-maxday="<?= $st['maxday']; ?>" data-judul="<?= $st['judul']; ?>" data-subtask="<?= $st['subtask']; ?>" data-tanggal="<?= $st['tanggal']; ?>" data-toggle="modal" data-target="#finishModal"> <i class="material-icons">done</i> <span class="icon-name">Finish</span></a>
                                                         </div>
 
                                                     </td>
@@ -179,92 +179,90 @@
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('implementator/finish_subtask') ?>
-                <input type="hidden" name="id_pelaporan" id="id_pelaporan">
+                <input type="hidden" name="id_forward" id="id_forward"> <!-- Perbarui dengan id_forward -->
                 <div class="body">
-                    <form class="form-horizontal">
 
-                        <label for="no_tiket">No Tiket</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                            </div>
+                    <label for="no_tiket">No Tiket</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="waktu_pelaporan">Tanggal</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                            </div>
+                    <label for="waktu_pelaporan">Tanggal</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="nama">Nama Klien</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
-                            </div>
+                    <label for="nama">Nama Klien</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="judul">Judul</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
-                            </div>
+                    <label for="judul">Judul</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="perihal">Perihal</label>
-                            <div class="form-line">
-                                <div id="perihal_coba" readonly></div>
-                            </div>
+                    <div class="form-group">
+                        <label for="perihal">Perihal</label>
+                        <div class="form-line">
+                            <div id="perihal_coba" readonly></div>
                         </div>
+                    </div>
 
-                        <label for="status_ccs">Status CCS</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                            </div>
+                    <label for="status_ccs">Status CCS</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="priority">Priority</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
-                            </div>
+                    <label for="priority">Priority</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="maxday">Max Day</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
-                            </div>
+                    <label for="maxday">Max Day</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="kategori">Kategori</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
-                            </div>
+                    <label for="kategori">Kategori</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="kategori">Subtask</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="subtask" name="subtask" class="form-control" readonly>
-                            </div>
+                    <label for="subtask">Subtask</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="text" id="subtask" name="subtask" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <label for="tanggal">Tenggat waktu</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="date" id="tanggal" name="tanggal" class="form-control" readonly>
-                            </div>
+                    <label for="tanggal">Tenggat waktu</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input value="" type="date" id="tanggal" name="tanggal" class="form-control" readonly>
                         </div>
+                    </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">FINISH</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-link waves-effect">FINISH</button>
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                    </div>
 
                 </div>
                 <?php echo form_close() ?>
@@ -273,7 +271,7 @@
     </div>
 </div>
 
-<!-- Script -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -287,37 +285,24 @@
             var modal = $(this)
 
             // Isi nilai pada field
-            modal.find('#id_pelaporan').attr("value", div.data('id_pelaporan'));
-            modal.find('#no_tiket').attr("value", div.data('no_tiket'));
-            modal.find('#waktu_pelaporan').attr("value", div.data('waktu_pelaporan'));
-            modal.find('#nama').attr("value", div.data('nama'));
-            modal.find('#judul').attr("value", div.data('judul'));
+            modal.find('#id_forward').val(div.data('id_forward')); // Sesuaikan dengan data-id_forward
+            modal.find('#no_tiket').val(div.data('no_tiket'));
+            modal.find('#waktu_pelaporan').val(div.data('waktu_pelaporan'));
+            modal.find('#nama').val(div.data('nama'));
+            modal.find('#judul').val(div.data('judul'));
             modal.find('#perihal_coba').html(div.data('perihal'));
-            modal.find('#status').attr("value", div.data('status'));
-            modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#subtask').attr("value", div.data('subtask'));
-            modal.find('#tanggal').attr("value", div.data('tanggal'));
-            // modal.find('#priority').value = div.data('priority');
-            // modal.find('#priority option:selected').text(div.data('priority'));
-            modal.find('#maxday').attr("value", div.data('maxday'));
-            modal.find('#kategori').attr("value", div.data('kategori'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-
+            modal.find('#status').val(div.data('status'));
+            modal.find('#status_ccs').val(div.data('status_ccs'));
+            modal.find('#priority').val(div.data('priority'));
+            modal.find('#subtask').val(div.data('subtask'));
+            modal.find('#tanggal').val(div.data('tanggal'));
+            modal.find('#maxday').val(div.data('maxday'));
+            modal.find('#kategori').val(div.data('kategori'));
         });
 
     });
 </script>
+
 
 <script>
     // Check if tenggat waktu is empty and display message if true
@@ -329,189 +314,4 @@
             }
         });
     });
-</script>
-
-<script>
-    // This sample still does not showcase all CKEditor&nbsp;5 features (!)
-    // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
-    CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-        // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
-        toolbar: {
-            items: [
-                'findAndReplace', 'selectAll', '|',
-                'heading', '|',
-                'bold', 'italic', 'strikethrough', 'underline', '', '|',
-                'bulletedList', 'numberedList', 'todoList', '|',
-                'fontSize', 'fontFamily', 'fontColor', '', '', '|',
-                'alignment', '|',
-                'uploadImage', '|',
-                'undo', 'redo',
-            ],
-            shouldNotGroupWhenFull: true
-        },
-        // Changing the language of the interface requires loading the language file using the <script> tag.
-        // language: 'es',
-        list: {
-            properties: {
-                styles: true,
-                startIndex: true,
-                reversed: true
-            }
-        },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
-        heading: {
-            options: [{
-                    model: 'paragraph',
-                    title: 'Paragraph',
-                    class: 'ck-heading_paragraph'
-                },
-                {
-                    model: 'heading1',
-                    view: 'h1',
-                    title: 'Heading 1',
-                    class: 'ck-heading_heading1'
-                },
-                {
-                    model: 'heading2',
-                    view: 'h2',
-                    title: 'Heading 2',
-                    class: 'ck-heading_heading2'
-                },
-                {
-                    model: 'heading3',
-                    view: 'h3',
-                    title: 'Heading 3',
-                    class: 'ck-heading_heading3'
-                },
-                {
-                    model: 'heading4',
-                    view: 'h4',
-                    title: 'Heading 4',
-                    class: 'ck-heading_heading4'
-                },
-                {
-                    model: 'heading5',
-                    view: 'h5',
-                    title: 'Heading 5',
-                    class: 'ck-heading_heading5'
-                },
-                {
-                    model: 'heading6',
-                    view: 'h6',
-                    title: 'Heading 6',
-                    class: 'ck-heading_heading6'
-                }
-            ]
-        },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-        placeholder: '',
-        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
-        fontFamily: {
-            options: [
-                'default',
-                'Arial, Helvetica, sans-serif',
-                'Courier New, Courier, monospace',
-                'Georgia, serif',
-                'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                'Tahoma, Geneva, sans-serif',
-                'Times New Roman, Times, serif',
-                'Trebuchet MS, Helvetica, sans-serif',
-                'Verdana, Geneva, sans-serif'
-            ],
-            supportAllValues: true
-        },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
-        fontSize: {
-            options: [10, 12, 14, 'default', 18, 20, 22],
-            supportAllValues: true
-        },
-        // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
-        // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
-        htmlSupport: {
-            allow: [{
-                name: /.*/,
-                attributes: true,
-                classes: true,
-                styles: true
-            }]
-        },
-        // Be careful with enabling previews
-        // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
-        htmlEmbed: {
-            showPreviews: true
-        },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
-        link: {
-            decorators: {
-                addTargetToExternalLinks: true,
-                defaultProtocol: 'https://',
-                toggleDownloadable: {
-                    mode: 'manual',
-                    label: 'Downloadable',
-                    attributes: {
-                        download: 'file'
-                    }
-                }
-            }
-        },
-        ckfinder: {
-            uploadUrl: "<?= base_url('implementator/upload') ?>"
-        },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-        mention: {
-            feeds: [{
-                marker: '@',
-                feed: [
-                    '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
-                    '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
-                    '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
-                    '@sugar', '@sweet', '@topping', '@wafer'
-                ],
-                minimumCharacters: 1
-            }]
-        },
-        // The "superbuild" contains more premium features that require additional configuration, disable them below.
-        // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
-        removePlugins: [
-            // These two are commercial, but you can try them out without registering to a trial.
-            // 'ExportPdf',
-            // 'ExportWord',
-            'AIAssistant',
-            'CKBox',
-            'CKFinder',
-            'EasyImage',
-            // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
-            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
-            // Storing images as Base64 is usually a very bad idea.
-            // Replace it on production website with other solutions:
-            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
-            // 'Base64UploadAdapter',
-            'MultiLevelList',
-            'RealTimeCollaborativeComments',
-            'RealTimeCollaborativeTrackChanges',
-            'RealTimeCollaborativeRevisionHistory',
-            'PresenceList',
-            'Comments',
-            'TrackChanges',
-            'TrackChangesData',
-            'RevisionHistory',
-            'Pagination',
-            'WProofreader',
-            // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
-            // from a local file system (file://) - load this site via HTTP server if you enable MathType.
-            'MathType',
-            // The following features are part of the Productivity Pack and require additional license.
-            'SlashCommand',
-            'Template',
-            'DocumentOutline',
-            'FormatPainter',
-            'TableOfContents',
-            'PasteFromOfficeEnhanced',
-            'CaseChange'
-        ]
-    });
-    RemoveFormat: [
-        'paragraph'
-
-    ]
 </script>

@@ -32,7 +32,9 @@ class Implementator_model extends CI_Model
             pelaporan.tags,
             t1_forward.subtask,
             t1_forward.tanggal,
-            t1_forward.judul
+            t1_forward.judul,
+            t1_forward.id_forward,
+            t1_forward.status
         ');
         $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
@@ -253,12 +255,14 @@ class Implementator_model extends CI_Model
             pelaporan.tags,
             t1_forward.subtask,
             t1_forward.tanggal,
-            t1_forward.judul
+            t1_forward.judul,
+            t1_forward.id_forward,
+            t1_forward.status
         ');
         $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('t1_forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where('t1_forward.status', 'PENDING');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         return $this->db->get()->result_array();
@@ -315,7 +319,6 @@ class Implementator_model extends CI_Model
 
     public function updateSubtask($id_forward, $data)
     {
-        // Gunakan kondisi WHERE untuk memastikan hanya baris dengan id_forward tertentu yang diupdate
         $this->db->where('id_forward', $id_forward);
         return $this->db->update('t1_forward', $data);
     }
