@@ -47,7 +47,10 @@
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
-                                                <th>Subtask</th>
+                                                <th>Subtask 1</th>
+                                                <th>Status Subtask 1</th>
+                                                <th>Subtask 2</th>
+                                                <th>Status Subtask 2</th>
                                                 <th>Tenggat waktu</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -67,7 +70,10 @@
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
-                                                <th>Subtask</th>
+                                                <th>Subtask 1</th>
+                                                <th>Status Subtask 1</th>
+                                                <th>Subtask 2</th>
+                                                <th>Status Subtask 2</th>
                                                 <th>Tenggat waktu</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -145,7 +151,28 @@
                                                             , <?= $dp['handle_by3']; ?>
                                                         <?php endif; ?>
                                                     </td>
-                                                    <td><?= $dp['subtask']; ?></td>
+                                                    <td><?= $dp['subtask1']; ?></td>
+                                                    <td>
+                                                        <?php if ($dp['status1'] == 'DONE') : ?>
+                                                            <span class="label label-success">DONE</span>
+
+                                                        <?php elseif ($dp['status1'] == 'PENDING') : ?>
+                                                            <span class="label label-info">PENDING</span>
+
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td><?= $dp['subtask2']; ?></td>
+                                                    <td>
+                                                        <?php if ($dp['status2'] == 'DONE') : ?>
+                                                            <span class="label label-success">DONE</span>
+
+                                                        <?php elseif ($dp['status2'] == 'PENDING') : ?>
+                                                            <span class="label label-info">PENDING</span>
+
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+                                                    </td>
                                                     <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
                                                     <td>
@@ -397,9 +424,9 @@
     // Check if tenggat waktu is empty and display message if true
     $(document).ready(function() {
         $('#example tbody tr').each(function() {
-            var tenggatWaktu = $(this).find('td:eq(14)').text().trim(); // Assuming 15th column (index 14) is tenggat waktu
+            var tenggatWaktu = $(this).find('td:eq(17)').text().trim(); // Assuming 15th column (index 14) is tenggat waktu
             if (tenggatWaktu === '') {
-                $(this).find('td:eq(14)').text('Invalid date format'); // Replace with your message or any action you want
+                $(this).find('td:eq(17)').text('Invalid date format'); // Replace with your message or any action you want
             }
         });
     });

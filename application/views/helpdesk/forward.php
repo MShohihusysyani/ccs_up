@@ -1,9 +1,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <h2>
-
-            </h2>
+            <h2></h2>
         </div>
         <!-- jQuery UI CSS -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -11,7 +9,6 @@
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
             <?php if ($this->session->flashdata('pesan')) { ?>
-
             <?php } ?>
             <!-- #END# Basic Examples -->
             <!-- Exportable Table -->
@@ -19,10 +16,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <h2>
-                                FORWARD
-                            </h2>
-
+                            <h2>FORWARD</h2>
                         </div>
                         <div class="body">
                             <div class="table-responsive">
@@ -41,8 +35,10 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <th>Subtask</th>
-                                            <th>Status Subtask</th>
+                                            <th>Subtask 1</th>
+                                            <th>Status Subtask 1</th>
+                                            <th>Subtask 2</th>
+                                            <th>Status Subtask 2</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -60,16 +56,20 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
-                                            <th>Subtask</th>
-                                            <th>Status Subtask</th>
+                                            <th>Subtask 1</th>
+                                            <th>Status Subtask 1</th>
+                                            <th>Subtask 2</th>
+                                            <th>Status Subtask 2</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-
                                         <?php
                                         $no = 1;
-                                        foreach ($datapelaporan as $dp) : ?>
+                                        foreach ($datapelaporan as $dp) :
+                                            // Assuming $dp['subtasks'] is an array of subtask data
+
+                                        ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $dp['no_tiket']; ?></td>
@@ -80,62 +80,43 @@
                                                 <td>
                                                     <?php if (!empty($dp['file'])) : ?>
                                                         <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                    <?php else : ?>
-
                                                     <?php endif; ?>
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
                                                         <span class="label label-info">Low</span>
-
                                                     <?php elseif ($dp['priority'] == 'Medium') : ?>
                                                         <span class="label label-warning">Medium</span>
-
                                                     <?php elseif ($dp['priority'] == 'High') : ?>
                                                         <span class="label label-danger">High</span>
-
-                                                    <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
                                                     <?php if ($dp['maxday'] == '90') : ?>
                                                         <span class="label label-info">90</span>
-
                                                     <?php elseif ($dp['maxday'] == '60') : ?>
                                                         <span class="label label-warning">60</span>
-
                                                     <?php elseif ($dp['maxday'] == '7') : ?>
                                                         <span class="label label-danger">7</span>
-
-                                                    <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
                                                     <?php if ($dp['status_ccs'] == 'FINISH') : ?>
                                                         <span class="label label-success">FINISH</span>
-
                                                     <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
                                                         <span class="label label-warning">CLOSE</span>
-
                                                     <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
                                                         <span class="label label-info">HANDLE</span>
-
                                                     <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
                                                         <span class="label label-info">HANDLE 2</span>
-
                                                     <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                         <span class="label label-primary">ADDED</span>
-
                                                     <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
                                                         <span class="label label-primary">ADDED 2</span>
-
-                                                    <?php else : ?>
                                                     <?php endif; ?>
-
                                                 </td>
-                                                <td>
-                                                    <?= $dp['handle_by']; ?>
+                                                <td><?= $dp['handle_by']; ?>
                                                     <?php if (!empty($dp['handle_by2'])) : ?>
                                                         , <?= $dp['handle_by2']; ?>
                                                     <?php endif; ?>
@@ -143,23 +124,32 @@
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td>
-                                                    <?= $dp['subtask2']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $dp['status2']; ?>
-                                                </td>
-                                                <!-- <td>
-                                                    <?= $dp['subtask3']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $dp['status3']; ?>
-                                                </td> -->
 
+                                                <td><?= $dp['subtask2']; ?></td>
                                                 <td>
-                                                    <a class="btn btn-xs btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
-                                                        Detail</a>
+                                                    <?php if ($dp['status2'] == 'DONE') : ?>
+                                                        <span class="label label-success">DONE</span>
 
+                                                    <?php elseif ($dp['status2'] == 'PENDING') : ?>
+                                                        <span class="label label-info">PENDING</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+                                                </td>
+
+                                                <td><?= $dp['subtask1']; ?></td>
+                                                <td>
+                                                    <?php if ($dp['status1'] == 'DONE') : ?>
+                                                        <span class="label label-success">DONE</span>
+
+                                                    <?php elseif ($dp['status1'] == 'PENDING') : ?>
+                                                        <span class="label label-info">PENDING</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-xs btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span> Detail</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

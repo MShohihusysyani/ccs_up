@@ -41,6 +41,10 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
+                                            <th>Subtask 1</th>
+                                            <th>Status Subtask 1</th>
+                                            <th>Subtask 2</th>
+                                            <th>Status Subtask 2</th>
                                             <!-- <th>Aksi</th> -->
                                         </tr>
                                     </thead>
@@ -58,6 +62,10 @@
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
+                                            <th>Subtask 1</th>
+                                            <th>Status Subtask 1</th>
+                                            <th>Subtask 2</th>
+                                            <th>Status Subtask 2</th>
                                             <!-- <th>Aksi</th> -->
                                         </tr>
                                     </tfoot>
@@ -132,6 +140,28 @@
                                                     <?php endif; ?>
                                                     <?php if (!empty($dp['handle_by3'])) : ?>
                                                         , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td><?= $dp['subtask1']; ?></td>
+                                                <td>
+                                                    <?php if ($dp['status1'] == 'DONE') : ?>
+                                                        <span class="label label-success">DONE</span>
+
+                                                    <?php elseif ($dp['status1'] == 'PENDING') : ?>
+                                                        <span class="label label-info">PENDING</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td><?= $dp['subtask2']; ?></td>
+                                                <td>
+                                                    <?php if ($dp['status2'] == 'DONE') : ?>
+                                                        <span class="label label-success">DONE</span>
+
+                                                    <?php elseif ($dp['status2'] == 'PENDING') : ?>
+                                                        <span class="label label-info">PENDING</span>
+
+                                                    <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
 
