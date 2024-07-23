@@ -322,4 +322,12 @@ class Implementator_model extends CI_Model
         $this->db->where('id_forward', $id_forward);
         return $this->db->update('t1_forward', $data);
     }
+
+    public function countPendingSubtasks($pelaporan_id)
+    {
+        $this->db->where('pelaporan_id', $pelaporan_id);
+        $this->db->where('status', 'PENDING');
+        $this->db->from('t1_forward');
+        return $this->db->count_all_results();
+    }
 }
