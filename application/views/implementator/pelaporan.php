@@ -153,8 +153,8 @@
                                                     </td>
                                                     <td><?= $dp['subtask1']; ?></td>
                                                     <td>
-                                                        <?php if ($dp['status1'] == 'DONE') : ?>
-                                                            <span class="label label-success">DONE</span>
+                                                        <?php if ($dp['status1'] == 'COMPLETED') : ?>
+                                                            <span class="label label-success">COMPLETED</span>
 
                                                         <?php elseif ($dp['status1'] == 'PENDING') : ?>
                                                             <span class="label label-info">PENDING</span>
@@ -164,8 +164,8 @@
                                                     </td>
                                                     <td><?= $dp['subtask2']; ?></td>
                                                     <td>
-                                                        <?php if ($dp['status2'] == 'DONE') : ?>
-                                                            <span class="label label-success">DONE</span>
+                                                        <?php if ($dp['status2'] == 'COMPLETED') : ?>
+                                                            <span class="label label-success">COMPLETED</span>
 
                                                         <?php elseif ($dp['status2'] == 'PENDING') : ?>
                                                             <span class="label label-info">PENDING</span>

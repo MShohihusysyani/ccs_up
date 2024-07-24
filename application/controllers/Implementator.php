@@ -356,7 +356,7 @@ class Implementator extends CI_Controller
         $judul = $this->input->post('judul');
         $subtask = $this->input->post('subtask');
         $tanggal_finish = date('Y-m-d');
-        $status = 'DONE';
+        $status = 'COMPLETED';
 
         $data = [
             'judul' => $judul,
