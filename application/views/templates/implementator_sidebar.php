@@ -103,7 +103,7 @@
 
                     <li <?= $this->uri->segment(2) == 'subtask' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('implementator/subtask') ?>">
-                            <i class="material-icons">computer</i>
+                            <i class="material-icons">task</i>
                             <span>Subtask</span>
                         </a>
                     </li>
