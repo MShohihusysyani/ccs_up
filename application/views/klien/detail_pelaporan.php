@@ -107,7 +107,7 @@
                             </div>
                             <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
 
-                            <a href="<?= base_url('klien/datapelaporan') ?>" type="button" class="btn btn-primary m-t-15 waves-effect">Kembali</a>
+                            <a href="<?= base_url('klien/onprogress') ?>" type="button" class="btn btn-primary m-t-15 waves-effect">Kembali</a>
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD</button>
                         <?php endforeach; ?>
                     </form>
