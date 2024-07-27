@@ -16,70 +16,88 @@ class Auth extends CI_Controller
         $this->load->view('auth/login');
         $this->load->view('templates/auth_footer');
     }
-    
-    
+
+
 
     public function proses_login()
-{
+    {
 
-    $this->form_validation->set_rules('username', 'Username', 'required', ['required' => 'Username Wajib Diisi!']);
-    $this->form_validation->set_rules('password', 'Password', 'required', ['required' => 'Password Wajib Diisi!']);
+        $this->form_validation->set_rules('username', 'Username', 'required', ['required' => 'Username Wajib Diisi!']);
+        $this->form_validation->set_rules('password', 'Password', 'required', ['required' => 'Password Wajib Diisi!']);
 
-    if ($this->form_validation->run() == FALSE) {
-        $this->load->view('templates/auth_header');
-        $this->load->view('auth/login');
-        $this->load->view('templates/auth_footer');
-    } else {
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/auth_header');
+            $this->load->view('auth/login');
+            $this->load->view('templates/auth_footer');
+        } else {
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
 
-        // Retrieve user by username
-        $user = $this->login_model->cek_login($username);
+            // Retrieve user by username
+            $user = $this->login_model->cek_login($username);
 
-        // Check if user exists and password is correct
-        if ($user && password_verify($password, $user->password)) {
-            // Update last login time
-            $this->User_model->update_last_login($user->id_user);
+            // Check if user exists and password is correct
+            if ($user && password_verify($password, $user->password)) {
+                // Update last login time
+                $this->User_model->update_last_login($user->id_user);
 
-            // Set session data
-            $sess_data = [
-                'username' => $user->username,
-                'nama_user' => $user->nama_user,
-                'divisi' => $user->divisi,
-                'role' => $user->role,
-                'id_user' => $user->id_user,
-                'active' => $user->active,
-            ];
-            $this->session->set_userdata($sess_data);
+                // Set session data
+                $sess_data = [
+                    'username' => $user->username,
+                    'nama_user' => $user->nama_user,
+                    'divisi' => $user->divisi,
+                    'role' => $user->role,
+                    'id_user' => $user->id_user,
+                    'active' => $user->active,
+                ];
+                $this->session->set_userdata($sess_data);
 
-            // Redirect based on user role
-            if ($sess_data['active'] == 'Y') {
-                $this->session->set_flashdata('pesan', 'Successfully Login!');
-                switch ($sess_data['role']) {
-                    case '1': redirect('klien'); break;
-                    case '2': redirect('helpdesk'); break;
-                    case '3': redirect('supervisor'); break;
-                    case '4': redirect('implementator'); break;
-                    case '5': redirect('support'); break;
-                    case '6': redirect('superadmin'); break;
-                    case '7': redirect('crd'); break;
-                    case '8': redirect('development'); break;
-                    case '9': redirect('supervisor2'); break;
-                    default:
-                        $this->session->set_flashdata('alert', 'Incorrect Roles!');
-                        redirect('auth');
-                        break;
+                // Redirect based on user role
+                if ($sess_data['active'] == 'Y') {
+                    $this->session->set_flashdata('pesan', 'Successfully Login!');
+                    switch ($sess_data['role']) {
+                        case '1':
+                            redirect('klien');
+                            break;
+                        case '2':
+                            redirect('helpdesk');
+                            break;
+                        case '3':
+                            redirect('supervisor');
+                            break;
+                        case '4':
+                            redirect('implementator');
+                            break;
+                        case '5':
+                            redirect('support');
+                            break;
+                        case '6':
+                            redirect('superadmin');
+                            break;
+                        case '7':
+                            redirect('crd');
+                            break;
+                        case '8':
+                            redirect('development');
+                            break;
+                        case '9':
+                            redirect('supervisor2');
+                            break;
+                        default:
+                            $this->session->set_flashdata('alert', 'Incorrect Roles!');
+                            redirect('auth');
+                            break;
+                    }
+                } else {
+                    $this->session->set_flashdata('alert', 'Inactive User, Please Contact Superadmin!');
+                    redirect('auth');
                 }
             } else {
-                $this->session->set_flashdata('alert', 'Inactive User, Please Contact Superadmin!');
+                $this->session->set_flashdata('alert', 'Incorrect Username or Password!');
                 redirect('auth');
             }
-        } else {
-            $this->session->set_flashdata('alert', 'Incorrect Username or Password!');
-            redirect('auth');
         }
     }
-}
 
 
 
