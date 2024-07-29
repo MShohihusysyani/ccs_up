@@ -154,7 +154,17 @@
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
                                                 </td>
-                                               
+                                               <td><?= $dp['subtask2']; ?></td>
+                                                <td>
+                                                    <?php if ($dp['status2'] == 'COMPLETED') : ?>
+                                                        <span class="label label-success">COMPLETED</span>
+
+                                                    <?php elseif ($dp['status2'] == 'PENDING') : ?>
+                                                        <span class="label label-info">PENDING</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td><?= $dp['subtask1']; ?></td>
                                                 <td>
                                                     <?php if ($dp['status1'] == 'COMPLETED') : ?>
@@ -166,17 +176,7 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-												 <td><?= $dp['subtask2']; ?></td>
-                                                <td>
-                                                    <?php if ($dp['status2'] == 'COMPLETED') : ?>
-                                                        <span class="label label-success">COMPLETED</span>
-
-                                                    <?php elseif ($dp['status2'] == 'PENDING') : ?>
-                                                        <span class="label label-info">PENDING</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
+												 
                                                 <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
                                                 <td>
