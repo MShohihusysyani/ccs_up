@@ -124,7 +124,17 @@
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
                                                 </td>
+<td><?= $dp['subtask2']; ?></td>
+                                                <td>
+                                                    <?php if ($dp['status2'] == 'COMPLETED') : ?>
+                                                        <span class="label label-success">COMPLETED</span>
 
+                                                    <?php elseif ($dp['status2'] == 'PENDING') : ?>
+                                                        <span class="label label-info">PENDING</span>
+
+                                                    <?php else : ?>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td><?= $dp['subtask1']; ?></td>
                                                 <td>
                                                     <?php if ($dp['status1'] == 'COMPLETED') : ?>
@@ -136,17 +146,7 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-												 <td><?= $dp['subtask2']; ?></td>
-                                                <td>
-                                                    <?php if ($dp['status2'] == 'COMPLETED') : ?>
-                                                        <span class="label label-success">COMPLETED</span>
-
-                                                    <?php elseif ($dp['status2'] == 'PENDING') : ?>
-                                                        <span class="label label-info">PENDING</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
+												 
                                                 <td>
                                                     <a class="btn btn-xs btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span> Detail</a>
                                                 </td>
