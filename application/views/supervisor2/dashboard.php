@@ -54,7 +54,7 @@
                         </div>
                         <div class="body">
                         <?php
-                            $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'ADDED'");
+                            $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'ADDED 2'");
 
                             foreach ($totalp->result() as $total) {
                             ?>
