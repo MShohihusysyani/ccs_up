@@ -95,25 +95,30 @@
                             </div>
                             <?php } ?>
 
-                            <?php
-                                $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'CLOSE'");
+                             <?php
+                                    $user_id =  $this->session->userdata('id_user');
+                                    $handle = $this->db->query("SELECT 
+                                        COUNT(*) as ticket_close
+                                        FROM s_forward
+                                        LEFT JOIN pelaporan ON s_forward.pelaporan_id = pelaporan.id_pelaporan
+                                        WHERE s_forward.user_id = $user_id
+                                        AND pelaporan.status_ccs = 'CLOSE' ")->result_array();
+                                    foreach ($handle as $hd) : ?>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                            <div class="info-box bg-orange hover-expand-effect">
+                                                <div class="icon">
+                                                    <a href="<?php echo base_url('supervisor2/close') ?>">
+                                                        <i class="material-icons">report</i>
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="text">CLOSE</div>
+                                                    <div class="number count-to" data-from="0" data-to="<?= $hd['ticket_close'] ?>" data-speed="1000" data-fresh-interval="20"><?= $hd['ticket_close'] ?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
 
-                                foreach ($totalp->result() as $total) {
-                                ?>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                <div class="info-box bg-orange hover-expand-effect">
-                                    <div class="icon">
-                                        <a href="<?php echo base_url('supervisor2/close') ?>">
-                                            <i class="material-icons">report</i>
-                                        </a>
-                                    </div>
-                                    <div class="content">
-                                        <div class="text">CLOSE</div>
-                                        <div class="number"><?php echo $total->totalp ?></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php } ?>
 
                             <?php
                                     $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'FINISH'");
