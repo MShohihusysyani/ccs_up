@@ -76,7 +76,7 @@
 
                         <?php } ?>
                             <?php
-                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE'");
+                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE 2'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>
