@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Jul 2024 pada 06.23
+-- Waktu pembuatan: 01 Agu 2024 pada 10.58
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -55,7 +55,7 @@ INSERT INTO `category` (`id`, `nama_kategori`) VALUES
 (32, 'Kredit - Aktivasi Rekening Kredit'),
 (33, 'Kredit - Tarik Nominatif'),
 (34, 'API - TTF'),
-(36, 'C6'),
+(36, 'C6 - C6'),
 (37, 'Kredit - Tarik Nominatif Kredit'),
 (38, 'Tabungan - Tabungan'),
 (39, 'Tabungan - Data Tabungan'),
@@ -66,7 +66,54 @@ INSERT INTO `category` (`id`, `nama_kategori`) VALUES
 (44, 'Tabungan - Saldo Minus Tabungan'),
 (45, 'Tabungan - Koreksi Kode Produk'),
 (46, 'Tabungan - Penutupan Tabungan'),
-(57, 'tes');
+(59, 'Deposito - Master Deposito (Posting Bunga Deposito Dan Biaya Transaksi Deposito)'),
+(60, 'Deposito - Posting Deposito'),
+(61, 'Deposito - Data Deposito'),
+(62, 'Deposito - Bilyet Deposito'),
+(63, 'Deposito - Trans Dep'),
+(64, 'Deposito - Bunga Deposito'),
+(65, 'Nasabah - Master Nasabah (Aktifkan CIF, Merger CIF)'),
+(66, 'Nasabah - Merger CIF'),
+(67, 'Nasabah - Data Nasabah'),
+(68, 'Nasabah - Tarik Data Nasabah'),
+(69, 'Nasabah - Error SLIK'),
+(70, 'Nasabah - Request Core Banking System'),
+(71, 'Nasabah - Error MBS'),
+(72, 'Nasabah - LAPBUL Koreksi OJK/KAP'),
+(73, 'Lapbul - Error LAPBUL'),
+(74, 'Exim - Exim'),
+(75, 'MBS ADMIN - Mbs Admin (Reset Password, Pengaktifan User, Setting Distribusi Angsuran)'),
+(76, 'User - Aktivasi User'),
+(77, 'User - Mutasi User'),
+(78, 'User - Reset Password'),
+(79, 'User - Perubahan Ijin Transaksi User'),
+(80, 'User - Data User'),
+(81, 'User - Registrasi Komputer'),
+(82, 'MBS Report - MBS Report'),
+(83, 'Akuntansi - Akuntansi'),
+(84, 'COA - COA (Pembukaan Kode Perkiraan, Pengaktifan Kode Perkiraan)'),
+(85, 'COA - Pembukaan Kode Perkiraan'),
+(86, 'COA - Penambahan Kode Perkiraan'),
+(87, 'COA - Perubahan Kode Perkiraan'),
+(88, 'COA - Koreksi Coa'),
+(89, 'COA - Penonaktifan Kode Perkiraan'),
+(90, 'ABA - ABA'),
+(91, 'Inventaris - Inventaris'),
+(92, 'Kantor - Penambahan Kantor '),
+(93, 'MBS Online - MBS Online'),
+(94, 'SMS Banking - SMS Banking'),
+(95, 'Jaringan - Jaringan'),
+(96, 'Website - Website'),
+(97, 'MBS Otorisasi - MBS Otorisasi'),
+(98, 'TKS - TKS'),
+(99, 'Obox - Obox'),
+(100, 'Virtual - Virtual Account'),
+(101, 'MBS Publikasi - MBS Publikasi'),
+(102, 'QRIS - QRIS'),
+(103, 'PPOB - PPOB'),
+(104, 'Lain-Lain - Lain-Lain'),
+(105, 'WA Blast - WA Blast'),
+(106, 'Undian - Undian');
 
 -- --------------------------------------------------------
 
@@ -361,6 +408,13 @@ CREATE TABLE `tiket_temp` (
   `tags` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tiket_temp`
+--
+
+INSERT INTO `tiket_temp` (`id_temp`, `no_tiket`, `user_id`, `judul`, `perihal`, `file`, `nama`, `kategori`, `tags`) VALUES
+(263, 'TIC00072024070005', 66, 'test tiket', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem ea quam amet soluta atque eum, ab illo. Quas enim maxime est nisi modi, labore rem porro, accusantium, deleniti beatae inventore exercitationem? Provident perferendis beatae ratione eum est ipsam, cumque, recusandae, commodi soluta repellat aliquam architecto sit. Quibusdam quis consequuntur totam dolorum cumque. Asperiores, nisi in?', '', 'PT BPR BKK Kebumen(Perseroda)', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -384,21 +438,20 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `role`, `active`, `tgl_register`, `last_login`) VALUES
-(47, 'Supervisor 2', 'Aling', 'aling', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y', '2024-05-31', '2024-07-27 10:43:50'),
+(47, 'Supervisor 2', 'Aling', 'aling', '$2y$10$3fmu3UaUBtwMUn/ibOqgwO0h36GrfFrAwjP/GAHxYZfIPJOJPYdgC', 9, 'Y', '2024-05-31', '2024-07-27 11:40:07'),
 (48, 'Helpdesk', 'Ajeng', 'ajeng', '$2y$10$yMDEbxjjlh4oNXdZJw1om.SmuYMqFSzqLe3vycjiXnVFnZVXh7Fli', 2, 'Y', '2024-05-31', '2024-05-31 15:08:48'),
-(50, 'Helpdesk', 'Ayu', 'ayu', '$2y$10$CBazdGZC3pDGBYv0WVS6WuqgRQW2SNVhGotgSoR09dL3CpXRLn4Tq', 2, 'Y', '2024-05-31', '2024-07-27 10:28:34'),
+(50, 'Helpdesk', 'Ayu', 'ayu', '$2y$10$CBazdGZC3pDGBYv0WVS6WuqgRQW2SNVhGotgSoR09dL3CpXRLn4Tq', 2, 'Y', '2024-05-31', '2024-07-31 15:33:25'),
 (52, 'Helpdesk', 'Eva', 'eva', '$2y$10$R8oQzXHI8pnwusrmXCTX3e9FWIjfvqgXFekk1yqJNhXIAkFDTY.n.', 2, 'Y', '2024-05-31', '2024-07-23 15:16:42'),
 (54, 'Helpdesk', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y', '2024-05-31', '2024-06-26 16:11:57'),
 (55, 'Helpdesk', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-07-24 08:09:48'),
-(57, 'Supervisor 1', 'Khabibah', 'Khabibah', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-07-27 10:58:02'),
-(58, 'Klien', 'PT BPR BKK Banjarharjo (Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-31', '2024-07-25 08:03:30'),
+(57, 'Supervisor 1', 'Khabibah', 'Khabibah', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-07-31 10:28:36'),
+(58, 'Klien', 'PT BPR BKK Banjarharjo (Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-31', '2024-08-01 15:46:03'),
 (59, 'Klien', 'PT BPR BKK Karangmalang (Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-31', '2024-07-01 14:37:06'),
 (60, 'Klien', 'PT BPR BKK Purwokerto (Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-31', '2024-07-03 14:01:20'),
 (61, 'Klien', 'PT BPR BKK Kab. Pekalongan (Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-31', '2024-07-25 16:16:13'),
 (62, 'Implementator', 'Diki', 'diki', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-31', '2024-07-27 10:46:21'),
-(63, 'Support', 'Support PT MSO Purwokerto', 'support', '$2y$10$HEztd8wkl66Mpu2EIIRdpuFj/EBs57NLxZiZRGjc0Kg4M1kNpwoUu', 5, 'Y', '2024-05-31', '2024-06-26 08:56:50'),
-(66, 'Klien', 'PT BPR BKK Kebumen(Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-31', '2024-07-03 13:59:45'),
-(68, 'Superadmin', 'Indri', 'indri', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-07-27 11:06:46'),
+(66, 'Klien', 'PT BPR BKK Kebumen(Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-31', '2024-07-31 10:25:50'),
+(68, 'Superadmin', 'Indri', 'indri', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-08-01 13:58:40'),
 (78, 'Implementator', 'Indra', 'indra', '$2y$10$8etE1d5OKw9.Gbyz58eyjuGIfU.O0MyFH0r6XZ8oY4bQek.ujQChK', 4, 'Y', '2024-06-28', '2024-07-27 10:49:05'),
 (79, 'Implementator', 'Arif', 'arif', '$2y$10$Vbg7uz5gPOgYBEcSJUt2Jef5ox//0yFYSCtS60mPzC2irwkmbSPzW', 4, 'Y', '2024-07-01', '2024-07-27 10:50:00'),
 (80, 'Helpdesk', 'Zelly', 'zelly', '$2y$10$w3ERUHDBVufTAMNPzcYdou5vlkWRrUykQxsVwJqCQkzOVIOYc2iZm', 2, 'Y', '2024-07-27', '2024-07-27 10:33:02'),
@@ -509,7 +562,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT untuk tabel `comment`
@@ -569,7 +622,7 @@ ALTER TABLE `t2_forward`
 -- AUTO_INCREMENT untuk tabel `tiket_temp`
 --
 ALTER TABLE `tiket_temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
