@@ -7,14 +7,14 @@
         </div>
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>"></div>
-            <?php if ($this->session->flashdata('pesan')) { ?>
+        <?php if ($this->session->flashdata('pesan')) { ?>
 
-            <?php } ?>
-            <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>"></div>
-                <?php if ($this->session->flashdata('pesan')) { ?>
+        <?php } ?>
+        <div class="eror" data-eror="<?= $this->session->flashdata('alert') ?>"></div>
+        <?php if ($this->session->flashdata('pesan')) { ?>
 
-                <?php } ?>
-                <p><?= validation_errors(); ?></p>
+        <?php } ?>
+        <p><?= validation_errors(); ?></p>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -25,16 +25,13 @@
                             Data Client
                         </h2>
                         <br>
-                        
-                        <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal"
-                            data-target="#defaultModal"> <i class="material-icons">add</i> <span
-                                class="icon-name"></i>Add Client</button>
+
+                        <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal"> <i class="material-icons">add</i> <span class="icon-name"></i>Add Client</button>
 
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                                id="example">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -44,38 +41,31 @@
                                     </tr>
                                 </thead>
                                 <tfoot>
-                                        <th>No</th>
-                                        <th>Kode Klien</th>
-                                        <th>Nama Klien</th>
-                                        <th>Aksi</th>
+                                    <th>No</th>
+                                    <th>Kode Klien</th>
+                                    <th>Nama Klien</th>
+                                    <th>Aksi</th>
                                 </tfoot>
                                 <tbody>
 
-                                <?php
+                                    <?php
                                     $no = 1;
                                     foreach ($klien as $cln) : ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?= $cln['no_klien'];?></td>
-                                        <td><?= $cln['nama_klien']; ?></td>
+                                        <tr>
+                                            <td><?php echo $no++ ?></td>
+                                            <td><?= $cln['no_klien']; ?></td>
+                                            <td><?= $cln['nama_klien']; ?></td>
 
-                                        <td>
-                                            <div class="btn btn-sm btn-warning">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $cln['id']; ?>"> <i
-                                                        class="material-icons">edit</i> <span
-                                                        class="icon-name"></span>
+                                            <td>
+                                                <div class="btn btn-sm btn-warning">
+                                                    <div class="demo-google-material-icon" data-toggle="modal" data-target="#editModal<?= $cln['id']; ?>"> <i class="material-icons">edit</i> <span class="icon-name"></span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <a class="btn btn-sm btn-danger waves-effect tombol-hapus"
-                                                    data-type="success"
-                                                    href="<?= base_url() ?>superadmin/hapus_klien/<?= $cln['id']; ?>"><i
-                                                        class="material-icons">delete</i><span
-                                                        class="fa fa-trash"></span>
-                                                    </a>
-                                        </td>
+                                                <a class="btn btn-sm btn-danger waves-effect tombol-hapus" data-type="success" href="<?= base_url() ?>superadmin/hapus_klien/<?= $cln['id']; ?>"><i class="material-icons">delete</i><span class="fa fa-trash"></span>
+                                                </a>
+                                            </td>
 
-                                    </tr>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -89,10 +79,10 @@
     <!-- Button trigger modal -->
 </section>
 
-    <!-- MODAL  edit -->
-    <?php
-    $no = 0;
-    foreach ($klien as $cln) : $no++; ?>
+<!-- MODAL  edit -->
+<?php
+$no = 0;
+foreach ($klien as $cln) : $no++; ?>
     <div class="modal fade" id="editModal<?= $cln['id']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -104,26 +94,38 @@
                     <input type="hidden" name="id" value="<?= $cln['id']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $cln['no_klien']; ?>" type="text" id="no_klien" name="no_klien" class="form-control">
-                                <label class="form-label">No Urut</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $cln['no_klien']; ?>" type="text" id="no_klien" name="no_klien" class="form-control">
+                                    <label class="form-label">No Urut</label>
+                                </div>
                             </div>
-                        </div>
 
-                        
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input type="text" value="<?= $cln['nama_klien']; ?>" id="nama_klien" name="nama_klien" class="form-control">
-                                <label class="form-label">Nama Klien</label>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" value="<?= $cln['nama_klien']; ?>" id="nama_klien" name="nama_klien" class="form-control">
+                                    <label class="form-label">Nama Klien</label>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <select id="nama_user_klien" name="nama_user_klien" class="form-control show-tick" required>
+                                        <option value=""><?= $cln['nama_klien'] ?></option>
+                                        <?php foreach ($user as $data) :
+                                        ?>
+                                            <option value="<?= $data['id_user'] ?>" <?= ($data['nama_user'] === $cln['nama_klien']) ? 'selected' : '' ?>><?= $data['nama_user'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <label class="form-label">Pilih User</label>
+                                </div>
+                            </div>
 
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-link waves-effect">SAVE
                                     CHANGES</button>
-                                <button type="button" class="btn btn-link waves-effect"
-                                    data-dismiss="modal">CLOSE</button>
+                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                                 <?php echo form_close() ?>
 
                             </div>
@@ -132,9 +134,9 @@
             </div>
         </div>
     </div>
-    <?php endforeach ?>
+<?php endforeach ?>
 
-    <!-- MODAL ADD -->
+<!-- MODAL ADD -->
 <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -148,20 +150,20 @@
                     <form>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input value="<?= noUrutClient(); ?>"  type="text" id="no_klien" name="no_klien" class="form-control">
+                                <input value="<?= noUrutClient(); ?>" type="text" id="no_klien" name="no_klien" class="form-control">
                                 <label class="form-label">No Klien</label>
                             </div>
                         </div>
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                            <select  id="nama_user_klien" name="nama_user_klien" class="form-control show-tick" required>
-                                <option value="">-- Please select User--</option>
-                                <?php foreach($user as $data):
-                                ?>
-                                    <option value="<?= $data['id_user']?>"><?= $data['nama_user']?></option>
-                                <?php endforeach;?>
-                                </select> 
+                                <select id="nama_user_klien" name="nama_user_klien" class="form-control show-tick" required>
+                                    <option value="">-- Please select User--</option>
+                                    <?php foreach ($user as $data) :
+                                    ?>
+                                        <option value="<?= $data['id_user'] ?>"><?= $data['nama_user'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
 
@@ -175,8 +177,7 @@
                 </div>
 
                 <div class="modal-footer js-sweetalert">
-                    <button type="submit" id="tombol-tambah" class="btn btn-primary waves-effect"
-                        data-type="success">SAVE
+                    <button type="submit" id="tombol-tambah" class="btn btn-primary waves-effect" data-type="success">SAVE
                         CHANGES</button>
                     <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                     <?php echo form_close() ?>
@@ -189,22 +190,22 @@
 </div>
 </div>
 
-    
+
 <script>
-$('#tombol-tambah').on('click', function(e) {
+    $('#tombol-tambah').on('click', function(e) {
 
-    e.preventDefault();
-    const href = $(this).attr('href');
+        e.preventDefault();
+        const href = $(this).attr('href');
 
-    Swal.fire({
-        icon: 'success',
-        title: 'Added',
-        text: 'Data added'
-    }).then((result) => {
-        if (result.value) {
-            document.location.href = href;
-        }
+        Swal.fire({
+            icon: 'success',
+            title: 'Added',
+            text: 'Data added'
+        }).then((result) => {
+            if (result.value) {
+                document.location.href = href;
+            }
+        })
+
     })
-
-})
 </script>

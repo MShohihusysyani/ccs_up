@@ -119,7 +119,8 @@ class Superadmin extends CI_Controller
         $nama_klien = $this->input->post('nama_klien');
         $ArrUpdate  = array(
             'no_klien'    => $no_klien,
-            'nama_klien' => $nama_klien
+            'nama_klien' => $nama_klien,
+            'id_user_klien' => $this->input->post('nama_user_klien')
         );
         $this->client_model->updateKlien($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
