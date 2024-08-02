@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Agu 2024 pada 10.58
+-- Waktu pembuatan: 02 Agu 2024 pada 10.38
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.26
 
@@ -199,7 +199,16 @@ INSERT INTO `klien` (`id`, `no_klien`, `nama_klien`, `id_user_klien`) VALUES
 (24, '0002', 'PT BPR BKK Karangmalang (Perseroda)', 59),
 (35, '0003', 'PT BPR BKK Purwokerto (Perseroda)', 60),
 (40, '0006', 'PT BPR BKK Kab.Pekalongan (Perseroda)', 61),
-(41, '0007', 'PT BPR BKK Kebumen (Perseroda)', 66);
+(41, '0007', 'PT BPR BKK Kebumen (Perseroda)', 66),
+(42, '0008', 'PT. BPR Arta Utama', 101),
+(43, '0009', 'PT. BPR Mentari Terang', 102),
+(44, '0010', 'PT. BPR Sinar Garuda Prima', 103),
+(45, '0011', 'PT. BPR Wirosari Ijo', 104),
+(46, '0012', 'PT BPR BKK Blora (Perseroda)', 105),
+(47, '0013', 'Kospin Sekartama', 106),
+(48, '0014', 'PT BPR BKK Jepara (Perseroda)', 107),
+(49, '0015', 'PT. BPR Kusuma Sumbing', 108),
+(50, '0016', 'PT BPR BKK Grogol (Perseroda)', 109);
 
 -- --------------------------------------------------------
 
@@ -444,15 +453,15 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (52, 'Helpdesk', 'Eva', 'eva', '$2y$10$R8oQzXHI8pnwusrmXCTX3e9FWIjfvqgXFekk1yqJNhXIAkFDTY.n.', 2, 'Y', '2024-05-31', '2024-07-23 15:16:42'),
 (54, 'Helpdesk', 'Nita', 'nita', '$2y$10$lGRwZfprphMBSECfyzb/SOLIyxsTw2THLpKO5WYjUeq41XBy0Nnz.', 2, 'Y', '2024-05-31', '2024-06-26 16:11:57'),
 (55, 'Helpdesk', 'Luthfi', 'luthfi', '$2y$10$JEjAMFVKUPfcwhAh5mNlAOzSOKQmSmXL/2iVnTWN6NS4BRzke6wMu', 2, 'Y', '2024-05-31', '2024-07-24 08:09:48'),
-(57, 'Supervisor 1', 'Khabibah', 'Khabibah', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-07-31 10:28:36'),
+(57, 'Supervisor 1', 'Khabibah', 'Khabibah', '$2y$10$B2CATYduaY1k14AaFRVyP.m/rV5.yI4mj0.WXWt.Ud8P5oZMF1rQy', 3, 'Y', '2024-05-31', '2024-08-02 13:51:36'),
 (58, 'Klien', 'PT BPR BKK Banjarharjo (Perseroda)', 'banjarharjo', '$2y$10$kTGlxi4xSlwGOuMW8xDSc.CparcG1uAK/YAIV4PU0trjX8oZ.YMVq', 1, 'Y', '2024-05-31', '2024-08-01 15:46:03'),
 (59, 'Klien', 'PT BPR BKK Karangmalang (Perseroda)', 'karangmalang', '$2y$10$QNYfJEq8VLi6JCCBdywKjumU8rGIQnu9LU5AIcCobSyvXzauc6EWm', 1, 'Y', '2024-05-31', '2024-07-01 14:37:06'),
 (60, 'Klien', 'PT BPR BKK Purwokerto (Perseroda)', 'purwokerto', '$2y$10$WniGIEgNUJA9Z/aNxOh3TO9oUtB9BAi9q3U8FYeqHHbTXTaV9Eywe', 1, 'Y', '2024-05-31', '2024-07-03 14:01:20'),
-(61, 'Klien', 'PT BPR BKK Kab. Pekalongan (Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-31', '2024-07-25 16:16:13'),
-(62, 'Implementator', 'Diki', 'diki', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-31', '2024-07-27 10:46:21'),
-(66, 'Klien', 'PT BPR BKK Kebumen(Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-31', '2024-07-31 10:25:50'),
-(68, 'Superadmin', 'Indri', 'indri', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-08-01 13:58:40'),
-(78, 'Implementator', 'Indra', 'indra', '$2y$10$8etE1d5OKw9.Gbyz58eyjuGIfU.O0MyFH0r6XZ8oY4bQek.ujQChK', 4, 'Y', '2024-06-28', '2024-07-27 10:49:05'),
+(61, 'Klien', 'PT BPR BKK Kab.Pekalongan (Perseroda)', 'pekalongan', '$2y$10$v7C/rY7SMvCOdS46NFs3jeZWtJbLmwImjBnw9KyHj0IM0fI3Useyu', 1, 'Y', '2024-05-31', '2024-07-25 16:16:13'),
+(62, 'Implementator', 'Diki', 'diki', '$2y$10$vAfqKnPDv/ymAIPib1NF2uhLZbnqWuJ6JN87f6T/Fq0A9n0axAoA2', 4, 'Y', '2024-05-31', '2024-08-02 08:17:50'),
+(66, 'Klien', 'PT BPR BKK Kebumen (Perseroda)', 'kebumen', '$2y$10$8U34fAsqjj5IvjEe7CZgpeR.1.otC4xVr1F/cDHpSRCowoEUU4ffm', 1, 'Y', '2024-05-31', '2024-07-31 10:25:50'),
+(68, 'Superadmin', 'Indri', 'indri', '$2y$10$tDJeFvFcChAeZWacIUOTxuSJp9HbObg3pagd3zZiHSj9EkGou79Iy', 6, 'Y', '2024-05-31', '2024-08-02 13:54:23'),
+(78, 'Implementator', 'Indra', 'indra', '$2y$10$8etE1d5OKw9.Gbyz58eyjuGIfU.O0MyFH0r6XZ8oY4bQek.ujQChK', 4, 'Y', '2024-06-28', '2024-08-01 16:11:57'),
 (79, 'Implementator', 'Arif', 'arif', '$2y$10$Vbg7uz5gPOgYBEcSJUt2Jef5ox//0yFYSCtS60mPzC2irwkmbSPzW', 4, 'Y', '2024-07-01', '2024-07-27 10:50:00'),
 (80, 'Helpdesk', 'Zelly', 'zelly', '$2y$10$w3ERUHDBVufTAMNPzcYdou5vlkWRrUykQxsVwJqCQkzOVIOYc2iZm', 2, 'Y', '2024-07-27', '2024-07-27 10:33:02'),
 (81, 'Helpdesk', 'Sandy', 'sandy', '$2y$10$rL5AZzoyO6rtAgWClQov7euzNspS5sP3UQydqwWDPLnBIR5cDZZcu', 2, 'Y', '2024-07-27', '2024-07-27 10:39:29'),
@@ -473,7 +482,16 @@ INSERT INTO `user` (`id_user`, `divisi`, `nama_user`, `username`, `password`, `r
 (96, 'Supervisor 1', 'Dettia', 'dettiaspv', '$2y$10$EzfEeeAW7c9ecyuyhGKLDOfqn9bK1E7T0g8QeoL.sWwYOJR4Zs8o.', 3, 'Y', '2024-07-27', '2024-07-27 11:03:33'),
 (97, 'Supervisor 1', 'Norma', 'normaspv', '$2y$10$K.YfvCf/L/aaWGHfzeKiC.TLhT4KTYbSCp2Y5QJG7ZMWk/1Q1wSM2', 3, 'Y', '2024-07-27', '2024-07-27 11:05:16'),
 (98, 'Superadmin', 'Novi', 'novi', '$2y$10$a28QjMimNT3y9rZiXmkHTOqnWsmE2ndNtkLXqPrPRpUlYlmJoIhbW', 6, 'Y', '2024-07-27', '2024-07-27 11:07:13'),
-(99, 'Superadmin', 'Muti', 'muti', '$2y$10$TjmDQQw/JYMs.fRUA.6bsefuXIfIGzh.3dtTwG5efkfhrW/LTVF/y', 6, 'Y', '2024-07-27', '2024-07-27 11:07:52');
+(99, 'Superadmin', 'Muti', 'muti', '$2y$10$TjmDQQw/JYMs.fRUA.6bsefuXIfIGzh.3dtTwG5efkfhrW/LTVF/y', 6, 'Y', '2024-07-27', '2024-07-27 11:07:52'),
+(101, 'Klien', 'PT. BPR Arta Utama', 'artautama', '$2y$10$S9XpmzbDl/D2jBCuPhIvi.3qIsGGB4hFtDCKrRqLqAY2TIUdamqFS', 1, 'Y', '2024-08-02', '2024-08-02 13:23:50'),
+(102, 'Klien', 'PT. BPR Mentari Terang', 'mentariterang', '$2y$10$AUlBIJ2KbdUgXuIoTE71MOKaVfh/HxHbBZo0DL4uxAIpGJ/BbgtTy', 1, 'Y', '2024-08-02', '2024-08-02 13:28:08'),
+(103, 'Klien', 'PT. BPR Sinar Garuda Prima', 'sinargarudaprima', '$2y$10$PHOrGjejFr0jdXzQZlkB0ObsDdO16s/G3soLdAntKzt9ek8AAmdPy', 1, 'Y', '2024-08-02', '2024-08-02 13:29:58'),
+(104, 'Klien', 'PT. BPR Wirosari Ijo', 'wirosariijo', '$2y$10$.cuv3nB.lIydSFhPENEVmufgBieQNpzxss9jMX/i1.GnGZtOsJPDy', 1, 'Y', '2024-08-02', '2024-08-02 13:32:47'),
+(105, 'Klien', 'PT BPR BKK Blora (Perseroda)', 'blora', '$2y$10$hOpF.ArXNQJPAEX.LjZMT.G5qxi4684vDrv6PyQwFt8NYOx4Eg12m', 1, 'Y', '2024-08-02', '2024-08-02 13:33:40'),
+(106, 'Klien', 'Kospin Sekartama', 'sekartama', '$2y$10$jgQlX0GNz0/cqXaeZjATxO/MTNBRhlvdZl82ksogu7rvYN5l1ASuu', 1, 'Y', '2024-08-02', '2024-08-02 13:35:44'),
+(107, 'Klien', 'PT BPR BKK Jepara (Perseroda)', 'jepara', '$2y$10$MqnibtwmduWuDg63c9pUt.htUXpCBo/XXSg2M6UyyVruarVuFiUga', 1, 'Y', '2024-08-02', '2024-08-02 13:37:09'),
+(108, 'Klien', 'PT. BPR Kusuma Sumbing', 'kusumasumbing', '$2y$10$PsRo6ECqNTPuVWV8qAnIJ.o7glngrf9UIAIorVMat8nYOeJBreKIO', 1, 'Y', '2024-08-02', '2024-08-02 13:40:21'),
+(109, 'Klien', 'PT BPR BKK Grogol (Perseroda)', 'grogol', '$2y$10$C1Si1w.4W4dEWP.tMuAgoOjtrwxOMN3RL8bL1i9c6gWmyz1cyPudi', 1, 'Y', '2024-08-02', '2024-08-02 13:41:52');
 
 --
 -- Indexes for dumped tables
@@ -580,7 +598,7 @@ ALTER TABLE `forward`
 -- AUTO_INCREMENT untuk tabel `klien`
 --
 ALTER TABLE `klien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelaporan`
@@ -628,7 +646,7 @@ ALTER TABLE `tiket_temp`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
