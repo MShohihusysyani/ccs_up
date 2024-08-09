@@ -113,7 +113,22 @@ class Klien extends CI_Controller
         redirect(base_url('klien/pengajuan'));
     }
 
-
+    public function fungsi_pengajuan()
+    {
+        // Cek apakah ada tiket yang selesai tetapi belum diberi rating
+        $has_unrated_finished_tickets = $this->pelaporan_model->has_unrated_finished_tickets($this->session->userdata('user_id'));
+    
+        if ($has_unrated_finished_tickets) {
+            // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
+            $this->session->set_flashdata('alert', 'Harap beri rating pada tiket yang sudah selesai sebelum mengajukan tiket baru.');
+            redirect(Base_url('klien/pengajuan')); // Alihkan ke halaman untuk memberi rating
+        } else {
+            // Tambahkan tiket baru
+            $this->pelaporan_model->add_pelaporan();
+            $this->session->set_flashdata('pesan', 'Pelaporan Berhasil!');
+            redirect(Base_url('klien/added'));
+        }
+    }
 
 
     public function tiket_temp()
