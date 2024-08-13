@@ -149,30 +149,63 @@ class Superadmin extends CI_Controller
 
     public function tambah_user()
     {
-        $data['divisi']   = $this->db->get('user')->result_array();
-        $data['nama_user']     = $this->db->get('user')->result_array();
-        $data['username'] = $this->db->get('user')->result_array();
-        $data['password'] = $this->db->get('user')->result_array();
-        $data['role']     = $this->db->get('user')->result_array();
-        $data['tgl_register']   = $this->db->get('user')->result_array();
+        $username = $this->input->post('username');
 
-        $this->form_validation->set_rules('no_urut', 'No Urut', 'required');
-        $this->form_validation->set_rules('nama_klien', 'Kategory', 'required');
+        // Cek apakah username sudah ada di database
+        $this->db->where('username', $username);
+        $query = $this->db->get('user');
 
-        // $password = md5($this->input->post('password'));
-        $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-        $data = [
-            'divisi'   => $this->input->post('divisi'),
-            'nama_user'     => $this->input->post('nama_user'),
-            'username' => $this->input->post('username'),
-            'password' => $password,
-            'role'     => $this->input->post('role'),
-            'tgl_register'   => $this->input->post('tgl_register')
-        ];
-        $this->db->insert('user', $data);
-        $this->session->set_flashdata('pesan', 'Successfully Added!');
-        redirect('superadmin/user');
+        if ($query->num_rows() > 0) {
+            // Jika username sudah ada, set pesan error dan redirect
+            $this->session->set_flashdata('alert', 'Username sudah digunakan oleh user lain.');
+            redirect('superadmin/user');
+        } else {
+            // Hash password
+            $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+
+            // Data yang akan diinsert
+            $data = [
+                'divisi'       => $this->input->post('divisi'),
+                'nama_user'    => $this->input->post('nama_user'),
+                'username'     => $username,
+                'password'     => $password,
+                'role'         => $this->input->post('role'),
+                'tgl_register' => $this->input->post('tgl_register')
+            ];
+
+            // Insert data ke tabel user
+            $this->db->insert('user', $data);
+            $this->session->set_flashdata('pesan', 'Successfully Added!');
+            redirect('superadmin/user');
+        }
     }
+
+    // public function tambah_user()
+    // {
+    //     $data['divisi']   = $this->db->get('user')->result_array();
+    //     $data['nama_user']     = $this->db->get('user')->result_array();
+    //     $data['username'] = $this->db->get('user')->result_array();
+    //     $data['password'] = $this->db->get('user')->result_array();
+    //     $data['role']     = $this->db->get('user')->result_array();
+    //     $data['tgl_register']   = $this->db->get('user')->result_array();
+
+    //     $this->form_validation->set_rules('no_urut', 'No Urut', 'required');
+    //     $this->form_validation->set_rules('nama_klien', 'Kategory', 'required');
+
+    //     // $password = md5($this->input->post('password'));
+    //     $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+    //     $data = [
+    //         'divisi'   => $this->input->post('divisi'),
+    //         'nama_user'     => $this->input->post('nama_user'),
+    //         'username' => $this->input->post('username'),
+    //         'password' => $password,
+    //         'role'     => $this->input->post('role'),
+    //         'tgl_register'   => $this->input->post('tgl_register')
+    //     ];
+    //     $this->db->insert('user', $data);
+    //     $this->session->set_flashdata('pesan', 'Successfully Added!');
+    //     redirect('superadmin/user');
+    // }
 
     public function edit_user()
     {

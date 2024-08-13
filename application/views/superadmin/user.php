@@ -11,86 +11,87 @@
             <?php if ($this->session->flashdata('pesan')) { ?>
 
             <?php } ?>
-            <?= $this->session->flashdata('message'); ?>
-        </div>
+            <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert')) ?>">
+                <?php if ($this->session->flashdata('pesan')) { ?>
 
-        <?= $this->session->flashdata('message'); ?>
-        <!-- #END# Basic Examples -->
-        <!-- Exportable Table -->
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>
-                            Data User
-                        </h2>
-                        <br>
+                <?php } ?>
+                <?= validation_errors(); ?>
+                <!-- #END# Basic Examples -->
+                <!-- Exportable Table -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    Data User
+                                </h2>
+                                <br>
 
-                        <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal"> <i class="material-icons">add</i> <span class="icon-name"></i>Add User</button>
+                                <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal"> <i class="material-icons">add</i> <span class="icon-name"></i>Add User</button>
 
-                    </div>
-                    <div class="body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Divisi</th>
-                                        <th>Nama</th>
-                                        <th>Active</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <th>No</th>
-                                    <th>Divisi</th>
-                                    <th>Nama</th>
-                                    <th>Active</th>
-                                    <th>Aksi</th>
-                                </tfoot>
-                                <tbody>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Divisi</th>
+                                                <th>Nama</th>
+                                                <th>Active</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <th>No</th>
+                                            <th>Divisi</th>
+                                            <th>Nama</th>
+                                            <th>Active</th>
+                                            <th>Aksi</th>
+                                        </tfoot>
+                                        <tbody>
 
-                                    <?php
-                                    $no = 1;
-                                    foreach ($user as $u) : ?>
-                                        <tr>
-                                            <td><?php echo $no++ ?></td>
-                                            <td><?= $u['divisi']; ?></td>
-                                            <td><?= $u['nama_user']; ?></td>
-                                            <td>
-                                                <?php if ($u['active'] == 'Y') : ?>
-                                                    <span><i class="material-icons">verified</i></span>
+                                            <?php
+                                            $no = 1;
+                                            foreach ($user as $u) : ?>
+                                                <tr>
+                                                    <td><?php echo $no++ ?></td>
+                                                    <td><?= $u['divisi']; ?></td>
+                                                    <td><?= $u['nama_user']; ?></td>
+                                                    <td>
+                                                        <?php if ($u['active'] == 'Y') : ?>
+                                                            <span><i class="material-icons">verified</i></span>
 
-                                                <?php elseif ($u['active'] == 'N') : ?>
-                                                    <span><i class="material-icons">close</i></span>
+                                                        <?php elseif ($u['active'] == 'N') : ?>
+                                                            <span><i class="material-icons">close</i></span>
 
-                                                <?php else : ?>
-                                                <?php endif; ?>
-                                            </td>
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+                                                    </td>
 
-                                            <td>
-                                                <div class="btn btn-sm btn-warning">
-                                                    <div class="demo-google-material-icon" data-toggle="modal" data-target="#editModal<?= $u['id_user']; ?>"> <i class="material-icons">edit</i> <span class="icon-name"></span>
-                                                    </div>
-                                                </div>
+                                                    <td>
+                                                        <div class="btn btn-sm btn-warning">
+                                                            <div class="demo-google-material-icon" data-toggle="modal" data-target="#editModal<?= $u['id_user']; ?>"> <i class="material-icons">edit</i> <span class="icon-name"></span>
+                                                            </div>
+                                                        </div>
 
-                                                <a class="btn btn-sm btn-danger waves-effect tombol-hapus" data-type="success" href="<?= base_url() ?>superadmin/hapus_user/<?= $u['id_user']; ?>"><i class="material-icons">delete</i><span class="fa fa-trash"></span>
-                                                </a>
+                                                        <a class="btn btn-sm btn-danger waves-effect tombol-hapus" data-type="success" href="<?= base_url() ?>superadmin/hapus_user/<?= $u['id_user']; ?>"><i class="material-icons">delete</i><span class="fa fa-trash"></span>
+                                                        </a>
 
-                                            </td>
+                                                    </td>
 
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- #END# Exportable Table -->
             </div>
-        </div>
-        <!-- #END# Exportable Table -->
-    </div>
-    <!-- Button trigger modal -->
+            <!-- Button trigger modal -->
 </section>
 
 <!-- <script>
