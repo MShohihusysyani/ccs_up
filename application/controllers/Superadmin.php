@@ -817,6 +817,10 @@ class Superadmin extends CI_Controller
             return '<span class="label label-warning">CLOSE</span>';
         } elseif ($status == 'HANDLE') {
             return '<span class="label label-info">HANDLE</span>';
+        } elseif ($status == 'HANDLE 2') {
+            return '<span class="label label-info">HANDLE 2</span>';
+        } elseif ($status == 'ADDED 2') {
+            return '<span class="label label-info">ADDED 2</span>';
         } elseif ($status == 'ADDED') {
             return '<span class="label label-primary">ADDED</span>';
         }
