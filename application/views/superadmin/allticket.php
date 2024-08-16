@@ -28,9 +28,9 @@
                         <h2>
                             All Ticket
                         </h2>
-                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
                             Import Excel
-                        </button> -->
+                        </button>
                     </div>
                     <div class="body">
                         <div class="table-responsive">
@@ -157,7 +157,7 @@
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 <!-- Modal for File Upload -->
-<!-- <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -166,7 +166,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= site_url('export/import_excel') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= site_url('export/import_excel_to_t1_forward') ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="file">Choose Excel File</label>
@@ -180,7 +180,7 @@
             </form>
         </div>
     </div>
-</div> -->
+</div>
 <script>
     $('#table_id').DataTable({
         "processing": true,
