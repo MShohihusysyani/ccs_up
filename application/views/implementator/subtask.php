@@ -88,7 +88,11 @@
                                                     </td>
                                                     <td><?= $st['kategori']; ?></td>
                                                     <td>
-                                                        <span class="label label-info"><?= $st['tags']; ?></span>
+                                                        <?php if (!empty($dp['tags'])): ?>
+                                                            <span class="label label-info">
+                                                                <?= $dp['tags']; ?>
+                                                            </span>
+                                                        <?php endif; ?>
                                                     </td>
                                                     <td>
                                                         <?php if ($st['priority'] == 'Low') : ?>

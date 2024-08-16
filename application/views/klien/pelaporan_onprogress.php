@@ -90,9 +90,11 @@
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
-                                                    <span class="label label-info">
-                                                        <?= $dp['tags']; ?>
-                                                    </span>
+                                                    <?php if (!empty($dp['tags'])): ?>
+                                                        <span class="label label-info">
+                                                            <?= $dp['tags']; ?>
+                                                        </span>
+                                                    <?php endif; ?>
                                                 </td>
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
@@ -154,7 +156,7 @@
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
                                                 </td>
-                                               <td><?= $dp['subtask2']; ?></td>
+                                                <td><?= $dp['subtask2']; ?></td>
                                                 <td>
                                                     <?php if ($dp['status2'] == 'COMPLETED') : ?>
                                                         <span class="label label-success">COMPLETED</span>
@@ -176,7 +178,7 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-												 
+
                                                 <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
                                                 <td>
