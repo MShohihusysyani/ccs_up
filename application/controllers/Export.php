@@ -5,6 +5,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Export extends CI_Controller
 {
@@ -1049,5 +1050,45 @@ class Export extends CI_Controller
 
         // Output to browser
         $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+    }
+
+    public function import_excel()
+    {
+        $file = $_FILES['file']['tmp_name'];
+
+        // Load the Excel file using PHPSpreadsheet
+        $spreadsheet = IOFactory::load($file);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+        // Process each row of the Excel file
+        foreach ($sheetData as $row) {
+            $tanggal = $row['J'];  // Assuming 'B' is the "waktu pelaporan" column
+            $dateOnly = date('Y-m-d', strtotime($tanggal)); // Extracts the date (YYYY-MM-DD) only
+
+            $tanggal2 = $row['K'];  // Assuming 'B' is the "waktu pelaporan" column
+            $dateOnly2 = date('Y-m-d', strtotime($tanggal2)); // Extracts the date (YYYY-MM-DD) only
+
+            // Map and validate the data as needed
+            $data = [
+                'no_tiket' => $row['A'],
+                'judul' => $row['B'],
+                'user_id' => $row['C'],
+                'perihal' => $row['D'],
+                'nama' => $row['E'],
+                'kategori' => $row['F'],
+                'priority' => $row['G'],
+                'handle_by' => $row['H'],
+                'status_ccs' => $row['I'],
+                'waktu_pelaporan' => $dateOnly,
+                'waktu_approve' => $dateOnly2,
+                // Map other fields as necessary
+            ];
+
+            // Insert into the database
+            $this->db->insert('pelaporan', $data);
+        }
+
+        // Redirect back with a success message
+        redirect('superadmin/all_ticket');
     }
 }
