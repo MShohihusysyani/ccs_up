@@ -1065,8 +1065,7 @@ class Export extends CI_Controller
             $tanggal = $row['J'];  // Assuming 'B' is the "waktu pelaporan" column
             $dateOnly = date('Y-m-d', strtotime($tanggal)); // Extracts the date (YYYY-MM-DD) only
 
-            $tanggal2 = $row['K'];  // Assuming 'B' is the "waktu pelaporan" column
-            $dateOnly2 = date('Y-m-d', strtotime($tanggal2)); // Extracts the date (YYYY-MM-DD) only
+            $waktuApprove = !empty($row['K']) && strtotime($row['K']) !== false ? date('Y-m-d', strtotime($row['K'])) : null;
 
             // Map and validate the data as needed
             $data = [
@@ -1080,7 +1079,7 @@ class Export extends CI_Controller
                 'handle_by' => $row['H'],
                 'status_ccs' => $row['I'],
                 'waktu_pelaporan' => $dateOnly,
-                'waktu_approve' => $dateOnly2,
+                'waktu_approve' => $waktuApprove,
                 // Map other fields as necessary
             ];
 
@@ -1089,6 +1088,6 @@ class Export extends CI_Controller
         }
 
         // Redirect back with a success message
-        redirect('superadmin/all_ticket');
+        redirect('superadmin/AllTicket');
     }
 }
