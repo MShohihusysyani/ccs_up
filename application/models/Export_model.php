@@ -16,7 +16,7 @@ class Export_model extends CI_Model
             $this->db->where('status_ccs', $status_ccs);
         }
         if ($nama_klien) {
-            $this->db->where('nama', $nama_klien);
+            $this->db->like('nama', $nama_klien);
         }
         if ($tags) {
             $this->db->where('tags', $tags);
