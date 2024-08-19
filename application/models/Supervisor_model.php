@@ -86,17 +86,12 @@
         //ON PROGRESS/HANDLE
         public function getKlienPelaporanOP()
         {
-            // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-            // $user_id = $this->session->userdata('id_user');
-            // $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority,maxday, handle_by, impact, handle_by2, handle_by3, tags  FROM pelaporan WHERE status_ccs='HANDLE' OR status_ccs='HANDLE 2' OR status_ccs='ADDED 2'  ORDER BY waktu_pelaporan DESC";
-            // return $this->db->query($query)->result_array();
-            // Get user data from the session
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $user_id = $this->session->userdata('id_user');
 
             // Subquery to gather subtasks and their statuses
             $subquery = "
-        (SELECT
+        SELECT
             pelaporan_id,
             MAX(CASE WHEN row_num = 1 THEN subtask END) AS subtask1,
             MAX(CASE WHEN row_num = 1 THEN status END) AS status1,
@@ -118,43 +113,42 @@
                 id_forward,
                 ROW_NUMBER() OVER(PARTITION BY pelaporan_id ORDER BY id_forward) AS row_num
             FROM t1_forward
-        ) sub
+        ) AS sub
         GROUP BY pelaporan_id
-        ) subtask_data
     ";
 
             // Build the main query
             $this->db->select('
-                pelaporan.kategori,
-                pelaporan.id_pelaporan,
-                pelaporan.waktu_pelaporan,
-                pelaporan.status_ccs,
-                pelaporan.priority,
-                pelaporan.maxday,
-                pelaporan.judul,
-                pelaporan.perihal,
-                pelaporan.file,
-                pelaporan.nama,
-                pelaporan.no_tiket,
-                pelaporan.impact,
-                pelaporan.handle_by,
-                pelaporan.handle_by2,
-                pelaporan.handle_by3,
-                pelaporan.status,
-                pelaporan.tags,
-                subtask_data.subtask1,
-                subtask_data.status1,
-                subtask_data.subtask2,
-                subtask_data.status2,
-                subtask_data.subtask3,
-                subtask_data.status3,
-                subtask_data.tanggal,
-                subtask_data.forward_judul,
-                subtask_data.id_forward,
-                subtask_data.forward_status
-            ');
+        pelaporan.kategori,
+        pelaporan.id_pelaporan,
+        pelaporan.waktu_pelaporan,
+        pelaporan.status_ccs,
+        pelaporan.priority,
+        pelaporan.maxday,
+        pelaporan.judul,
+        pelaporan.perihal,
+        pelaporan.file,
+        pelaporan.nama,
+        pelaporan.no_tiket,
+        pelaporan.impact,
+        pelaporan.handle_by,
+        pelaporan.handle_by2,
+        pelaporan.handle_by3,
+        pelaporan.status,
+        pelaporan.tags,
+        subtask_data.subtask1,
+        subtask_data.status1,
+        subtask_data.subtask2,
+        subtask_data.status2,
+        subtask_data.subtask3,
+        subtask_data.status3,
+        subtask_data.tanggal,
+        subtask_data.forward_judul,
+        subtask_data.id_forward,
+        subtask_data.forward_status
+    ');
             $this->db->from('pelaporan');
-            $this->db->join("($subquery)", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
+            $this->db->join("($subquery) AS subtask_data", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
             $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLE 2', 'HANDLE']);
             $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
@@ -162,19 +156,16 @@
             return $this->db->get()->result_array();
         }
 
+
         //CLOSE
         public function getKlienPelaporanClose()
         {
-            // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-            // $user_id = $this->session->userdata('id_user');
-            // $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, maxday, handle_by, maxday, handle_by2, handle_by3, impact, tags  FROM pelaporan WHERE status_ccs='CLOSE' ORDER BY waktu_pelaporan DESC";
-            // return $this->db->query($query)->result_array();
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $user_id = $this->session->userdata('id_user');
 
             // Subquery to gather subtasks and their statuses
             $subquery = "
-        (SELECT
+        SELECT
             pelaporan_id,
             MAX(CASE WHEN row_num = 1 THEN subtask END) AS subtask1,
             MAX(CASE WHEN row_num = 1 THEN status END) AS status1,
@@ -196,49 +187,49 @@
                 id_forward,
                 ROW_NUMBER() OVER(PARTITION BY pelaporan_id ORDER BY id_forward) AS row_num
             FROM t1_forward
-        ) sub
+        ) AS sub
         GROUP BY pelaporan_id
-        ) subtask_data
     ";
 
             // Build the main query
             $this->db->select('
-                pelaporan.kategori,
-                pelaporan.id_pelaporan,
-                pelaporan.waktu_pelaporan,
-                pelaporan.status_ccs,
-                pelaporan.priority,
-                pelaporan.maxday,
-                pelaporan.judul,
-                pelaporan.perihal,
-                pelaporan.file,
-                pelaporan.nama,
-                pelaporan.no_tiket,
-                pelaporan.impact,
-                pelaporan.handle_by,
-                pelaporan.handle_by2,
-                pelaporan.handle_by3,
-                pelaporan.status,
-                pelaporan.tags,
-                subtask_data.subtask1,
-                subtask_data.status1,
-                subtask_data.subtask2,
-                subtask_data.status2,
-                subtask_data.subtask3,
-                subtask_data.status3,
-                subtask_data.tanggal,
-                subtask_data.forward_judul,
-                subtask_data.id_forward,
-                subtask_data.forward_status
-            ');
+        pelaporan.kategori,
+        pelaporan.id_pelaporan,
+        pelaporan.waktu_pelaporan,
+        pelaporan.status_ccs,
+        pelaporan.priority,
+        pelaporan.maxday,
+        pelaporan.judul,
+        pelaporan.perihal,
+        pelaporan.file,
+        pelaporan.nama,
+        pelaporan.no_tiket,
+        pelaporan.impact,
+        pelaporan.handle_by,
+        pelaporan.handle_by2,
+        pelaporan.handle_by3,
+        pelaporan.status,
+        pelaporan.tags,
+        subtask_data.subtask1,
+        subtask_data.status1,
+        subtask_data.subtask2,
+        subtask_data.status2,
+        subtask_data.subtask3,
+        subtask_data.status3,
+        subtask_data.tanggal,
+        subtask_data.forward_judul,
+        subtask_data.id_forward,
+        subtask_data.forward_status
+    ');
             $this->db->from('pelaporan');
-            $this->db->join("($subquery)", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
+            $this->db->join("($subquery) AS subtask_data", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
             $this->db->where('pelaporan.status_ccs', 'CLOSE');
             $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
             // Execute the query and return the result
             return $this->db->get()->result_array();
         }
+
 
         //FINISH
         public function getKlienPelaporanFinish()
