@@ -1140,4 +1140,29 @@ class Export extends CI_Controller
         // Redirect back with a success message
         redirect('superadmin/AllTicket');
     }
+
+    public function import_excel_to_s_forward()
+    {
+        $file = $_FILES['file']['tmp_name'];
+
+        // Load the Excel file using PHPSpreadsheet
+        $spreadsheet = IOFactory::load($file);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+        // Process each row of the Excel file
+        foreach ($sheetData as $row) {
+            // Map and validate the data as needed
+            $data = [
+                'pelaporan_id' => $row['A'],
+                'user_id' => $row['B'],
+                // Map other fields as necessary
+            ];
+
+            // Insert into the database
+            $this->db->insert('s_forward', $data);
+        }
+
+        // Redirect back with a success message
+        redirect('superadmin/AllTicket');
+    }
 }
