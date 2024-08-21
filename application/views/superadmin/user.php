@@ -38,7 +38,7 @@
                                                 <th>No</th>
                                                 <th>Divisi</th>
                                                 <th>Nama</th>
-                                                <th>ID User</th>
+                                                <!-- <th>ID User</th> -->
                                                 <th>Active</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -47,7 +47,7 @@
                                             <th>No</th>
                                             <th>Divisi</th>
                                             <th>Nama</th>
-                                            <th>ID User</th>
+                                            <!-- <th>ID User</th> -->
                                             <th>Active</th>
                                             <th>Aksi</th>
                                         </tfoot>
@@ -60,7 +60,7 @@
                                                     <td><?php echo $no++ ?></td>
                                                     <td><?= $u['divisi']; ?></td>
                                                     <td><?= $u['nama_user']; ?></td>
-                                                    <td><?= $u['id_user']; ?></td>
+                                                    <!-- <td><?= $u['id_user']; ?></td> -->
                                                     <td>
                                                         <?php if ($u['active'] == 'Y') : ?>
                                                             <span><i class="material-icons">verified</i></span>
