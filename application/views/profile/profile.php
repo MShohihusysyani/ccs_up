@@ -75,7 +75,7 @@
                                                             <div class="form-line">
                                                                 <input type="text" class="form-control" id="username"
                                                                     name="username" placeholder="Username"
-                                                                    value="<?= $u['username']; ?>">
+                                                                    value="<?= $u['username']; ?>" <?= ($u['divisi'] !== 'Superadmin') ? 'readonly' : ''; ?>>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -84,8 +84,8 @@
                                                         <label for="Nama" class="col-sm-2 control-label">Nama Lengkap</label>
                                                         <div class="col-sm-10">
                                                             <div class="form-line">
-                                                                <input type="text" class="form-control" id="nama_user" name="nama_user"
-                                                                    placeholder="Nama Lengkap" value="<?= $u['nama_user']; ?>" required>
+                                                                <input type="text" class="form-control" id="nama_user" name="nama_user" placeholder="Nama Lengkap" value="<?= $u['nama_user']; ?>"
+                                                                    <?= ($u['divisi'] == 'Klien') ? 'readonly' : ''; ?>>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -98,6 +98,12 @@
 
 
                                                 </form>
+                                                <!-- <script>
+                                                    var divisi = "<?= $u['divisi']; ?>";
+                                                    if (divisi === 'Klien') {
+                                                        document.getElementById('nama_user').setAttribute('readonly', 'readonly');
+                                                    }
+                                                </script> -->
                                             <?php endforeach; ?>
                                             </div>
                                     </div>
