@@ -35,15 +35,15 @@ class Temp_model extends CI_Model
             // Debug: cek hasil query
             var_dump($file_data);
 
-            if (isset($file_data->file)) { // Ganti 'file_name' dengan 'file'
-                // Hapus data dari database
-                $this->db->where('id_temp', $id);
-                $this->db->delete('tiket_temp');
+            // Hapus data dari database
+            $this->db->where('id_temp', $id);
+            $this->db->delete('tiket_temp');
 
-                // Hapus file fisik
+            // Hapus file fisik jika ada
+            if (isset($file_data->file)) { // Ganti 'file_name' dengan 'file'
                 $file_path = FCPATH . 'assets/files/' . $file_data->file; // Ganti 'file_name' dengan 'file'
                 // Debug: cek apakah file path benar dan bukan direktori
-                var_dump($file_path);
+                // var_dump($file_path);
 
                 if (is_file($file_path)) {
                     if (unlink($file_path)) {
@@ -55,11 +55,11 @@ class Temp_model extends CI_Model
                     }
                 } else {
                     log_message('error', 'File tidak ditemukan atau ini adalah direktori: ' . $file_path);
-                    return false;  // File tidak ditemukan atau ini adalah direktori
+                    return true;  // File tidak ditemukan, tetap kembalikan true karena data sudah dihapus
                 }
             } else {
-                log_message('error', 'Properti file tidak ditemukan di objek $file_data');
-                return false;  // Properti file tidak ditemukan di objek $file_data
+                // Tidak ada file yang dihapus, tetap kembalikan true
+                return true;
             }
         } else {
             log_message('error', 'Data file tidak ditemukan di database dengan ID: ' . $id);
