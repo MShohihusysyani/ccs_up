@@ -142,6 +142,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Kode Klien</th>
                             <th>Nama Klien</th>
                             <th class="hide">ID</th>
                             <th>Aksi</th>
@@ -152,6 +153,7 @@
                         <?php foreach ($klien as $cln) : ?>
                             <tr>
                                 <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $cln['no_klien']; ?></td>
                                 <td><?= $cln['nama_klien']; ?></td>
                                 <td class="hide"><?= $cln['id']; ?></td>
                                 <td style="text-align:center;">

@@ -141,6 +141,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Kode Klien</th>
                             <th>Nama Klien</th>
                             <th class="hide">ID</th>
                             <th>Aksi</th>
@@ -151,6 +152,7 @@
                         <?php foreach ($klien as $cln) : ?>
                             <tr>
                                 <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $cln['no_klien']; ?></td>
                                 <td><?= $cln['nama_klien']; ?></td>
                                 <td class="hide"><?= $cln['id']; ?></td>
                                 <td style="text-align:center;">
@@ -203,28 +205,49 @@
                     data.status_ccs = $('#status_ccs').val();
                 }
             },
-            "order": [[1, 'desc']], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
-            "columnDefs": [
-            { 
-            "targets": [ 0 ], 
-            "orderable": false,
-            },
-        ],
-            "columns": [
-                { "data": "no" },
-                { "data": "waktu_pelaporan" },
-                { "data": "no_tiket" },
-                { "data": "nama" },
-                { "data": "perihal" },
-                { "data": "tags" },
-                { "data": "kategori" },
-                { "data": "impact" },
-                { "data": "priority" },
-                { "data": "maxday" },
-                { "data": "status_ccs" }
+            "order": [
+                [1, 'desc']
+            ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+            "columns": [{
+                    "data": "no"
+                },
+                {
+                    "data": "waktu_pelaporan"
+                },
+                {
+                    "data": "no_tiket"
+                },
+                {
+                    "data": "nama"
+                },
+                {
+                    "data": "perihal"
+                },
+                {
+                    "data": "tags"
+                },
+                {
+                    "data": "kategori"
+                },
+                {
+                    "data": "impact"
+                },
+                {
+                    "data": "priority"
+                },
+                {
+                    "data": "maxday"
+                },
+                {
+                    "data": "status_ccs"
+                }
             ]
         });
-        
+
 
         // Handle form submission for filtering
         $('#filterForm').on('submit', function(e) {
@@ -263,7 +286,7 @@
             };
 
             var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel'); ?>';
-            
+
             var form = $('<form>', {
                 action: actionUrl,
                 method: 'POST',
@@ -287,6 +310,3 @@
         }
     });
 </script>
-
-
-
