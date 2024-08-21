@@ -27,7 +27,7 @@
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
-                                            <th>Perihal</th>
+                                            <th>Judul</th>
                                             <th>Impact</th>
                                             <th>Attachment</th>
                                             <th>Category</th>
@@ -48,7 +48,7 @@
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
-                                            <th>Perihal</th>
+                                            <th>Judul</th>
                                             <th>Impact</th>
                                             <th>Attachment</th>
                                             <th>Category</th>
@@ -75,7 +75,7 @@
                                                 <td><?= $dp['no_tiket']; ?></td>
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                 <td><?= $dp['nama']; ?></td>
-                                                <td><?= $dp['perihal']; ?></td>
+                                                <td><?= $dp['judul']; ?></td>
                                                 <td><?= $dp['impact']; ?></td>
                                                 <td>
                                                     <?php if (!empty($dp['file'])) : ?>
@@ -124,7 +124,7 @@
                                                         , <?= $dp['handle_by3']; ?>
                                                     <?php endif; ?>
                                                 </td>
-<td><?= $dp['subtask2']; ?></td>
+                                                <td><?= $dp['subtask2']; ?></td>
                                                 <td>
                                                     <?php if ($dp['status2'] == 'COMPLETED') : ?>
                                                         <span class="label label-success">COMPLETED</span>
@@ -146,7 +146,7 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-												 
+
                                                 <td>
                                                     <a class="btn btn-xs btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span> Detail</a>
                                                 </td>

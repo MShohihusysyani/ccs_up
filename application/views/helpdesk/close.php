@@ -33,7 +33,7 @@
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
-                                            <th>Perihal</th>
+                                            <th>Judul</th>
                                             <th>Impact</th>
                                             <th>Attachment</th>
                                             <th>Category</th>
@@ -45,7 +45,7 @@
                                             <th>Status Subtask 1</th>
                                             <th>Subtask 2</th>
                                             <th>Status Subtask 2</th>
-                                            <!-- <th>Aksi</th> -->
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -54,7 +54,7 @@
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
-                                            <th>Perihal</th>
+                                            <th>Judul</th>
                                             <th>Impact</th>
                                             <th>Attachment</th>
                                             <th>Category</th>
@@ -66,7 +66,7 @@
                                             <th>Status Subtask 1</th>
                                             <th>Subtask 2</th>
                                             <th>Status Subtask 2</th>
-                                            <!-- <th>Aksi</th> -->
+                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -79,7 +79,7 @@
                                                 <td><?= $dp['no_tiket']; ?></td>
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                 <td><?= $dp['nama']; ?></td>
-                                                <td><?= $dp['perihal']; ?></td>
+                                                <td><?= $dp['judul']; ?></td>
                                                 <td><?= $dp['impact']; ?></td>
                                                 <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                 </td>
@@ -165,6 +165,9 @@
 
                                                     <?php else : ?>
                                                     <?php endif; ?>
+                                                </td>
+                                                <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>helpdesk/detail_close/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
+                                                        Detail</a>
                                                 </td>
 
                                             </tr>

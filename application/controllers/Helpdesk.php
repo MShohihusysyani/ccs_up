@@ -560,6 +560,30 @@ class Helpdesk extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function detail_finish($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/detail_finish', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detail_close($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/detail_close', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function detail_pelaporann($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
