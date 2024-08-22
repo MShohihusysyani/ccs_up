@@ -407,4 +407,29 @@
             $query = $this->db->get('pelaporan'); // Assuming 'pelaporan' is the name of your table
             return $query->result(); // Returns an array of object
         }
+
+
+        // public function get_recent_pelaporan()
+        // {
+        //     $this->db->select('id_pelaporan,no_tiket, judul, waktu_pelaporan, status_ccs, nama');
+        //     // $this->db->where('user_id', $user_id);  // Atau sesuaikan dengan kondisi lain jika perlu
+        //     $this->db->where('status_ccs', 'ADDED');  // Hanya mengambil yang masih dalam status proses
+        //     $this->db->order_by('waktu_pelaporan', 'DESC');
+        //     // $this->db->limit(5);  // Ambil 5 pelaporan terbaru
+        //     return $this->db->get('pelaporan')->result();
+        // }
+        public function get_recent_pelaporan()
+        {
+            $this->db->select('id_pelaporan,no_tiket, judul, waktu_pelaporan, status_ccs, nama');
+            $this->db->where('status_ccs', 'ADDED');
+            $this->db->order_by('waktu_pelaporan', 'DESC');
+            return $this->db->get('pelaporan')->result();
+        }
+
+        // Menghitung jumlah notifikasi yang belum dibaca
+        public function count_unread_notifications()
+        {
+            $this->db->where('status_ccs', 'ADDED');  // Syarat untuk notifikasi belum dibaca
+            return $this->db->count_all_results('pelaporan');
+        }
     }

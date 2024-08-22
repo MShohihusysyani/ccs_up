@@ -943,4 +943,18 @@ class Supervisor extends CI_Controller
             redirect(base_url('supervisor/close'));
         }
     }
+
+    public function get_notifications()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $this->load->model('Supervisor_model', 'supervisor_model');
+        $notifications = $this->supervisor_model->get_recent_pelaporan();
+
+        $unread_count = $this->supervisor_model->count_unread_notifications();
+
+        echo json_encode([
+            'notifications' => $notifications,
+            'unread_count' => $unread_count
+        ]);
+    }
 }
