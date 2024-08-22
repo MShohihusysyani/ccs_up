@@ -34,7 +34,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Perihal</th>
+                                            <!-- <th>Perihal</th> -->
                                             <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Tags</th>
@@ -48,6 +48,7 @@
                                             <th>Subtask 2</th>
                                             <th>Status Subtask 2</th>
                                             <th>Tenggat waktu</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -57,7 +58,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Perihal</th>
+                                            <!-- <th>Perihal</th> -->
                                             <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Tags</th>
@@ -71,6 +72,7 @@
                                             <th>Subtask 2</th>
                                             <th>Status Subtask 2</th>
                                             <th>Tenggat waktu</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -83,7 +85,7 @@
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
-                                                <td><?= $dp['perihal']; ?></td>
+                                                <!-- <td><?= $dp['perihal']; ?></td> -->
                                                 <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
@@ -173,6 +175,9 @@
                                                     <?php endif; ?>
                                                 </td>
                                                 <td><?= tanggal_indo($dp['tanggal']) ?></td>
+                                                <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>klien/detail_close/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
+                                                        Detail</a>
+                                                </td>
 
                                             </tr>
                                         <?php endforeach; ?>

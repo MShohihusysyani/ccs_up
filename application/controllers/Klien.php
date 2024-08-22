@@ -117,7 +117,7 @@ class Klien extends CI_Controller
     {
         // Cek apakah ada tiket yang selesai tetapi belum diberi rating
         $has_unrated_finished_tickets = $this->pelaporan_model->has_unrated_finished_tickets($this->session->userdata('user_id'));
-    
+
         if ($has_unrated_finished_tickets) {
             // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
             $this->session->set_flashdata('alert', 'Harap beri rating pada tiket yang sudah selesai sebelum mengajukan tiket baru.');
@@ -471,6 +471,30 @@ class Klien extends CI_Controller
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
         $this->load->view('klien/detail_pelaporan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detail_finish($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('klienpelaporan_model', 'klienpelaporan_model');
+        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/klien_sidebar');
+        $this->load->view('klien/detail_finish', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detail_close($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('klienpelaporan_model', 'klienpelaporan_model');
+        $data['datapelaporan'] = $this->klienpelaporan_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/klien_sidebar');
+        $this->load->view('klien/detail_close', $data);
         $this->load->view('templates/footer');
     }
 

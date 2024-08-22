@@ -56,7 +56,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Perihal</th>
+                                            <!-- <th>Perihal</th> -->
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
@@ -65,6 +65,7 @@
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
                                             <th>Rating</th>
+                                            <th>Aksi</th>
 
                                         </tr>
                                     </thead>
@@ -75,7 +76,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Perihal</th>
+                                            <!-- <th>Perihal</th> -->
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
@@ -84,6 +85,7 @@
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
                                             <th>Rating</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -97,7 +99,7 @@
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
-                                                <td><?= $dp['perihal']; ?></td>
+                                                <!-- <td><?= $dp['perihal']; ?></td> -->
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
                                                     <?php if (!empty($dp['tags'])): ?>
@@ -179,6 +181,9 @@
                                                         <span class="star" data-value="5">&#9733;</span>
                                                     </div>
 
+                                                </td>
+                                                <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>klien/detail_finish/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
+                                                        Detail</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
