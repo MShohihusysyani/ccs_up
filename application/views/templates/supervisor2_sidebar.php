@@ -165,7 +165,7 @@
 
                             <li>
                                 <!-- <?= $this->uri->segment(2) == 'changepassword' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
-                                <a href="<?= base_url('user/changepassword2') ?>"><i class="material-icons">lock</i>Change Password</a>
+                                <a href="<?= base_url('user/changepassword_spv2') ?>"><i class="material-icons">lock</i>Change Password</a>
                             </li>
 
                             <li role="separator" class="divider"></li>

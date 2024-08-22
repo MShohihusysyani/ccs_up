@@ -9,7 +9,7 @@
 
                 <?php } ?>
                 <?= validation_errors(); ?>
-
+                <?= $this->session->flashdata('message'); ?>
                 <div class="row clearfix">
 
                     <div class="col-xs-12 col-sm-9">
@@ -23,7 +23,7 @@
                                     </ul>
 
                                     <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
-                                        <form class="form-horizontal" action="<?= base_url('user/changepassword') ?>"
+                                        <form class="form-horizontal" action="<?= base_url('user/changepassword_spv2') ?>"
                                             method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="OldPassword" class="col-sm-3 control-label">Old Password</label>
