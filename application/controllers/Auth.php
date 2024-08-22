@@ -54,7 +54,7 @@ class Auth extends CI_Controller
 
                 // Redirect based on user role
                 if ($sess_data['active'] == 'Y') {
-                    $this->session->set_flashdata('pesan', 'Successfully Login!');
+                    $this->session->set_flashdata('pesan', 'Berhasil Login!');
                     switch ($sess_data['role']) {
                         case '1':
                             redirect('klien');
@@ -89,11 +89,11 @@ class Auth extends CI_Controller
                             break;
                     }
                 } else {
-                    $this->session->set_flashdata('alert', 'Inactive User, Please Contact Superadmin!');
+                    $this->session->set_flashdata('alert', 'User tidak aktif, Please Contact Superadmin!');
                     redirect('auth');
                 }
             } else {
-                $this->session->set_flashdata('alert', 'Incorrect Username or Password!');
+                $this->session->set_flashdata('alert', 'Username atau Password Anda Salah!');
                 redirect('auth');
             }
         }
@@ -115,7 +115,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id_user');
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role');
-        $this->session->set_flashdata('pesan', 'Successfully Logout!');
+        $this->session->set_flashdata('pesan', 'Berhasil Logout!');
         redirect('auth');
     }
 
