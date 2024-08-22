@@ -245,18 +245,18 @@ class User extends CI_Controller
             $confirm_new_password = $this->input->post('new_password2');
 
             if (!password_verify($current_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'Wrong current password!');
+                $this->session->set_flashdata('alert', 'Password lama anda salah!');
                 redirect('user/changepassword');
                 // Verifikasi bahwa password baru dan konfirmasinya sama
             } elseif (!password_verify($confirm_new_password, password_hash($new_password, PASSWORD_DEFAULT))) {
-                $this->session->set_flashdata('alert', 'New password and confirmation password do not match!');
+                $this->session->set_flashdata('alert', 'Password baru dan konfirmasi password baru tidak sama!');
                 redirect('user/changepassword');
             } elseif (password_verify($new_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+                $this->session->set_flashdata('alert', 'Password baru tidak boleh sama dengan password lama!!');
                 redirect('user/changepassword');
                 // Tambahkan pengecekan jika password baru kurang dari 8 karakter
             } elseif (strlen($new_password) < 8) {
-                $this->session->set_flashdata('alert', 'password must be at least 8 characters!');
+                $this->session->set_flashdata('alert', 'Password baru minimal 8 karakter!');
                 redirect('user/changepassword');
             } else {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -264,7 +264,7 @@ class User extends CI_Controller
                 $this->db->where('id_user', $this->session->userdata('id_user'));
                 $this->db->update('user');
 
-                $this->session->set_flashdata('pesan', 'Password Changed!');
+                $this->session->set_flashdata('pesan', 'Berhasil merubah password!');
                 redirect('user/changepassword');
             }
         }
@@ -289,18 +289,18 @@ class User extends CI_Controller
             $confirm_new_password = $this->input->post('new_password2');
 
             if (!password_verify($current_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'Wrong current password!');
+                $this->session->set_flashdata('alert', 'Password lama anda salah!');
                 redirect('user/changepassword_spv2');
                 // Verifikasi bahwa password baru dan konfirmasinya sama
             } elseif (!password_verify($confirm_new_password, password_hash($new_password, PASSWORD_DEFAULT))) {
-                $this->session->set_flashdata('alert', 'New password and confirmation password do not match!');
+                $this->session->set_flashdata('alert', 'Password baru dan konfirmasi password baru tidak sama!');
                 redirect('user/changepassword_spv2');
             } elseif (password_verify($new_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+                $this->session->set_flashdata('alert', 'Password baru tidak boleh sama dengan password lama!!');
                 redirect('user/changepassword_spv2');
                 // Tambahkan pengecekan jika password baru kurang dari 8 karakter
             } elseif (strlen($new_password) < 8) {
-                $this->session->set_flashdata('alert', 'password must be at least 8 characters!');
+                $this->session->set_flashdata('alert', 'Password baru minimal 8 karakter!');
                 redirect('user/changepassword_spv2');
             } else {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -308,7 +308,7 @@ class User extends CI_Controller
                 $this->db->where('id_user', $this->session->userdata('id_user'));
                 $this->db->update('user');
 
-                $this->session->set_flashdata('pesan', 'Password Changed!');
+                $this->session->set_flashdata('pesan', 'Berhasil merubah password!');
                 redirect('user/changepassword');
             }
         }
@@ -334,18 +334,18 @@ class User extends CI_Controller
             $confirm_new_password = $this->input->post('new_password2');
 
             if (!password_verify($current_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'Wrong current password!');
+                $this->session->set_flashdata('alert', 'Password lama anda salah!');
                 redirect('user/changepassword_superadmin');
                 // Verifikasi bahwa password baru dan konfirmasinya sama
             } elseif (!password_verify($confirm_new_password, password_hash($new_password, PASSWORD_DEFAULT))) {
-                $this->session->set_flashdata('alert', 'New password and confirmation password do not match!');
+                $this->session->set_flashdata('alert', 'Password baru dan konfirmasi password baru tidak sama!');
                 redirect('user/changepassword_superadmin');
             } elseif (password_verify($new_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+                $this->session->set_flashdata('alert', 'Password baru tidak boleh sama dengan password lama!!');
                 redirect('user/changepassword_superadmin');
                 // Tambahkan pengecekan password baru minimal 8 karakter
             } elseif (strlen($new_password) < 8) {
-                $this->session->set_flashdata('alert', 'password must be at least 8 characters!');
+                $this->session->set_flashdata('alert', 'Password baru minimal 8 karakter!');
                 redirect('user/changepassword_superadmin');
             } else {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -353,7 +353,7 @@ class User extends CI_Controller
                 $this->db->where('id_user', $this->session->userdata('id_user'));
                 $this->db->update('user');
 
-                $this->session->set_flashdata('pesan', 'Password Changed!');
+                $this->session->set_flashdata('pesan', 'Berhasil merubah password!');
                 redirect('user/changepassword_superadmin');
             }
         }
@@ -379,18 +379,18 @@ class User extends CI_Controller
             $confirm_new_password = $this->input->post('new_password2');
 
             if (!password_verify($current_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'Wrong current password!');
+                $this->session->set_flashdata('alert', 'Password lama anda salah!');
                 redirect('user/changepassword_klien');
                 // Verifikasi bahwa password baru dan konfirmasinya sama
             } elseif (!password_verify($confirm_new_password, password_hash($new_password, PASSWORD_DEFAULT))) {
-                $this->session->set_flashdata('alert', 'New password and confirmation password do not match!');
+                $this->session->set_flashdata('alert', 'Password baru dan konfirmasi password baru tidak sama!');
                 redirect('user/changepassword_klien');
             } elseif (password_verify($new_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+                $this->session->set_flashdata('alert', 'Password baru tidak boleh sama dengan password lama!!');
                 redirect('user/changepassword_klien');
                 // Tambahkan pengecekan jika password baru kurang dari 8 karakter
             } elseif (strlen($new_password) < 8) {
-                $this->session->set_flashdata('alert', 'Password must be at least 8 characters!');
+                $this->session->set_flashdata('alert', 'Password baru minimal 8 karakter!');
                 redirect('user/changepassword_klien');
             } else {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -398,7 +398,7 @@ class User extends CI_Controller
                 $this->db->where('id_user', $this->session->userdata('id_user'));
                 $this->db->update('user');
 
-                $this->session->set_flashdata('pesan', 'Password Changed!');
+                $this->session->set_flashdata('pesan', 'Berhasil merubah password!');
                 redirect('user/changepassword_klien');
             }
         }
@@ -424,18 +424,18 @@ class User extends CI_Controller
             $confirm_new_password = $this->input->post('new_password2');
 
             if (!password_verify($current_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'Wrong current password!');
+                $this->session->set_flashdata('alert', 'Password lama anda salah!');
                 redirect('user/changepassword_hd');
                 // Verifikasi bahwa password baru dan konfirmasinya sama
             } elseif (!password_verify($confirm_new_password, password_hash($new_password, PASSWORD_DEFAULT))) {
-                $this->session->set_flashdata('alert', 'New password and confirmation password do not match!');
+                $this->session->set_flashdata('alert', 'Password baru dan konfirmasi password baru tidak sama!');
                 redirect('user/changepassword_hd');
             } elseif (password_verify($new_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+                $this->session->set_flashdata('alert', 'Password baru tidak boleh sama dengan password lama!!');
                 redirect('user/changepassword_hd');
                 // Tambahkan pengecekan password baru minimal 8 karakter
             } elseif (strlen($new_password) < 8) {
-                $this->session->set_flashdata('alert', 'password must be at least 8 characters long!');
+                $this->session->set_flashdata('alert', 'Password baru minimal 8 karakter!');
                 redirect('user/changepassword_hd');
             } else {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -443,7 +443,7 @@ class User extends CI_Controller
                 $this->db->where('id_user', $this->session->userdata('id_user'));
                 $this->db->update('user');
 
-                $this->session->set_flashdata('pesan', 'Password Changed!');
+                $this->session->set_flashdata('pesan', 'Berhasil merubah password!');
                 redirect('user/changepassword_hd');
             }
         }
@@ -469,18 +469,18 @@ class User extends CI_Controller
             $confirm_new_password = $this->input->post('new_password2');
 
             if (!password_verify($current_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'Wrong current password!');
+                $this->session->set_flashdata('alert', 'Password lama anda salah!');
                 redirect('user/changepassword_implementator');
                 // Verifikasi bahwa password baru dan konfirmasinya sama
             } elseif (!password_verify($confirm_new_password, password_hash($new_password, PASSWORD_DEFAULT))) {
-                $this->session->set_flashdata('alert', 'New password and confirmation password do not match!');
+                $this->session->set_flashdata('alert', 'Password baru dan konfirmasi password baru tidak sama!');
                 redirect('user/changepassword_implementator');
             } elseif (password_verify($new_password, $data['user']['password'])) {
-                $this->session->set_flashdata('alert', 'New password cannot be the same as current password!!');
+                $this->session->set_flashdata('alert', 'Password baru tidak boleh sama dengan password lama!!');
                 redirect('user/changepassword_implementator');
                 // Tambahkan pengecekan jika password baru kurang dari 8 karakter
             } elseif (strlen($new_password) < 8) {
-                $this->session->set_flashdata('alert', 'Password must be at least 8 characters long.');
+                $this->session->set_flashdata('alert', 'Password baru minimal 8 karakter!');
                 redirect('user/changepassword');
             } else {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -488,7 +488,7 @@ class User extends CI_Controller
                 $this->db->where('id_user', $this->session->userdata('id_user'));
                 $this->db->update('user');
 
-                $this->session->set_flashdata('pesan', 'Password Changed!');
+                $this->session->set_flashdata('pesan', 'Berhasil merubah password!');
                 redirect('user/changepassword_implementator');
             }
         }
