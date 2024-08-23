@@ -702,4 +702,41 @@ class Helpdesk extends CI_Controller
         $this->load->view('helpdesk/statistik');
         $this->load->view('templates/footer');
     }
+
+    public function get_notifications()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $limit = $this->input->get('limit');
+        $offset = $this->input->get('offset');
+
+        // Ambil notifikasi dari database dengan paginasi
+        $notifications = $this->helpdesk_model->get_notifications($limit, $offset);
+
+        // Total notifikasi yang tersedia di server
+        $total_count = $this->helpdesk_model->get_total_count();
+
+        // Kirim response JSON
+        echo json_encode([
+            'notifications' => $notifications,
+            'unread_count' => $this->helpdesk_model->get_unread_count(),
+            'total_count' => $total_count
+        ]);
+    }
+    public function fetch_notifications()
+    {
+        // // Fetch total active data from the model
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('user_id');
+
+        $limit = 5;  // Tampilkan 20 notifikasi per halaman
+        $offset = $this->input->get('offset') ? $this->input->get('offset') : 0;
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $notifications = $this->helpdesk_model->get_notifications($limit, $offset);
+        $unread_count = $this->helpdesk_model->count_unread_notifications();
+        echo json_encode([
+            'notifications' => $notifications,
+            'unread_count' => $unread_count
+        ]);
+    }
 }
