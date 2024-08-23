@@ -426,10 +426,32 @@
             return $this->db->get('pelaporan')->result();
         }
 
+        // public function get_notifications($limit, $offset)
+        // {
+        //     $this->db->select('id_pelaporan,no_tiket, judul, waktu_pelaporan, status_ccs, nama');
+        //     $this->db->where('status_ccs', 'HANDLE');
+        //     $this->db->order_by('waktu_pelaporan', 'DESC');
+        //     $this->db->limit($limit, $offset);  // Batasi jumlah notifikasi
+        //     return $this->db->get('pelaporan')->result();
+        // }
+
+        public function get_notifications()
+        {
+            $this->db->select('id_pelaporan, no_tiket, judul, nama, waktu_pelaporan, status_ccs');
+            $this->db->from('pelaporan');
+            $this->db->where('status_ccs', 'HANDLE'); // Contoh filter status
+            $this->db->order_by('waktu_pelaporan', 'DESC');
+            // $this->db->limit(100); // Batasi hasil notifikasi
+            $query = $this->db->get();
+
+            return $query->result_array();
+        }
+
+
         // Menghitung jumlah notifikasi yang belum dibaca
         public function count_unread_notifications()
         {
-            $this->db->where('status_ccs', 'ADDED');  // Syarat untuk notifikasi belum dibaca
+            $this->db->where('status_ccs', 'HANDLE');  // Syarat untuk notifikasi belum dibaca
             return $this->db->count_all_results('pelaporan');
         }
     }

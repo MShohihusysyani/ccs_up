@@ -25,6 +25,13 @@
         top: 10px;
         right: 5px;
     }
+
+    #notifications-list {
+        max-height: 300px;
+        /* Sesuaikan tinggi area notifikasi */
+        overflow-y: auto;
+        /* Aktifkan scroll jika konten melebihi tinggi */
+    }
 </style>
 
 <body class="theme-blue">
@@ -70,12 +77,14 @@
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);">View All Notifications</a>
+                                <a href="javascript:void(0);" id="load-more-btn" style="">Load More</a>
+                                <!-- <a href="javascript:void(0);">View All Notifications</a> -->
                             </li>
                         </ul>
                     </li>
                 </ul>
             </div>
+
         </div>
 
         </div>
@@ -259,14 +268,23 @@
 
         <script>
             $(document).ready(function() {
-                function loadNotifications() {
+                var limit = 10; // Batas notifikasi yang akan ditampilkan setiap kali load
+                var offset = 0; // Offset awal untuk load data
+                var totalCount = 0; // Total notifikasi yang ada di server
+
+                function loadNotifications(isLoadMore = false) {
                     $.ajax({
-                        url: '<?= base_url("supervisor/get_notifications") ?>',
+                        url: '<?= base_url("supervisor/fetch_notifications") ?>',
                         method: 'GET',
+                        data: {
+                            limit: limit,
+                            offset: offset
+                        },
                         success: function(response) {
                             var data = JSON.parse(response);
                             var notifications = data.notifications;
                             var unreadCount = data.unread_count;
+                            totalCount = data.total_count; // Update total count dari server
                             var notificationsList = '';
 
                             // Menampilkan jumlah notifikasi di ikon lonceng
@@ -276,6 +294,12 @@
                                 $('#notification-count').text(''); // Kosongkan jika tidak ada notifikasi
                             }
 
+                            // Jika ini adalah load awal, hapus semua notifikasi sebelumnya
+                            if (!isLoadMore) {
+                                $('#notifications-list').html(''); // Kosongkan list notifikasi
+                            }
+
+                            // Menampilkan notifikasi baru
                             if (notifications.length > 0) {
                                 $.each(notifications, function(index, notification) {
                                     notificationsList += `
@@ -294,11 +318,20 @@
                                 </a>
                             </li>`;
                                 });
+
+                                // Tambahkan notifikasi ke dalam list
+                                $('#notifications-list').append(notificationsList);
+
+                                // Mengecek apakah masih ada notifikasi yang belum ditampilkan
+                                if ($('#notifications-list li').length < totalCount) {
+                                    $('#load-more').show(); // Tampilkan tombol "Load More" jika masih ada notifikasi
+                                } else {
+                                    $('#load-more').hide(); // Sembunyikan tombol jika semua notifikasi sudah ditampilkan
+                                }
                             } else {
                                 notificationsList = '<li><p>No new notifications.</p></li>';
+                                $('#notifications-list').html(notificationsList);
                             }
-
-                            $('#notifications-list').html(notificationsList);
                         }
                     });
                 }
@@ -306,7 +339,16 @@
                 // Load notifications saat page load
                 loadNotifications();
 
+                // Event listener untuk tombol "Load More"
+                $('#load-more').on('click', function() {
+                    offset += limit; // Update offset untuk mengambil data berikutnya
+                    loadNotifications(true); // Load more notifikasi
+                });
+
                 // Bisa juga menambahkan interval untuk auto-refresh notifikasi
-                setInterval(loadNotifications, 60000); // Setiap 60 detik
+                setInterval(function() {
+                    offset = 0; // Reset offset saat refresh otomatis
+                    loadNotifications(); // Muat ulang notifikasi
+                }, 60000); // Setiap 60 detik
             });
         </script>

@@ -125,6 +125,7 @@ class Klien extends CI_Controller
         } else {
             // Tambahkan tiket baru
             $this->pelaporan_model->add_pelaporan();
+            $this->pelaporan_model->delete_pelaporan();
             $this->session->set_flashdata('pesan', 'Pelaporan Berhasil!');
             redirect(Base_url('klien/added'));
         }

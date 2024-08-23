@@ -948,10 +948,29 @@ class Supervisor extends CI_Controller
     {
         $user_id = $this->session->userdata('user_id');
         $this->load->model('Supervisor_model', 'supervisor_model');
-        $notifications = $this->supervisor_model->get_recent_pelaporan();
+        $limit = $this->input->get('limit');
+        $offset = $this->input->get('offset');
 
+        // Ambil notifikasi dari database dengan paginasi
+        $notifications = $this->supervisor_model->get_notifications($limit, $offset);
+
+        // Total notifikasi yang tersedia di server
+        $total_count = $this->supervisor_model->get_total_count();
+
+        // Kirim response JSON
+        echo json_encode([
+            'notifications' => $notifications,
+            'unread_count' => $this->supervisor_model->get_unread_count(),
+            'total_count' => $total_count
+        ]);
+    }
+    public function fetch_notifications()
+    {
+        $limit = 5;  // Tampilkan 20 notifikasi per halaman
+        $offset = $this->input->get('offset') ? $this->input->get('offset') : 0;
+        $this->load->model('Supervisor_model', 'supervisor_model');
+        $notifications = $this->supervisor_model->get_notifications($limit, $offset);
         $unread_count = $this->supervisor_model->count_unread_notifications();
-
         echo json_encode([
             'notifications' => $notifications,
             'unread_count' => $unread_count
