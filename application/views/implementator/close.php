@@ -45,7 +45,7 @@
                                             <th>Status Subtask 1</th>
                                             <th>Subtask 2</th>
                                             <th>Status Subtask 2</th>
-                                            <!-- <th>Aksi</th> -->
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -66,7 +66,7 @@
                                             <th>Status Subtask 1</th>
                                             <th>Subtask 2</th>
                                             <th>Status Subtask 2</th>
-                                            <!-- <th>Aksi</th> -->
+                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -163,6 +163,9 @@
 
                                                     <?php else : ?>
                                                     <?php endif; ?>
+                                                </td>
+                                                <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>implementator/detail_close/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
+                                                        Detail</a>
                                                 </td>
 
                                             </tr>

@@ -50,7 +50,7 @@
                                         <th>Tanggal</th>
                                         <th>No Tiket</th>
                                         <th>Nama Klien</th>
-                                        <th>Perihal</th>
+                                        <th>Judul</th>
                                         <th>Category</th>
                                         <th>Tags</th>
                                         <th>Priority</th>
@@ -58,6 +58,7 @@
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
                                         <th>Rating</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,7 +71,7 @@
                                             <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                             <td><?= $dp['no_tiket']; ?></td>
                                             <td><?= $dp['nama']; ?></td>
-                                            <td><?= $dp['perihal']; ?></td>
+                                            <td><?= $dp['judul']; ?></td>
                                             <td><?= $dp['kategori']; ?></td>
                                             <td>
                                                 <span class="label label-info">
@@ -162,6 +163,9 @@
                                                         ?>
                                                     </div>
                                                 <?php endif; ?>
+                                            </td>
+                                            <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>implementator/detail_finish/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
+                                                    Detail</a>
                                             </td>
 
                                         </tr>

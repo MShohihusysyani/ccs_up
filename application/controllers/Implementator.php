@@ -226,6 +226,30 @@ class Implementator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function detail_close($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Implementator_model', 'implementator_model');
+        $data['datapelaporan'] = $this->implementator_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/detail_close', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detail_finish($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Implementator_model', 'implementator_model');
+        $data['datapelaporan'] = $this->implementator_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/detail_finish', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function add_comment()
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
