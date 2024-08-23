@@ -427,4 +427,56 @@ class Implementator_model extends CI_Model
         $this->db->from('t1_forward');
         return $this->db->count_all_results();
     }
+
+    public function get_notifications()
+    {
+
+        // Get user data from the session
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+
+        // Build the query using Query Builder
+        $this->db->select('
+            pelaporan.id_pelaporan,
+            pelaporan.waktu_pelaporan,
+            pelaporan.status_ccs,
+            pelaporan.judul,
+            pelaporan.nama,
+            pelaporan.no_tiket,
+        ');
+        $this->db->from('t1_forward');
+        $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('t1_forward.user_id', $user_id);
+        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+
+        // Execute the query and return the result
+        return $this->db->get()->result_array();
+    }
+
+
+    // Menghitung jumlah notifikasi
+    public function count_unread_notifications()
+    {
+        // Ambil data user berdasarkan username dari sesi
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+
+        // Lakukan join dengan tabel forward dan hitung notifikasi yang belum dibaca
+        $this->db->select('
+        pelaporan.id_pelaporan,
+        pelaporan.waktu_pelaporan,
+        pelaporan.status_ccs,
+        pelaporan.judul,
+        pelaporan.nama,
+        pelaporan.no_tiket,
+    ');
+        $this->db->from('pelaporan');
+        $this->db->join('t1_forward', 'pelaporan.id_pelaporan = t1_forward.pelaporan_id'); // Sesuaikan id join jika berbeda
+        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where('t1_forward.user_id', $user_id);
+
+        // Menghitung jumlah notifikasi
+        return $this->db->count_all_results();
+    }
 }
