@@ -39,7 +39,7 @@
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
                                                 <th>Judul</th>
-                                                <th>Perihal</th>
+                                                <!-- <th>Perihal</th> -->
                                                 <th>Attachment</th>
                                                 <th>Category</th>
                                                 <th>Priority</th>
@@ -62,7 +62,7 @@
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
                                                 <th>Judul</th>
-                                                <th>Perihal</th>
+                                                <!-- <th>Perihal</th> -->
                                                 <th>Attachment</th>
                                                 <th>Category</th>
                                                 <th>Priority</th>
@@ -89,7 +89,7 @@
                                                     <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                     <td><?= $dp['nama']; ?></td>
                                                     <td><?= $dp['judul']; ?></td>
-                                                    <td><?= $dp['perihal']; ?></td>
+                                                    <!-- <td><?= $dp['perihal']; ?></td> -->
                                                     <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                     </td>
                                                     <td><?= $dp['kategori']; ?></td>
@@ -149,7 +149,7 @@
                                                             , <?= $dp['handle_by3']; ?>
                                                         <?php endif; ?>
                                                     </td>
-		<td><?= $dp['subtask2']; ?></td>
+                                                    <td><?= $dp['subtask2']; ?></td>
                                                     <td>
                                                         <?php if ($dp['status2'] == 'COMPLETED') : ?>
                                                             <span class="label label-success">COMPLETED</span>
