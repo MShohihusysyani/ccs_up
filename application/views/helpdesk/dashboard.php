@@ -52,11 +52,14 @@
                             </div>
                             <div class="body">
                                 <?php
-                                $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE '");
-
-                                foreach ($totalp->result() as $total) {
-                                ?>
-
+                                $user_id =  $this->session->userdata('id_user');
+                                $handle = $this->db->query("SELECT 
+                                        COUNT(*) as ticket_finish
+                                        FROM forward
+                                        LEFT JOIN pelaporan ON forward.pelaporan_id = pelaporan.id_pelaporan
+                                        WHERE forward.user_id = $user_id
+                                        AND pelaporan.status_ccs  = 'HANDLE'")->result_array();
+                                foreach ($handle as $hd) : ?>
                                     <div class="row clearfix">
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div class="info-box bg-blue hover-expand-effect">
@@ -66,14 +69,16 @@
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="text">NEW TIKET</div>
-                                                    <div class="number"><?php echo $total->totalp ?></div>
+                                                    <div class="text">New Ticket</div>
+                                                    <div class="number count-to" data-from="0" data-to="<?= $hd['ticket_finish'] ?>" data-speed="1000" data-fresh-interval="20">
+                                                        <?= $hd['ticket_finish'] ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php } ?>
+                                    <?php endforeach; ?>
 
-                                   <?php
+                                    <?php
                                     $user_id =  $this->session->userdata('id_user');
                                     $handle = $this->db->query("SELECT 
                                         COUNT(*) as ticket_finish
@@ -85,7 +90,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div class="info-box bg-light-green hover-expand-effect">
                                                 <div class="icon">
-                                                <a href="<?php echo base_url('helpdesk/data_finish') ?>">
+                                                    <a href="<?php echo base_url('helpdesk/data_finish') ?>">
                                                         <i class="material-icons">done_all</i>
                                                     </a>
                                                 </div>
