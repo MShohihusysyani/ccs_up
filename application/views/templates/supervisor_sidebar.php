@@ -77,7 +77,7 @@
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);" id="load-more-btn" style="">Load More</a>
+                                <a href="javascript:void(0);" id="load-more-btn">Load More</a>
                                 <!-- <a href="javascript:void(0);">View All Notifications</a> -->
                             </li>
                         </ul>
