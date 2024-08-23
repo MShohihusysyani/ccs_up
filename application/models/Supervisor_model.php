@@ -312,7 +312,7 @@
 
         public function ambil_id_pelaporan($id)
         {
-            $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, judul, nama, status_ccs, kategori, priority, maxday, impact, file  FROM pelaporan WHERE id_pelaporan='$id'";
+            $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, judul, nama, status_ccs, kategori, priority, maxday, impact, tags, catatan_finish, file  FROM pelaporan WHERE id_pelaporan='$id'";
             return $this->db->query($query)->result_array();
         }
 
