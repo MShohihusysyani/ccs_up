@@ -201,16 +201,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('.star-rating').each(function() {
-            var hasRated = $(this).data('has-rated');
-
-            if (hasRated) {
-                $(this).find('.star').addClass('selected').css('cursor', 'default');
-                $(this).off('click');
-            }
-        });
-
-        $('.star').on('click', function() {
+        // Handle dynamic content and pagination
+        $(document).on('click', '.star', function() {
             var $star = $(this);
             var rating = $star.data('value');
             var $ratingContainer = $star.closest('.star-rating');
@@ -252,7 +244,16 @@
                     alert('Failed to submit rating: ' + textStatus + ' - ' + errorThrown);
                 }
             });
+        });
 
+        // Initialize the stars for previously rated items when the page loads
+        $('.star-rating').each(function() {
+            var hasRated = $(this).data('has-rated');
+
+            if (hasRated) {
+                $(this).find('.star').addClass('selected').css('cursor', 'default');
+                $(this).off('click');
+            }
         });
     });
 </script>
