@@ -20,6 +20,13 @@ class User_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function getDataKlien()
+    {
+        $query = "SELECT *
+                    FROM user where divisi='Klien'";
+        return $this->db->query($query)->result_array();
+    }
+
     public function getUserDetail($id)
     {
 

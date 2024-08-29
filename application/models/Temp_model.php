@@ -12,6 +12,64 @@ class Temp_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    // public function getLatestTicketNumberByClient($no_klien)
+    // {
+    //     $tahun = date('Y');
+    //     $bulan = date('m');
+
+    //     // Format prefix yang dicari
+    //     $prefix = "TIC{$no_klien}{$tahun}{$bulan}";
+
+    //     // Mendapatkan nomor urut terbaru berdasarkan klien dan bulan
+    //     $this->db->select('no_tiket');
+    //     $this->db->from('pelaporan');
+    //     $this->db->like('no_tiket', $prefix, 'after');
+    //     // $this->db->order_by('no_tiket', 'DESC');
+    //     // $this->db->limit(1);
+    //     $query = $this->db->get();
+
+    //     if ($query->num_rows() > 0) {
+    //         $latest_ticket = $query->row()->no_tiket;
+    //         $no_urut = intval(substr($latest_ticket, -4));
+    //     } else {
+    //         $no_urut = 1;
+    //     }
+
+    //     $no_urut = str_pad($no_urut, 4, '0', STR_PAD_LEFT); // Format nomor urut menjadi 4 digit
+    //     $new_ticket_number = "{$prefix}{$no_urut}";
+
+    //     return $new_ticket_number;
+    // }
+
+    public function getNoUrut($no_klien)
+    {
+        $tahun = date('Y');
+        $bulan = date('m');
+
+        $prefix = "TIC{$no_klien}{$tahun}{$bulan}";
+
+        $this->db->select('no_tiket');
+        $this->db->from('pelaporan');
+        $this->db->like('no_tiket', $prefix, 'after');
+        $this->db->order_by('no_tiket', 'DESC');
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $latest_ticket = $query->row()->no_tiket;
+            $no_urut = intval(substr($latest_ticket, -4));
+        } else {
+            $no_urut = 1;
+        }
+
+        $no_urut = str_pad($no_urut, 4, '0', STR_PAD_LEFT);
+        $new_ticket_number = "{$prefix}{$no_urut}";
+
+        return $new_ticket_number;
+    }
+
+
+
     public function getTiketTemp1()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();

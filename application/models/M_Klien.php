@@ -7,6 +7,19 @@ class M_Klien extends CI_Model
     /**
      * Get All Data Siswa
      */
+    public function getNoKlienByUserId($id)
+    {
+        $this->db->select('no_klien');
+        $this->db->from('klien'); // Nama tabel klien
+        $this->db->where('id_user_klien', $id); // Sesuaikan dengan kolom yang ada
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->no_klien; // Mengembalikan no_klien untuk user_id
+        } else {
+            return null; // Jika tidak ada no_klien
+        }
+    }
     public function get_all()
     {
         $this->db->select("*");

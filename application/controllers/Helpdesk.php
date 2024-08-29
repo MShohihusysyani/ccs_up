@@ -20,25 +20,47 @@ class Helpdesk extends CI_Controller
     public function pengajuan()
     {
         // $data['noTiket'] = $this->client_model->getkodeticket();
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $this->load->model('Category_model', 'category_model');
-        // $data['nama_kategori'] = $this->db->get('category')->result_array();
+        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Category_model', 'category_model');
         $this->load->model('Temp_model', 'temp_model');
-        // $data['nama_kategori'] = $this->db->get('tiket_temp')->result_array();
+        $this->load->model('User_model', 'user_model');
+
         $data['category']      = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTemp1();
-        $id_user = $this->session->userdata('id_user');
-        $no_klien = $this->client_model->getNoKlien($id_user);
-        $no_urut = $this->client_model->getNoUrut($id_user);
-        $bulan = $time = date("m");
-        $tahun = $time = date("Y");
+        $data['user'] = $this->user_model->getDataKlien();
+        // $id_user = $this->session->userdata('id_user');
+        // // $no_klien = $this->client_model->getNoKlien($id_user);
+        // $no_urut = $this->client_model->getNoUrut($id_user);
+        // $bulan = $time = date("m");
+        // $tahun = $time = date("Y");
 
-        $data['tiket'] = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
+        // $data['tiket'] = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
         $this->load->view('helpdesk/pengajuan', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function get_latest_ticket_number()
+    {
+        $user_id = $this->input->post('user_id');
+
+        if ($user_id) {
+            $this->load->model('Temp_model', 'temp_model');
+            $this->load->model('M_Klien');
+
+            $no_klien = $this->M_Klien->getNoKlienByUserId($user_id);
+
+            if ($no_klien) {
+                $new_ticket_number = $this->temp_model->getNoUrut($no_klien);
+                echo json_encode(['new_ticket_number' => $new_ticket_number]);
+            } else {
+                echo json_encode(['error' => 'No client number found for this user.']);
+            }
+        } else {
+            echo json_encode(['error' => 'User ID not provided']);
+        }
     }
 
     public function add_temp_tiket()
@@ -149,6 +171,7 @@ class Helpdesk extends CI_Controller
             redirect(Base_url('helpdesk/pengajuan'));
         }
     }
+
 
     public function pelaporan()
     {

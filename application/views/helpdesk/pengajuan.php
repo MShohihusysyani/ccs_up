@@ -28,12 +28,27 @@
                         </div>
                         <div class="body">
                             <form method="post" action="<?= base_url('helpdesk/add_temp_tiket'); ?>" enctype="multipart/form-data">
-                                <div class="form-group form-float">
+                                <!-- Dropdown Pilih Klien -->
+                                <label for="klien">Pilih Klien</label>
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" id="no_tiket" name="no_tiket" class="form-control" value="<?= $tiket; ?>" readonly>
-                                        <label class="form-label">No tiket</label>
+                                        <select id="klien" name="klien" class="form-control" required>
+                                            <option value="">-- Pilih Klien --</option>
+                                            <?php foreach ($user as $u) : ?>
+                                                <option value="<?= $u['id_user']; ?>"><?= $u['nama_user']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
+
+                                <!-- No Tiket (Akan Terisi Otomatis) -->
+                                <label for="judul">No Tiket</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="no_tiket" name="no_tiket" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+
 
                                 <label for="judul">Judul</label>
                                 <div class="form-group">
@@ -60,20 +75,6 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="form-group form-float">
-                        <select name="kategori" id="kategori" class="form-control">
-                            
-                                    <option value="">--Pilih Category--</option>
-                                    <?php
-                                    foreach ($category as $cat) : ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                        <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                        </div> -->
-
-
                                 <label for="kategori">Category</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -88,10 +89,6 @@
                                         <input type="text" class="form-control" data-role="tagsinput" value="" id="tags" name="tags">
                                     </div>
                                 </div>
-
-                                <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
-                                <input type="hidden" name="nama" id="nama" value="<?= $user['nama_user'] ?>">
-
 
                                 <div class="js-sweetalert">
                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect" data-type="with-custom-icon">Proses</button>
@@ -140,18 +137,6 @@
                                                             <span class="label label-info" data-role="tagsinput"><?= $tmp['tags']; ?></span>
                                                         </td>
                                                         <td>
-                                                            <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                <div class="btn btn-sm btn-warning">
-                                                    <a href="javascript:;" data-id_temp="<?= $tmp['id_temp']; ?>"
-                                                        data-no_tiket="<?= $tmp['no_tiket']; ?>"
-                                                        data-judul = "<?= $tmp['judul']; ?>"
-                                                        data-perihal="<?= $tmp['perihal']; ?>"
-                                                        data-kategori="<?= $tmp['kategori']; ?>"
-                                                        data-file="<?= $tmp['file']; ?>"
-                                                        data-tags="<?= $tmp['tags']; ?>" data-toggle="modal"
-                                                        data-target="#editModalTemp"> <i class="material-icons">edit</i> <span
-                                                        class="icon-name">Edit</span></a>
-                                                </div> -->
 
                                                             <a class="btn btn-sm btn-warning" href="<?= base_url() ?>klien/edit_pelaporan/<?= $tmp['id_temp']; ?>"><i class="material-icons">edit</i> <span class="icon-name"></span>Edit</a>
                                                             <br><br>
@@ -233,6 +218,39 @@
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+<script>
+    document.getElementById('klien').addEventListener('change', function() {
+        var userId = this.value;
+        console.log(userId);
+        if (userId) {
+            // Make AJAX call to get the latest ticket number for the selected client
+            $.ajax({
+                url: "<?= base_url('helpdesk/get_latest_ticket_number') ?>",
+                type: "POST",
+                data: {
+                    user_id: userId
+                }, // Send correct user_id
+                dataType: 'json', // Ensure JSON response is properly handled
+
+                success: function(data) {
+                    console.log(data); // Debug: check the response
+                    if (data && data.new_ticket_number) {
+                        // Assign the new ticket number to the input field
+                        document.getElementById('no_tiket').value = data.new_ticket_number;
+                    } else {
+                        alert("Failed to generate a ticket number.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                    alert("There was an issue generating the ticket number.");
+                }
+            });
+        } else {
+            document.getElementById('no_tiket').value = '';
+        }
+    });
+</script>
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilihKategori', function() {
