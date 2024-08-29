@@ -34,6 +34,7 @@ class Klien extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             // If validation fails, set an error message and redirect back
             $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter.');
+            // $referred_from = $this->session->userdata('referred_from');
             redirect('klien/pengajuan');
         } else {
             // Retrieve the ticket number from the form input
@@ -45,7 +46,8 @@ class Klien extends CI_Controller
 
             if ($existing_ticket) {
                 // If the ticket number already exists, set an error message and redirect back
-                $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Tiket sudah ada.');
+                $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan terlebih dahulu tiket yang sudah diproses!!!');
+                // $referred_from = $this->session->userdata('referred_from');
                 redirect('klien/pengajuan');
             } else {
                 // Handle file upload if there is a file
@@ -62,10 +64,9 @@ class Klien extends CI_Controller
                     if ($this->upload->do_upload('file')) {
                         $photo = $this->upload->data('file_name');
                     } else {
-                        // Log the error and set a flash message for failed upload
-                        log_message('error', 'File upload error: ' . $this->upload->display_errors());
-                        $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
-                        redirect('klien/pengajuan');
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                        $referred_from = $this->session->userdata('referred_from');
+                        redirect($referred_from, 'refresh');
                     }
                 }
 
@@ -86,24 +87,18 @@ class Klien extends CI_Controller
                     return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
                 }, $data);
 
-                // Prevent certain HTML tags such as <a> from being inserted in 'perihal'
                 $pattern = '/<a\s+href="([^"]+)"/i';
                 $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
 
                 // Insert the data into the database
-                if ($this->db->insert('tiket_temp', $data)) {
-                    // Set a success message and redirect to the submission page
-                    $this->session->set_flashdata('pesan', 'Pelaporan berhasil ditambahkan!');
-                    redirect('klien/pengajuan');
-                } else {
-                    // Set a flash message if the data insertion fails
-                    $this->session->set_flashdata('alert', 'Gagal menyimpan data, silakan coba lagi.');
-                    redirect('klien/pengajuan');
-                }
+                $this->db->insert('tiket_temp', $data);
+
+                // Set a success message and redirect to the submission page
+                $this->session->set_flashdata('pesan', 'Pelaporan Added!');
+                redirect('klien/pengajuan');
             }
         }
     }
-
 
     public function fungsi_delete_temp($id)
     {

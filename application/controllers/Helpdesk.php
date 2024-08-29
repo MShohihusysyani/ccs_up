@@ -41,6 +41,115 @@ class Helpdesk extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function add_temp_tiket()
+    {
+        // Load the form validation library
+        $this->load->library('form_validation');
+
+        // Set validation rules
+        $this->form_validation->set_rules('perihal', 'Perihal', 'required|min_length[50]');
+
+        // Check if the form validation passed
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, set an error message and redirect back
+            $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter.');
+            // $referred_from = $this->session->userdata('referred_from');
+            redirect('klien/pengajuan');
+        } else {
+            // Retrieve the ticket number from the form input
+            $no_tiket = $this->input->post('no_tiket');
+
+            // Check if the ticket number already exists in the database
+            $this->db->where('no_tiket', $no_tiket);
+            $existing_ticket = $this->db->get('tiket_temp')->row();
+
+            if ($existing_ticket) {
+                // If the ticket number already exists, set an error message and redirect back
+                $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan terlebih dahulu tiket yang sudah diproses!!!');
+                // $referred_from = $this->session->userdata('referred_from');
+                redirect('klien/pengajuan');
+            } else {
+                // Handle file upload if there is a file
+                $photo = $_FILES['file']['name'];
+
+                if ($photo) {
+                    $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
+                    $config['max_size'] = '2048';
+                    $config['upload_path'] = './assets/files/';
+
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+
+                    if ($this->upload->do_upload('file')) {
+                        $photo = $this->upload->data('file_name');
+                    } else {
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                        $referred_from = $this->session->userdata('referred_from');
+                        redirect($referred_from, 'refresh');
+                    }
+                }
+
+                // Prepare the data for insertion
+                $data = [
+                    'no_tiket' => $no_tiket,
+                    'perihal'  => $this->input->post('perihal'),
+                    'file'     => $photo,
+                    'user_id'  => $this->input->post('user_id'),
+                    'nama'     => $this->input->post('nama'),
+                    'kategori' => $this->input->post('kategori'),
+                    'tags'     => $this->input->post('tags'),
+                    'judul'    => $this->input->post('judul')
+                ];
+
+                // Remove unwanted HTML tags from data
+                $data = array_map(function ($value) {
+                    return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
+                }, $data);
+
+                $pattern = '/<a\s+href="([^"]+)"/i';
+                $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
+
+                // Insert the data into the database
+                $this->db->insert('tiket_temp', $data);
+
+                // Set a success message and redirect to the submission page
+                $this->session->set_flashdata('pesan', 'Pelaporan Added!');
+                redirect('helpdesk/pengajuan');
+            }
+        }
+    }
+
+    public function fungsi_delete_temp($id)
+    {
+        $result = $this->temp_model->hapus_temp($id);
+        if ($result) {
+            $this->session->set_flashdata('pesan', 'Data Deleted!');
+        } else {
+            $this->session->set_flashdata('alert', 'Failed to delete!');
+        }
+        // var_dump($result);
+        // die();
+        redirect(base_url('helpdesk/pengajuan'));
+    }
+
+    public function fungsi_pengajuan()
+    {
+        // Cek apakah ada tiket yang selesai tetapi belum diberi rating
+        $has_unrated_finished_tickets = $this->pelaporan_model->has_unrated_finished_tickets($this->session->userdata('user_id'));
+
+        if ($has_unrated_finished_tickets) {
+            // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
+            $this->session->set_flashdata('alert', 'Harap beri rating pada tiket yang sudah selesai sebelum mengajukan tiket baru.');
+            redirect(Base_url('klien/pengajuan')); // Alihkan ke halaman untuk memberi rating
+        } else {
+            // Tambahkan tiket baru
+            $this->pelaporan_model->add_pelaporan();
+            $this->pelaporan_model->delete_pelaporan();
+            $this->session->set_flashdata('pesan', 'Pelaporan Berhasil!');
+            redirect(Base_url('helpdesk/pengajuan'));
+        }
+    }
+
     public function pelaporan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
