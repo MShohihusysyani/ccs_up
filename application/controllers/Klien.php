@@ -52,7 +52,7 @@ class Klien extends CI_Controller
                 $photo = $_FILES['file']['name'];
 
                 if ($photo) {
-                    $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
+                    $config['allowed_types'] = 'pdf|docx|jpeg|jpg|png|csv|xlsx|';
                     $config['max_size'] = '2048';
                     $config['upload_path'] = './assets/files/';
 
