@@ -19,22 +19,16 @@ class Helpdesk extends CI_Controller
 
     public function pengajuan()
     {
-        // $data['noTiket'] = $this->client_model->getkodeticket();
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_hd'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $id_user = $this->session->userdata('id_user');
+
         $this->load->model('Category_model', 'category_model');
         $this->load->model('Temp_model', 'temp_model');
         $this->load->model('User_model', 'user_model');
 
         $data['category']      = $this->category_model->getCategory();
-        $data['tiket_temp'] = $this->temp_model->getTiketTemp1();
+        $data['tiket_temp'] = $this->temp_model->getTiketTempHd();
         $data['user'] = $this->user_model->getDataKlien();
-        // $id_user = $this->session->userdata('id_user');
-        // // $no_klien = $this->client_model->getNoKlien($id_user);
-        // $no_urut = $this->client_model->getNoUrut($id_user);
-        // $bulan = $time = date("m");
-        // $tahun = $time = date("Y");
-
-        // $data['tiket'] = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
@@ -42,26 +36,30 @@ class Helpdesk extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function get_latest_ticket_number()
+    public function get_no_tiket()
     {
+        $this->load->model('Temp_model', 'temp_model');
         $user_id = $this->input->post('user_id');
 
         if ($user_id) {
-            $this->load->model('Temp_model', 'temp_model');
-            $this->load->model('M_Klien');
+            // Panggil fungsi model untuk mengambil no klien
+            $no_klien = $this->temp_model->getNoKlien($user_id);
 
-            $no_klien = $this->M_Klien->getNoKlienByUserId($user_id);
+            // Dapatkan no urut tiket terakhir berdasarkan klien yang dipilih
+            $no_urut = $this->temp_model->getNoUrut($user_id);
 
-            if ($no_klien) {
-                $new_ticket_number = $this->temp_model->getNoUrut($no_klien);
-                echo json_encode(['new_ticket_number' => $new_ticket_number]);
-            } else {
-                echo json_encode(['error' => 'No client number found for this user.']);
-            }
+            // Buat format no tiket (misalnya: TICno_klientahunbulannourut)
+            $tahun = date('Y');
+            $bulan = date('m');
+            $no_tiket = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
+
+            // Kembalikan no tiket ke AJAX
+            echo $no_tiket;
         } else {
-            echo json_encode(['error' => 'User ID not provided']);
+            echo "";  // Jika tidak ada klien yang dipilih, kembalikan kosong
         }
     }
+
 
     public function add_temp_tiket()
     {
@@ -76,7 +74,7 @@ class Helpdesk extends CI_Controller
             // If validation fails, set an error message and redirect back
             $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter.');
             // $referred_from = $this->session->userdata('referred_from');
-            redirect('klien/pengajuan');
+            redirect('helpdesk/pengajuan');
         } else {
             // Retrieve the ticket number from the form input
             $no_tiket = $this->input->post('no_tiket');
@@ -89,7 +87,7 @@ class Helpdesk extends CI_Controller
                 // If the ticket number already exists, set an error message and redirect back
                 $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan terlebih dahulu tiket yang sudah diproses!!!');
                 // $referred_from = $this->session->userdata('referred_from');
-                redirect('klien/pengajuan');
+                redirect('helpdesk/pengajuan');
             } else {
                 // Handle file upload if there is a file
                 $photo = $_FILES['file']['name'];
@@ -116,11 +114,12 @@ class Helpdesk extends CI_Controller
                     'no_tiket' => $no_tiket,
                     'perihal'  => $this->input->post('perihal'),
                     'file'     => $photo,
-                    'user_id'  => $this->input->post('user_id'),
-                    'nama'     => $this->input->post('nama'),
+                    'user_id'  => $this->input->post('klien_id'),
+                    'nama'     => $this->input->post('nama_klien'),
                     'kategori' => $this->input->post('kategori'),
                     'tags'     => $this->input->post('tags'),
-                    'judul'    => $this->input->post('judul')
+                    'judul'    => $this->input->post('judul'),
+                    'user_id_hd' => $this->input->post('user_id_hd')
                 ];
 
                 // Remove unwanted HTML tags from data
@@ -161,8 +160,8 @@ class Helpdesk extends CI_Controller
 
         if ($has_unrated_finished_tickets) {
             // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
-            $this->session->set_flashdata('alert', 'Harap beri rating pada tiket yang sudah selesai sebelum mengajukan tiket baru.');
-            redirect(Base_url('klien/pengajuan')); // Alihkan ke halaman untuk memberi rating
+            $this->session->set_flashdata('alert', 'Harap beri rating pada tiket yang sudah selesai, sebelum mengajukan tiket baru.');
+            redirect(Base_url('helpdesk/pengajuan')); // Alihkan ke halaman untuk memberi rating
         } else {
             // Tambahkan tiket baru
             $this->pelaporan_model->add_pelaporan();

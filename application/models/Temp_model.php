@@ -11,64 +11,51 @@ class Temp_model extends CI_Model
                     ";
         return $this->db->query($query)->result_array();
     }
-
-    // public function getLatestTicketNumberByClient($no_klien)
-    // {
-    //     $tahun = date('Y');
-    //     $bulan = date('m');
-
-    //     // Format prefix yang dicari
-    //     $prefix = "TIC{$no_klien}{$tahun}{$bulan}";
-
-    //     // Mendapatkan nomor urut terbaru berdasarkan klien dan bulan
-    //     $this->db->select('no_tiket');
-    //     $this->db->from('pelaporan');
-    //     $this->db->like('no_tiket', $prefix, 'after');
-    //     // $this->db->order_by('no_tiket', 'DESC');
-    //     // $this->db->limit(1);
-    //     $query = $this->db->get();
-
-    //     if ($query->num_rows() > 0) {
-    //         $latest_ticket = $query->row()->no_tiket;
-    //         $no_urut = intval(substr($latest_ticket, -4));
-    //     } else {
-    //         $no_urut = 1;
-    //     }
-
-    //     $no_urut = str_pad($no_urut, 4, '0', STR_PAD_LEFT); // Format nomor urut menjadi 4 digit
-    //     $new_ticket_number = "{$prefix}{$no_urut}";
-
-    //     return $new_ticket_number;
-    // }
-
-    public function getNoUrut($no_klien)
+    // FUNGSI UNTUK INPUT TIKET DARI HELPDESK
+    public function getNoKlien($klien_id)
     {
-        $tahun = date('Y');
-        $bulan = date('m');
+        // Ambil nomor klien dari tabel klien berdasarkan id klien
+        $this->db->select('no_klien');
+        $this->db->from('klien');
+        $this->db->where('id_user_klien', $klien_id);
+        $result = $this->db->get()->row_array();
 
-        $prefix = "TIC{$no_klien}{$tahun}{$bulan}";
-
-        $this->db->select('no_tiket');
-        $this->db->from('pelaporan');
-        $this->db->like('no_tiket', $prefix, 'after');
-        $this->db->order_by('no_tiket', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            $latest_ticket = $query->row()->no_tiket;
-            $no_urut = intval(substr($latest_ticket, -4));
-        } else {
-            $no_urut = 1;
-        }
-
-        $no_urut = str_pad($no_urut, 4, '0', STR_PAD_LEFT);
-        $new_ticket_number = "{$prefix}{$no_urut}";
-
-        return $new_ticket_number;
+        return $result ? $result['no_klien'] : null;  // Kembalikan no_klien atau null jika tidak ada
     }
 
+    // Fungsi untuk mendapatkan nomor urut tiket terakhir berdasarkan klien
+    public function getNoUrut($user_id)
+    {
+        // Ambil no tiket terakhir dari tabel pelaporan berdasarkan user (user_id)
+        $this->db->select('max(no_tiket) as no_tiket');
+        $this->db->from('pelaporan');
+        $this->db->where('user_id', $user_id);
+        $result = $this->db->get()->row_array();
 
+        if ($result && $result['no_tiket']) {
+            // Jika ada no_tiket yang ditemukan, ambil 4 digit terakhir untuk no urut
+            $no_tiket = $result['no_tiket'];
+            $no_urut = (int) substr($no_tiket, -4);  // Mengambil 4 digit terakhir dari no tiket
+        } else {
+            // Jika tidak ada tiket sebelumnya, mulai dari 0
+            $no_urut = 0;
+        }
+
+        // Tambahkan 1 untuk nomor urut berikutnya dan format menjadi 4 digit (misalnya: 0001)
+        return sprintf('%04d', $no_urut + 1);
+    }
+
+    // tiket temp helpdesk
+    public function getTiketTempHd()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+        $query = "SELECT user.nama_user,tiket_temp.id_temp,  tiket_temp.no_tiket, tiket_temp.perihal, tiket_temp.file, user.id_user, tiket_temp.kategori, tiket_temp.tags, tiket_temp.judul
+                    FROM tiket_temp JOIN user
+                    ON tiket_temp.user_id_hd = user.id_user
+                    WHERE user_id_hd = $user_id";
+        return $this->db->query($query)->result_array();
+    }
 
     public function getTiketTemp1()
     {

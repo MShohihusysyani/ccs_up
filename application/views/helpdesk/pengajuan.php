@@ -40,12 +40,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <!-- Hidden input untuk id_user KLIEN -->
+                                <input type="hidden" id="klien_id" name="klien_id">
+                                <!-- Hidden input untuk nama_user klien -->
+                                <input type="hidden" id="nama_klien" name="nama_klien">
 
                                 <!-- No Tiket (Akan Terisi Otomatis) -->
                                 <label for="judul">No Tiket</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" id="no_tiket" name="no_tiket" class="form-control" placeholder="">
+                                        <input type="text" id="no_tiket" name="no_tiket" class="form-control" placeholder="" readonly>
                                     </div>
                                 </div>
 
@@ -89,6 +93,8 @@
                                         <input type="text" class="form-control" data-role="tagsinput" value="" id="tags" name="tags">
                                     </div>
                                 </div>
+                                <!-- Hidden input untuk user_id_helpdesk -->
+                                <input type="hidden" name="user_id_hd" id="user_id_hd" value="<?= $user_hd['id_user']; ?>">
 
                                 <div class="js-sweetalert">
                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect" data-type="with-custom-icon">Proses</button>
@@ -138,11 +144,11 @@
                                                         </td>
                                                         <td>
 
-                                                            <a class="btn btn-sm btn-warning" href="<?= base_url() ?>klien/edit_pelaporan/<?= $tmp['id_temp']; ?>"><i class="material-icons">edit</i> <span class="icon-name"></span>Edit</a>
+                                                            <a class="btn btn-sm btn-warning" href="<?= base_url() ?>helpdesk/edit_tiket_temp/<?= $tmp['id_temp']; ?>"><i class="material-icons">edit</i> <span class="icon-name"></span>Edit</a>
                                                             <br><br>
-                                                            <a class="btn btn-sm btn-info" href="<?= base_url() ?>klien/preview/<?= $tmp['id_temp']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
+                                                            <a class="btn btn-sm btn-info" href="<?= base_url() ?>helpdesk/preview/<?= $tmp['id_temp']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
                                                             <br><br>
-                                                            <a class="btn btn-sm btn-danger tombol-hapus" href="<?= base_url() ?>klien/fungsi_delete_temp/<?= $tmp['id_temp']; ?>"><span class="fa fa-trash tombol-hapus"></span>
+                                                            <a class="btn btn-sm btn-danger tombol-hapus" href="<?= base_url() ?>helpdesk/fungsi_delete_temp/<?= $tmp['id_temp']; ?>"><span class="fa fa-trash tombol-hapus"></span>
                                                                 Hapus</a>
 
 
@@ -218,39 +224,65 @@
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<script>
-    document.getElementById('klien').addEventListener('change', function() {
-        var userId = this.value;
-        console.log(userId);
-        if (userId) {
-            // Make AJAX call to get the latest ticket number for the selected client
-            $.ajax({
-                url: "<?= base_url('helpdesk/get_latest_ticket_number') ?>",
-                type: "POST",
-                data: {
-                    user_id: userId
-                }, // Send correct user_id
-                dataType: 'json', // Ensure JSON response is properly handled
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                success: function(data) {
-                    console.log(data); // Debug: check the response
-                    if (data && data.new_ticket_number) {
-                        // Assign the new ticket number to the input field
-                        document.getElementById('no_tiket').value = data.new_ticket_number;
-                    } else {
-                        alert("Failed to generate a ticket number.");
+<script>
+    $(document).ready(function() {
+        $('#klien').change(function() {
+            var user_id = $(this).val(); // Ambil value id_user dari klien yang dipilih
+            var nama_klien = $('#klien option:selected').text(); // Ambil nama klien dari option yang dipilih
+
+            if (user_id !== "") {
+                $.ajax({
+                    url: '<?= base_url("helpdesk/get_no_tiket"); ?>', // Ganti URL ini dengan URL ke controller yang benar
+                    type: 'POST',
+                    data: {
+                        user_id: user_id
+                    },
+                    success: function(response) {
+                        $('#no_tiket').val(response); // Tampilkan nomor tiket di input
+                        $('#klien_id').val(user_id); // Isi hidden input klien_id
+                        $('#nama_klien').val(nama_klien); // Isi hidden input nama_klien
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error); // Menangani error jika terjadi
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", error);
-                    alert("There was an issue generating the ticket number.");
-                }
-            });
-        } else {
-            document.getElementById('no_tiket').value = '';
-        }
+                });
+            } else {
+                $('#no_tiket').val(''); // Jika tidak ada klien yang dipilih, kosongkan input
+                $('#klien_id').val(''); // Kosongkan hidden input klien_id
+                $('#nama_klien').val(''); // Kosongkan hidden input nama_klien
+            }
+        });
     });
 </script>
+
+<!-- <script>
+    $(document).ready(function() {
+        $('#klien').change(function() {
+            var user_id = $(this).val(); // Ambil value klien yang dipilih
+
+            if (user_id !== "") {
+                $.ajax({
+                    url: '<?= base_url("helpdesk/get_no_tiket"); ?>', // Ganti URL ini dengan URL ke controller yang benar
+                    type: 'POST',
+                    data: {
+                        user_id: user_id
+                    },
+                    success: function(response) {
+                        $('#no_tiket').val(response); // Tampilkan nomor tiket di input
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error); // Menangani error jika terjadi
+                    }
+                });
+            } else {
+                $('#no_tiket').val(''); // Jika tidak ada klien yang dipilih, kosongkan input
+            }
+        });
+    });
+</script> -->
+
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilihKategori', function() {
