@@ -25,10 +25,12 @@ class Helpdesk extends CI_Controller
         $this->load->model('Category_model', 'category_model');
         $this->load->model('Temp_model', 'temp_model');
         $this->load->model('User_model', 'user_model');
+        $this->load->model('Client_model', 'client_model');
 
         $data['category']      = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTempHd();
         $data['user'] = $this->user_model->getDataKlien();
+        $data['klien'] = $this->client_model->getClient();
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
@@ -155,8 +157,14 @@ class Helpdesk extends CI_Controller
 
     public function fungsi_pengajuan()
     {
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
         // Cek apakah ada tiket yang selesai tetapi belum diberi rating
-        $has_unrated_finished_tickets = $this->pelaporan_model->has_unrated_finished_tickets($this->session->userdata('user_id'));
+        $klien_id = $this->input->post('user_id');
+        // var_dump($klien_id);
+        // die;
+        $has_unrated_finished_tickets = $this->helpdesk_model->has_unrated_finished_tickets($klien_id);
+        var_dump($has_unrated_finished_tickets);
+        die;
 
         if ($has_unrated_finished_tickets) {
             // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
@@ -164,8 +172,8 @@ class Helpdesk extends CI_Controller
             redirect(Base_url('helpdesk/pengajuan')); // Alihkan ke halaman untuk memberi rating
         } else {
             // Tambahkan tiket baru
-            $this->pelaporan_model->add_pelaporan();
-            $this->pelaporan_model->delete_pelaporan();
+            $this->helpdesk_model->add_pelaporan($klien_id);
+            $this->helpdesk_model->delete_pelaporan($klien_id);
             $this->session->set_flashdata('pesan', 'Pelaporan Berhasil!');
             redirect(Base_url('helpdesk/pengajuan'));
         }
@@ -629,8 +637,6 @@ class Helpdesk extends CI_Controller
         }
     }
 
-
-
     public function edit_pelaporan()
     {
 
@@ -647,6 +653,68 @@ class Helpdesk extends CI_Controller
         $this->pelaporan_model->updateImpact($id_pelaporan, $ArrUpdate);
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
         Redirect(base_url('helpdesk/pelaporan'));
+    }
+
+    // EDIT TIKET TEMP
+    public function edit_tiket_temp($id)
+    {
+
+        $this->load->model('Temp_model', 'temp_model');
+        $data['tiket_temp'] = $this->temp_model->ambil_id_temp($id);
+
+        $this->load->model('Category_model', 'category_model');
+        $data['category'] = $this->category_model->getNamaKategori();
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/edit_tiket_temp', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_edit_pelaporan()
+    {
+        $this->load->model('Category_model', 'category_model');
+        $data['category'] = $this->category_model->getNamaKategori();
+
+        $id_temp = $this->input->post('id_temp');
+        $judul = $this->input->post('judul');
+        $perihal = $this->input->post('perihal');
+        $kategori = $this->input->post('kategori');
+        $tags  = $this->input->post('tags');
+
+        //jika FILE
+        $photo = $_FILES['file']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpeg|jpg|png|docx|pdf|xlsx|csv|txt|zip|rar';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/files/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file')) {
+                $old_image = $data['tiket_temp']['file'];
+                if ($old_image != '') {
+                    unlink(FCPATH . 'assets/files/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('file', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('klien/edit_pelaporan');
+            }
+        }
+
+        $this->db->set('judul', $judul);
+        $this->db->set('perihal', $perihal);
+        $this->db->set('kategori', $kategori);
+        $this->db->set('tags', $tags);
+        $this->db->where('id_temp', $id_temp);
+        $this->db->update('tiket_temp');
+        $this->session->set_flashdata('pesan', 'Data Edited!');
+        Redirect(base_url('helpdesk/pengajuan'));
     }
 
 
@@ -726,6 +794,18 @@ class Helpdesk extends CI_Controller
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
         $this->load->view('helpdesk/detail_pelaporann', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function preview($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        $data['tiket_temp'] = $this->klienpelaporan_model->ambil_id_temp($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/preview', $data);
         $this->load->view('templates/footer');
     }
 

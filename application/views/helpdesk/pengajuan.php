@@ -29,6 +29,16 @@
                         <div class="body">
                             <form method="post" action="<?= base_url('helpdesk/add_temp_tiket'); ?>" enctype="multipart/form-data">
                                 <!-- Dropdown Pilih Klien -->
+
+                                <!-- <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
+                                            name="nama_klien" id="nama_klien" placeholder="Pilih BPR"
+                                            class="form-control" value="" autocomplete="off">
+                                        <input type="hidden" id="klien_id" name="klien_id">
+                                    </div>
+                                </div> -->
+
                                 <label for="klien">Pilih Klien</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -160,6 +170,7 @@
                                             </tbody>
                                         </table>
                                         <form method="post" action="<?= base_url('helpdesk/fungsi_pengajuan') ?>">
+                                            <input type="hidden" id="klien_id" name="klien_id">
                                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button>
                                         </form>
                                     </div>
@@ -174,6 +185,49 @@
 </section>
 
 
+<!-- Modal Cari Klien -->
+<div class="modal fade" id="defaultModalNamaKlien" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Klien</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode Klien</th>
+                            <th>Nama Klien</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($klien as $cln) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $cln['no_klien']; ?></td>
+                                <td><?= $cln['nama_klien']; ?></td>
+                                <td class="hide"><?= $cln['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>">
+                                        Pilih
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- modal cari kategori -->
 <div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
@@ -225,6 +279,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih3', function() {
+            var nama_klas = $(this).data('nama-klien');
+            var id = $(this).data('id');
+            $('#nama_klien').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaKlien').modal('hide');
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -256,32 +321,6 @@
         });
     });
 </script>
-
-<!-- <script>
-    $(document).ready(function() {
-        $('#klien').change(function() {
-            var user_id = $(this).val(); // Ambil value klien yang dipilih
-
-            if (user_id !== "") {
-                $.ajax({
-                    url: '<?= base_url("helpdesk/get_no_tiket"); ?>', // Ganti URL ini dengan URL ke controller yang benar
-                    type: 'POST',
-                    data: {
-                        user_id: user_id
-                    },
-                    success: function(response) {
-                        $('#no_tiket').val(response); // Tampilkan nomor tiket di input
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error); // Menangani error jika terjadi
-                    }
-                });
-            } else {
-                $('#no_tiket').val(''); // Jika tidak ada klien yang dipilih, kosongkan input
-            }
-        });
-    });
-</script> -->
 
 <script>
     $(document).ready(function() {

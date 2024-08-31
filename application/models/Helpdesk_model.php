@@ -485,4 +485,66 @@ class Helpdesk_model extends CI_Model
         // Menghitung jumlah notifikasi
         return $this->db->count_all_results();
     }
+
+    // fungsi add&delete tiket
+    public function add_pelaporan()
+    {
+        // Get user data from the session
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+
+        // Set the timezone and get the current date
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date('Y-m-d');
+
+        // Retrieve data from tiket_temp for the given user
+        $this->db->select('user_id, perihal, file, nama, no_tiket, kategori, tags, judul');
+        $this->db->from('tiket_temp');
+        $this->db->where('user_id_hd', $user_id);
+        $tiket_temp_data = $this->db->get()->result_array();
+
+        // Insert the retrieved data into pelaporan
+        foreach ($tiket_temp_data as $row) {
+            $data_to_insert = [
+                'user_id' => $row['user_id'],
+                'waktu_pelaporan' => $now,
+                'perihal' => $row['perihal'],
+                'file' => $row['file'],
+                'nama' => $row['nama'],
+                'no_tiket' => $row['no_tiket'],
+                'kategori' => $row['kategori'],
+                'tags' => $row['tags'],
+                'judul' => $row['judul']
+            ];
+
+            $this->db->insert('pelaporan', $data_to_insert);
+        }
+
+        // Optionally delete the data from tiket_temp after insertion
+        // $this->db->delete('tiket_temp', ['user_id' => $user_id]);
+    }
+
+    public function delete_pelaporan()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+
+        $query = "DELETE FROM tiket_temp where user_id_hd = $user_id
+                    ";
+        // $query2 = "DELETE FROM barang_temp where user_id = $user_id";
+        $this->db->query($query);
+    }
+
+    // fungsi cek klien sudah rating atau belum
+    public function has_unrated_finished_tickets($klien_id)
+    {
+        $this->db->select('user_id');
+        $this->db->from('pelaporan');
+        $this->db->where('status_ccs', 'FINISH');
+        $this->db->where('rating', 0);
+        $this->db->where('user_id', $klien_id);
+        $query = $this->db->get();
+        echo $this->db->last_query();
+        return $query->num_rows() > 0;
+    }
 }

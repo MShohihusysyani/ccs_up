@@ -69,25 +69,25 @@ class Pelaporan_model extends CI_Model
         $this->db->query($query);
     }
 
+    // fungsi cek klien sudah rating atau belum
+    public function has_unrated_finished_tickets($user_id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
+
+        $this->db->where('user_id', $user_id);
+        $this->db->where('status_ccs', 'FINISH'); // Status tiket yang sudah selesai
+        $this->db->where('rating', 0); // Tiket yang belum diberi rating
+        $query = $this->db->get('pelaporan');
+
+        return $query->num_rows() > 0;
+    }
+
     function updateCP($id_pelaporan, $data)
     {
         $this->db->where('id_pelaporan', $id_pelaporan);
         $this->db->update('pelaporan', $data);
     }
-	// fungsi cek klien sudah rating atau belum
-    public function has_unrated_finished_tickets($user_id)
-{
-    $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    $user_id = $this->session->userdata('id_user');
-
-    $this->db->where('user_id', $user_id);
-    $this->db->where('status_ccs', 'FINISH'); // Status tiket yang sudah selesai
-    $this->db->where('rating' ,0); // Tiket yang belum diberi rating
-    $query = $this->db->get('pelaporan');
-
-    return $query->num_rows() > 0;
-}
-
 
     function updateImpact($id_pelaporan, $data)
     {
