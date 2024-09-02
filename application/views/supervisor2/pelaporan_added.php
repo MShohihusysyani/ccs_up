@@ -45,6 +45,7 @@
                                                 <th>Priority</th>
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
+                                                <th>Handle By</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -61,6 +62,7 @@
                                                 <th>Priority</th>
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
+                                                <th>Handle By</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </tfoot>
@@ -126,6 +128,15 @@
                                                         <?php else : ?>
                                                         <?php endif; ?>
 
+                                                    </td>
+                                                    <td>
+                                                        <?= $dp['handle_by']; ?>
+                                                        <?php if (!empty($dp['handle_by2'])) : ?>
+                                                            , <?= $dp['handle_by2']; ?>
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($dp['handle_by3'])) : ?>
+                                                            , <?= $dp['handle_by3']; ?>
+                                                        <?php endif; ?>
                                                     </td>
                                                     <td>
 
