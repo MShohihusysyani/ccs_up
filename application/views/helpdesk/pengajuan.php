@@ -170,7 +170,6 @@
                                             </tbody>
                                         </table>
                                         <form method="post" action="<?= base_url('helpdesk/fungsi_pengajuan') ?>">
-                                            <input type="hidden" id="klien_id" name="klien_id">
                                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button>
                                         </form>
                                     </div>
@@ -181,7 +180,6 @@
                     <!-- #END# Data Pengajuan -->
                 </div>
             </div>
-
 </section>
 
 
@@ -212,7 +210,7 @@
                                 <td><?= $cln['nama_klien']; ?></td>
                                 <td class="hide"><?= $cln['id']; ?></td>
                                 <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>">
+                                    <button class="btn btn-sm btn-info pilih-klien" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>" data-kodeklien="<?= $cln['no_klien']; ?>">
                                         Pilih
                                     </button>
                                 </td>
@@ -321,6 +319,44 @@
         });
     });
 </script>
+<!-- <script>
+    $(document).ready(function() {
+        // Trigger when a client is selected from the modal
+        $('.pilih-klien').on('click', function() {
+            var user_id = $(this).data('id-namaklien'); // Get the user_id from the data attribute
+            var nama_klien = $(this).data('nama-klien'); // Get the nama_klien from the data attribute
+
+            // Populate the form fields with client data
+            $('#klien_id').val(user_id);
+            $('#nama_klien').val(nama_klien);
+
+            if (user_id !== "") {
+                // AJAX request to get the No Tiket
+                $.ajax({
+                    url: '<?= base_url("helpdesk/get_no_tiket"); ?>', // URL to your controller
+                    type: 'POST',
+                    data: {
+                        user_id: user_id
+                    },
+                    success: function(response) {
+                        $('#no_tiket').val(response); // Fill in the No Tiket field
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error); // Handle any errors
+                    }
+                });
+            } else {
+                // Clear fields if no client is selected
+                $('#no_tiket').val('');
+                $('#klien_id').val('');
+                $('#nama_klien').val('');
+            }
+
+            // Close the modal after selection
+            $('#defaultModalNamaKlien').modal('hide');
+        });
+    });
+</script> -->
 
 <script>
     $(document).ready(function() {

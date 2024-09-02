@@ -160,11 +160,7 @@ class Helpdesk extends CI_Controller
         $this->load->model('Helpdesk_model', 'helpdesk_model');
         // Cek apakah ada tiket yang selesai tetapi belum diberi rating
         $klien_id = $this->input->post('user_id');
-        // var_dump($klien_id);
-        // die;
         $has_unrated_finished_tickets = $this->helpdesk_model->has_unrated_finished_tickets($klien_id);
-        var_dump($has_unrated_finished_tickets);
-        die;
 
         if ($has_unrated_finished_tickets) {
             // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses

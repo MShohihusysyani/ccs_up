@@ -538,13 +538,12 @@ class Helpdesk_model extends CI_Model
     // fungsi cek klien sudah rating atau belum
     public function has_unrated_finished_tickets($klien_id)
     {
-        $this->db->select('user_id');
-        $this->db->from('pelaporan');
-        $this->db->where('status_ccs', 'FINISH');
-        $this->db->where('rating', 0);
+        // Pengecekan apakah ada tiket yang statusnya selesai (FINISH) dan belum diberi rating
         $this->db->where('user_id', $klien_id);
-        $query = $this->db->get();
-        echo $this->db->last_query();
-        return $query->num_rows() > 0;
+        $this->db->where('status_ccs', 'FINISH');  // Tiket yang sudah selesai
+        $this->db->where('rating', 0);  // Tiket yang belum diberi rating
+        $query = $this->db->get('pelaporan');
+
+        return $query->num_rows() > 0;  // Jika ada tiket yang belum diberi rating, kembalikan true
     }
 }
