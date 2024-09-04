@@ -144,13 +144,6 @@
                                                 </td>
 
                                                 <td>
-                                                    <!-- <div class="btn btn-sm btn-info">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">launch</i> <span
-                                                        class="icon-name">Approve</span>
-                                                </div>
-                                            </div> -->
                                                     <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/finish_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">launch</i> <span class="icon-name"></span>Approve</a>
                                                     <br>
                                                     <br>
@@ -422,17 +415,7 @@
             modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
             // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-
         });
 
     });

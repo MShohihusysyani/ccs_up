@@ -503,18 +503,7 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#tags').attr("value", div.data('tags'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-            // modal.find('#tags').value = div.data('tags');
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
             // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
 
         });
 
@@ -546,16 +535,7 @@
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
             // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
 
         });
 

@@ -180,33 +180,6 @@ class Superadmin extends CI_Controller
         }
     }
 
-    // public function tambah_user()
-    // {
-    //     $data['divisi']   = $this->db->get('user')->result_array();
-    //     $data['nama_user']     = $this->db->get('user')->result_array();
-    //     $data['username'] = $this->db->get('user')->result_array();
-    //     $data['password'] = $this->db->get('user')->result_array();
-    //     $data['role']     = $this->db->get('user')->result_array();
-    //     $data['tgl_register']   = $this->db->get('user')->result_array();
-
-    //     $this->form_validation->set_rules('no_urut', 'No Urut', 'required');
-    //     $this->form_validation->set_rules('nama_klien', 'Kategory', 'required');
-
-    //     // $password = md5($this->input->post('password'));
-    //     $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-    //     $data = [
-    //         'divisi'   => $this->input->post('divisi'),
-    //         'nama_user'     => $this->input->post('nama_user'),
-    //         'username' => $this->input->post('username'),
-    //         'password' => $password,
-    //         'role'     => $this->input->post('role'),
-    //         'tgl_register'   => $this->input->post('tgl_register')
-    //     ];
-    //     $this->db->insert('user', $data);
-    //     $this->session->set_flashdata('pesan', 'Successfully Added!');
-    //     redirect('superadmin/user');
-    // }
-
     public function edit_user()
     {
         $id       = $this->input->post('id_user');
@@ -238,21 +211,6 @@ class Superadmin extends CI_Controller
     }
 
     //LIST TICKET
-    // public function AllTicket()
-    // {
-    //     $this->load->model('Superadmin_model', 'superadmin_model');
-    //     // $data['kategori'] = $this->db->get('pelaporan')->result_array();
-    //     $data['category'] = $this->category_model->getCategory();
-    //     $this->load->model('User_model', 'user_model');
-    //     $data['user'] = $this->user_model->getDataUser();
-    //     $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporan();
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/superadmin_sidebar');
-    //     $this->load->view('superadmin/allticket', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
     public function AllTicket()
     {
 
@@ -828,8 +786,6 @@ class Superadmin extends CI_Controller
 
 
 
-
-
     // REKAP KATEGORI
     public function rekapKategori()
     {
@@ -846,17 +802,6 @@ class Superadmin extends CI_Controller
 
     public function dateKategori()
     {
-        // $tgla = $this->input->post('tgla');
-        // $tglb = $this->input->post('tglb');
-        // // $nama_kategori = $this->input->post('nama_kategori');
-        // $this->load->model('Pelaporan_model', 'pelaporan_model');
-        // $data['category'] = $this->category_model->getCategory();
-        // $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb);
-
-        // $this->load->view('templates/header');
-        // $this->load->view('templates/superadmin_sidebar');
-        // $this->load->view('superadmin/rekap_kategori', $data);
-        // $this->load->view('templates/footer');
 
         //Load necessary libraries and models
         $this->load->library('form_validation');

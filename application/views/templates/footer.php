@@ -7,17 +7,17 @@
 <!-- Bootstrap Tags Input Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
- <!-- Select Plugin Js -->
- <!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-select/js/bootstrap-select.js"></script> -->
+<!-- Select Plugin Js -->
+<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-select/js/bootstrap-select.js"></script> -->
 
 <!-- Slimscroll Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
- <!-- Dropzone Plugin Js -->
- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/dropzone/dropzone.js"></script>
+<!-- Dropzone Plugin Js -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/dropzone/dropzone.js"></script>
 
- <!-- Jquery Validation Plugin Css -->
- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-validation/jquery.validate.js"></script>
+<!-- Jquery Validation Plugin Css -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-validation/jquery.validate.js"></script>
 
 <!-- JQuery Steps Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-steps/jquery.steps.js"></script>
@@ -46,11 +46,11 @@
 <!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/chartjs/Chart.bundle.js"></script> -->
 
 <!-- Flot Charts Plugin Js -->
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.js"></script>
+<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.js"></script>
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.resize.js"></script>
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.pie.js"></script>
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.categories.js"></script>
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.time.js"></script>
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.time.js"></script> -->
 
 <!-- Jquery DataTable Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
@@ -91,7 +91,7 @@
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>js/demo.js"></script>
 
 <!-- Ckeditor -->
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/ckeditor/ckeditor.js"></script>
+<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/ckeditor/ckeditor.js"></script> -->
 
 <!-- TinyMCE -->
 <!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/tinymce/tinymce.js"></script> -->
