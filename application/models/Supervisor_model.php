@@ -322,34 +322,6 @@
             return $this->db->query($query)->result_array();
         }
 
-        // public function ambil_id_comment($id){
-        //     $this->db->select('*');
-        //     $this->db->from('comment');
-        //     $this->db->where('pelaporan_id', $id);
-        //     return $this->db->get()->result();
-        // }
-
-        // public function ambil_id_comment($id){
-
-        //     $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id, comment.id_comment, comment.file
-        //     FROM comment
-        //     LEFT JOIN user ON comment.user_id=user.id_user
-        //     WHERE comment.pelaporan_id='$id'";
-
-        //     return $this->db->query($query)->result_array();
-        // }
-
-        // public function ambil_comment_id($id){
-
-
-        //     $query = "SELECT  user.nama_user, user.id_user, comment.body, comment.pelaporan_id,  comment.file, comment.comment_id
-        //     FROM comment
-        //     LEFT JOIN user ON comment.user_id=user.id_user
-        //     WHERE comment.comment_id='$id'";
-
-        //     return $this->db->query($query)->result_array();
-        // }
-
         public function ambil_comment_id($id)
         {
 
@@ -408,16 +380,6 @@
             return $query->result(); // Returns an array of object
         }
 
-
-        // public function get_recent_pelaporan()
-        // {
-        //     $this->db->select('id_pelaporan,no_tiket, judul, waktu_pelaporan, status_ccs, nama');
-        //     // $this->db->where('user_id', $user_id);  // Atau sesuaikan dengan kondisi lain jika perlu
-        //     $this->db->where('status_ccs', 'ADDED');  // Hanya mengambil yang masih dalam status proses
-        //     $this->db->order_by('waktu_pelaporan', 'DESC');
-        //     // $this->db->limit(5);  // Ambil 5 pelaporan terbaru
-        //     return $this->db->get('pelaporan')->result();
-        // }
         public function get_recent_pelaporan()
         {
             $this->db->select('id_pelaporan,no_tiket, judul, waktu_pelaporan, status_ccs, nama');
@@ -426,14 +388,6 @@
             return $this->db->get('pelaporan')->result();
         }
 
-        // public function get_notifications($limit, $offset)
-        // {
-        //     $this->db->select('id_pelaporan,no_tiket, judul, waktu_pelaporan, status_ccs, nama');
-        //     $this->db->where('status_ccs', 'HANDLE');
-        //     $this->db->order_by('waktu_pelaporan', 'DESC');
-        //     $this->db->limit($limit, $offset);  // Batasi jumlah notifikasi
-        //     return $this->db->get('pelaporan')->result();
-        // }
 
         public function get_notifications()
         {
@@ -446,7 +400,6 @@
 
             return $query->result_array();
         }
-
 
         // Menghitung jumlah notifikasi yang belum dibaca
         public function count_unread_notifications()

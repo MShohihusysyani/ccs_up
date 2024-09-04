@@ -217,39 +217,6 @@ class Implementator_model extends CI_Model
         // Execute the query and return the result
         return $this->db->get()->result_array();
     }
-    // public function getKlienPelaporanClose()
-    // {
-
-    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    //     $user_id = $this->session->userdata('id_user');
-
-    //     $this->db->select('
-    //         pelaporan.kategori,
-    //         pelaporan.id_pelaporan,
-    //         pelaporan.waktu_pelaporan,
-    //         pelaporan.status_ccs,
-    //         pelaporan.priority,
-    //         pelaporan.maxday,
-    //         pelaporan.judul,
-    //         pelaporan.perihal,
-    //         pelaporan.file,
-    //         pelaporan.nama,
-    //         pelaporan.no_tiket,
-    //         pelaporan.impact,
-    //         pelaporan.handle_by,
-    //         pelaporan.handle_by2,
-    //         pelaporan.handle_by3,
-    //         pelaporan.status,
-    //         pelaporan.tags
-    //     ');
-    //     $this->db->from('t1_forward');
-    //     $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
-    //     $this->db->where('t1_forward.user_id', $user_id);
-    //     $this->db->where('pelaporan.status_ccs', 'CLOSE');
-    //     $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
-
-    //     return $this->db->get()->result_array();
-    // }
 
     public function getPelaporanReject()
     {

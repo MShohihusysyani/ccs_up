@@ -153,10 +153,7 @@ class Klien extends CI_Controller
     {
         // $data['noTiket'] = $this->client_model->getkodeticket();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $this->load->model('Category_model', 'category_model');
-        // $data['nama_kategori'] = $this->db->get('category')->result_array();
         $this->load->model('Temp_model', 'temp_model');
-        // $data['nama_kategori'] = $this->db->get('tiket_temp')->result_array();
         $data['category']      = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTemp1();
         $id_user = $this->session->userdata('id_user');
@@ -178,7 +175,6 @@ class Klien extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['datapelaporan'] = $this->klienpelaporan_model->getKlienPelaporanTemp();
 
 
@@ -191,7 +187,6 @@ class Klien extends CI_Controller
     public function added()
     {
         $this->load->model('M_Klien', 'M_Klien');
-        // $data['kategori'] = $this->db->get('pelaporan')->result_array();
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
         $data['dataAdded'] = $this->M_Klien->getKlienPelaporanAdd();
@@ -205,7 +200,6 @@ class Klien extends CI_Controller
     public function onprogress()
     {
         $this->load->model('M_Klien', 'M_Klien');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->M_Klien->getKlienPelaporanOP();
@@ -219,7 +213,6 @@ class Klien extends CI_Controller
     public function close()
     {
         $this->load->model('M_Klien', 'M_Klien');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->M_Klien->getKlienPelaporanClose();
@@ -343,54 +336,6 @@ class Klien extends CI_Controller
             echo json_encode(['status' => 'error', 'message' => 'Internal Server Error: ' . $e->getMessage()]);
         }
     }
-
-
-
-
-    // public function rating()
-    // {
-    //     header('Content-Type: application/json');
-
-    //     $id = $this->input->post('id_pelaporan');
-    //     $rating = $this->input->post('rating');
-
-    //     // Log input data
-    //     log_message('debug', 'Received rating data: ID = ' . $id . ', Rating = ' . $rating);
-
-    //     // Check if the user has already rated
-    //     $this->db->where('id_pelaporan', $id);
-    //     $query = $this->db->get('pelaporan');
-    //     if (!$query) {
-    //         log_message('error', 'Database query failed: ' . $this->db->last_query());
-    //         echo json_encode(['status' => 'error', 'message' => 'Database query failed']);
-    //         return;
-    //     }
-
-    //     $row = $query->row();
-
-    //     if ($row->has_rated) {
-    //         // User has already rated
-    //         echo json_encode(['status' => 'error', 'message' => 'You have already rated this item.']);
-    //         return;
-    //     }
-
-    //     // Perform validation and update the rating in the database
-    //     if ($this->model->update_rating($id, $rating)) {
-    //         // Update the rating status
-    //         $this->db->where('id_pelaporan', $id);
-    //         $update = $this->db->update('pelaporan', ['has_rated' => TRUE]);
-    //         if (!$update) {
-    //             log_message('error', 'Failed to update rating status: ' . $this->db->last_query());
-    //             echo json_encode(['status' => 'error', 'message' => 'Failed to update rating status']);
-    //             return;
-    //         }
-
-    //         echo json_encode(['status' => 'success']);
-    //     } else {
-    //         log_message('error', 'Failed to update rating');
-    //         echo json_encode(['status' => 'error', 'message' => 'Failed to update rating']);
-    //     }
-    // }
 
     public function bank_knowlage()
     {

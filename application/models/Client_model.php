@@ -88,26 +88,4 @@ class Client_model extends CI_Model
         
     }
 
-
-    // public function buat_tiket(){
-    //     $this->db->select('RIGHT(tiket_temp.no_tiket) as tiket', FALSE);
-    //     $this->db->order_by('no_tiket','DESC');
-    //     $this->db->limit(1);
-    //     $query = $this->db->get('tiket_temp');
-    //     if($query->num_rows() <> 0){
-    //         $data = $query->row();
-    //         $kode = intval($data->tiket) + 1;
-
-    //     }else{
-    //         $kode = 1;
-
-    //     }
-
-    //     $kodemax = str_pad($kode, 3, "0",STR_PAD_LEFT);
-    //     $kodejadi = "TIC".$kodemax;
-    //     return $kodejadi;
-
-    // }
-
-
 }

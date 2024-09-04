@@ -276,21 +276,6 @@ class Pelaporan_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    // public function getDateKategori($nama_kategori)
-    // {
-    //     $query = "SELECT  kategori,  COUNT(*) AS total
-    //     FROM pelaporan WHERE kategori='$nama_kategori'";
-    //     return $this->db->query($query)->result_array();
-    // }
-
-
-    // public function getDateKategori($tgla, $tglb, $nama_kategori)
-    // {
-    //     $query = "SELECT  kategori
-    //     FROM pelaporan where kategori=$nama_kategori BETWEEN '$tgla' AND '$tglb'  AND kategori = '$nama_kategori' ";
-    //     return $this->db->query($query)->result_array();
-    // }
-
     public function getHelpdesk()
     {
         $query = "SELECT handle_by, COUNT(*) AS 'totalH', waktu_approve FROM pelaporan WHERE status_ccs='FINISH' GROUP BY handle_by ";

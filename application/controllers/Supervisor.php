@@ -301,7 +301,6 @@ class Supervisor extends CI_Controller
     public function added()
     {
         $this->load->model('Supervisor_model', 'supervisor_model');
-        // $data['kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category']      = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
@@ -319,7 +318,6 @@ class Supervisor extends CI_Controller
     public function onprogress()
     {
         $this->load->model('Supervisor_model', 'supervisor_model');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
@@ -338,7 +336,6 @@ class Supervisor extends CI_Controller
     public function close()
     {
         $this->load->model('Supervisor_model', 'supervisor_model');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
@@ -356,7 +353,6 @@ class Supervisor extends CI_Controller
     public function finish()
     {
         $this->load->model('Supervisor_model', 'supervisor_model');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();

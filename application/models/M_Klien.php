@@ -219,23 +219,4 @@ class M_Klien extends CI_Model
         return $result;
     }
 
-
-
-    // public function update_rating($id, $rating)
-    // {
-    //     // Log data received
-    //     log_message('info', 'Update Rating - ID: ' . $id . ', Rating: ' . $rating);
-
-    //     $this->db->where('id_pelaporan', $id);
-    //     $this->db->update('pelaporan', ['rating' => $rating]);
-
-    //     // Log query executed
-    //     log_message('info', 'Executed Query: ' . $this->db->last_query());
-    //     // Check affected rows
-    //     if ($this->db->affected_rows() > 0) {
-    //         log_message('info', 'Rating updated successfully.');
-    //     } else {
-    //         log_message('error', 'Failed to update rating.');
-    //     }
-    // }
 }

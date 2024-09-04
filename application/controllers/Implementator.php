@@ -22,9 +22,6 @@ class Implementator extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Implementator_model', 'Implementator_model');
 
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        // $data['category'] = $this->category_model->getNamakategori();
-
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->Implementator_model->getKlienPelaporanImplementator();

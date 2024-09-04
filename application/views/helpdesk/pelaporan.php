@@ -154,11 +154,6 @@
                                                         <br>
                                                         <br>
 
-                                                        <!-- <div class="btn btn-sm btn-info">
-                                                            <div class="demo-google-material-icon" data-toggle="modal" data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i class="material-icons">done</i> <span class="icon-name">Finish</span>
-                                                            </div>
-                                                        </div> -->
-
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-info">
                                                             <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-judul="<?= $dp['judul']; ?>" data-toggle="modal" data-target="#finishModal"> <i class="material-icons">done</i> <span class="icon-name">Finish</span></a>

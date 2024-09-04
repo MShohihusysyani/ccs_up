@@ -134,29 +134,6 @@ class Spv2_model extends CI_Model
 
     public function getKlienPelaporanOP()
     {
-        // Get user data from the session
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-
-        // // Build the query using Query Builder
-        // $this->db->select('
-        //     pelaporan.*,
-        //     GROUP_CONCAT(DISTINCT t1_forward.judul ORDER BY t1_forward.tanggal SEPARATOR ", ") AS judul1,
-        //     GROUP_CONCAT(DISTINCT t1_forward.subtask ORDER BY t1_forward.tanggal SEPARATOR ", ") AS subtask1,
-        //     GROUP_CONCAT(DISTINCT t1_forward.tanggal ORDER BY t1_forward.tanggal SEPARATOR ", ") AS tanggal1,
-        //     GROUP_CONCAT(DISTINCT t2_forward.judul ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS judul2,
-        //     GROUP_CONCAT(DISTINCT t2_forward.subtask2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS subtask2,
-        //     GROUP_CONCAT(DISTINCT t2_forward.tanggal2 ORDER BY t2_forward.tanggal2 SEPARATOR ", ") AS tanggal2
-        // ');
-        // $this->db->from('pelaporan');
-        // $this->db->join('t1_forward', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        // $this->db->join('t2_forward', 't2_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        // $this->db->join('s_forward', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        // $this->db->where('s_forward.user_id', $user_id);
-        // $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
-        // $this->db->group_by('pelaporan.id_pelaporan');
-        // $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
-
         // // Execute the query and return the result
         // return $this->db->get()->result_array();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -207,10 +184,6 @@ class Spv2_model extends CI_Model
 
     public function getKlienPelaporanClose()
     {
-        // $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        // $user_id = $this->session->userdata('id_user');
-        // $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, maxday, handle_by, maxday, handle_by2, handle_by3, impact, tags  FROM pelaporan WHERE status_ccs='CLOSE' ORDER BY waktu_pelaporan DESC";
-        // return $this->db->query($query)->result_array();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
