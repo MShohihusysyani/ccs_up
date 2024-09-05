@@ -985,4 +985,18 @@ class Superadmin extends CI_Controller
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('superadmin/detail_pelaporan/' . $id_pelaporan));
     }
+
+    // NOTIFICATION
+    public function fetch_notifications()
+    {
+        $limit = 5;  // Tampilkan 20 notifikasi per halaman
+        $offset = $this->input->get('offset') ? $this->input->get('offset') : 0;
+        $this->load->model('Superadmin_model', 'superadmin_model');
+        $notifications = $this->superadmin_model->get_notifications($limit, $offset);
+        $unread_count = $this->superadmin_model->count_unread_notifications();
+        echo json_encode([
+            'notifications' => $notifications,
+            'unread_count' => $unread_count
+        ]);
+    }
 }

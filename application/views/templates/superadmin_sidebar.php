@@ -1,3 +1,39 @@
+<style>
+    ul#notifications-list {
+        list-style-type: none;
+        /* Menghilangkan bullet */
+        padding: 0;
+        /* Menghilangkan padding default */
+        margin: 0;
+        /* Menghilangkan margin default */
+    }
+
+    ul#notifications-list li {
+        border-bottom: 1px solid #f1f1f1;
+        /* Optional: Tambahkan garis bawah antar item */
+        padding: 10px 0;
+        /* Optional: Atur padding antar item */
+    }
+
+    .label-count {
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 6px;
+        font-size: 12px;
+        position: absolute;
+        top: 10px;
+        right: 5px;
+    }
+
+    #notifications-list {
+        max-height: 300px;
+        /* Sesuaikan tinggi area notifikasi */
+        overflow-y: auto;
+        /* Aktifkan scroll jika konten melebihi tinggi */
+    }
+</style>
+
 <body class="theme-blue">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -31,107 +67,18 @@
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             <i class="material-icons">notifications</i>
-                            <span class="label-count">7</span>
+                            <span id="notification-count" class="label-count"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="header">NOTIFICATIONS</li>
                             <li class="body">
-                                <ul class="menu">
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">person_add</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>12 new members joined</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 14 mins ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-cyan">
-                                                <i class="material-icons">add_shopping_cart</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>4 sales made</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 22 mins ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-red">
-                                                <i class="material-icons">delete_forever</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>Nancy Doe</b> deleted account</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 3 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-orange">
-                                                <i class="material-icons">mode_edit</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>Nancy</b> changed name</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 2 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-blue-grey">
-                                                <i class="material-icons">comment</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>John</b> commented your post</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 4 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">cached</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>John</b> updated status</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 3 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-purple">
-                                                <i class="material-icons">settings</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>Settings updated</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> Yesterday
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
+                                <ul class="menu" id="notifications-list">
+                                    <!-- Notifikasi akan dimasukkan secara dinamis di sini -->
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);">View All Notifications</a>
+                                <a href="javascript:void(0);" id="load-more-btn">Load More</a>
+                                <!-- <a href="javascript:void(0);">View All Notifications</a> -->
                             </li>
                         </ul>
                     </li>
@@ -141,7 +88,7 @@
 
         </div>
     </nav>
-    
+
     <!-- #Top Bar -->
     <section>
         <!-- Left Sidebar -->
@@ -164,7 +111,7 @@
                             </li>
 
                             <li>
-                            <!-- <?= $this->uri->segment(2) == 'changepassword_superadmin' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
+                                <!-- <?= $this->uri->segment(2) == 'changepassword_superadmin' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> -->
                                 <a href="<?= base_url('user/changepassword_superadmin') ?>"><i
                                         class="material-icons">lock</i>Change Password</a>
                             </li>
@@ -268,7 +215,7 @@
                                 <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('superadmin/rekapPelaporan') ?>">Rekap Pelaporan</a>
                             </li>
-<!-- 
+                            <!-- 
                             <li
                                 <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('superadmin/rekapKategori') ?>">Rekap Kategori</a>
@@ -296,7 +243,7 @@
                     </li>
                 </ul>
             </div>
-            
+
             <!-- #Menu -->
             <!-- Footer -->
             <div class="legal">
@@ -313,4 +260,95 @@
 
         <script>
             document.getElementById("year").innerHTML = new Date().getFullYear();
+        </script>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                var limit = 10; // Batas notifikasi yang akan ditampilkan setiap kali load
+                var offset = 0; // Offset awal untuk load data
+                var totalCount = 0; // Total notifikasi yang ada di server
+
+                function loadNotifications(isLoadMore = false) {
+                    $.ajax({
+                        url: '<?= base_url("superadmin/fetch_notifications") ?>',
+                        method: 'GET',
+                        data: {
+                            limit: limit,
+                            offset: offset
+                        },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            var notifications = data.notifications;
+                            var unreadCount = data.unread_count;
+                            totalCount = data.total_count; // Update total count dari server
+                            var notificationsList = '';
+
+                            // Menampilkan jumlah notifikasi di ikon lonceng
+                            if (unreadCount > 0) {
+                                $('#notification-count').text(unreadCount); // Update jumlah notifikasi
+                            } else {
+                                $('#notification-count').text(''); // Kosongkan jika tidak ada notifikasi
+                            }
+
+                            // Jika ini adalah load awal, hapus semua notifikasi sebelumnya
+                            if (!isLoadMore) {
+                                $('#notifications-list').html(''); // Kosongkan list notifikasi
+                            }
+
+                            // Menampilkan notifikasi baru
+                            if (notifications.length > 0) {
+                                $.each(notifications, function(index, notification) {
+                                    notificationsList += `
+                            <li>
+                                <a href="<?= base_url('superadmin/added') ?>">
+                                    <div class="icon-circle bg-light-green">
+                                        <i class="material-icons">assignment</i>
+                                    </div>
+                                    <div class="menu-info">
+                                        <h4>${notification.no_tiket}</h4>
+                                        <p>
+                                            <i class="material-icons">access_time</i> ${notification.waktu_pelaporan}
+                                        </p>
+                                        <p>Status: ${notification.status_ccs}</p>
+                                    </div>
+                                </a>
+                            </li>`;
+                                });
+
+                                // Tambahkan notifikasi ke dalam list
+                                $('#notifications-list').append(notificationsList);
+
+                                // Mengecek apakah masih ada notifikasi yang belum ditampilkan
+                                if ($('#notifications-list li').length < totalCount) {
+                                    $('#load-more').show(); // Tampilkan tombol "Load More" jika masih ada notifikasi
+                                } else {
+                                    $('#load-more').hide(); // Sembunyikan tombol jika semua notifikasi sudah ditampilkan
+                                }
+                            } else {
+                                notificationsList = '<li><p>No new notifications.</p></li>';
+                                $('#notifications-list').html(notificationsList);
+                            }
+                        }
+                    });
+                }
+
+                // Load notifications saat page load
+                loadNotifications();
+
+                // Event listener untuk tombol "Load More"
+                $('#load-more').on('click', function() {
+                    offset += limit; // Update offset untuk mengambil data berikutnya
+                    loadNotifications(true); // Load more notifikasi
+                });
+
+                // Bisa juga menambahkan interval untuk auto-refresh notifikasi
+                setInterval(function() {
+                    offset = 0; // Reset offset saat refresh otomatis
+                    loadNotifications(); // Muat ulang notifikasi
+                }, 60000); // Setiap 60 detik
+            });
         </script>

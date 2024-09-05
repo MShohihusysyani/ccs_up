@@ -398,6 +398,26 @@ class Superadmin_model extends CI_Model
         return $query->row();
     }
 
+    // NOTIFICATION
+    public function get_notifications()
+    {
+        $this->db->select('id_pelaporan, no_tiket, judul, nama, waktu_pelaporan, status_ccs');
+        $this->db->from('pelaporan');
+        $this->db->where('status_ccs', 'ADDED'); // Contoh filter status
+        $this->db->order_by('waktu_pelaporan', 'DESC');
+        // $this->db->limit(100); // Batasi hasil notifikasi
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    // Menghitung jumlah notifikasi yang belum dibaca
+    public function count_unread_notifications()
+    {
+        $this->db->where('status_ccs', 'ADDED');  // Syarat untuk notifikasi belum dibaca
+        return $this->db->count_all_results('pelaporan');
+    }
+
     //     public function fetchData($columns)
     // {
     //     $this->db->select('*');
