@@ -522,7 +522,7 @@ class Helpdesk extends CI_Controller
         $photo = $_FILES['file_finish']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
+            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png|rar|zip';
             $config['max_size'] = '2048';
             $config['upload_path'] = './assets/filefinish/';
 
