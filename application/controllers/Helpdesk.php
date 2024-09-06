@@ -164,7 +164,7 @@ class Helpdesk extends CI_Controller
 
         if ($has_unrated_finished_tickets) {
             // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
-            $this->session->set_flashdata('alert', 'Harap beri rating pada tiket yang sudah selesai, sebelum mengajukan tiket baru.');
+            $this->session->set_flashdata('alert', 'Mohon hubungi BPR terkait untuk memberikan rating, agar tiket dapat diproses. Terima kasih!');
             redirect(Base_url('helpdesk/pengajuan')); // Alihkan ke halaman untuk memberi rating
         } else {
             // Tambahkan tiket baru

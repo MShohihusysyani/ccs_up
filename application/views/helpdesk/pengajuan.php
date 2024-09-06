@@ -130,7 +130,8 @@
                                                     <th>No</th>
                                                     <th>No Tiket</th>
                                                     <th>Judul</th>
-                                                    <th>Perihal</th>
+                                                    <th>Nama</th>
+                                                    <!-- <th>Perihal</th> -->
                                                     <th>Attachment</th>
                                                     <th>kategori</th>
                                                     <th>Tags</th>
@@ -145,7 +146,8 @@
                                                         <td><?php echo $no++ ?></td>
                                                         <td><?= $tmp['no_tiket']; ?></td>
                                                         <td><?= $tmp['judul']; ?></td>
-                                                        <td><?= $tmp['perihal']; ?></td>
+                                                        <td><?= $tmp['nama']; ?></td>
+                                                        <!-- <td><?= $tmp['perihal']; ?></td> -->
                                                         <td> <a href="<?= base_url('assets/files/' . $tmp['file']); ?>"><?= $tmp['file']; ?></a>
                                                         </td>
                                                         <td><?= $tmp['kategori']; ?></td>
@@ -171,6 +173,7 @@
                                         </table>
                                         <form method="post" action="<?= base_url('helpdesk/fungsi_pengajuan') ?>">
                                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button>
+                                            <input type="hidden" id="user_id" name="user_id">
                                         </form>
                                     </div>
                                 </div>
