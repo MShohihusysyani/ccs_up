@@ -69,10 +69,34 @@
                                 <?= $dp['catatan_finish']; ?>
                             </textarea>
 
+                            <br>
+
                             <label for="nama">File</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <img src="<?= base_url('assets/files/') . $dp['file']; ?>" width="500" height="500" class="img-thumbnail">
+                                    <?php
+                                    $file_finish = $dp['file_finish']; // File yang dilampirkan
+                                    if (!empty($file_finish)) {
+                                        $file_path = base_url('assets/filefinish/') . $file_finish;
+                                        $file_name = basename($file_finish);  // Mengambil nama file
+                                        $file_ext = pathinfo($file_finish, PATHINFO_EXTENSION);
+
+                                        // Tampilkan nama file
+                                        echo '<p>' . $file_name . '</p>';
+
+                                        // Periksa apakah file adalah gambar
+                                        if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+                                            // Jika file gambar, tampilkan dengan tag <img>
+                                            echo '<img src="' . $file_path . '" width="500" height="500" class="img-thumbnail">';
+                                        } else {
+                                            // Jika file bukan gambar, tampilkan tautan untuk mengunduh atau melihat file
+                                            echo '<a href="' . $file_path . '" target="_blank" class="btn btn-primary">Download file</a>';
+                                        }
+                                    } else {
+                                        // Jika tidak ada file yang dilampirkan
+                                        echo '<span class= "label label-info" style="font-size:12px;">Tidak ada file yang dilampirkan.</span/';
+                                    }
+                                    ?>
                                 </div>
                             </div>
 
