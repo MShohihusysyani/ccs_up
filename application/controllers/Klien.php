@@ -396,7 +396,9 @@ class Klien extends CI_Controller
                 $new_image = $this->upload->data('file_name');
                 $this->db->set('file', $new_image);
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                // Log the error and set a flash message for failed upload
+                log_message('error', 'File upload error: ' . $this->upload->display_errors());
+                $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
                 redirect('klien/edit_pelaporan');
             }
         }
@@ -480,9 +482,10 @@ class Klien extends CI_Controller
 
                 $photo = $this->upload->data('file_name');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-                $referred_from = $this->session->userdata('referred_from');
-                redirect($referred_from, 'refresh');
+                // Log the error and set a flash message for failed upload
+                log_message('error', 'File upload error: ' . $this->upload->display_errors());
+                $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
+                redirect('klien/detail_pelaporan');
             }
         }
 
@@ -525,9 +528,9 @@ class Klien extends CI_Controller
 
                 $photo = $this->upload->data('file_name');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-                $referred_from = $this->session->userdata('referred_from');
-                redirect($referred_from, 'refresh');
+                log_message('error', 'File upload error: ' . $this->upload->display_errors());
+                $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
+                redirect('klien/detail_pelaporan');
             }
         }
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
