@@ -162,23 +162,3 @@
             </div>
         </div>
     </div>
-
-    
-<script>
-$('#tombol-tambah').on('click', function(e) {
-
-    e.preventDefault();
-    const href = $(this).attr('href');
-
-    Swal.fire({
-        icon: 'success',
-        title: 'Added',
-        text: 'Data added'
-    }).then((result) => {
-        if (result.value) {
-            document.location.href = href;
-        }
-    })
-
-})
-</script>
