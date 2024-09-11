@@ -11,39 +11,79 @@ class Temp_model extends CI_Model
                     ";
         return $this->db->query($query)->result_array();
     }
-    // FUNGSI UNTUK INPUT TIKET DARI HELPDESK
-    public function getNoKlien($klien_id)
+    public function getNoKlien($id)
     {
-        // Ambil nomor klien dari tabel klien berdasarkan id klien
-        $this->db->select('no_klien');
-        $this->db->from('klien');
-        $this->db->where('id_user_klien', $klien_id);
-        $result = $this->db->get()->row_array();
+        $no_klien = $this->db->query("SELECT no_klien FROM klien WHERE id_user_klien = $id")->row_array();
 
-        return $result ? $result['no_klien'] : null;  // Kembalikan no_klien atau null jika tidak ada
+        return $no_klien['no_klien'];
     }
 
-    // Fungsi untuk mendapatkan nomor urut tiket terakhir berdasarkan klien
     public function getNoUrut($user_id)
     {
-        // Ambil no tiket terakhir dari tabel pelaporan berdasarkan user (user_id)
-        $this->db->select('max(no_tiket) as no_tiket');
-        $this->db->from('pelaporan');
-        $this->db->where('user_id', $user_id);
-        $result = $this->db->get()->row_array();
+        // Transaksi untuk mencegah race condition
+        $this->db->trans_start();
 
-        if ($result && $result['no_tiket']) {
-            // Jika ada no_tiket yang ditemukan, ambil 4 digit terakhir untuk no urut
-            $no_tiket = $result['no_tiket'];
-            $no_urut = (int) substr($no_tiket, -4);  // Mengambil 4 digit terakhir dari no tiket
+        // Ambil nomor tiket terbesar yang sudah ada untuk klien tersebut
+        $query = $this->db->query("SELECT MAX(CAST(SUBSTRING(no_tiket, -4) AS UNSIGNED)) AS no_urut FROM pelaporan WHERE user_id = ? FOR UPDATE", [$user_id])->row_array();
+
+        // Debugging: Log hasil query
+        log_message('debug', 'Nomor urut terakhir dari query: ' . json_encode($query));
+
+        // Jika query tidak menghasilkan nomor tiket, mulai nomor urut dari 1
+        if ($query == NULL || empty($query['no_urut'])) {
+            $no_urut = 1;
         } else {
-            // Jika tidak ada tiket sebelumnya, mulai dari 0
-            $no_urut = 0;
+            // Ambil 4 digit terakhir dari nomor tiket dan tambahkan 1
+            $no_urut = (int) $query['no_urut'] + 1;
         }
 
-        // Tambahkan 1 untuk nomor urut berikutnya dan format menjadi 4 digit (misalnya: 0001)
-        return sprintf('%04d', $no_urut + 1);
+        // Format nomor urut menjadi 4 digit
+        $no_urut = sprintf('%04d', $no_urut);
+
+        // Selesaikan transaksi
+        $this->db->trans_complete();
+
+        return $no_urut;
     }
+
+
+
+
+
+
+    // FUNGSI UNTUK INPUT TIKET DARI HELPDESK
+    // public function getNoKlien($klien_id)
+    // {
+    //     // Ambil nomor klien dari tabel klien berdasarkan id klien
+    //     $this->db->select('no_klien');
+    //     $this->db->from('klien');
+    //     $this->db->where('id_user_klien', $klien_id);
+    //     $result = $this->db->get()->row_array();
+
+    //     return $result ? $result['no_klien'] : null;  // Kembalikan no_klien atau null jika tidak ada
+    // }
+
+    // // Fungsi untuk mendapatkan nomor urut tiket terakhir berdasarkan klien
+    // public function getNoUrut($user_id)
+    // {
+    //     // Ambil no tiket terakhir dari tabel pelaporan berdasarkan user (user_id)
+    //     $this->db->select('max(no_tiket) as no_tiket');
+    //     $this->db->from('pelaporan');
+    //     $this->db->where('user_id', $user_id);
+    //     $result = $this->db->get()->row_array();
+
+    //     if ($result && $result['no_tiket']) {
+    //         // Jika ada no_tiket yang ditemukan, ambil 4 digit terakhir untuk no urut
+    //         $no_tiket = $result['no_tiket'];
+    //         $no_urut = (int) substr($no_tiket, -4);  // Mengambil 4 digit terakhir dari no tiket
+    //     } else {
+    //         // Jika tidak ada tiket sebelumnya, mulai dari 0
+    //         $no_urut = 0;
+    //     }
+
+    //     // Tambahkan 1 untuk nomor urut berikutnya dan format menjadi 4 digit (misalnya: 0001)
+    //     return sprintf('%04d', $no_urut + 1);
+    // }
 
     // tiket temp helpdesk
     public function getTiketTempHd()

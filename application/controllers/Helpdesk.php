@@ -41,7 +41,7 @@ class Helpdesk extends CI_Controller
     public function get_no_tiket()
     {
         $this->load->model('Temp_model', 'temp_model');
-        $user_id = $this->input->post('user_id');
+        $user_id = $this->input->post('user_id'); // user_id klien
 
         if ($user_id) {
             // Panggil fungsi model untuk mengambil no klien
@@ -50,7 +50,7 @@ class Helpdesk extends CI_Controller
             // Dapatkan no urut tiket terakhir berdasarkan klien yang dipilih
             $no_urut = $this->temp_model->getNoUrut($user_id);
 
-            // Buat format no tiket (misalnya: TICno_klientahunbulannourut)
+            // Buat format no tiket (misalnya: TICno_klienTahunBulanNoUrut)
             $tahun = date('Y');
             $bulan = date('m');
             $no_tiket = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
@@ -61,6 +61,31 @@ class Helpdesk extends CI_Controller
             echo "";  // Jika tidak ada klien yang dipilih, kembalikan kosong
         }
     }
+
+
+    // public function get_no_tiket()
+    // {
+    //     $this->load->model('Temp_model', 'temp_model');
+    //     $user_id = $this->input->post('user_id');
+
+    //     if ($user_id) {
+    //         // Panggil fungsi model untuk mengambil no klien
+    //         $no_klien = $this->temp_model->getNoKlien($user_id);
+
+    //         // Dapatkan no urut tiket terakhir berdasarkan klien yang dipilih
+    //         $no_urut = $this->temp_model->getNoUrut($user_id);
+
+    //         // Buat format no tiket (misalnya: TICno_klientahunbulannourut)
+    //         $tahun = date('Y');
+    //         $bulan = date('m');
+    //         $no_tiket = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
+
+    //         // Kembalikan no tiket ke AJAX
+    //         echo $no_tiket;
+    //     } else {
+    //         echo "";  // Jika tidak ada klien yang dipilih, kembalikan kosong
+    //     }
+    // }
 
 
     public function add_temp_tiket()

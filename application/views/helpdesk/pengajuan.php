@@ -44,8 +44,8 @@
                                     <div class="form-line">
                                         <select id="klien" name="klien" class="form-control" required>
                                             <option value="">-- Pilih Klien --</option>
-                                            <?php foreach ($user as $u) : ?>
-                                                <option value="<?= $u['id_user']; ?>"><?= $u['nama_user']; ?></option>
+                                            <?php foreach ($klien as $u) : ?>
+                                                <option value="<?= $u['id_user_klien']; ?>"><?= $u['nama_klien']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>

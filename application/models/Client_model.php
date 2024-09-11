@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Client_model extends CI_Model
 {
-    
+
 
     public function getClient()
     {
@@ -36,24 +36,40 @@ class Client_model extends CI_Model
     public function getNoKlien($id)
     {
         $no_klien = $this->db->query("SELECT no_klien FROM klien WHERE id_user_klien = $id")->row_array();
-        
+
         return $no_klien['no_klien'];
     }
 
-    public function getNoUrut($id)
+    public function getNoUrut($user_id)
     {
-        $no_urut = $this->db->query("SELECT max(no_tiket) AS no_tiket FROM pelaporan WHERE user_id = $id")->row_array();
+        // Transaksi untuk mencegah race condition
+        $this->db->trans_start();
 
-        if($no_urut == NULL){
-            $no = 0;
+        // Ambil nomor tiket terbesar yang sudah ada untuk klien tersebut
+        $query = $this->db->query("SELECT MAX(CAST(SUBSTRING(no_tiket, -4) AS UNSIGNED)) AS no_urut FROM pelaporan WHERE user_id = ? FOR UPDATE", [$user_id])->row_array();
+
+        // Debugging: Log hasil query
+        log_message('debug', 'Nomor urut terakhir dari query: ' . json_encode($query));
+
+        // Jika query tidak menghasilkan nomor tiket, mulai nomor urut dari 1
+        if ($query == NULL || empty($query['no_urut'])) {
+            $no_urut = 1;
         } else {
-            $no = (int) substr($no_urut['no_tiket'], -4);
+            // Ambil 4 digit terakhir dari nomor tiket dan tambahkan 1
+            $no_urut = (int) $query['no_urut'] + 1;
         }
-        $no_urut = $no + 1;
-        return sprintf('%04d',$no_urut);
+
+        // Format nomor urut menjadi 4 digit
+        $no_urut = sprintf('%04d', $no_urut);
+
+        // Selesaikan transaksi
+        $this->db->trans_complete();
+
+        return $no_urut;
     }
 
-      // GENERATE KODE OTOMATIS
+
+    // GENERATE KODE OTOMATIS
     public function getkodeticket()
     {
         $query = $this->db->query("select max(no_tiket) as max_code FROM pelaporan");
@@ -64,11 +80,11 @@ class Client_model extends CI_Model
         $max_fix = (int) substr($max_id, 9, 4);
         $max_nik = $max_fix + 1;
 
-          // $tanggal = $time = date("d");
+        // $tanggal = $time = date("d");
         $bulan = $time = date("m");
-        $tahun = $time = date("Y"); 
+        $tahun = $time = date("Y");
 
-        $nik = "TIC".$tahun.$bulan.sprintf("%04s", $max_nik);
+        $nik = "TIC" . $tahun . $bulan . sprintf("%04s", $max_nik);
         return $nik;
     }
 
@@ -80,12 +96,10 @@ class Client_model extends CI_Model
     // DASHBOARD KLIEN
     public function getDataKlienHandle()
     {
-        
+
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
         $query = "SELECT no_tiket, status_ccs FROM pelaporan WHERE  user_id= $user_id AND status_ccs IN('HANDLE', 'HANDLE 2')";
         return $this->db->query($query)->result_array();
-        
     }
-
 }
