@@ -79,10 +79,10 @@ class Helpdesk extends CI_Controller
             redirect('helpdesk/pengajuan');
         } else {
             // Retrieve the ticket number from the form input
-            $no_tiket = $this->input->post('user_id_hd');
+            $user_id_hd = $this->input->post('user_id_hd');
 
             // Check if the ticket number already exists in the database
-            $this->db->where('user_id_hd', $no_tiket);
+            $this->db->where('user_id_hd', $user_id_hd);
             $existing_ticket = $this->db->get('tiket_temp')->row();
 
             if ($existing_ticket) {
@@ -114,7 +114,7 @@ class Helpdesk extends CI_Controller
 
                 // Prepare the data for insertion
                 $data = [
-                    'no_tiket' => $no_tiket,
+                    'no_tiket' => $this->input->post('no_tiket'),
                     'perihal'  => $this->input->post('perihal'),
                     'file'     => $photo,
                     'user_id'  => $this->input->post('klien_id'),

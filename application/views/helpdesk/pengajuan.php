@@ -173,7 +173,7 @@
                                         </table>
                                         <form method="post" action="<?= base_url('helpdesk/fungsi_pengajuan') ?>">
                                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Ajukan</button>
-                                            <input type="hidden" id="user_id" name="user_id">
+                                            <!-- <input type="hidden" id="user_id" name="user_id"> -->
                                         </form>
                                     </div>
                                 </div>
