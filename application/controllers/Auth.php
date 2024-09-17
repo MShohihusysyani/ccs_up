@@ -21,7 +21,6 @@ class Auth extends CI_Controller
 
     public function proses_login()
     {
-
         $this->form_validation->set_rules('username', 'Username', 'required', ['required' => 'Username Wajib Diisi!']);
         $this->form_validation->set_rules('password', 'Password', 'required', ['required' => 'Password Wajib Diisi!']);
 
@@ -36,8 +35,12 @@ class Auth extends CI_Controller
             // Retrieve user by username
             $user = $this->login_model->cek_login($username);
 
-            // Check if user exists and password is correct
-            if ($user && password_verify($password, $user->password)) {
+            // Check if user exists
+            if (!$user) {
+                // If user not found, set flash message and redirect back to login
+                $this->session->set_flashdata('alert', 'User tidak terdaftar!');
+                redirect('auth');
+            } elseif (password_verify($password, $user->password)) {
                 // Update last login time
                 $this->User_model->update_last_login($user->id_user);
 
@@ -89,15 +92,17 @@ class Auth extends CI_Controller
                             break;
                     }
                 } else {
-                    $this->session->set_flashdata('alert', 'User tidak aktif, Please Contact Superadmin!');
+                    $this->session->set_flashdata('alert', 'User tidak aktif, Mohon hubungi Superadmin!');
                     redirect('auth');
                 }
             } else {
+                // If password is incorrect, set flash message and redirect back to login
                 $this->session->set_flashdata('alert', 'Username atau Password Anda Salah!');
                 redirect('auth');
             }
         }
     }
+
 
 
 
