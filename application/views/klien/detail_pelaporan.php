@@ -98,7 +98,7 @@
                                         // Periksa apakah file adalah gambar
                                         if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])) {
                                             // Jika file gambar, tampilkan dengan tag <img>
-                                            echo '<img src="' . $file_path . '" width="500" height="500" class="img-thumbnail">';
+                                            echo '<img src="' . $file_path . '" width="700" height="700" class="img-thumbnail">';
                                         } else {
                                             // Jika file bukan gambar, tampilkan tautan untuk mengunduh atau melihat file
                                             echo '<a href="' . $file_path . '" target="_blank" class="btn btn-primary">Download file</a>';

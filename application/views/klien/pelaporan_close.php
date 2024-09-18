@@ -86,7 +86,35 @@
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
                                                 <!-- <td><?= $dp['perihal']; ?></td> -->
-                                                <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                <td>
+                                                    <?php
+                                                    $file_path = base_url('assets/files/' . $dp['file']);
+                                                    $file_ext = pathinfo($dp['file'], PATHINFO_EXTENSION);
+
+                                                    if (in_array(strtolower($file_ext), ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                                                        <a href="#" data-toggle="modal" data-target="#imageModal<?= $dp['id_pelaporan']; ?>">
+                                                            <img src="<?= $file_path; ?>" alt="<?= $dp['file']; ?>" style="max-width: 150px;">
+                                                        </a>
+
+                                                        <!-- Modal Bootstrap -->
+                                                        <div class="modal fade" id="imageModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"><?= $dp['file']; ?></h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <img src="<?= $file_path; ?>" alt="<?= $dp['file']; ?>" style="max-width: 100%;">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <a href="<?= $file_path; ?>"><?= $dp['file']; ?></a>
+                                                    <?php endif; ?>
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>

@@ -133,8 +133,48 @@
                                                         <td><?= $tmp['no_tiket']; ?></td>
                                                         <td><?= $tmp['judul']; ?></td>
                                                         <td><?= $tmp['perihal']; ?></td>
-                                                        <td> <a href="<?= base_url('assets/files/' . $tmp['file']); ?>"><?= $tmp['file']; ?></a>
+                                                        <td>
+                                                            <?php
+                                                            $file_path = base_url('assets/files/' . $tmp['file']);
+                                                            $file_ext = pathinfo($tmp['file'], PATHINFO_EXTENSION);
+
+                                                            if (in_array(strtolower($file_ext), ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                                                                <a href="#" data-toggle="modal" data-target="#imageModal<?= $tmp['id_temp']; ?>">
+                                                                    <img src="<?= $file_path; ?>" alt="<?= $tmp['file']; ?>" style="max-width: 150px;">
+                                                                </a>
+
+                                                                <!-- Modal Bootstrap -->
+                                                                <div class="modal fade" id="imageModal<?= $tmp['id_temp']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"><?= $tmp['file']; ?></h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body text-center">
+                                                                                <img src="<?= $file_path; ?>" alt="<?= $tmp['file']; ?>" style="max-width: 100%;">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            <?php else: ?>
+                                                                <a href="<?= $file_path; ?>"><?= $tmp['file']; ?></a>
+                                                            <?php endif; ?>
                                                         </td>
+                                                        <!-- <td>
+                                                            <?php
+                                                            $file_path = base_url('assets/files/' . $tmp['file']);
+                                                            $file_ext = pathinfo($tmp['file'], PATHINFO_EXTENSION);
+
+                                                            if (in_array(strtolower($file_ext), ['jpg', 'jpeg', 'png', 'gif'])) {
+                                                                echo "<img src='$file_path' alt='{$tmp['file']}' style='max-width: 150px;'>";
+                                                            } else {
+                                                                echo "<a href='$file_path'>{$tmp['file']}</a>";
+                                                            }
+                                                            ?>
+                                                        </td> -->
                                                         <td><?= $tmp['kategori']; ?></td>
                                                         <td>
                                                             <span class="label label-info" data-role="tagsinput"><?= $tmp['tags']; ?></span>
