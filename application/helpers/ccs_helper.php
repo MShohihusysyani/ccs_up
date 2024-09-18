@@ -1,10 +1,24 @@
 <?php
-
 function is_logged_in()
 {
     $ci = get_instance();
     if (!$ci->session->userdata('username')) {
         redirect('auth');
+    } else {
+        $role_id = $ci->session->userdata('role');
+        $menu = $ci->uri->segment(1);
+
+        $queryMenu = $ci->db->get_where('menu', ['nama_menu' => $menu])->row_array();
+        $menu_id = $queryMenu['nama_menu'];
+
+        $userAccess = $ci->db->get_where('menu', [
+            'role_id' => $role_id,
+            'nama_menu' => $menu_id
+        ]);
+
+        if ($userAccess->num_rows() < 1) {
+            redirect('auth/blocked');
+        }
     }
 }
 if (!function_exists('bulan')) {
