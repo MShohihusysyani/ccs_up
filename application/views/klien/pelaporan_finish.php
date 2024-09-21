@@ -234,30 +234,64 @@
         var initStarRating = function() {
             $('.star-rating').each(function() {
                 var $ratingContainer = $(this);
-                var rating = $ratingContainer.data('rating'); // Get rating from data attribute
-                var hasRated = $ratingContainer.data('has-rated');
+                var rating = $ratingContainer.data('rating'); // Get current rating
+                var hasRated = $ratingContainer.data('has-rated'); // Check if already rated
 
-                // Highlight the stars based on the rating
+                // Highlight the stars based on the current rating
                 if (rating) {
                     $ratingContainer.find('.star').each(function() {
                         var starValue = $(this).data('value');
                         if (starValue <= rating) {
                             $(this).addClass('selected');
                         } else {
-                            $(this).removeClass('selected'); // Ensure non-selected stars are cleared
+                            $(this).removeClass('selected');
                         }
                     });
                 }
 
+                // Enable or disable star clicks based on whether it has been rated
                 if (hasRated) {
                     $ratingContainer.find('.star').css('cursor', 'default').off('click');
                 } else {
-                    $ratingContainer.find('.star').css('cursor', 'pointer');
+                    $ratingContainer.find('.star').css('cursor', 'pointer').off('click').on('click', function() {
+                        var $star = $(this);
+                        var selectedRating = $star.data('value');
+                        var id_pelaporan = $ratingContainer.data('id_pelaporan');
+
+                        // Send the selected rating to the server via AJAX
+                        $.ajax({
+                            url: '<?= base_url("klien/rating"); ?>',
+                            type: 'POST',
+                            data: {
+                                id_pelaporan: id_pelaporan,
+                                rating: selectedRating
+                            },
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    alert('Rating submitted successfully');
+
+                                    // Update the UI to reflect the rating
+                                    $ratingContainer.find('.star').removeClass('selected');
+                                    $star.prevAll('.star').addBack().addClass('selected');
+
+                                    // Disable further rating for this ticket
+                                    $ratingContainer.find('.star').off('click').css('cursor', 'default');
+                                    $ratingContainer.data('has-rated', true);
+                                } else {
+                                    alert(response.message);
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.error("Failed to submit rating:", textStatus, errorThrown);
+                                alert('Failed to submit rating: ' + textStatus + ' - ' + errorThrown);
+                            }
+                        });
+                    });
                 }
             });
         };
 
-        // Initialize star rating on page load
+        // Initialize star ratings on page load
         initStarRating();
 
         // Reinitialize star rating after each DataTable redraw (if using DataTables)
