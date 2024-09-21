@@ -204,14 +204,13 @@
                                                     </div>
                                                 </td> -->
                                                 <td>
-                                                    <div class="star-rating" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-has-rated="<?= $dp['has_rated'] ? 'true' : 'false'; ?>">
+                                                    <div class="star-rating" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-has-rated="<?= $dp['has_rated'] ? 'true' : 'false'; ?>" data-rating="<?= $dp['rating']; ?>">
                                                         <span class="star" data-value="1">&#9733;</span>
                                                         <span class="star" data-value="2">&#9733;</span>
                                                         <span class="star" data-value="3">&#9733;</span>
                                                         <span class="star" data-value="4">&#9733;</span>
                                                         <span class="star" data-value="5">&#9733;</span>
                                                     </div>
-
                                                 </td>
                                                 <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>klien/detail_finish/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
                                                         Detail</a>
@@ -231,6 +230,43 @@
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function() {
+        var initStarRating = function() {
+            $('.star-rating').each(function() {
+                var $ratingContainer = $(this);
+                var rating = $ratingContainer.data('rating'); // Get rating from data attribute
+                var hasRated = $ratingContainer.data('has-rated');
+
+                // Highlight the stars based on the rating
+                if (rating) {
+                    $ratingContainer.find('.star').each(function() {
+                        var starValue = $(this).data('value');
+                        if (starValue <= rating) {
+                            $(this).addClass('selected');
+                        } else {
+                            $(this).removeClass('selected'); // Ensure non-selected stars are cleared
+                        }
+                    });
+                }
+
+                if (hasRated) {
+                    $ratingContainer.find('.star').css('cursor', 'default').off('click');
+                } else {
+                    $ratingContainer.find('.star').css('cursor', 'pointer');
+                }
+            });
+        };
+
+        // Initialize star rating on page load
+        initStarRating();
+
+        // Reinitialize star rating after each DataTable redraw (if using DataTables)
+        $('#example').on('draw.dt', function() {
+            initStarRating();
+        });
+    });
+</script>
+<!-- <script>
     $(document).ready(function() {
         var initStarRating = function() {
             $('.star-rating').each(function() {
@@ -297,4 +333,4 @@
             initStarRating();
         });
     });
-</script>
+</script> -->
