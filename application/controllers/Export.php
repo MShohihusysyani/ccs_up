@@ -1052,6 +1052,47 @@ class Export extends CI_Controller
         $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
 
+    // public function import_excel()
+    // {
+    //     $file = $_FILES['file']['tmp_name'];
+
+    //     // Load the Excel file using PHPSpreadsheet
+    //     $spreadsheet = IOFactory::load($file);
+    //     $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+    //     // Process each row of the Excel file
+    //     foreach ($sheetData as $row) {
+    //         $tanggal = $row['J'];  // Assuming 'B' is the "waktu pelaporan" column
+    //         $dateOnly = date('Y-m-d', strtotime($tanggal)); // Extracts the date (YYYY-MM-DD) only
+
+    //         $waktuApprove = !empty($row['K']) && strtotime($row['K']) !== false ? date('Y-m-d', strtotime($row['K'])) : null;
+
+    //         // Map and validate the data as needed
+    //         $data = [
+    //             'no_tiket' => $row['A'],
+    //             'judul' => $row['B'],
+    //             'user_id' => $row['C'],
+    //             'perihal' => $row['D'],
+    //             'nama' => $row['E'],
+    //             'kategori' => $row['F'],
+    //             'priority' => $row['G'],
+    //             'handle_by' => $row['H'],
+    //             'status_ccs' => $row['I'],
+    //             'waktu_pelaporan' => $dateOnly,
+    //             'waktu_approve' => $waktuApprove,
+    //             'rating' => $row['L'],
+    //             'has_rated' => $row['M'],
+    //             // Map other fields as necessary
+    //         ];
+
+    //         // Insert into the database
+    //         $this->db->insert('pelaporan', $data);
+    //     }
+
+    //     // Redirect back with a success message
+    //     redirect('superadmin/AllTicket');
+    // }
+
     public function import_excel()
     {
         $file = $_FILES['file']['tmp_name'];
@@ -1062,14 +1103,29 @@ class Export extends CI_Controller
 
         // Process each row of the Excel file
         foreach ($sheetData as $row) {
-            $tanggal = $row['J'];  // Assuming 'B' is the "waktu pelaporan" column
+            $noTiket = $row['A']; // Assuming 'A' is the "no_tiket" column
+
+            // Skip if no_tiket is empty
+            if (empty($noTiket)) {
+                log_message('error', 'No Tiket is missing in one of the rows.');
+                continue; // Skip this row
+            }
+
+            // Check if no_tiket already exists in the database
+            $existingTicket = $this->db->get_where('pelaporan', ['no_tiket' => $noTiket])->row_array();
+            if ($existingTicket) {
+                log_message('info', 'Duplicate no_tiket: ' . $noTiket . ' - Skipping row.');
+                continue; // Skip this row if no_tiket already exists
+            }
+
+            // Map and validate the data as needed
+            $tanggal = $row['J']; // Assuming 'J' is the "waktu pelaporan" column
             $dateOnly = date('Y-m-d', strtotime($tanggal)); // Extracts the date (YYYY-MM-DD) only
 
             $waktuApprove = !empty($row['K']) && strtotime($row['K']) !== false ? date('Y-m-d', strtotime($row['K'])) : null;
 
-            // Map and validate the data as needed
             $data = [
-                'no_tiket' => $row['A'],
+                'no_tiket' => $noTiket,
                 'judul' => $row['B'],
                 'user_id' => $row['C'],
                 'perihal' => $row['D'],
@@ -1080,10 +1136,12 @@ class Export extends CI_Controller
                 'status_ccs' => $row['I'],
                 'waktu_pelaporan' => $dateOnly,
                 'waktu_approve' => $waktuApprove,
+                'rating' => $row['L'],
+                'has_rated' => $row['M'],
                 // Map other fields as necessary
             ];
 
-            // Insert into the database
+            // Insert the data into the database
             $this->db->insert('pelaporan', $data);
         }
 

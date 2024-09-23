@@ -74,10 +74,13 @@
                                             <td><?= $dp['judul']; ?></td>
                                             <td><?= $dp['kategori']; ?></td>
                                             <td>
-                                                <span class="label label-info">
-                                                    <?= $dp['tags']; ?>
-                                                </span>
+                                                <?php if (!empty($dp['tags'])) : ?>
+                                                    <span class="label label-info">
+                                                        <?= $dp['tags']; ?>
+                                                    </span>
+                                                <?php endif; ?>
                                             </td>
+
                                             <td>
                                                 <?php if ($dp['priority'] == 'Low') : ?>
                                                     <span class="label label-info">Low</span>
@@ -125,9 +128,9 @@
                                                 <?php
                                                 // Contoh penanganan multiple handle by
                                                 $handleByList = [
-                                                    // $dp['handle_by'],
+                                                    $dp['handle_by'],
                                                     $dp['handle_by2'],
-                                                    // $dp['handle_by3']
+                                                    $dp['handle_by3']
                                                 ];
 
                                                 // Loop untuk setiap user yang menghandle tiket

@@ -28,9 +28,9 @@
                         <h2>
                             All Ticket
                         </h2>
-                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
                             Import Excel
-                        </button> -->
+                        </button>
                     </div>
                     <div class="body">
                         <div class="table-responsive">
@@ -166,7 +166,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= site_url('export/import_excel') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= site_url('export/import_excel_to_t1_forward') ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="file">Choose Excel File</label>
