@@ -152,43 +152,69 @@
                     foreach ($datacomment as $dc) { ?>
                         <div class="body">
                             <div class="panel panel-default">
-                                <div class="panel-heading"> <b><?= $dc['nama_user']; ?></b>
-                                    <?= format_indo($dc['created_at']) ?>
+                                <div class="panel-heading">
+                                    <b><?= $dc['nama_user']; ?></b> <?= format_indo($dc['created_at']) ?>
                                 </div>
                                 <div class="panel-body"><?= $dc['comment_body']; ?></div>
-                                <div class="panel-body"><a href="<?= base_url('assets/comment/' . $dc['file']); ?>"><?= $dc['file']; ?></a></div>
-                                <div class="panel-footer" align="right"><button class="btn btn-sm btn-primary" id="<?= $dc['id_comment']; ?>showFormInputButton" onclick=""><i class="material-icons">reply</i></button></div>
-                            </div>
 
-                            <div id="<?= $dc['id_comment']; ?>hiddenFormInput" style="display: none;">
-                                <?php echo form_open_multipart('klien/add_reply') ?>
-                                <label for="comment">Reply Comment</label>
-                                <textarea id="<?= $dc['id_comment']; ?>editor2" class="form-control" name="body" id="body">
+                                <div class="panel-body">
+                                    <?php
+                                    // Tentukan path file
+                                    $filePath = base_url('assets/comment/' . $dc['file']);
+                                    // Tentukan extensi file
+                                    $fileExt = pathinfo($dc['file'], PATHINFO_EXTENSION);
+                                    // Daftar ekstensi file gambar yang didukung
+                                    $imageExt = ['jpg', 'jpeg', 'png', 'gif'];
 
-                            </textarea>
-                                <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
-                                <div class="form-group">
-                                    <label for="exampleInputFile"></label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="file" name="file">
-                                            <label for="file" class="custom-file-label">Choose
-                                                file</label>
-                                        </div>
-                                    </div>
+                                    // Jika file adalah gambar
+                                    if (in_array(strtolower($fileExt), $imageExt)) {
+                                        echo '<img src="' . $filePath . '" alt="Gambar" style="max-width: 100%; height: auto;">';
+                                    } else {
+                                        // Jika file bukan gambar, tampilkan link untuk mengunduh
+                                        echo '<a href="' . $filePath . '" download>' . $dc['file'] . '</a>';
+                                    }
+                                    ?>
                                 </div>
 
-                                <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
-                                <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                                <input type="hidden" name="id_comment" id="id_comment" value="<?= $dc['id_comment']; ?>">
-
-                                <button type="submit" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">send</i></button>
-                                <?php echo form_close() ?>
+                                <div class="panel-footer" align="right">
+                                    <button class="btn btn-sm btn-primary" id="<?= $dc['id_comment']; ?>showFormInputButton" onclick="">
+                                        <i class="material-icons">reply</i>
+                                    </button>
+                                </div>
                             </div>
 
-                            <?php
-                            $id_comment = $dc['id_comment'];
-                            $reply = $this->db->query("SELECT 
+                        </div>
+
+
+                        <div id="<?= $dc['id_comment']; ?>hiddenFormInput" style="display: none;">
+                            <?php echo form_open_multipart('klien/add_reply') ?>
+                            <label for="comment">Reply Comment</label>
+                            <textarea id="<?= $dc['id_comment']; ?>editor2" class="form-control" name="body" id="body">
+
+                            </textarea>
+                            <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                            <div class="form-group">
+                                <label for="exampleInputFile"></label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file" name="file">
+                                        <label for="file" class="custom-file-label">Choose
+                                            file</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="user_id" id="user_id" value="<?= $user['id_user']; ?>">
+                            <input type="hidden" name="id_pelaporan" id="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
+                            <input type="hidden" name="id_comment" id="id_comment" value="<?= $dc['id_comment']; ?>">
+
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">send</i></button>
+                            <?php echo form_close() ?>
+                        </div>
+
+                        <?php
+                        $id_comment = $dc['id_comment'];
+                        $reply = $this->db->query("SELECT 
                             user.nama_user, 
                             user.id_user, 
                             reply.body, 
@@ -199,26 +225,41 @@
                         LEFT JOIN user ON reply.user_id = user.id_user
                         WHERE reply.comment_id = $id_comment
                         ORDER BY reply.created_at DESC")->result_array();
-                            foreach ($reply as $dr) : ?>
-                                <div class="panel panel-default" style="margin-left: 48px;">
-                                    <div class="panel-heading">
-                                        <b><?= $dr['nama_user']; ?></b>
-                                        <?= format_indo($dr['created_at']) ?>
-                                    </div>
-                                    <div class="panel-body">
-                                        <?= $dr['body']; ?>
-                                    </div>
-                                    <div class="panel-body">
-                                        <a href="<?= base_url('assets/reply/' . $dr['file']); ?>"><?= $dr['file']; ?></a>
-                                    </div>
+                        foreach ($reply as $dr) : ?>
+                            <div class="panel panel-default" style="margin-left: 48px;">
+                                <div class="panel-heading">
+                                    <b><?= $dr['nama_user']; ?></b>
+                                    <?= format_indo($dr['created_at']) ?>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
-                <?php }
-                } ?>
+                                <div class="panel-body">
+                                    <?= $dr['body']; ?>
+                                </div>
+                                <div class="panel-body">
+                                    <?php
+                                    // Tentukan path file
+                                    $filePath = base_url('assets/reply/' . $dr['file']);
+                                    // Tentukan extensi file
+                                    $fileExt = pathinfo($dr['file'], PATHINFO_EXTENSION);
+                                    // Daftar ekstensi file gambar yang didukung
+                                    $imageExt = ['jpg', 'jpeg', 'png', 'gif'];
+
+                                    // Jika file adalah gambar
+                                    if (in_array(strtolower($fileExt), $imageExt)) {
+                                        echo '<img src="' . $filePath . '" alt="Gambar" style="max-width: 100%; height: auto;">';
+                                    } else {
+                                        // Jika file bukan gambar, tampilkan link untuk mengunduh
+                                        echo '<a href="' . $filePath . '" download>' . $dr['file'] . '</a>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
             </div>
+    <?php }
+                } ?>
         </div>
-        <!-- end comment -->
+    </div>
+    <!-- end comment -->
     </div>
 </section>
 
