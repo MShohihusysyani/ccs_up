@@ -475,192 +475,6 @@ class Helpdesk extends CI_Controller
         }
     }
 
-    private function contains_only_images($content)
-    {
-        $doc = new DOMDocument();
-        @$doc->loadHTML($content);
-        $body = $doc->getElementsByTagName('body')->item(0);
-
-        foreach ($body->childNodes as $node) {
-            if ($node->nodeType === XML_TEXT_NODE && trim($node->textContent) !== '') {
-                return false;
-            }
-            if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName !== 'img') {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public function finish()
-    {
-        // Load the form validation library
-        $this->load->library('form_validation');
-
-        // Set validation rules
-        $this->form_validation->set_rules('catatan_finish', 'Catatan Finish', 'callback_validateCatatanFinish');
-
-        // Get catatan finish content from the request
-        $catatan_finish = $this->input->post('catatan_finish');
-
-        // Check if catatan finish only contains images
-        if ($this->contains_only_images($catatan_finish)) {
-            // If only images, set an error message and redirect back
-            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish tidak boleh hanya berisi gambar.');
-
-            // Remove uploaded images
-            $this->remove_uploaded_images();
-            redirect('helpdesk/pelaporan');
-            return;
-        }
-
-        // Check if the form validation passed
-        if ($this->form_validation->run() == FALSE) {
-            // If validation fails, set an error message and redirect back
-            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
-
-            // Remove uploaded images
-            $this->remove_uploaded_images();
-            redirect('helpdesk/pelaporan');
-        } else {
-            $this->processFinish();
-        }
-    }
-
-    // Custom validation callback
-    public function validateCatatanFinish($str)
-    {
-        $minLength = 50;
-
-        // Strip tags to get text content and check if length is less than min length
-        $textContent = strip_tags($str);
-        if (strlen($textContent) < $minLength) {
-            $this->form_validation->set_message('validateCatatanFinish', 'Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
-            return FALSE;
-        }
-
-        return TRUE;
-    }
-
-    private function processFinish()
-    {
-        // Handle file upload if there is a file
-        $photo = $_FILES['file_finish']['name'];
-
-        if ($photo) {
-            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png|rar|zip';
-            $config['max_size'] = '2048';
-            $config['upload_path'] = './assets/filefinish/';
-
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-
-            if ($this->upload->do_upload('file_finish')) {
-                $photo = $this->upload->data('file_name');
-            } else {
-
-                log_message('error', 'File upload error: ' . $this->upload->display_errors());
-                $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
-                redirect('helpdesk/pelaporan');
-                return;
-            }
-        }
-
-        // Validate the note content
-        $catatan_finish = $this->input->post('catatan_finish');
-        if ($this->contains_only_images($catatan_finish) || strlen(strip_tags($catatan_finish)) < 50) {
-            if ($photo) {
-                unlink('./assets/filefinish/' . $photo);
-            }
-            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
-            redirect('helpdesk/pelaporan');
-            return;
-        }
-
-        // Prepare the data for insertion
-        $id = $this->input->post('id_pelaporan');
-        $data = [
-            'id_pelaporan' => $id,
-            'no_tiket' => $this->input->post('no_tiket'),
-            'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
-            'file_finish'     => $photo,
-            'nama'     => $this->input->post('nama'),
-            'kategori' => $this->input->post('kategori'),
-            'priority'   => $this->input->post('priority'),
-            'maxday'     => $this->input->post('maxday'),
-            'catatan_finish' => $catatan_finish,
-            'status'     => 'Solved',
-            'status_ccs' => 'CLOSE'
-        ];
-
-        // Remove unwanted HTML tags from data
-        $data = array_map(function ($value) {
-            return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
-        }, $data);
-
-        // Insert the data into the database
-        $this->pelaporan_model->updateHD($id, $data);
-
-        // Clear session images after successful finish
-        $this->session->unset_userdata('uploaded_images');
-
-        // Set a success message and redirect to the submission page
-        $this->session->set_flashdata('pesan', 'Successfully Finish!');
-        redirect('helpdesk/pelaporan');
-    }
-
-    private function remove_uploaded_images()
-    {
-        $uploaded_images = $this->session->userdata('uploaded_images');
-        if ($uploaded_images) {
-            foreach ($uploaded_images as $image) {
-                if (file_exists('./assets/filefinish/' . $image)) {
-                    unlink('./assets/filefinish/' . $image);
-                }
-            }
-            $this->session->unset_userdata('uploaded_images');
-        }
-    }
-
-
-    public function upload()
-    {
-        if ($_FILES['upload']['name']) {
-            $config['allowed_types'] = 'jpeg|jpg|png';
-            $config['max_size'] = '2048';
-            $config['upload_path'] = './assets/filefinish/';
-
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-
-            if ($this->upload->do_upload('upload')) {
-                $photo = $this->upload->data('file_name');
-                $url = base_url('assets/filefinish/' . $photo);
-                $this->load->helper('url');
-
-                // Store the uploaded file name in session
-                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
-                $uploaded_images[] = $photo;
-                $this->session->set_userdata('uploaded_images', $uploaded_images);
-
-                $data = array(
-                    'fileName' => $photo,
-                    'uploaded' => 1,
-                    'url' => $url
-                );
-                $this->output->set_content_type('application/json');
-                echo json_encode($data);
-            } else {
-                $data = array(
-                    'message' => 'Upload failed',
-                    'uploaded' => 0
-                );
-                $this->output->set_content_type('application/json');
-                echo json_encode($data);
-            }
-        }
-    }
-
     public function edit_pelaporan()
     {
 
@@ -754,7 +568,7 @@ class Helpdesk extends CI_Controller
             // If validation fails, redirect back to the form with error messages
             $errors = strip_tags(validation_errors());
             $this->session->set_flashdata('alert', $errors);
-            redirect('helpdesk/pelaporan');
+            redirect('helpdesk/forward_tiket');
         } else {
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namaspv');
@@ -767,6 +581,230 @@ class Helpdesk extends CI_Controller
             $this->klienpelaporan_model->updateForward($id_pelaporan, $id_user);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
             Redirect(Base_url('helpdesk/pelaporan'));
+        }
+    }
+
+    public function forward_tiket($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
+
+        $this->load->model('User_model', 'user_model');
+        $data['namaspv'] = $this->user_model->getNamaSpv();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/forward_tiket', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function finish_tiket($id = null)
+    {
+        // Cek apakah ID pelaporan tidak ada
+        if ($id === null) {
+            // Set pesan error dan redirect ke halaman yang sesuai
+            $this->session->set_flashdata('alert', 'Finish gagal.');
+            redirect('helpdesk/pelaporan'); // Redirect ke halaman yang diinginkan
+            return;
+        }
+
+        // Jika ID ada, lanjutkan proses
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/finish_tiket', $data);
+        $this->load->view('templates/footer');
+    }
+
+
+
+    private function contains_only_images($content)
+    {
+        $doc = new DOMDocument();
+        @$doc->loadHTML($content);
+        $body = $doc->getElementsByTagName('body')->item(0);
+
+        foreach ($body->childNodes as $node) {
+            if ($node->nodeType === XML_TEXT_NODE && trim($node->textContent) !== '') {
+                return false;
+            }
+            if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName !== 'img') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function finish()
+    {
+        // Load the form validation library
+        $this->load->library('form_validation');
+
+        // Set validation rules
+        $this->form_validation->set_rules('catatan_finish', 'Catatan Finish', 'callback_validateCatatanFinish');
+
+        // Get catatan finish content from the request
+        $catatan_finish = $this->input->post('catatan_finish');
+
+        // Check if catatan finish only contains images
+        if ($this->contains_only_images($catatan_finish)) {
+            // If only images, set an error message and redirect back
+            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish tidak boleh hanya berisi gambar.');
+
+            // Remove uploaded images
+            $this->remove_uploaded_images();
+            redirect('helpdesk/finish_tiket');
+            return;
+        }
+
+        // Check if the form validation passed
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, set an error message and redirect back
+            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+
+            // Remove uploaded images
+            $this->remove_uploaded_images();
+            redirect('helpdesk/finish_tiket');
+        } else {
+            $this->processFinish();
+        }
+    }
+
+    // Custom validation callback
+    public function validateCatatanFinish($str)
+    {
+        $minLength = 50;
+
+        // Strip tags to get text content and check if length is less than min length
+        $textContent = strip_tags($str);
+        if (strlen($textContent) < $minLength) {
+            $this->form_validation->set_message('validateCatatanFinish', 'Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
+    private function processFinish()
+    {
+        // Handle file upload if there is a file
+        $photo = $_FILES['file_finish']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png|rar|zip';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/filefinish/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file_finish')) {
+                $photo = $this->upload->data('file_name');
+            } else {
+
+                log_message('error', 'File upload error: ' . $this->upload->display_errors());
+                $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
+                redirect('helpdesk/finish_tiket');
+                return;
+            }
+        }
+
+        // Validate the note content
+        $catatan_finish = $this->input->post('catatan_finish');
+        if ($this->contains_only_images($catatan_finish) || strlen(strip_tags($catatan_finish)) < 50) {
+            if ($photo) {
+                unlink('./assets/filefinish/' . $photo);
+            }
+            $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+            redirect('helpdesk/finish_tiket');
+            return;
+        }
+
+        // Prepare the data for insertion
+        $id = $this->input->post('id_pelaporan');
+        $data = [
+            'id_pelaporan' => $id,
+            'no_tiket' => $this->input->post('no_tiket'),
+            'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
+            'file_finish'     => $photo,
+            'nama'     => $this->input->post('nama'),
+            'kategori' => $this->input->post('kategori'),
+            'priority'   => $this->input->post('priority'),
+            'maxday'     => $this->input->post('maxday'),
+            'catatan_finish' => $catatan_finish,
+            'status'     => 'Solved',
+            'status_ccs' => 'CLOSE'
+        ];
+
+        // Remove unwanted HTML tags from data
+        $data = array_map(function ($value) {
+            return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
+        }, $data);
+
+        // Insert the data into the database
+        $this->pelaporan_model->updateHD($id, $data);
+
+        // Clear session images after successful finish
+        $this->session->unset_userdata('uploaded_images');
+
+        // Set a success message and redirect to the submission page
+        $this->session->set_flashdata('pesan', 'Successfully Finish!');
+        redirect('helpdesk/pelaporan');
+    }
+
+    private function remove_uploaded_images()
+    {
+        $uploaded_images = $this->session->userdata('uploaded_images');
+        if ($uploaded_images) {
+            foreach ($uploaded_images as $image) {
+                if (file_exists('./assets/filefinish/' . $image)) {
+                    unlink('./assets/filefinish/' . $image);
+                }
+            }
+            $this->session->unset_userdata('uploaded_images');
+        }
+    }
+
+
+    public function upload()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/filefinish/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/filefinish/' . $photo);
+                $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
         }
     }
 
