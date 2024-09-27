@@ -584,8 +584,16 @@ class Helpdesk extends CI_Controller
         }
     }
 
-    public function forward_tiket($id)
+    public function forward_tiket($id = null)
     {
+        // Cek apakah ID pelaporan tidak ada
+        if ($id === null) {
+            // Set pesan error dan redirect ke halaman yang sesuai
+            $this->session->set_flashdata('alert', 'Forward gagal.');
+            redirect('helpdesk/pelaporan'); // Redirect ke halaman yang diinginkan
+            return;
+        }
+
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Helpdesk_model', 'helpdesk_model');
         $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);

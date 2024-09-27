@@ -218,6 +218,106 @@
 
 <!-- MODAL EDIT HELPDESK -->
 <div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <?= form_open_multipart('supervisor/fungsi_edit') ?>
+                <input type="hidden" name="id_pelaporan" id="id_pelaporan">
+                <div class="body">
+                    <form class="form-horizontal">
+
+                        <label for="no_tiket">No Tiket</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="waktu_pelaporan">Tanggal</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="nama">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="perihal">Perihal</label>
+                            <div class="form-line">
+                                <div id="perihal_coba" readonly></div>
+                            </div>
+                        </div>
+
+                        <label for="status_ccs">Status CCS</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="maxday">Max Day</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="kategori">Kategori</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select name="namahd" id="namahd" class="form-control">
+                                    <option value=""> -- Pilih Helpdesk -- </option>
+                                    <?php
+                                    foreach ($namahd as $nah) : ?>
+                                        <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE
+                                CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+
+                </div>
+                <?php echo form_close() ?>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL EDIT HELPDESK
+<div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -315,7 +415,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 
