@@ -305,7 +305,7 @@
                 'bulletedList', 'numberedList', 'todoList', '|',
                 'fontSize', 'fontFamily', 'fontColor', '', '', '|',
                 'alignment', '|',
-                'insertTable', 'mediaEmbed', '', '', '|',
+                'uploadImage', 'ckfinder', '|',
                 'undo', 'redo',
             ],
             shouldNotGroupWhenFull: true
@@ -415,8 +415,12 @@
                 }
             }
         },
-        mediaEmbed: {
-            previewsInData: true
+        // uploadImage: {
+        //     types: ['jpeg', 'png', 'gif', 'bmp', 'webp', 'jpg'],
+        //     previewsInData: true
+        // },
+        ckfinder: {
+            uploadUrl: "<?= base_url('klien/upload') ?>"
         },
         // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         mention: {
@@ -470,6 +474,7 @@
             'PasteFromOfficeEnhanced',
             'CaseChange'
         ]
+
     });
     RemoveFormat: [
         'paragraph'

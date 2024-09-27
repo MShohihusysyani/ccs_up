@@ -22,6 +22,23 @@ class Klien extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    private function contains_only_images($content)
+    {
+        $doc = new DOMDocument();
+        @$doc->loadHTML($content);
+        $body = $doc->getElementsByTagName('body')->item(0);
+
+        foreach ($body->childNodes as $node) {
+            if ($node->nodeType === XML_TEXT_NODE && trim($node->textContent) !== '') {
+                return false;
+            }
+            if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName !== 'img') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function add_temp_tiket()
     {
         // Load the form validation library
@@ -68,11 +85,24 @@ class Klien extends CI_Controller
                         redirect('klien/pengajuan');
                     }
                 }
+                // Validate the note content
+                $perihal = $this->input->post('perihal');
+                if ($this->contains_only_images($perihal) || strlen(strip_tags($perihal)) < 50) {
+                    if ($photo) {
+                        unlink('./assets/files/' . $photo);
+                    }
+                    $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+                    redirect('klien/pengajuan');
+                    return;
+                }
 
                 // Prepare the data for insertion
+                // Prepare the data for insertion
+                $id = $this->input->post('id_temp');
                 $data = [
+                    'id_temp'  => $id,
                     'no_tiket' => $no_tiket,
-                    'perihal'  => $this->input->post('perihal'),
+                    'perihal'  => $perihal,
                     'file'     => $photo,
                     'user_id'  => $this->input->post('user_id'),
                     'nama'     => $this->input->post('nama'),
@@ -104,6 +134,43 @@ class Klien extends CI_Controller
         }
     }
 
+    public function upload()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/files/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/files/' . $photo);
+                $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
+        }
+    }
 
     public function fungsi_delete_temp($id)
     {
