@@ -180,7 +180,7 @@
                                                     <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
 
-                                                    <td>
+                                                    <td style="display: flex; gap: 10px; justify-content: flex-end;">
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-warning edit-action">

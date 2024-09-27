@@ -154,12 +154,12 @@
                                                         <td>
                                                             <span class="label label-info" data-role="tagsinput"><?= $tmp['tags']; ?></span>
                                                         </td>
-                                                        <td>
+                                                        <td style="display: flex; gap: 10px; justify-content: flex-end;">
 
                                                             <a class="btn btn-sm btn-warning" href="<?= base_url() ?>helpdesk/edit_tiket_temp/<?= $tmp['id_temp']; ?>"><i class="material-icons">edit</i> <span class="icon-name"></span>Edit</a>
-                                                            <br><br>
+
                                                             <a class="btn btn-sm btn-info" href="<?= base_url() ?>helpdesk/preview/<?= $tmp['id_temp']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-                                                            <br><br>
+
                                                             <a class="btn btn-sm btn-danger tombol-hapus" href="<?= base_url() ?>helpdesk/fungsi_delete_temp/<?= $tmp['id_temp']; ?>"><span class="fa fa-trash tombol-hapus"></span>
                                                                 Hapus</a>
 

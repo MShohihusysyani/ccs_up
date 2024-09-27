@@ -182,7 +182,7 @@
                                                     </td>
                                                     <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
-                                                    <td>
+                                                    <td style="display: flex; gap: 10px; justify-content: flex-end;">
                                                         <!-- <div class="btn btn-sm btn-info">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editModal<?= $dp['id_pelaporan']; ?>"> <i

@@ -173,7 +173,7 @@
                                                 </td>
                                                 <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
-                                                <td>
+                                                <td style="display: flex; gap: 10px; justify-content: flex-end;">
                                                     <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor2/finish_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">launch</i> <span class="icon-name"></span>Approve</a>
                                                     <br>
                                                     <br>

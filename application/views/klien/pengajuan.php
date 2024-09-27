@@ -179,7 +179,7 @@
                                                         <td>
                                                             <span class="label label-info" data-role="tagsinput"><?= $tmp['tags']; ?></span>
                                                         </td>
-                                                        <td>
+                                                        <td style="display: flex; gap: 10px; justify-content: flex-end;">
                                                             <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_temp="<?= $tmp['id_temp']; ?>"
@@ -194,9 +194,8 @@
                                                 </div> -->
 
                                                             <a class="btn btn-sm btn-warning" href="<?= base_url() ?>klien/edit_pelaporan/<?= $tmp['id_temp']; ?>"><i class="material-icons">edit</i> <span class="icon-name"></span>Edit</a>
-                                                            <br><br>
+
                                                             <a class="btn btn-sm btn-info" href="<?= base_url() ?>klien/preview/<?= $tmp['id_temp']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-                                                            <br><br>
                                                             <a class="btn btn-sm btn-danger tombol-hapus" href="<?= base_url() ?>klien/fungsi_delete_temp/<?= $tmp['id_temp']; ?>"><span class="fa fa-trash tombol-hapus"></span>
                                                                 Hapus</a>
 
