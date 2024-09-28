@@ -630,4 +630,21 @@ class Klien extends CI_Controller
         );
         $this->klienpelaporan_model->update_data('pelaporan', $data, $id_pelaporan);
     }
+
+    public function fetch_notifications()
+    {
+        // // Fetch total active data from the model
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('user_id');
+
+        $limit = 5;  // Tampilkan 20 notifikasi per halaman
+        $offset = $this->input->get('offset') ? $this->input->get('offset') : 0;
+        $this->load->model('M_Klien', 'M_Klien');
+        $notifications = $this->M_Klien->get_notifications($limit, $offset, $user_id);
+        $unread_count = $this->M_Klien->count_unread_notifications();
+        echo json_encode([
+            'notifications' => $notifications,
+            'unread_count' => $unread_count
+        ]);
+    }
 }
