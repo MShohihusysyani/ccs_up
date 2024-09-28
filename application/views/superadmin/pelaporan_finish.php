@@ -54,7 +54,7 @@
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
-                                            <th>Perihal</th>
+                                            <th>Judul</th>
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>

@@ -143,12 +143,12 @@
                                                             <i class="material-icons">forward</i> Forward
                                                         </a>
 
-                                                        <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>">
-                                                            <i class="material-icons">print</i> Print Detail
-                                                        </a>
-
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>helpdesk/finish_tiket/<?= $dp['id_pelaporan']; ?>">
                                                             <i class="material-icons">done</i> Finish
+                                                        </a>
+
+                                                        <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>">
+                                                            <i class="material-icons">print</i> Print Detail
                                                         </a>
                                                     </td>
 

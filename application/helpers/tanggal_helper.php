@@ -77,6 +77,45 @@ if (!function_exists('tanggal')) {
         return $tanggal;
     }
 }
+// function tanggal_indo($tanggal)
+// {
+//     if (empty($tanggal)) {
+//         return 'Invalid date format';
+//     }
+
+//     $bulan = array(
+//         1 => 'Januari',
+//         'Februari',
+//         'Maret',
+//         'April',
+//         'Mei',
+//         'Juni',
+//         'Juli',
+//         'Agustus',
+//         'September',
+//         'Oktober',
+//         'November',
+//         'Desember'
+//     );
+
+//     $split = explode('-', $tanggal);
+
+//     // Check if $split has at least 3 elements
+//     if (count($split) < 3) {
+//         return 'Invalid date format';
+//     }
+
+//     // Ensure $split[1] is within valid month range
+//     $bulan_index = (int)$split[1];
+//     if ($bulan_index < 1 || $bulan_index > 12) {
+//         return 'Invalid date format';
+//     }
+
+//     $tanggal_indo = $split[2] . ' ' . $bulan[$bulan_index] . ' ' . $split[0];
+
+//     return $tanggal_indo;
+// }
+
 function tanggal_indo($tanggal)
 {
     if (empty($tanggal)) {
@@ -98,23 +137,35 @@ function tanggal_indo($tanggal)
         'Desember'
     );
 
-    $split = explode('-', $tanggal);
+    // Memisahkan tanggal dan waktu jika ada
+    $datetime_split = explode(' ', $tanggal);
+    $date_part = $datetime_split[0]; // Bagian tanggal
+    $time_part = isset($datetime_split[1]) ? $datetime_split[1] : ''; // Bagian waktu jika ada
 
-    // Check if $split has at least 3 elements
+    $split = explode('-', $date_part);
+
+    // Memeriksa apakah $split memiliki setidaknya 3 elemen
     if (count($split) < 3) {
         return 'Invalid date format';
     }
 
-    // Ensure $split[1] is within valid month range
+    // Memastikan $split[1] adalah bulan yang valid
     $bulan_index = (int)$split[1];
     if ($bulan_index < 1 || $bulan_index > 12) {
         return 'Invalid date format';
     }
 
+    // Format tanggal Indonesia
     $tanggal_indo = $split[2] . ' ' . $bulan[$bulan_index] . ' ' . $split[0];
+
+    // Jika ada waktu, tambahkan di belakang
+    if (!empty($time_part)) {
+        $tanggal_indo .= ' ' . $time_part;
+    }
 
     return $tanggal_indo;
 }
+
 
 
 

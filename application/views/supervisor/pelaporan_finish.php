@@ -58,7 +58,7 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
@@ -78,7 +78,7 @@
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
@@ -119,7 +119,7 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?= $dp['impact']; ?></td>
+                                                <!-- <td><?= $dp['impact']; ?></td> -->
                                                 <td>
                                                     <?php if ($dp['maxday'] == '90') : ?>
                                                         <span class="label label-info">90</span>

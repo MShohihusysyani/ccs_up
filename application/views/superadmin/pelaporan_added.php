@@ -38,7 +38,8 @@
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
-                                                <th>Perihal</th>
+                                                <th>Judul</th>
+                                                <!-- <th>Perihal</th> -->
                                                 <th>Attachment</th>
                                                 <th>Category</th>
                                                 <th>Tags</th>
@@ -54,7 +55,8 @@
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
-                                                <th>Perihal</th>
+                                                <th>Judul</th>
+                                                <!-- <th>Perihal</th> -->
                                                 <th>Attachment</th>
                                                 <th>Category</th>
                                                 <th>Tags</th>
@@ -74,7 +76,8 @@
                                                     <td><?= $dp['no_tiket']; ?></td>
                                                     <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                     <td><?= $dp['nama']; ?></td>
-                                                    <td><?= $dp['perihal']; ?></td>
+                                                    <td><?= $dp['judul']; ?></td>
+                                                    <!-- <td><?= $dp['perihal']; ?></td> -->
                                                     <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                     </td>
                                                     <td><?= $dp['kategori']; ?></td>
@@ -124,7 +127,7 @@
                                                         <?php endif; ?>
 
                                                     </td>
-                                                    <td>
+                                                    <td style="display: flex; gap: 10px; justify-content: flex-end;">
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-warning edit-action">
@@ -134,8 +137,6 @@
                                                             </a>
 
                                                         </div>
-                                                        <br>
-                                                        <br>
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-info forward-action">

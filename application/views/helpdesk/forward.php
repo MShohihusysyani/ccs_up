@@ -28,7 +28,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Priority</th>
@@ -49,7 +49,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Priority</th>
@@ -76,7 +76,7 @@
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
-                                                <td><?= $dp['impact']; ?></td>
+                                                <!-- <td><?= $dp['impact']; ?></td> -->
                                                 <td>
                                                     <?php if (!empty($dp['file'])) : ?>
                                                         <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>

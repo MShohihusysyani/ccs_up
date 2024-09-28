@@ -11,122 +11,125 @@
 
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-        <?php if ($this->session->flashdata('pesan')) { ?>
+            <?php if ($this->session->flashdata('pesan')) { ?>
 
-        <?php } ?>
-        <!-- #END# Basic Examples -->
-        <!-- Exportable Table -->
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>
-                            PELAPORAN
-                        </h2>
+            <?php } ?>
+            <!-- #END# Basic Examples -->
+            <!-- Exportable Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                PELAPORAN
+                            </h2>
 
-                    </div>
-                    <div class="body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
-                                id="example">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Klien</th>
-                                        <th>Perihal</th>
-                                        <th>Impact</th>
-                                        <th>Attachment</th>
-                                        <th>Category</th>
-                                        <th>Priority</th>
-                                        <th>Max Day</th>
-                                        <th>Status CCS</th>
-                                        <th>Handle By</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Klien</th>
-                                        <th>Perihal</th>
-                                        <th>Impact</th>
-                                        <th>Attachment</th>
-                                        <th>Category</th>
-                                        <th>Priority</th>
-                                        <th>Max Day</th>
-                                        <th>Status CCS</th>
-                                        <th>Handle By</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($datapelaporan as $dp): ?>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                                    id="example">
+                                    <thead>
                                         <tr>
-                                            <td><?= $no++ ?></td>
-                                            <td><?= $dp['no_tiket']; ?></td>
-                                            <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
-                                            <td><?= $dp['nama']; ?></td>
-                                            <td><?= $dp['perihal']; ?></td>
-                                            <td><?= $dp['impact'];?></td>
-                                            <td> <a
-                                                    href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                            </td>
-                                            <td><?= $dp['kategori']; ?></td>
-                                            <td>
-                                                <?php if ($dp['priority'] == 'Low'): ?>
-                                                    <span class="label label-info">Low</span>
+                                            <th>No</th>
+                                            <th>No Tiket</th>
+                                            <th>Tanggal</th>
+                                            <th>Nama Klien</th>
+                                            <th>Judul</th>
+                                            <!-- <th>Perihal</th> -->
+                                            <!-- <th>Impact</th> -->
+                                            <th>Attachment</th>
+                                            <th>Category</th>
+                                            <th>Priority</th>
+                                            <th>Max Day</th>
+                                            <th>Status CCS</th>
+                                            <th>Handle By</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>No Tiket</th>
+                                            <th>Tanggal</th>
+                                            <th>Nama Klien</th>
+                                            <th>Judul</th>
+                                            <!-- <th>Perihal</th> -->
+                                            <!-- <th>Impact</th> -->
+                                            <th>Attachment</th>
+                                            <th>Category</th>
+                                            <th>Priority</th>
+                                            <th>Max Day</th>
+                                            <th>Status CCS</th>
+                                            <th>Handle By</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <?php
+                                        $no = 1;
+                                        foreach ($datapelaporan as $dp): ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $dp['no_tiket']; ?></td>
+                                                <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
+                                                <td><?= $dp['nama']; ?></td>
+                                                <td><?= $dp['judul']; ?></td>
+                                                <!-- <td><?= $dp['perihal']; ?></td> -->
+                                                <!-- <td><?= $dp['impact']; ?></td> -->
+                                                <td> <a
+                                                        href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                </td>
+                                                <td><?= $dp['kategori']; ?></td>
+                                                <td>
+                                                    <?php if ($dp['priority'] == 'Low'): ?>
+                                                        <span class="label label-info">Low</span>
 
-                                                <?php elseif ($dp['priority'] == 'Medium'): ?>
-                                                    <span class="label label-warning">Medium</span>
+                                                    <?php elseif ($dp['priority'] == 'Medium'): ?>
+                                                        <span class="label label-warning">Medium</span>
 
-                                                <?php elseif ($dp['priority'] == 'High'): ?>
-                                                    <span class="label label-danger">High</span>
+                                                    <?php elseif ($dp['priority'] == 'High'): ?>
+                                                        <span class="label label-danger">High</span>
 
-                                                <?php else: ?>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?php if ($dp['maxday'] == '90'): ?>
-                                                    <span class="label label-info">90</span>
+                                                    <?php else: ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <?php if ($dp['maxday'] == '90'): ?>
+                                                        <span class="label label-info">90</span>
 
-                                                <?php elseif ($dp['maxday'] == '60'): ?>
-                                                    <span class="label label-warning">60</span>
+                                                    <?php elseif ($dp['maxday'] == '60'): ?>
+                                                        <span class="label label-warning">60</span>
 
-                                                <?php elseif ($dp['maxday'] == '7'): ?>
-                                                    <span class="label label-danger">7</span>
+                                                    <?php elseif ($dp['maxday'] == '7'): ?>
+                                                        <span class="label label-danger">7</span>
 
-                                                <?php else: ?>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?php if ($dp['status_ccs'] == 'FINISH'): ?>
-                                                    <span class="label label-success">FINISH</span>
+                                                    <?php else: ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <?php if ($dp['status_ccs'] == 'FINISH'): ?>
+                                                        <span class="label label-success">FINISH</span>
 
-                                                <?php elseif ($dp['status_ccs'] == 'CLOSE'): ?>
-                                                    <span class="label label-warning">CLOSE</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'CLOSE'): ?>
+                                                        <span class="label label-warning">CLOSE</span>
 
-                                                <?php elseif ($dp['status_ccs'] == 'HANDLE'): ?>
-                                                    <span class="label label-info">HANDLE</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE'): ?>
+                                                        <span class="label label-info">HANDLE</span>
 
-                                                <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
-                                                    <span class="label label-primary">ADDED</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'ADDED'): ?>
+                                                        <span class="label label-primary">ADDED</span>
 
-                                                <?php elseif ($dp['status_ccs'] == 'REJECT'): ?>
-                                                    <span class="label label-danger">REJECT</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'REJECT'): ?>
+                                                        <span class="label label-danger">REJECT</span>
 
-                                                <?php else: ?>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td><?= $dp['handle_by'];?></td>
-                                            <td>
+                                                    <?php else: ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td><?= $dp['handle_by']; ?></td>
+                                                <td>
 
-                                                <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                    <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="btn btn-sm btn-warning">
                                                     <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>"
                                                         data-no_tiket="<?= $dp['no_tiket']; ?>"
@@ -143,26 +146,26 @@
                                                 </div>
                                                     <br>
                                                     <br> -->
-                                                <div class="btn btn-sm btn-info">
-                                                    <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i
-                                                        class="material-icons">done</i> <span
-                                                        class="icon-name">Finish</span>
+                                                    <div class="btn btn-sm btn-info">
+                                                        <div class="demo-google-material-icon" data-toggle="modal"
+                                                            data-target="#finishModal<?= $dp['id_pelaporan']; ?>"> <i
+                                                                class="material-icons">done</i> <span
+                                                                class="icon-name">Finish</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- #END# Exportable Table -->
         </div>
-        <!-- #END# Exportable Table -->
-    </div>
-    <!-- Button trigger modal -->
+        <!-- Button trigger modal -->
 </section>
 
 
@@ -178,13 +181,13 @@
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
-                                                    
+
                         <label for="no_tiket">No Tiket</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
                             </div>
-                        </div> 
+                        </div>
 
                         <label for="waktu_pelaporan">Tanggal</label>
                         <div class="form-group">
@@ -199,14 +202,14 @@
                                 <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
                             </div>
                         </div>
-                        
+
                         <label for="perihal">Perihal</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="perihal" name="perihal" class="form-control" readonly>
                             </div>
                         </div>
-                        
+
                         <label for="status">Status</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -224,9 +227,9 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namaspv" id="namaspv" class="form-control">
-                                <option value=""> -- Pilih Supervisor -- </option>
+                                    <option value=""> -- Pilih Supervisor -- </option>
                                     <?php
-                                        foreach ($namaspv as $nas): ?>
+                                    foreach ($namaspv as $nas): ?>
                                         <option value="<?= $nas['id_user']; ?>"><?= $nas['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -240,7 +243,7 @@
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
 
                         </div>
-                    
+
                 </div>
                 <?php echo form_close() ?>
             </div>
@@ -250,8 +253,8 @@
 
 <!-- MODAL FINISH -->
 <?php
-    $no = 0;
-    foreach ($datapelaporan as $dp) : $no++; ?>
+$no = 0;
+foreach ($datapelaporan as $dp) : $no++; ?>
     <div class="modal fade" id="finishModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -263,62 +266,62 @@
                     <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
-                        
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                <label class="form-label">No tiket</label>
-                            </div>
-                        </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                <label class="form-label">Waktu Pelaporan</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
+                                    <label class="form-label">No tiket</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                <label class="form-label">Nama Klien</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
+                                    <label class="form-label">Waktu Pelaporan</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
-                                <label class="form-label">Perihal</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
+                                    <label class="form-label">Nama Klien</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                <label class="form-label">Status CCS</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['perihal']; ?>" type="text" id="perihal" name="perihal" class="form-control" readonly>
+                                    <label class="form-label">Perihal</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['priority']; ?>" type="text" id="priority" name="priority" class="form-control" readonly>
-                                <label class="form-label">Priority</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
+                                    <label class="form-label">Status CCS</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['maxday']; ?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
-                                <label class="form-label">Max Day</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['priority']; ?>" type="text" id="priority" name="priority" class="form-control" readonly>
+                                    <label class="form-label">Priority</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input value="<?= $dp['kategori']; ?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
-                                <label class="form-label">Kategori</label>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['maxday']; ?>" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                                    <label class="form-label">Max Day</label>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input value="<?= $dp['kategori']; ?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                                    <label class="form-label">Kategori</label>
+                                </div>
+                            </div>
 
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-link waves-effect">FINISH</button>
@@ -332,7 +335,7 @@
             </div>
         </div>
     </div>
-    <?php endforeach ?>
+<?php endforeach ?>
 
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
@@ -342,7 +345,7 @@
     const input = document.getElementById('maxday');
 
     // Add event listener to the select element
-    select.addEventListener('change', function () {
+    select.addEventListener('change', function() {
         // Set the value of the input field to the selected option's value
         if (select.value == "Low") {
             input.value = "90";
@@ -363,10 +366,10 @@
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         // Untuk sunting
-        $('#editModalCP').on('show.bs.modal', function (event) {
+        $('#editModalCP').on('show.bs.modal', function(event) {
             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
             var modal = $(this)
 
