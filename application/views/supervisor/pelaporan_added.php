@@ -38,6 +38,7 @@
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
+                                                <th>Judul</th>
                                                 <!-- <th>Perihal</th> -->
                                                 <th>Attachment</th>
                                                 <th>Category</th>
@@ -54,6 +55,7 @@
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
+                                                <th>Judul</th>
                                                 <!-- <th>Perihal</th> -->
                                                 <th>Attachment</th>
                                                 <th>Category</th>
@@ -74,6 +76,7 @@
                                                     <td><?= $dp['no_tiket']; ?></td>
                                                     <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                     <td><?= $dp['nama']; ?></td>
+                                                    <td><?= $dp['judul']; ?></td>
                                                     <!-- <td><?= $dp['perihal']; ?></td> -->
                                                     <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                     </td>
