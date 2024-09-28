@@ -57,12 +57,40 @@
                                 </div>
                             </div>
 
+                            <?php
+                            $file = $tmp['file'] ?? null;
+                            $file_path = $file ? base_url('assets/files/') . $file : null;
+                            $file_extension = $file ? strtolower(pathinfo($file, PATHINFO_EXTENSION)) : null;
+                            $image_extensions = ['jpeg', 'jpg', 'png'];
+                            ?>
+
                             <label for="nama">File</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <img src="<?= base_url('assets/files/') . $tmp['file']; ?>" width="500" height="500" class="img-thumbnail">
+                                    <?php if ($file): ?>
+                                        <?php if (in_array($file_extension, $image_extensions)): ?>
+                                            <!-- Display the image if it's a jpeg or png -->
+                                            <img src="<?= $file_path; ?>" width="500" height="500" class="img-thumbnail">
+                                        <?php else: ?>
+                                            <!-- Provide a download link if it's not an image -->
+                                            <a href="<?= $file_path; ?>" download>Download File (<?= strtoupper($file_extension); ?>)</a>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <!-- Display message if no file is attached -->
+                                        <p><strong>Tidak ada file yang dilampirkan.</strong></p>
+                                    <?php endif; ?>
+
+                                    <div class="form-group mt-3">
+                                        <label for="exampleInputFile">Upload New File</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="file" name="file">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
 
                             <a href="<?= base_url('klien/pengajuan') ?>" type="button" class="btn btn-primary m-t-15 waves-effect">kembali</a>
                         <?php endforeach; ?>

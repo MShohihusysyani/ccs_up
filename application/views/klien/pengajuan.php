@@ -48,7 +48,7 @@
 
                                 </textarea>
 
-                                <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                                <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 25mb</label>
                                 <div class="form-group">
                                     <label for="exampleInputFile"></label>
                                     <div class="input-group">
@@ -117,7 +117,7 @@
                                                     <th>No</th>
                                                     <th>No Tiket</th>
                                                     <th>Judul</th>
-                                                    <th>Perihal</th>
+                                                    <!-- <th>Perihal</th> -->
                                                     <th>Attachment</th>
                                                     <th>kategori</th>
                                                     <th>Tags</th>
@@ -132,7 +132,7 @@
                                                         <td><?php echo $no++ ?></td>
                                                         <td><?= $tmp['no_tiket']; ?></td>
                                                         <td><?= $tmp['judul']; ?></td>
-                                                        <td><?= $tmp['perihal']; ?></td>
+                                                        <!-- <td><?= $tmp['perihal']; ?></td> -->
                                                         <td>
                                                             <?php
                                                             $file_path = base_url('assets/files/' . $tmp['file']);
