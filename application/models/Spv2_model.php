@@ -126,6 +126,7 @@ class Spv2_model extends CI_Model
         $this->db->join('pelaporan', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('s_forward.user_id', $user_id);
         $this->db->where('pelaporan.status_ccs', 'ADDED 2');
+        $this->db->order_by('waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
         return $this->db->get()->result_array();
