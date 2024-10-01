@@ -103,7 +103,7 @@ class M_Klien extends CI_Model
         $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan AND t1_forward2.id_forward != t1_forward1.id_forward', 'left');
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->where('pelaporan.user_id', $user_id);
-        $this->db->where_in('pelaporan.status_ccs', ['HANDLE', 'HANDLE 2']);
+        $this->db->where_in('pelaporan.status_ccs', ['HANDLED', 'HANDLED 2']);
         $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('waktu_pelaporan', 'DESC');
 
@@ -153,7 +153,7 @@ class M_Klien extends CI_Model
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->where('pelaporan.user_id', $user_id);
         $this->db->group_by('pelaporan.id_pelaporan');
-        $this->db->where('pelaporan.status_ccs', 'CLOSE');
+        $this->db->where('pelaporan.status_ccs', 'CLOSED');
         $this->db->order_by('waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
@@ -193,7 +193,7 @@ class M_Klien extends CI_Model
         ');
         $this->db->from('pelaporan');
         $this->db->where('user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'FINISH');
+        $this->db->where('pelaporan.status_ccs', 'FINISHED');
         $this->db->order_by('waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result

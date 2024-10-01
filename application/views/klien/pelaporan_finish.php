@@ -167,14 +167,14 @@
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
-                                                    <?php if ($dp['status_ccs'] == 'FINISH') : ?>
-                                                        <span class="label label-success">FINISH</span>
+                                                    <?php if ($dp['status_ccs'] == 'FINISHED') : ?>
+                                                        <span class="label label-success">FINISHED</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
-                                                        <span class="label label-warning">CLOSE</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'CLOSED') : ?>
+                                                        <span class="label label-warning">CLOSED</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
-                                                        <span class="label label-info">HANDLE</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'HANDLED') : ?>
+                                                        <span class="label label-info">HANDLED</span>
 
                                                     <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                         <span class="label label-primary">ADDED</span>

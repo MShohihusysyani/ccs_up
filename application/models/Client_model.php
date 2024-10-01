@@ -40,85 +40,85 @@ class Client_model extends CI_Model
         return $no_klien['no_klien'];
     }
 
-    // public function getNoUrut($user_id)
-    // {
-    //     // Dapatkan bulan dan tahun saat ini
-    //     $currentMonth = date('Ym'); // Format: YYYYMM
-
-    //     // Transaksi untuk mencegah race condition
-    //     $this->db->trans_start();
-
-    //     // Ambil nomor tiket terakhir yang terbesar untuk user yang sama
-    //     $query = $this->db->query(
-    //         "SELECT no_tiket 
-    //          FROM pelaporan 
-    //          WHERE user_id = ? 
-    //          ORDER BY no_tiket DESC 
-    //          LIMIT 1 FOR UPDATE",
-    //         [$user_id]
-    //     )->row_array();
-
-    //     // Debugging: Log hasil query
-    //     log_message('debug', 'Tiket terakhir dari query: ' . json_encode($query));
-
-    //     // Jika tidak ada tiket sebelumnya, mulai dari 0001
-    //     if ($query == NULL || empty($query['no_tiket'])) {
-    //         $no_urut = 1;
-    //     } else {
-    //         // Ambil bulan dari tiket terakhir (4 sampai 9 adalah YYYYMM)
-    //         $lastTicketMonth = substr($query['no_tiket'], 3, 6);
-
-    //         // Cek apakah bulan sekarang berbeda dengan bulan terakhir pada tiket
-    //         if ($lastTicketMonth != $currentMonth) {
-    //             // Reset ke 0001 jika bulan sudah berubah
-    //             $no_urut = 1;
-    //         } else {
-    //             // Jika masih bulan yang sama, tambahkan nomor urut
-    //             $lastNoUrut = (int) substr($query['no_tiket'], -4); // Ambil 4 digit terakhir
-    //             $no_urut = $lastNoUrut + 1;
-    //         }
-    //     }
-
-    //     // Format nomor urut menjadi 4 digit
-    //     $no_urut = sprintf('%04d', $no_urut);
-
-    //     // Gabungkan prefix 'TIC', bulan dan tahun saat ini (YYYYMM), dan nomor urut
-
-    //     // Selesaikan transaksi
-    //     $this->db->trans_complete();
-
-    //     return $no_urut;
-    // }
-
-
-
     public function getNoUrut($user_id)
     {
+        // Dapatkan bulan dan tahun saat ini
+        $currentMonth = date('Ym'); // Format: YYYYMM
+
         // Transaksi untuk mencegah race condition
         $this->db->trans_start();
 
-        // Ambil nomor tiket terbesar yang sudah ada untuk klien tersebut
-        $query = $this->db->query("SELECT MAX(CAST(SUBSTRING(no_tiket, -4) AS UNSIGNED)) AS no_urut FROM pelaporan WHERE user_id = ? FOR UPDATE", [$user_id])->row_array();
+        // Ambil nomor tiket terakhir yang terbesar untuk user yang sama
+        $query = $this->db->query(
+            "SELECT no_tiket 
+             FROM pelaporan 
+             WHERE user_id = ? 
+             ORDER BY no_tiket DESC 
+             LIMIT 1 FOR UPDATE",
+            [$user_id]
+        )->row_array();
 
         // Debugging: Log hasil query
-        log_message('debug', 'Nomor urut terakhir dari query: ' . json_encode($query));
+        log_message('debug', 'Tiket terakhir dari query: ' . json_encode($query));
 
-        // Jika query tidak menghasilkan nomor tiket, mulai nomor urut dari 1
-        if ($query == NULL || empty($query['no_urut'])) {
+        // Jika tidak ada tiket sebelumnya, mulai dari 0001
+        if ($query == NULL || empty($query['no_tiket'])) {
             $no_urut = 1;
         } else {
-            // Ambil 4 digit terakhir dari nomor tiket dan tambahkan 1
-            $no_urut = (int) $query['no_urut'] + 1;
+            // Ambil bulan dari tiket terakhir (4 sampai 9 adalah YYYYMM)
+            $lastTicketMonth = substr($query['no_tiket'], 3, 6);
+
+            // Cek apakah bulan sekarang berbeda dengan bulan terakhir pada tiket
+            if ($lastTicketMonth != $currentMonth) {
+                // Reset ke 0001 jika bulan sudah berubah
+                $no_urut = 1;
+            } else {
+                // Jika masih bulan yang sama, tambahkan nomor urut
+                $lastNoUrut = (int) substr($query['no_tiket'], -4); // Ambil 4 digit terakhir
+                $no_urut = $lastNoUrut + 1;
+            }
         }
 
         // Format nomor urut menjadi 4 digit
         $no_urut = sprintf('%04d', $no_urut);
+
+        // Gabungkan prefix 'TIC', bulan dan tahun saat ini (YYYYMM), dan nomor urut
 
         // Selesaikan transaksi
         $this->db->trans_complete();
 
         return $no_urut;
     }
+
+
+
+    // public function getNoUrut($user_id)
+    // {
+    //     // Transaksi untuk mencegah race condition
+    //     $this->db->trans_start();
+
+    //     // Ambil nomor tiket terbesar yang sudah ada untuk klien tersebut
+    //     $query = $this->db->query("SELECT MAX(CAST(SUBSTRING(no_tiket, -4) AS UNSIGNED)) AS no_urut FROM pelaporan WHERE user_id = ? FOR UPDATE", [$user_id])->row_array();
+
+    //     // Debugging: Log hasil query
+    //     log_message('debug', 'Nomor urut terakhir dari query: ' . json_encode($query));
+
+    //     // Jika query tidak menghasilkan nomor tiket, mulai nomor urut dari 1
+    //     if ($query == NULL || empty($query['no_urut'])) {
+    //         $no_urut = 1;
+    //     } else {
+    //         // Ambil 4 digit terakhir dari nomor tiket dan tambahkan 1
+    //         $no_urut = (int) $query['no_urut'] + 1;
+    //     }
+
+    //     // Format nomor urut menjadi 4 digit
+    //     $no_urut = sprintf('%04d', $no_urut);
+
+    //     // Selesaikan transaksi
+    //     $this->db->trans_complete();
+
+    //     return $no_urut;
+    // }
 
 
     // GENERATE KODE OTOMATIS

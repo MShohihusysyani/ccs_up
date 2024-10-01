@@ -214,7 +214,7 @@ class Superadmin_model extends CI_Model
             FROM 
                 pelaporan 
             WHERE 
-                status_ccs IN ('HANDLE', 'HANDLE 2', 'ADDED 2') 
+                status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') 
             ORDER BY 
                 waktu_pelaporan DESC
         ";
@@ -242,7 +242,7 @@ class Superadmin_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, maxday, handle_by, maxday, handle_by2, handle_by3, impact, tags  FROM pelaporan WHERE status_ccs='CLOSE' ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, maxday, handle_by, maxday, handle_by2, handle_by3, impact, tags  FROM pelaporan WHERE status_ccs='CLOSED' ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -284,7 +284,7 @@ class Superadmin_model extends CI_Model
             FROM 
                 pelaporan 
             WHERE 
-                status_ccs = 'FINISH' 
+                status_ccs = 'FINISHED' 
             ORDER BY 
                 waktu_pelaporan DESC
         ";

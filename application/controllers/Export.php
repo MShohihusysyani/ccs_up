@@ -1103,7 +1103,7 @@ class Export extends CI_Controller
 
         // Process each row of the Excel file
         foreach ($sheetData as $row) {
-            $noTiket = $row['A']; // Assuming 'A' is the "no_tiket" column
+            $noTiket = $row['B']; // Assuming 'B' is the "no_tiket" column
 
             // Skip if no_tiket is empty
             if (empty($noTiket)) {
@@ -1118,26 +1118,24 @@ class Export extends CI_Controller
                 continue; // Skip this row if no_tiket already exists
             }
 
-            // Map and validate the data as needed
-            $tanggal = $row['J']; // Assuming 'J' is the "waktu pelaporan" column
-            $dateOnly = date('Y-m-d', strtotime($tanggal)); // Extracts the date (YYYY-MM-DD) only
-
-            $waktuApprove = !empty($row['K']) && strtotime($row['K']) !== false ? date('Y-m-d', strtotime($row['K'])) : null;
+            // Remove the comma from the datetime format and convert it
+            $tanggal = !empty($row['K']) ? date('Y-m-d H:i:s', strtotime(str_replace(',', '', $row['K']))) : null;
+            $waktuApprove = !empty($row['L']) ? date('Y-m-d H:i:s', strtotime(str_replace(',', '', $row['L']))) : null;
 
             $data = [
                 'no_tiket' => $noTiket,
-                'judul' => $row['B'],
-                'user_id' => $row['C'],
-                'perihal' => $row['D'],
-                'nama' => $row['E'],
-                'kategori' => $row['F'],
-                'priority' => $row['G'],
-                'handle_by' => $row['H'],
-                'status_ccs' => $row['I'],
-                'waktu_pelaporan' => $dateOnly,
-                'waktu_approve' => $waktuApprove,
-                'rating' => $row['L'],
-                'has_rated' => $row['M'],
+                'judul' => $row['C'],
+                'user_id' => $row['D'],
+                'perihal' => $row['E'],
+                'nama' => $row['F'],
+                'kategori' => $row['G'],
+                'priority' => $row['H'],
+                'handle_by' => $row['I'],
+                'status_ccs' => $row['J'],
+                'waktu_pelaporan' => $tanggal, // Converted datetime
+                'waktu_approve' => $waktuApprove, // Converted datetime
+                'rating' => $row['M'],
+                'has_rated' => $row['N'],
                 // Map other fields as necessary
             ];
 
@@ -1148,6 +1146,9 @@ class Export extends CI_Controller
         // Redirect back with a success message
         redirect('superadmin/AllTicket');
     }
+
+
+
 
     public function import_excel_to_forward()
     {

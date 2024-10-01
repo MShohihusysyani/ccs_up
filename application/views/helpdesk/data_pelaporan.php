@@ -56,10 +56,10 @@
                                     <div class="form-line">
                                         <select id="status_ccs" name="status_ccs" class="form-control">
                                             <option value="">-- Pilih Status --</option>
-                                            <option value="FINISH">FINISH</option>
-                                            <option value="CLOSE">CLOSE</option>
-                                            <option value="HANDLE">HANDLE</option>
-                                            <option value="HANDLE 2">HANDLE 2</option>
+                                            <option value="FINISHED">FINISHED</option>
+                                            <option value="CLOSED">CLOSED</option>
+                                            <option value="HANDLED">HANDLED</option>
+                                            <option value="HANDLED 2">HANDLED 2</option>
                                             <option value="ADDED">ADDED</option>
                                             <option value="ADDED 2">ADDED 2</option>
                                         </select>

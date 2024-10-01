@@ -268,14 +268,14 @@ class Superadmin extends CI_Controller
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
             } elseif ($pelaporan->status_ccs == 'ADDED 2') {
                 $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
-            } elseif ($pelaporan->status_ccs == 'HANDLE') {
-                $status_ccs_label = '<span class="label label-info">HANDLE</span>';
-            } elseif ($pelaporan->status_ccs == 'HANDLE 2') {
-                $status_ccs_label = '<span class="label label-info">HANDLE 2</span>';
-            } elseif ($pelaporan->status_ccs == 'CLOSE') {
-                $status_ccs_label = '<span class="label label-warning">CLOSE</span>';
-            } elseif ($pelaporan->status_ccs == 'FINISH') {
-                $status_ccs_label = '<span class="label label-success">FINISH</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLED') {
+                $status_ccs_label = '<span class="label label-info">HANDLED</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLED 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLED 2</span>';
+            } elseif ($pelaporan->status_ccs == 'CLOSED') {
+                $status_ccs_label = '<span class="label label-warning">CLOSED</span>';
+            } elseif ($pelaporan->status_ccs == 'FINISHED') {
+                $status_ccs_label = '<span class="label label-success">FINISHED</span>';
             } else {
                 $status_ccs_label = $pelaporan->status_ccs;
             }

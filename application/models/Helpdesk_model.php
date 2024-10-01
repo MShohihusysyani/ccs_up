@@ -37,7 +37,7 @@ class Helpdesk_model extends CI_Model
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE');
+        $this->db->where('pelaporan.status_ccs', 'HANDLED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
@@ -85,7 +85,7 @@ class Helpdesk_model extends CI_Model
         $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan AND t1_forward2.id_forward != t1_forward1.id_forward', 'left');
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLE 2']);
+        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2']);
         $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
@@ -132,7 +132,7 @@ class Helpdesk_model extends CI_Model
         $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan AND t1_forward2.id_forward != t1_forward1.id_forward', 'left');
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'CLOSE');
+        $this->db->where('pelaporan.status_ccs', 'CLOSED');
         $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
@@ -172,7 +172,7 @@ class Helpdesk_model extends CI_Model
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'FINISH');
+        $this->db->where('pelaporan.status_ccs', 'FINISHED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result

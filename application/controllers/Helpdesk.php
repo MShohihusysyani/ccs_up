@@ -460,14 +460,14 @@ class Helpdesk extends CI_Controller
 
     private function get_status_label($status)
     {
-        if ($status == 'FINISH') {
-            return '<span class="label label-success">FINISH</span>';
-        } elseif ($status == 'CLOSE') {
-            return '<span class="label label-warning">CLOSE</span>';
-        } elseif ($status == 'HANDLE') {
-            return '<span class="label label-info">HANDLE</span>';
-        } elseif ($status == 'HANDLE 2') {
-            return '<span class="label label-info">HANDLE 2</span>';
+        if ($status == 'FINISHED') {
+            return '<span class="label label-success">FINISHED</span>';
+        } elseif ($status == 'CLOSED') {
+            return '<span class="label label-warning">CLOSED</span>';
+        } elseif ($status == 'HANDLED') {
+            return '<span class="label label-info">HANDLED</span>';
+        } elseif ($status == 'HANDLED 2') {
+            return '<span class="label label-info">HANDLED 2</span>';
         } elseif ($status == 'ADDED') {
             return '<span class="label label-primary">ADDED</span>';
         } elseif ($status == 'ADDED 2') {
