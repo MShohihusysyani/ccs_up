@@ -352,17 +352,76 @@ class Supervisor extends CI_Controller
 
     public function finish()
     {
-        $this->load->model('Supervisor_model', 'supervisor_model');
-        $data['category'] = $this->category_model->getNamakategori();
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanFinish();
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/pelaporan_finish', $data);
+        $this->load->view('supervisor/pelaporan_finish');
         $this->load->view('templates/footer');
     }
+
+    private function get_rating_stars($rating)
+    {
+        $stars = '';
+        for ($i = 1; $i <= 5; $i++) {
+            if ($i <= $rating) {
+                $stars .= '<i class="fa fa-star" style="color: gold;"></i>'; // Bintang penuh
+            } else {
+                $stars .= '<i class="fa fa-star-o"></i>'; // Bintang kosong
+            }
+        }
+        return $stars;
+    }
+
+
+
+    public function get_data_finish()
+    {
+        $this->load->model('Supervisor_model', 'supervisor_model');
+
+        $list = $this->supervisor_model->get_datatables_finish();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($list as $dp) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $dp['no_tiket'];
+            $row[] = tanggal_indo($dp['waktu_pelaporan']);
+            $row[] = $dp['nama'];
+            $row[] = $dp['judul'];
+            $row[] = $dp['kategori'];
+            $row[] = $dp['tags'] ? '<span class="label label-info">' . $dp['tags'] . '</span>' : '';
+            $row[] = $dp['priority'];
+            $row[] = $dp['maxday'];
+            $row[] = $dp['status_ccs'];
+            $handle_combined = $dp->handle_by;
+            if ($dp->handle_by2) {
+                $handle_combined .= ', ' . $dp->handle_by2;
+            }
+            if ($dp->handle_by3) {
+                $handle_combined .= ', ' . $dp->handle_by3;
+            }
+            $row[] = $handle_combined;
+
+            $data[] = $row; // Untuk menampilkan handle by
+            $row[] = $this->get_rating_stars($dp['rating']); // Untuk menampilkan bintang rating
+
+            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor/detail_finish/' . $dp['id_pelaporan']) . '"><i class="material-icons">visibility</i></a>';
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->supervisor_model->count_all_finish(),
+            "recordsFiltered" => $this->supervisor_model->count_filtered_finish(),
+            "data" => $data,
+        );
+
+        echo json_encode($output);
+    }
+
 
     public function edit_pelaporan()
     {
