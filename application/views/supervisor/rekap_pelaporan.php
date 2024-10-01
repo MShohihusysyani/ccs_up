@@ -58,9 +58,9 @@
                                     <div class="form-line">
                                         <select id="status_ccs" name="status_ccs" class="form-control">
                                             <option value="">-- Pilih Status --</option>
-                                            <option value="FINISH">FINISH</option>
-                                            <option value="CLOSE">CLOSE</option>
-                                            <option value="HANDLE">HANDLE</option>
+                                            <option value="FINISHED">FINISHED</option>
+                                            <option value="CLOSED">CLOSED</option>
+                                            <option value="HANDLED">HANDLED</option>
                                             <option value="ADDED">ADDED</option>
                                         </select>
                                     </div>
