@@ -123,17 +123,17 @@
                                                         <?php endif; ?>
                                                     </td>
                                                     <td>
-                                                        <?php if ($dp['status_ccs'] == 'FINISH') : ?>
-                                                            <span class="label label-success">FINISH</span>
+                                                        <?php if ($dp['status_ccs'] == 'FINISHED') : ?>
+                                                            <span class="label label-success">FINISHED</span>
 
-                                                        <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
-                                                            <span class="label label-warning">CLOSE</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'CLOSED') : ?>
+                                                            <span class="label label-warning">CLOSED</span>
 
-                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
-                                                            <span class="label label-info">HANDLE</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLED') : ?>
+                                                            <span class="label label-info">HANDLED</span>
 
-                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
-                                                            <span class="label label-info">HANDLE 2</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLED 2') : ?>
+                                                            <span class="label label-info">HANDLED 2</span>
 
                                                         <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                             <span class="label label-primary">ADDED</span>
@@ -214,7 +214,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="largeModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="largeModalLabel">Edit Helpdesk</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor/fungsi_edit') ?>

@@ -149,7 +149,7 @@
     ');
             $this->db->from('pelaporan');
             $this->db->join("($subquery) AS subtask_data", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
-            $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLE 2', 'HANDLE']);
+            $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
             $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
             // Execute the query and return the result
@@ -223,7 +223,7 @@
     ');
             $this->db->from('pelaporan');
             $this->db->join("($subquery) AS subtask_data", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
-            $this->db->where('pelaporan.status_ccs', 'CLOSE');
+            $this->db->where('pelaporan.status_ccs', 'CLOSED');
             $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
             // Execute the query and return the result
@@ -236,7 +236,7 @@
         {
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $user_id = $this->session->userdata('id_user');
-            $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, maxday, waktu_approve, handle_by2, handle_by3, impact, tags, rating  FROM pelaporan WHERE status_ccs='FINISH' ORDER BY waktu_pelaporan DESC";
+            $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, maxday, waktu_approve, handle_by2, handle_by3, impact, tags, rating  FROM pelaporan WHERE status_ccs='FINISHED' ORDER BY waktu_pelaporan DESC";
             return $this->db->query($query)->result_array();
         }
 

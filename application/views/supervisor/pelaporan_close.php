@@ -44,7 +44,7 @@
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
-                                                <th>Impact</th>
+                                                <!-- <th>Impact</th> -->
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
@@ -68,7 +68,7 @@
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
-                                                <th>Impact</th>
+                                                <!-- <th>Impact</th> -->
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
@@ -114,7 +114,7 @@
                                                         <?php else : ?>
                                                         <?php endif; ?>
                                                     </td>
-                                                    <td><?= $dp['impact']; ?></td>
+                                                    <!-- <td><?= $dp['impact']; ?></td> -->
                                                     <td>
                                                         <?php if ($dp['maxday'] == '90') : ?>
                                                             <span class="label label-info">90</span>
@@ -129,17 +129,17 @@
                                                         <?php endif; ?>
                                                     </td>
                                                     <td>
-                                                        <?php if ($dp['status_ccs'] == 'FINISH') : ?>
-                                                            <span class="label label-success">FINISH</span>
+                                                        <?php if ($dp['status_ccs'] == 'FINISHED') : ?>
+                                                            <span class="label label-success">FINISHED</span>
 
-                                                        <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
-                                                            <span class="label label-warning">CLOSE</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'CLOSED') : ?>
+                                                            <span class="label label-warning">CLOSED</span>
 
-                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
-                                                            <span class="label label-info">HANDLE</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLED') : ?>
+                                                            <span class="label label-info">HANDLED</span>
 
-                                                        <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
-                                                            <span class="label label-info">HANDLE 2</span>
+                                                        <?php elseif ($dp['status_ccs'] == 'HANDLED 2') : ?>
+                                                            <span class="label label-info">HANDLED 2</span>
 
                                                         <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                             <span class="label label-primary">ADDED</span>
