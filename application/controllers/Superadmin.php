@@ -274,7 +274,7 @@ class Superadmin extends CI_Controller
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
             $row[] = $pelaporan->nama;
             $row[] = $pelaporan->perihal;
-            $row[] = $pelaporan->impact;
+            // $row[] = $pelaporan->impact;
             $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
             $pelaporan->file;
             $row[] = $pelaporan->kategori;
