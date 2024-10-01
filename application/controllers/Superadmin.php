@@ -189,19 +189,59 @@ class Superadmin extends CI_Controller
         $password = $this->input->post('password');
         $role     = $this->input->post('role');
         $active   = $this->input->post('active');
-        $ArrUpdate = array(
-            'divisi'   => $divisi,
-            'nama_user'     => $nama,
-            'username' => $username,
-            'password' => $password,
-            'role'     => $role,
-            'active'   => $active,
 
-        );
+        // Check if the password field is not empty, then hash it
+        if (!empty($password)) {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $ArrUpdate = array(
+                'divisi'   => $divisi,
+                'nama_user' => $nama,
+                'username' => $username,
+                'password' => $hashed_password,  // Hash the password
+                'role'     => $role,
+                'active'   => $active,
+            );
+        } else {
+            // If password is empty, don't update the password field
+            $ArrUpdate = array(
+                'divisi'   => $divisi,
+                'nama_user' => $nama,
+                'username' => $username,
+                'role'     => $role,
+                'active'   => $active,
+            );
+        }
+
+        // Update the user data in the database
         $this->usermaster_model->updateUser($id, $ArrUpdate);
+
+        // Set success message and redirect
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
         Redirect(base_url('superadmin/user'));
     }
+
+    // public function edit_user()
+    // {
+    //     $id       = $this->input->post('id_user');
+    //     $divisi   = $this->input->post('divisi');
+    //     $nama     = $this->input->post('nama_user');
+    //     $username = $this->input->post('username');
+    //     $password = $this->input->post('password');
+    //     $role     = $this->input->post('role');
+    //     $active   = $this->input->post('active');
+    //     $ArrUpdate = array(
+    //         'divisi'   => $divisi,
+    //         'nama_user'     => $nama,
+    //         'username' => $username,
+    //         'password' => $password,
+    //         'role'     => $role,
+    //         'active'   => $active,
+
+    //     );
+    //     $this->usermaster_model->updateUser($id, $ArrUpdate);
+    //     $this->session->set_flashdata('pesan', 'Successfully Edited!');
+    //     Redirect(base_url('superadmin/user'));
+    // }
 
     public function hapus_user($id)
     {

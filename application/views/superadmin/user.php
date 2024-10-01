@@ -162,7 +162,7 @@ foreach ($user as $u) : $no++; ?>
 
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="password" value="<?= $u['password']; ?>" id="password" name="password" class="form-control" readonly>
+                                    <input type="password" value="<?= $u['password']; ?>" id="password" name="password" class="form-control">
                                     <label class="form-label">password</label>
                                 </div>
                             </div>
