@@ -38,7 +38,7 @@
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
-                                                <th>Perihal</th>
+                                                <!-- <th>Perihal</th> -->
                                                 <th>Impact</th>
                                                 <th>Attachment</th>
                                                 <th>Category</th>
@@ -58,7 +58,7 @@
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
-                                                <th>Perihal</th>
+                                                <!-- <th>Perihal</th> -->
                                                 <th>Impact</th>
                                                 <th>Attachment</th>
                                                 <th>Category</th>
@@ -82,7 +82,7 @@
                                                     <td><?= $st['no_tiket']; ?></td>
                                                     <td><?= tanggal_indo($st['waktu_pelaporan']) ?></td>
                                                     <td><?= $st['nama']; ?></td>
-                                                    <td><?= $st['perihal']; ?></td>
+                                                    <!-- <td><?= $st['perihal']; ?></td> -->
                                                     <td><?= $st['impact']; ?></td>
                                                     <td> <a href="<?= base_url('assets/files/' . $st['file']); ?>"><?= $st['file']; ?></a>
                                                     </td>
@@ -156,7 +156,7 @@
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-info">
-                                                            <a href="javascript:;" data-id_forward="<?= $st['id_forward']; ?>" data-no_tiket="<?= $st['no_tiket']; ?>" data-waktu_pelaporan="<?= $st['waktu_pelaporan']; ?>" data-nama="<?= $st['nama']; ?>" data-perihal='<?= $st['perihal']; ?>' data-status="<?= $st['status']; ?>" data-status_ccs="<?= $st['status_ccs']; ?>" data-kategori="<?= $st['kategori']; ?>" data-priority="<?= $st['priority']; ?>" data-maxday="<?= $st['maxday']; ?>" data-judul="<?= $st['judul']; ?>" data-subtask="<?= $st['subtask']; ?>" data-tanggal="<?= $st['tanggal']; ?>" data-toggle="modal" data-target="#finishModal"> <i class="material-icons">done</i> <span class="icon-name">Finish</span></a>
+                                                            <a href="javascript:;" data-id_forward="<?= $st['id_forward']; ?>" data-no_tiket="<?= $st['no_tiket']; ?>" data-waktu_pelaporan="<?= $st['waktu_pelaporan']; ?>" data-nama="<?= $st['nama']; ?>" data-perihal='<?= htmlspecialchars($st['perihal']), ENT_QUOTES; ?>' data-status="<?= $st['status']; ?>" data-status_ccs="<?= $st['status_ccs']; ?>" data-kategori="<?= $st['kategori']; ?>" data-priority="<?= $st['priority']; ?>" data-maxday="<?= $st['maxday']; ?>" data-judul="<?= $st['judul']; ?>" data-subtask="<?= $st['subtask']; ?>" data-tanggal="<?= $st['tanggal']; ?>" data-toggle="modal" data-target="#finishModal"> <i class="material-icons">done</i> <span class="icon-name">Finish</span></a>
                                                         </div>
 
                                                     </td>

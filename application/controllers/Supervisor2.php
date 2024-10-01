@@ -428,6 +428,30 @@ class Supervisor2 extends CI_Controller
         }
     }
 
+    public function forward_tiket($id = null)
+    {
+        // Cek apakah ID pelaporan tidak ada
+        if ($id === null) {
+            // Set pesan error dan redirect ke halaman yang sesuai
+            $this->session->set_flashdata('alert', 'Forward gagal.');
+            redirect('supervisor2/pelaporan'); // Redirect ke halaman yang diinginkan
+            return;
+        }
+
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
+
+
+        $this->load->model('User_model', 'user_model');
+        $data['namateknisi'] = $this->user_model->getNamaTeknisi();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor2_sidebar');
+        $this->load->view('supervisor2/forward_tiket', $data);
+        $this->load->view('templates/footer');
+    }
+
 
     //EDIT TEKNISI
     // public function fungsi_edit()

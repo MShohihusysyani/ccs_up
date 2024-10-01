@@ -82,6 +82,27 @@ class Implementator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function finish_tiket($id = null)
+    {
+        // Cek apakah ID pelaporan tidak ada
+        if ($id === null) {
+            // Set pesan error dan redirect ke halaman yang sesuai
+            $this->session->set_flashdata('alert', 'Finish gagal.');
+            redirect('implementator/pelaporan'); // Redirect ke halaman yang diinginkan
+            return;
+        }
+
+        // Jika ID ada, lanjutkan proses
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('implementator_model', 'implementator_model');
+        $data['datapelaporan'] = $this->implementator_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/implementator_sidebar');
+        $this->load->view('implementator/finish_tiket', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function finish()
     {
         // Load the form validation library
