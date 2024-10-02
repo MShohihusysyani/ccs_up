@@ -153,7 +153,7 @@ class Implementator extends CI_Controller
 
         if ($photo) {
             $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png|rar|zip';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/filefinish/';
 
             $this->load->library('upload', $config);
@@ -201,7 +201,7 @@ class Implementator extends CI_Controller
     {
         if ($_FILES['upload']['name']) {
             $config['allowed_types'] = 'jpeg|jpg|png';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/filefinish/';
 
             $this->load->library('upload', $config);
