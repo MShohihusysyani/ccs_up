@@ -28,78 +28,73 @@
 
             </h2>
         </div>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
-        <!-- <link rel="stylesheet"  type="text/css" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css"> -->
-        <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
         <!-- Basic Examples -->
-        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-            <?php if ($this->session->flashdata('pesan')) { ?>
+        <!-- #END# Basic Examples -->
+        <!-- Exportable Table -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            FINISH
+                        </h2>
 
-            <?php } ?>
-            <!-- #END# Basic Examples -->
-            <!-- Exportable Table -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                FINISH
-                            </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class=" display table table-bordered table-striped table-hover " id="example">
+                                <!-- class="table table-bordered table-striped table-hover dataTable js-basic-example" -->
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Tiket</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Klien</th>
+                                        <th>Judul</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status CCS</th>
+                                        <th>Handle By</th>
+                                        <th>Rating</th>
+                                        <th>Aksi</th>
 
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
-                                    <!-- class="table table-bordered table-striped table-hover dataTable js-basic-example" -->
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Rating</th>
-                                            <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Tiket</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Klien</th>
+                                        <th>Judul</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status CCS</th>
+                                        <th>Handle By</th>
+                                        <th>Rating</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
 
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Rating</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- #END# Exportable Table -->
         </div>
-        <!-- Button trigger modal -->
+        <!-- #END# Exportable Table -->
+    </div>
+    <!-- Button trigger modal -->
 </section>
 
 <script>
@@ -119,3 +114,132 @@
         }, ],
     });
 </script>
+<!-- <script>
+    $(document).ready(function() {
+        // Check if DataTable already exists and destroy it if it does
+        if ($.fn.DataTable.isDataTable('#example')) {
+            $('#example').DataTable().destroy();
+        }
+
+        // Initialize DataTable
+        $('#example').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "<?= base_url('supervisor/get_data_finish') ?>",
+                "type": "POST",
+                "error": function(xhr, error, thrown) {
+                    console.error("DataTables Ajax error:", error);
+                    console.log("XHR Response:", xhr.responseText); // Log the full response for inspection
+                }
+            },
+            "columns": [{
+                    "data": "no"
+                },
+                {
+                    "data": "no_tiket"
+                },
+                {
+                    "data": "waktu_pelaporan"
+                },
+                {
+                    "data": "nama"
+                },
+                {
+                    "data": "judul"
+                },
+                {
+                    "data": "kategori"
+                },
+                {
+                    "data": "tags"
+                },
+                {
+                    "data": "priority"
+                },
+                {
+                    "data": "maxday"
+                },
+                {
+                    "data": "status_ccs"
+                },
+                {
+                    "data": "handle_combined"
+                },
+                {
+                    "data": "rating"
+                },
+                {
+                    "data": "id_pelaporan",
+                    "render": function(data, type, row) {
+                        return '<a class="btn btn-sm btn-info" href="' + base_url('supervisor/detail_finish/' + data) + '"><i class="material-icons">visibility</i></a>';
+                    }
+                }
+            ]
+        });
+    });
+</script> -->
+<!-- <script type="text/javascript">
+    $(document).ready(function() {
+        if (!$.fn.DataTable.isDataTable('#example')) {
+            var table = $('#example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "supervisor/get_data_finish'",
+                    "type": "POST",
+                },
+                "order": [
+                    [1, 'desc']
+                ],
+                "columnDefs": [{
+                    "targets": [0],
+                    "orderable": false,
+                }, ],
+                "columns": [{
+                        "data": "no"
+                    },
+                    {
+                        "data": "waktu_pelaporan"
+                    },
+                    {
+                        "data": "no_tiket"
+                    },
+                    {
+                        "data": "nama"
+                    },
+                    {
+                        "data": "judul"
+                    },
+                    {
+                        "data": "tags"
+                    },
+                    {
+                        "data": "kategori"
+                    },
+                    {
+                        "data": "priority"
+                    },
+                    {
+                        "data": "maxday"
+                    },
+                    {
+                        "data": "status_ccs"
+                    },
+                    {
+                        "data": "handle_combined"
+                    },
+                    {
+                        "data": "rating"
+                    },
+                    {
+                        "data": "id_pelaporan",
+                        "render": function(data, type, row) {
+                            return '<a class="btn btn-sm btn-info" href="' + base_url('supervisor/detail_finish/' + data) + '"><i class="material-icons">visibility</i></a>';
+                        }
+                    }
+                ]
+            });
+        }
+    });
+</script> -->

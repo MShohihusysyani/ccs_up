@@ -46,6 +46,7 @@ class Klien extends CI_Controller
 
         // Set validation rules
         $this->form_validation->set_rules('perihal', 'Perihal', 'required|min_length[50]');
+        $this->form_validation->set_rules('judul', 'Judul', 'required');
 
         // Check if the form validation passed
         if ($this->form_validation->run() == FALSE) {

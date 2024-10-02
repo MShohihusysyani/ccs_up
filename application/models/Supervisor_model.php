@@ -3,10 +3,6 @@
 
     class Supervisor_model extends CI_Model
     {
-        var $table_2 = 'pelaporan'; // Na
-        var $column_order2 = array(null, 'no_tiket', 'waktu_pelaporan', 'nama', 'judul', 'kategori', 'tags', 'priority', 'maxday', 'status_ccs', 'handle_by', 'rating', null); // Field yang diurutkan
-        var $column_search2 = array('no_tiket', 'nama', 'judul', 'kategori'); // Field yang di-search
-        var $order2 = array('waktu_pelaporan' => 'desc'); // Default order
 
         private $table = 'pelaporan';
         private $column_order = array(null, 'no_tiket', 'waktu_pelaporan', 'nama', 'perihal', 'impact', 'file', 'kategori', 'tags', 'priority', 'maxday', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3', 'rating');
@@ -242,62 +238,6 @@
             $user_id = $this->session->userdata('id_user');
             $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, handle_by, maxday, waktu_approve, handle_by2, handle_by3, impact, tags, rating  FROM pelaporan WHERE status_ccs='FINISHED' ORDER BY waktu_pelaporan DESC";
             return $this->db->query($query)->result_array();
-        }
-
-        private function _get_datatables_query_finish()
-        {
-            $this->db->from($this->table2);
-            $this->db->where('status_ccs', 'FINISHED');
-
-            $i = 0;
-
-            foreach ($this->column_search2 as $item) { // Looping untuk setiap field yang di-search
-                if ($_POST['search']['value']) {
-
-                    if ($i === 0) {
-                        $this->db->group_start(); // Open bracket untuk grouping
-                        $this->db->like($item, $_POST['search']['value']);
-                    } else {
-                        $this->db->or_like($item, $_POST['search']['value']);
-                    }
-
-                    if (count($this->column_search2) - 1 == $i) {
-                        $this->db->group_end(); // Close bracket
-                    }
-                }
-                $i++;
-            }
-
-            if (isset($_POST['order'])) { // Untuk order by berdasarkan request DataTable
-                $this->db->order_by($this->column_order2[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-            } else if (isset($this->order2)) {
-                $order = $this->order2;
-                $this->db->order_by(key($order), $order[key($order)]);
-            }
-        }
-
-        function get_datatables_finish()
-        {
-            $this->_get_datatables_query();
-            if ($_POST['length'] != -1) {
-                $this->db->limit($_POST['length'], $_POST['start']);
-            }
-            $query = $this->db->get();
-            return $query->result_array();
-        }
-
-        function count_filtered_finish()
-        {
-            $this->_get_datatables_query();
-            $query = $this->db->get();
-            return $query->num_rows();
-        }
-
-        function count_all_finish()
-        {
-            $this->db->from($this->table2);
-            $this->db->where('status_ccs', 'FINISHED');
-            return $this->db->count_all_results();
         }
 
 
