@@ -277,7 +277,7 @@
         //     previewsInData: true
         // },
         ckfinder: {
-            uploadUrl: "<?= base_url('helpdesk/upload') ?>"
+            uploadUrl: "<?= base_url('implementator/upload') ?>"
         },
         // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         mention: {
