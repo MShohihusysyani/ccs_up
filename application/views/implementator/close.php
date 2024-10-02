@@ -34,7 +34,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Priority</th>
@@ -55,7 +55,7 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Priority</th>
@@ -80,7 +80,7 @@
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
-                                                <td><?= $dp['impact']; ?></td>
+                                                <!-- <td><?= $dp['impact']; ?></td> -->
                                                 <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
@@ -111,17 +111,17 @@
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
-                                                    <?php if ($dp['status_ccs'] == 'FINISH') : ?>
-                                                        <span class="label label-success">FINISH</span>
+                                                    <?php if ($dp['status_ccs'] == 'FINISHED') : ?>
+                                                        <span class="label label-success">FINISHED</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'CLOSE') : ?>
-                                                        <span class="label label-warning">CLOSE</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'CLOSED') : ?>
+                                                        <span class="label label-warning">CLOSED</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE') : ?>
-                                                        <span class="label label-info">HANDLE</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'HANDLED') : ?>
+                                                        <span class="label label-info">HANDLED</span>
 
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLE 2') : ?>
-                                                        <span class="label label-info">HANDLE 2</span>
+                                                    <?php elseif ($dp['status_ccs'] == 'HANDLED 2') : ?>
+                                                        <span class="label label-info">HANDLED 2</span>
 
                                                     <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
                                                         <span class="label label-primary">ADDED</span>

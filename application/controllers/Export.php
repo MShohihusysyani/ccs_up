@@ -1130,7 +1130,7 @@ class Export extends CI_Controller
                 'nama' => $row['F'],
                 'kategori' => $row['G'],
                 'priority' => $row['H'],
-                'handle_by' => $row['I'],
+                'handle_by2' => $row['I'],
                 'status_ccs' => $row['J'],
                 'waktu_pelaporan' => $tanggal, // Converted datetime
                 'waktu_approve' => $waktuApprove, // Converted datetime
@@ -1189,6 +1189,7 @@ class Export extends CI_Controller
             $data = [
                 'pelaporan_id' => $row['A'],
                 'user_id' => $row['B'],
+                'status' => $row['C'],
                 // Map other fields as necessary
             ];
 

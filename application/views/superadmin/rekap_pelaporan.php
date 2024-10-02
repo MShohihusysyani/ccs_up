@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
-                                            name="nama_klien" id="nama_klien" placeholder="Pilih BPR"
+                                            name="nama_klien" id="nama_klien" placeholder="Pilih Klien"
                                             class="form-control" value="" autocomplete="off">
                                         <input type="hidden" id="id" name="id">
                                     </div>

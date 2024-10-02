@@ -45,7 +45,7 @@ class Implementator_model extends CI_Model
         $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan AND t1_forward2.id_forward != t1_forward1.id_forward', 'left');
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->where('t1_forward1.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where('pelaporan.status_ccs', 'HANDLED 2');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
@@ -211,7 +211,7 @@ class Implementator_model extends CI_Model
         $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan AND t1_forward2.id_forward != t1_forward1.id_forward', 'left');
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->where('t1_forward1.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'CLOSE');
+        $this->db->where('pelaporan.status_ccs', 'CLOSED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
@@ -248,7 +248,7 @@ class Implementator_model extends CI_Model
         $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('t1_forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'REJECT');
+        $this->db->where('pelaporan.status_ccs', 'REJECTED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
@@ -287,7 +287,7 @@ class Implementator_model extends CI_Model
         $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('t1_forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'FINISH');
+        $this->db->where('pelaporan.status_ccs', 'FINISHED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result

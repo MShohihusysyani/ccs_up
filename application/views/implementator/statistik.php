@@ -62,14 +62,14 @@
                                         FROM t1_forward
                                         LEFT JOIN pelaporan ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE t1_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')
+                                        AND pelaporan.status_ccs IN ('HANDLED', 'HANDLED 2')
                                     
                                         UNION ALL
                                         SELECT t2_forward.pelaporan_id
                                         FROM t2_forward
                                         LEFT JOIN pelaporan ON t2_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE t2_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')
+                                        AND pelaporan.status_ccs IN ('HANDLED', 'HANDLED 2')
                                     ) AS combined_forwards";
 
                                 $handle = $this->db->query($query)->result_array();
@@ -97,7 +97,7 @@
                                         FROM t1_forward
                                         LEFT JOIN pelaporan ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE t1_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs = 'CLOSE' ")->result_array();
+                                        AND pelaporan.status_ccs = 'CLOSED' ")->result_array();
                                     foreach ($handle as $hd) : ?>
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div class="info-box bg-orange hover-expand-effect">
@@ -119,7 +119,7 @@
                                         FROM t1_forward
                                         LEFT JOIN pelaporan ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE t1_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs = 'FINISH' ")->result_array();
+                                        AND pelaporan.status_ccs = 'FINISHED' ")->result_array();
                                     foreach ($handle as $hd) : ?>
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div class="info-box bg-light-green hover-expand-effect">
