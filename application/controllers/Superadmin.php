@@ -543,7 +543,6 @@ class Superadmin extends CI_Controller
 
     public function fungsi_edit_teknisi()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
@@ -559,11 +558,9 @@ class Superadmin extends CI_Controller
 
         // Check if the form passes validation
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
             redirect('superadmin/onprogress');
         } else {
-            // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namateknisi');
             $data = [
@@ -586,17 +583,12 @@ class Superadmin extends CI_Controller
                 $this->db->where('pelaporan_id', $id_pelaporan);
                 $this->db->update('t1_forward', $data);
 
-                // Update the Helpdesk in the supervisor_model
                 $this->superadmin_model->updateTeknisi($id_pelaporan, $nama_user);
 
-                // Set success message
-                $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+                $this->session->set_flashdata('pesan', 'Teknisi berhasil dirubah!');
             } else {
-                // Set error message if user not found
                 $this->session->set_flashdata('error', 'User not found.');
             }
-
-            // Redirect to the onprogress page
             redirect(base_url('superadmin/onprogress'));
         }
     }
