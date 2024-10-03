@@ -177,10 +177,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Edit Helpdesk</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Edit Teknisi</h4>
             </div>
             <div class="modal-body">
-                <?= form_open_multipart('superadmin/fungsi_edit') ?>
+                <?= form_open_multipart('superadmin/fungsi_edit_teknisi') ?>
                 <input type="hidden" name="id_pelaporan" id="id_pelaporan">
                 <div class="body">
                     <form class="form-horizontal">
@@ -243,11 +243,11 @@
 
                         <div class="form-group">
                             <div class="form-line">
-                                <select name="namahd" id="namahd" class="form-control">
-                                    <option value=""> -- Pilih Helpdesk -- </option>
+                                <select name="namateknisi" id="namateknisi" class="form-control">
+                                    <option value=""> -- Pilih Teknisi -- </option>
                                     <?php
-                                    foreach ($namahd as $nah) : ?>
-                                        <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
+                                    foreach ($namateknisi as $nat) : ?>
+                                        <option value="<?= $nat['id_user']; ?>"><?= $nat['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

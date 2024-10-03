@@ -214,7 +214,7 @@ class Superadmin_model extends CI_Model
             FROM 
                 pelaporan 
             WHERE 
-                status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') 
+                status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2', 'HANDLE 2') 
             ORDER BY 
                 waktu_pelaporan DESC
         ";
@@ -305,6 +305,13 @@ class Superadmin_model extends CI_Model
             log_message('error', 'User not found in session.');
             return []; // Return an empty array or handle as needed
         }
+    }
+
+    public function updateTeknisi($id_pelaporan, $nama_user)
+    {
+
+        $query = "UPDATE pelaporan SET status_ccs='HANDLED 2', handle_by2 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
+        return $this->db->query($query);
     }
 
     public function getAllData()

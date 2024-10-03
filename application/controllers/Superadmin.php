@@ -371,8 +371,10 @@ class Superadmin extends CI_Controller
         $data['user'] = $this->user_model->getDataUser();
         $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporanOP();
 
+        // $this->load->model('User_model', 'user_model');
+        // $data['namahd'] = $this->user_model->getNamaUser();
         $this->load->model('User_model', 'user_model');
-        $data['namahd'] = $this->user_model->getNamaUser();
+        $data['namateknisi'] = $this->user_model->getNamaTeknisi();
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
@@ -539,6 +541,65 @@ class Superadmin extends CI_Controller
         }
     }
 
+    public function fungsi_edit_teknisi()
+    {
+        // Load the form validation library
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
+            'required' => 'Kolom Teknisi wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('priority', 'Priority', 'required', [
+            'required' => 'Kolom Priority wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
+            'required' => 'Kolom Max Day wajib diisi.'
+        ]);
+
+        // Check if the form passes validation
+        if ($this->form_validation->run() == FALSE) {
+            // If validation fails, redirect back to the form with error messages
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('superadmin/onprogress');
+        } else {
+            // Retrieve POST data
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $id_user = $this->input->post('namateknisi');
+            $data = [
+                'pelaporan_id' => $id_pelaporan,
+                'user_id' => $id_user
+            ];
+
+            // Fetch the user name based on the user ID
+            $this->db->select('id_user, nama_user');
+            $this->db->from('user');
+            $this->db->where('id_user', $id_user);
+            $query = $this->db->get();
+
+            // Check if user exists
+            if ($query->num_rows() > 0) {
+                $user = $query->row();
+                $nama_user = $user->nama_user;
+
+                // Update the forward table
+                $this->db->where('pelaporan_id', $id_pelaporan);
+                $this->db->update('t1_forward', $data);
+
+                // Update the Helpdesk in the supervisor_model
+                $this->superadmin_model->updateTeknisi($id_pelaporan, $nama_user);
+
+                // Set success message
+                $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+            } else {
+                // Set error message if user not found
+                $this->session->set_flashdata('error', 'User not found.');
+            }
+
+            // Redirect to the onprogress page
+            redirect(base_url('superadmin/onprogress'));
+        }
+    }
 
     // FUNGSI REJECT
     public function fungsi_reject()
