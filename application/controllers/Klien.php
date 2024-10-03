@@ -50,8 +50,20 @@ class Klien extends CI_Controller
 
         // Check if the form validation passed
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, set an error message and redirect back
-            $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter.');
+            // Jika validasi gagal, buat pesan error yang sesuai dengan kesalahan field
+            $errors = validation_errors('<p>', '</p>');
+            $error_message = 'Proses tiket baru gagal! ';
+
+            if (form_error('perihal')) {
+                $error_message .= 'Perihal harus diisi minimal 50 karakter. ';
+            }
+
+            if (form_error('judul')) {
+                $error_message .= 'Judul harus diisi.';
+            }
+
+            // Set flashdata dengan pesan error yang sudah dibuat
+            $this->session->set_flashdata('alert', $error_message);
             redirect('klien/pengajuan');
         } else {
             // Retrieve the ticket number from the form input
@@ -86,18 +98,18 @@ class Klien extends CI_Controller
                         redirect('klien/pengajuan');
                     }
                 }
+
                 // Validate the note content
                 $perihal = $this->input->post('perihal');
                 if ($this->contains_only_images($perihal) || strlen(strip_tags($perihal)) < 50) {
                     if ($photo) {
                         unlink('./assets/files/' . $photo);
                     }
-                    $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
+                    $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
                     redirect('klien/pengajuan');
                     return;
                 }
 
-                // Prepare the data for insertion
                 // Prepare the data for insertion
                 $id = $this->input->post('id_temp');
                 $data = [
@@ -121,13 +133,10 @@ class Klien extends CI_Controller
                 $pattern = '/<a\s+href="([^"]+)"/i';
                 $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
 
-                // Insert the data into the database
                 if ($this->db->insert('tiket_temp', $data)) {
-                    // Set a success message and redirect to the submission page
                     $this->session->set_flashdata('pesan', 'Pelaporan berhasil ditambahkan!');
                     redirect('klien/pengajuan');
                 } else {
-                    // Set a flash message if the data insertion fails
                     $this->session->set_flashdata('alert', 'Gagal menyimpan data, silakan coba lagi.');
                     redirect('klien/pengajuan');
                 }
@@ -135,11 +144,12 @@ class Klien extends CI_Controller
         }
     }
 
+
     public function upload()
     {
         if ($_FILES['upload']['name']) {
             $config['allowed_types'] = 'jpeg|jpg|png';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/files/';
 
             $this->load->library('upload', $config);
@@ -188,13 +198,12 @@ class Klien extends CI_Controller
 
     public function fungsi_pengajuan()
     {
-        // Cek apakah ada tiket yang selesai tetapi belum diberi rating
         $has_unrated_finished_tickets = $this->pelaporan_model->has_unrated_finished_tickets($this->session->userdata('user_id'));
 
         if ($has_unrated_finished_tickets) {
             // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
             $this->session->set_flashdata('alert', 'Sebelum mengajukan tiket baru, mohon berikan rating pada tiket yang telah finish. Terima kasih!');
-            redirect(Base_url('klien/pengajuan')); // Alihkan ke halaman untuk memberi rating
+            redirect(Base_url('klien/pengajuan')); 
         } else {
             // Tambahkan tiket baru
             $this->pelaporan_model->add_pelaporan();
@@ -540,7 +549,7 @@ class Klien extends CI_Controller
 
         if ($photo) {
             $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|jpg|png';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/comment/';
 
             $this->load->library('upload', $config);
@@ -586,7 +595,7 @@ class Klien extends CI_Controller
 
         if ($photo) {
             $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|png|jpg';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/reply/';
 
             $this->load->library('upload', $config);
