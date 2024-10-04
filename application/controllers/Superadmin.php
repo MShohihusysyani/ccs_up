@@ -774,15 +774,15 @@ class Superadmin extends CI_Controller
     public function fungsi_approve_pelaporan()
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-        $now = date('Y-m-d');
+        $now = date('Y-m-d H:i:s');
 
         $id_pelaporan         = $this->input->post('id_pelaporan');
         $no_tiket   = $this->input->post('no_tiket');
         $nama       = $this->input->post('nama');
         $judul      = $this->input->post('judul');
         // $perihal    = $this->input->post('perihal');
-        $status_ccs = 'FINISH';
-        $waktu      = date('Y-m-d');
+        $status_ccs = 'FINISHED';
+        $waktu      = date('Y-m-d H:i:s');
         $priority   = $this->input->post('priority');
         $maxday     = $this->input->post('maxday');
         $kategori   = $this->input->post('kategori');
