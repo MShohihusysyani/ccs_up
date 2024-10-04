@@ -173,7 +173,7 @@ class Spv2_model extends CI_Model
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->join('s_forward', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('s_forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where('pelaporan.status_ccs', 'HANDLED 2');
         $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
@@ -221,7 +221,7 @@ class Spv2_model extends CI_Model
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->join('s_forward', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('s_forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'CLOSE');
+        $this->db->where('pelaporan.status_ccs', 'CLOSED');
         $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
@@ -278,7 +278,7 @@ class Spv2_model extends CI_Model
             FROM 
                 pelaporan 
             WHERE 
-                status_ccs = 'FINISH' 
+                status_ccs = 'FINISHED' 
             ORDER BY 
                 waktu_pelaporan DESC
         ";
@@ -305,21 +305,21 @@ class Spv2_model extends CI_Model
     public function updateForward($id_pelaporan, $nama_user)
     {
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2',  handle_by2 = '$nama_user',  status='Forward To Teknisi' WHERE id_pelaporan=$id_pelaporan";
+        $query = "UPDATE pelaporan SET status_ccs='HANDLED 2',  handle_by2 = '$nama_user',  status='Forward To Teknisi' WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 
     public function updateTeknisi($id_pelaporan, $nama_user)
     {
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by3 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
+        $query = "UPDATE pelaporan SET status_ccs='HANDLED 2', handle_by3 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 
     public function tambahTeknisi($id_pelaporan, $nama_user)
     {
 
-        $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by3 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
+        $query = "UPDATE pelaporan SET status_ccs='HANDLED 2', handle_by3 = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
         return $this->db->query($query);
     }
 
