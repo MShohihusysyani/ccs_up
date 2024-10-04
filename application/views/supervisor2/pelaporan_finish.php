@@ -28,68 +28,62 @@
 
             </h2>
         </div>
-        <!-- Basic Examples -->
-        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-            <?php if ($this->session->flashdata('pesan')) { ?>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+        <!-- #END# Basic Examples -->
+        <!-- Exportable Table -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            FINISH
+                        </h2>
 
-            <?php } ?>
-            <!-- #END# Basic Examples -->
-            <!-- Exportable Table -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                FINISH
-                            </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Tiket</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Klien</th>
+                                        <th>Judul</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status CCS</th>
+                                        <th>Handle By</th>
+                                        <th>Rating</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Tiket</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Klien</th>
+                                        <th>Judul</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status CCS</th>
+                                        <th>Handle By</th>
+                                        <th>Rating</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
 
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <!-- <th>Impact</th> -->
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Rating</th>
-                                            <th>Aksi</th>
-                                            <!-- <th>Tanggal Approve</th> -->
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <!-- <th>Impact</th> -->
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Rating</th>
-                                            <th>Aksi</th>
-                                            <!-- <th>Tanggal Approve</th> -->
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-
-                                        <?php
-                                        $no = 1;
-                                        foreach ($datapelaporan as $dp) : ?>
+                                    <!-- <?php
+                                            $no = 1;
+                                            foreach ($datapelaporan as $dp) : ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $dp['no_tiket']; ?></td>
@@ -117,7 +111,6 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <!-- <td><?= $dp['impact']; ?></td> -->
                                                 <td>
                                                     <?php if ($dp['maxday'] == '90') : ?>
                                                         <span class="label label-info">90</span>
@@ -151,18 +144,15 @@
 
                                                 <td>
                                                     <?php
-                                                    // Contoh penanganan multiple handle by
                                                     $handleByList = [
                                                         $dp['handle_by'],
                                                         $dp['handle_by2'],
                                                         $dp['handle_by3']
                                                     ];
 
-                                                    // Loop untuk setiap user yang menghandle tiket
                                                     $first = true;
                                                     foreach ($handleByList as $handleBy) :
                                                         if (!empty($handleBy)) :
-                                                            // Tampilkan koma di antara nama-nama pengguna jika bukan pengguna pertama
                                                             if (!$first) {
                                                                 echo ', ';
                                                             }
@@ -177,11 +167,10 @@
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <!-- Tampilkan rating dalam bentuk bintang di kolom Rating -->
+                                            
                                                     <?php if ($dp['rating'] !== null) : ?>
                                                         <div class="star-rating">
                                                             <?php
-                                                            // Tampilkan bintang sesuai dengan rating yang diberikan
                                                             $rating = $dp['rating'];
                                                             for ($i = 1; $i <= 5; $i++) {
                                                                 if ($i <= $rating) {
@@ -195,27 +184,34 @@
                                                 <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor2/detail_finish/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
                                                         Detail</a>
                                                 </td>
-
-                                                <!-- <td>
-                                                    <?= $dp['handle_by']; ?>
-                                                    <?php if (!empty($dp['handle_by2'])) : ?>
-                                                        , <?= $dp['handle_by2']; ?>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($dp['handle_by3'])) : ?>
-                                                        , <?= $dp['handle_by3']; ?>
-                                                    <?php endif; ?>
-                                                </td> -->
-                                                <!-- <td><?= tanggal_indo($dp['waktu_approve']); ?></td> -->
                                             </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <?php endforeach; ?> -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- #END# Exportable Table -->
         </div>
-        <!-- Button trigger modal -->
+        <!-- #END# Exportable Table -->
+    </div>
+    <!-- Button trigger modal -->
 </section>
+
+<script>
+    $('#example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('supervisor2/get_data_finish') ?>",
+            "type": "POST"
+        },
+        "order": [
+            [2, 'desc']
+        ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+        "columnDefs": [{
+            "targets": [0],
+            "orderable": false,
+        }, ],
+    });
+</script>

@@ -169,17 +169,120 @@ class Supervisor2 extends CI_Controller
 
     public function finish()
     {
-        $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        $data['category'] = $this->category_model->getNamakategori();
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanFinish();
+        // $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
+        // // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
+        // $data['category'] = $this->category_model->getNamakategori();
+        // $this->load->model('User_model', 'user_model');
+        // $data['user'] = $this->user_model->getDataUser();
+        // $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanFinish();
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
-        $this->load->view('supervisor2/pelaporan_finish', $data);
+        $this->load->view('supervisor2/pelaporan_finish');
         $this->load->view('templates/footer');
+    }
+
+    public function get_data_finish()
+    {
+        $this->load->model('Datatable_model', 'datatable_model');
+
+        $list = $this->datatable_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($list as $dp) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $dp->no_tiket;
+            $row[] = tanggal_indo($dp->waktu_pelaporan);
+            $row[] = $dp->nama;
+            $row[] = $dp->judul;
+            $row[] = $dp->kategori;
+            $row[] = $dp->tags ? '<span class="label label-info">' . $dp['tags'] . '</span>' : '';
+
+            // Proses nilai prioritas di server-side
+            if ($dp->priority == 'Low') {
+                $priority_label = '<span class="label label-info">Low</span>';
+            } elseif ($dp->priority == 'Medium') {
+                $priority_label = '<span class="label label-warning">Medium</span>';
+            } elseif ($dp->priority == 'High') {
+                $priority_label = '<span class="label label-danger">High</span>';
+            } else {
+                $priority_label = $dp->priority;
+            }
+            $row[] = $priority_label;
+
+            // Proses nilai maxday di server-side
+            if ($dp->maxday == '90') {
+                $maxday_label = '<span class="label label-info">90</span>';
+            } elseif ($dp->maxday == '60') {
+                $maxday_label = '<span class="label label-warning">60</span>';
+            } elseif ($dp->maxday == '7') {
+                $maxday_label = '<span class="label label-danger">7</span>';
+            } else {
+                $maxday_label = $dp->maxday;
+            }
+            $row[] = $maxday_label;
+
+            // Proses nilai status_ccs di server-side
+            if ($dp->status_ccs == 'ADDED') {
+                $status_ccs_label = '<span class="label label-primary">ADDED</span>';
+            } elseif ($dp->status_ccs == 'ADDED 2') {
+                $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
+            } elseif ($dp->status_ccs == 'HANDLED') {
+                $status_ccs_label = '<span class="label label-info">HANDLED</span>';
+            } elseif ($dp->status_ccs == 'HANDLED 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLED 2</span>';
+            } elseif ($dp->status_ccs == 'CLOSED') {
+                $status_ccs_label = '<span class="label label-warning">CLOSED</span>';
+            } elseif ($dp->status_ccs == 'FINISHED') {
+                $status_ccs_label = '<span class="label label-success">FINISHED</span>';
+            } else {
+                $status_ccs_label = $dp->status_ccs;
+            }
+            $row[] = $status_ccs_label;
+
+            // Proses handle_by
+            $handle_combined = $dp->handle_by;
+            if ($dp->handle_by2) {
+                $handle_combined .= ', ' . $dp->handle_by2;
+            }
+            if ($dp->handle_by3) {
+                $handle_combined .= ', ' . $dp->handle_by3;
+            }
+            $row[] = $handle_combined;
+
+            // Proses rating bintang
+            $star_rating = '';
+            if ($dp->rating !== null) {
+                $rating = $dp->rating; // Get the rating value
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i <= $rating) {
+                        $star_rating .= '<span class="star selected">&#9733;</span>'; // Full star for rating
+                    } else {
+                        $star_rating .= '<span class="star">&#9734;</span>'; // Empty star for remaining
+                    }
+                }
+            }
+            $row[] = '<div class="star-rating">' . $star_rating . '</div>'; // Wrap in div for styling
+
+            // Tombol Aksi
+            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_finish/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
+
+            // Tambahkan row ke data
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->datatable_model->count_all(),
+            "recordsFiltered" => $this->datatable_model->count_filtered(),
+            "data" => $data,
+        );
+
+        echo json_encode($output);  // Kirim JSON ke DataTables
+        die();
     }
 
     public function finish_pelaporan($id)
@@ -577,9 +680,6 @@ class Supervisor2 extends CI_Controller
             redirect(base_url('supervisor2/onprogress'));
         }
     }
-
-
-
 
 
     //TAMBAH TEKNISI
