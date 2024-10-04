@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
-                                            name="nama_klien" id="nama_klien" placeholder="Pilih BPR"
+                                            name="nama_klien" id="nama_klien" placeholder="Pilih Klien"
                                             class="form-control" value="" autocomplete="off">
                                         <input type="hidden" id="id" name="id">
                                     </div>
@@ -49,7 +49,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Pilih Tags">
+                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +61,9 @@
                                             <option value="FINISHED">FINISHED</option>
                                             <option value="CLOSED">CLOSED</option>
                                             <option value="HANDLED">HANDLED</option>
+                                            <option value="HANDLED 2">HANDLED 2</option>
                                             <option value="ADDED">ADDED</option>
+                                            <option value="ADDED 2">ADDED 2</option>
                                         </select>
                                     </div>
                                 </div>
@@ -114,7 +116,6 @@
                                     <th>Perihal</th>
                                     <th>Tags</th>
                                     <th>Kategori</th>
-                                    <th>Impact</th>
                                     <th>Priority</th>
                                     <th>Max Day</th>
                                     <th>Status CCS</th>
@@ -232,9 +233,6 @@
                 },
                 {
                     "data": "kategori"
-                },
-                {
-                    "data": "impact"
                 },
                 {
                     "data": "priority"

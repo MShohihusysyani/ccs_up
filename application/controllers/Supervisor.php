@@ -461,19 +461,6 @@ class Supervisor extends CI_Controller
         die();
     }
 
-    // private function get_rating_stars($rating)
-    // {
-    //     $stars = '';
-    //     for ($i = 1; $i <= 5; $i++) {
-    //         if ($i <= $rating) {
-    //             $stars .= '<i class="fa fa-star" style="color: gold;"></i>'; // Bintang penuh
-    //         } else {
-    //             $stars .= '<i class="fa fa-star-o"></i>'; // Bintang kosong
-    //         }
-    //     }
-    //     return $stars;
-    // }
-
 
     public function edit_pelaporan()
     {
@@ -770,7 +757,6 @@ class Supervisor extends CI_Controller
             $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
             $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
-            $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
             $row['priority'] = $this->get_priority_label($dataItem->priority);
             $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
             $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
@@ -857,7 +843,6 @@ class Supervisor extends CI_Controller
     }
 
 
-
     // REKAP HANDLE BY HELPDESK
     public function rekapHelpdesk()
     {
@@ -912,7 +897,6 @@ class Supervisor extends CI_Controller
     //DISTRIBUSI TO HELPDESK
     public function fungsi_forward()
     {
-        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namahd', 'Helpdesk', 'required', [
             'required' => 'Kolom Helpdesk wajib diisi.'
@@ -925,7 +909,6 @@ class Supervisor extends CI_Controller
         ]);
 
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
             redirect('supervisor/added');
         } else {
@@ -954,7 +937,6 @@ class Supervisor extends CI_Controller
 
     public function fungsi_edit()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
@@ -970,11 +952,9 @@ class Supervisor extends CI_Controller
 
 
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
             redirect('supervisor/onprogress');
         } else {
-            // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namahd');
             $data = [
@@ -997,17 +977,13 @@ class Supervisor extends CI_Controller
                 $this->db->where('pelaporan_id', $id_pelaporan);
                 $this->db->update('forward', $data);
 
-                // Update the Helpdesk in the supervisor_model
                 $this->supervisor_model->updateHD($id_pelaporan, $nama_user);
 
-                // Set success message
                 $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
             } else {
-                // Set error message if user not found
                 $this->session->set_flashdata('error', 'User not found.');
             }
 
-            // Redirect to the onprogress page
             redirect(base_url('supervisor/onprogress'));
         }
     }

@@ -43,7 +43,6 @@ class Supervisor2 extends CI_Controller
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
             $row[] = $pelaporan->nama;
             $row[] = $pelaporan->perihal;
-            $row[] = $pelaporan->impact;
             $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
             $pelaporan->file;
             $row[] = $pelaporan->kategori;
@@ -77,14 +76,14 @@ class Supervisor2 extends CI_Controller
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
             } elseif ($pelaporan->status_ccs == 'ADDED 2') {
                 $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
-            } elseif ($pelaporan->status_ccs == 'HANDLE') {
-                $status_ccs_label = '<span class="label label-info">HANDLE</span>';
-            } elseif ($pelaporan->status_ccs == 'HANDLE 2') {
-                $status_ccs_label = '<span class="label label-info">HANDLE 2</span>';
-            } elseif ($pelaporan->status_ccs == 'CLOSE') {
-                $status_ccs_label = '<span class="label label-warning">CLOSE</span>';
-            } elseif ($pelaporan->status_ccs == 'FINISH') {
-                $status_ccs_label = '<span class="label label-success">FINISH</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLED') {
+                $status_ccs_label = '<span class="label label-info">HANDLED</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLED 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLED 2</span>';
+            } elseif ($pelaporan->status_ccs == 'CLOSED') {
+                $status_ccs_label = '<span class="label label-warning">CLOSED</span>';
+            } elseif ($pelaporan->status_ccs == 'FINISHED') {
+                $status_ccs_label = '<span class="label label-success">FINISHED</span>';
             } else {
                 $status_ccs_label = $pelaporan->status_ccs;
             }
@@ -474,7 +473,6 @@ class Supervisor2 extends CI_Controller
     // FORWARD KE TEKNISI
     public function fungsi_forward()
     {
-        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
             'required' => 'Kolom Teknisi wajib diisi.'
@@ -495,9 +493,7 @@ class Supervisor2 extends CI_Controller
             'required' => 'Kolom Max Day wajib diisi.'
         ]);
 
-        // Check if validation is successful
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
             redirect('supervisor2/added');
         } else {
@@ -533,11 +529,9 @@ class Supervisor2 extends CI_Controller
 
     public function forward_tiket($id = null)
     {
-        // Cek apakah ID pelaporan tidak ada
         if ($id === null) {
-            // Set pesan error dan redirect ke halaman yang sesuai
             $this->session->set_flashdata('alert', 'Forward gagal.');
-            redirect('supervisor2/pelaporan'); // Redirect ke halaman yang diinginkan
+            redirect('supervisor2/pelaporan'); 
             return;
         }
 
@@ -555,65 +549,10 @@ class Supervisor2 extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-
-    //EDIT TEKNISI
-    // public function fungsi_edit()
-    // {
-    //     // Load the form validation library
-    //     $this->load->library('form_validation');
-
-    //     // Set validation rules
-    //     $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    //     $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required');
-
-    //     // Check if the form passes validation
-    //     if ($this->form_validation->run() == FALSE) {
-    //         $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-    //         redirect(base_url('supervisor2/onprogress'));
-    //     } else {
-    //         // Retrieve POST data
-    //         $id_pelaporan = $this->input->post('id_pelaporan');
-    //         $id_user = $this->input->post('namateknisi');
-    //         $data = [
-    //             'pelaporan_id' => $id_pelaporan,
-    //             'user_id' => $id_user
-    //         ];
-
-    //         // Fetch the user name based on the user ID
-    //         $this->db->select('id_user, nama_user');
-    //         $this->db->from('user');
-    //         $this->db->where('id_user', $id_user);
-    //         $query = $this->db->get();
-
-    //         // Check if user exists
-    //         if ($query->num_rows() > 0) {
-    //             $user = $query->row();
-    //             $nama_user = $user->nama_user;
-
-    //             // Update the forward table
-    //             $this->db->where('pelaporan_id', $id_pelaporan);
-    //             $this->db->update('t1_forward', $data);
-
-    //             // Update the Helpdesk in the supervisor_model
-    //             $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
-
-    //             // Set success message
-    //             $this->session->set_flashdata('pesan', 'Teknisi has been updated!');
-    //         } else {
-    //             // Set error message if user not found
-    //             $this->session->set_flashdata('error', 'User not found.');
-    //         }
-
-    //         // Redirect to the onprogress page
-    //         redirect(base_url('supervisor2/onprogress'));
-    //     }
-    // }
     public function fungsi_edit()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
 
-        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
             'required' => 'Kolom Teknisi wajib diisi.'
@@ -625,38 +564,32 @@ class Supervisor2 extends CI_Controller
             'required' => 'Kolom Max Day wajib diisi.'
         ]);
 
-        // Check if the form passes validation
 
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
             redirect('supervisor2/onprogress');
         } else {
-            // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namateknisi');
 
-            // Fetch the user name based on the user ID
             $this->db->select('id_user, nama_user');
             $this->db->from('user');
             $this->db->where('id_user', $id_user);
             $query = $this->db->get();
 
-            // Check if user exists
             if ($query->num_rows() > 0) {
                 $user = $query->row();
                 $nama_user = $user->nama_user;
 
-                // Find the second entry for the pelaporan_id
                 $this->db->select('id_forward');
                 $this->db->from('t1_forward');
                 $this->db->where('pelaporan_id', $id_pelaporan);
-                $this->db->order_by('id_forward', 'ASC'); // Order by id to get the entries in order
+                $this->db->order_by('id_forward', 'ASC');
                 $query = $this->db->get();
                 $result = $query->result();
 
-                if (count($result) >= 2) { // Ensure there are at least two entries
-                    $second_technician_id = $result[1]->id_forward; // Get the ID of the second technician entry
+                if (count($result) >= 2) {
+                    $second_technician_id = $result[1]->id_forward;
 
                     // Update the second technician
                     $this->db->where('id_forward', $second_technician_id);
@@ -665,18 +598,14 @@ class Supervisor2 extends CI_Controller
                     // Update the Helpdesk in the supervisor_model
                     $this->spv2_model->updateTeknisi($id_pelaporan, $nama_user);
 
-                    // Set success message
                     $this->session->set_flashdata('pesan', 'Teknisi kedua telah diperbarui!');
                 } else {
-                    // Set error message if there are less than two entries
                     $this->session->set_flashdata('error', 'Teknisi kedua tidak ditemukan.');
                 }
             } else {
-                // Set error message if user not found
                 $this->session->set_flashdata('error', 'User tidak ditemukan.');
             }
 
-            // Redirect to the onprogress page
             redirect(base_url('supervisor2/onprogress'));
         }
     }
@@ -685,7 +614,6 @@ class Supervisor2 extends CI_Controller
     //TAMBAH TEKNISI
     public function fungsi_tambah()
     {
-        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
             'required' => 'Kolom Teknisi wajib diisi.'
@@ -707,7 +635,6 @@ class Supervisor2 extends CI_Controller
         ]);
 
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
             redirect('supervisor2/onprogress');
         } else {
@@ -726,7 +653,6 @@ class Supervisor2 extends CI_Controller
                 'status'  => $status
             ];
 
-            // cari nama user berdasarkan id 
             $this->db->select('id_user, nama_user');
             $this->db->from('user');
             $this->db->where('id_user', $id_user);
@@ -740,62 +666,6 @@ class Supervisor2 extends CI_Controller
             Redirect(Base_url('supervisor2/onprogress'));
         }
     }
-
-    // public function fungsi_tambah()
-    // {
-    //     // Set validation rules
-    //     $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-    //     $this->form_validation->set_rules('namateknisi', 'Teknisi', 'required', [
-    //         'required' => 'Kolom Teknisi wajib diisi.'
-    //     ]);
-    //     $this->form_validation->set_rules('judul', 'Judul', 'required', [
-    //         'required' => 'Kolom Judul wajib diisi.'
-    //     ]);
-    //     $this->form_validation->set_rules('subtask2', 'Subtask', 'required', [
-    //         'required' => 'Kolom Subtask wajib diisi.'
-    //     ]);
-    //     $this->form_validation->set_rules('tanggal2', 'Tanggal', 'required', [
-    //         'required' => 'Kolom Tenggat waktu wajib diisi.'
-    //     ]);
-    //     $this->form_validation->set_rules('priority', 'Priority', 'required', [
-    //         'required' => 'Kolom Priority wajib diisi.'
-    //     ]);
-    //     $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
-    //         'required' => 'Kolom Max Day wajib diisi.'
-    //     ]);
-
-    //     if ($this->form_validation->run() == FALSE) {
-    //         // If validation fails, redirect back to the form with error messages
-    //         $this->session->set_flashdata('alert', validation_errors());
-    //         redirect('supervisor2/onprogress');
-    //     } else {
-    //         $id_pelaporan = $this->input->post('id_pelaporan');
-    //         $id_user = $this->input->post('namateknisi');
-    //         $judul   = $this->input->post('judul');
-    //         $subtask = $this->input->post('subtask2');
-    //         $tanggal = $this->input->post('tanggal2');
-    //         $data = [
-    //             'pelaporan_id' => $id_pelaporan,
-    //             'user_id' => $id_user,
-    //             'judul'   => $judul,
-    //             'subtask2' => $subtask,
-    //             'tanggal2' => $tanggal
-    //         ];
-
-    //         // cari nama user berdasarkan id 
-    //         $this->db->select('id_user, nama_user');
-    //         $this->db->from('user');
-    //         $this->db->where('id_user', $id_user);
-    //         $query = $this->db->get();
-    //         $user = $query->row();
-    //         $nama_user = $user->nama_user;
-
-    //         $this->db->insert('t2_forward', $data);
-    //         $this->spv2_model->tambahTeknisi($id_pelaporan, $nama_user);
-    //         $this->session->set_flashdata('pesan', 'Teknisi has been added!');
-    //         Redirect(Base_url('supervisor2/onprogress'));
-    //     }
-    // }
 
     //   FILTER LAPORAN
     public function rekapPelaporan()
@@ -906,7 +776,6 @@ class Supervisor2 extends CI_Controller
             $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
             $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
-            $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
             $row['priority'] = $this->get_priority_label($dataItem->priority);
             $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
             $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
@@ -948,14 +817,18 @@ class Supervisor2 extends CI_Controller
 
     private function get_status_label($status)
     {
-        if ($status == 'FINISH') {
-            return '<span class="label label-success">FINISH</span>';
-        } elseif ($status == 'CLOSE') {
-            return '<span class="label label-warning">CLOSE</span>';
-        } elseif ($status == 'HANDLE') {
-            return '<span class="label label-info">HANDLE</span>';
+        if ($status == 'FINISHED') {
+            return '<span class="label label-success">FINISHED</span>';
+        } elseif ($status == 'CLOSED') {
+            return '<span class="label label-warning">CLOSED</span>';
+        } elseif ($status == 'HANDLED 2') {
+            return '<span class="label label-info">HANDLED 2</span>';
+        } elseif ($status == 'HANDLED') {
+            return '<span class="label label-info">HANDLED</span>';
         } elseif ($status == 'ADDED') {
-            return '<span class="label label-primary">ADDED</span>';
+            return '<span class="label label-info">ADDED</span>';
+        } elseif ($status == 'ADDED 2') {
+            return '<span class="label label-primary">ADDED 2</span>';
         }
     }
 

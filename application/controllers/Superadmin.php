@@ -930,7 +930,6 @@ class Superadmin extends CI_Controller
             $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
             $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
-            $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
             $row['priority'] = $this->get_priority_label($dataItem->priority);
             $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
             $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
@@ -972,14 +971,14 @@ class Superadmin extends CI_Controller
 
     private function get_status_label($status)
     {
-        if ($status == 'FINISH') {
-            return '<span class="label label-success">FINISH</span>';
-        } elseif ($status == 'CLOSE') {
-            return '<span class="label label-warning">CLOSE</span>';
-        } elseif ($status == 'HANDLE') {
-            return '<span class="label label-info">HANDLE</span>';
-        } elseif ($status == 'HANDLE 2') {
-            return '<span class="label label-info">HANDLE 2</span>';
+        if ($status == 'FINISHED') {
+            return '<span class="label label-success">FINISHED</span>';
+        } elseif ($status == 'CLOSED') {
+            return '<span class="label label-warning">CLOSED</span>';
+        } elseif ($status == 'HANDLED') {
+            return '<span class="label label-info">HANDLED</span>';
+        } elseif ($status == 'HANDLED 2') {
+            return '<span class="label label-info">HANDLED 2</span>';
         } elseif ($status == 'ADDED 2') {
             return '<span class="label label-info">ADDED 2</span>';
         } elseif ($status == 'ADDED') {

@@ -35,7 +35,6 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Tags</th>
@@ -52,7 +51,6 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Perihal</th>
-                                        <th>Impact</th>
                                         <th>Attachment</th>
                                         <th>Category</th>
                                         <th>Tags</th>
