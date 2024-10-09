@@ -76,7 +76,7 @@
 
                         <?php } ?>
                             <?php
-                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLE 2'");
+                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'HANDLED 2'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>
@@ -102,7 +102,7 @@
                                         FROM s_forward
                                         LEFT JOIN pelaporan ON s_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE s_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs = 'CLOSE' ")->result_array();
+                                        AND pelaporan.status_ccs = 'CLOSED' ")->result_array();
                                     foreach ($handle as $hd) : ?>
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div class="info-box bg-orange hover-expand-effect">
@@ -121,7 +121,7 @@
 
 
                             <?php
-                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'FINISH'");
+                                    $totalp = $this->db->query("SELECT count(id_pelaporan) as totalp FROM pelaporan where status_ccs = 'FINISHED'");
 
                                 foreach ($totalp->result() as $total) {
                                 ?>

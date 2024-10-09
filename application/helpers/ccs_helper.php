@@ -121,7 +121,7 @@ function noTiket()
 function total_high()
 {
     $ci = get_instance();
-    $query = "SELECT count(id_pelaporan) as totalh FROM pelaporan where status_ccs='FINISH' AND priority='High'";
+    $query = "SELECT count(id_pelaporan) as totalh FROM pelaporan where status_ccs='FINISHED' AND priority='High'";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totalh'];
     $kodeBaru = $total;
@@ -131,7 +131,7 @@ function total_high()
 function total_medium()
 {
     $ci = get_instance();
-    $query = "SELECT count(id_pelaporan) as totalm FROM pelaporan where status_ccs='FINISH' AND priority='Medium'";
+    $query = "SELECT count(id_pelaporan) as totalm FROM pelaporan where status_ccs='FINISHED' AND priority='Medium'";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totalm'];
     $kodeBaru = $total;
@@ -141,7 +141,7 @@ function total_medium()
 function total_low()
 {
     $ci = get_instance();
-    $query = "SELECT count(id_pelaporan) as totall FROM pelaporan where status_ccs='FINISH' AND priority='Low'";
+    $query = "SELECT count(id_pelaporan) as totall FROM pelaporan where status_ccs='FINISHED' AND priority='Low'";
     $data = $ci->db->query($query)->row_array();
     $total = $data['totall'];
     $kodeBaru = $total;
