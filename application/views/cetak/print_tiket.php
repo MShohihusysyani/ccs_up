@@ -30,6 +30,11 @@
                 size: A4;
                 margin: 20mm;
             }
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
         }
     </style>
 </head>
@@ -56,8 +61,16 @@
         </div>
         <div class="row">
             <div class="col-sm-2"><b>Perihal:</b></div>
-            <div class="col-sm-10"><textarea class="form-control" rows="10"><?= $ticket->perihal ?></textarea></div>
+            <div class="col-sm-10">
+                <!-- Rendering CKEditor content directly -->
+                <?= $ticket->perihal ?>
+            </div>
         </div>
+
+        <!-- <div class="row">
+            <div class="col-sm-2"><b>Perihal:</b></div>
+            <div class="col-sm-10"><textarea class="form-control" rows="10"><?= $ticket->perihal ?></textarea></div>
+        </div> -->
         <div class="row">
             <div class="col-sm-2"><b>Category:</b></div>
             <div class="col-sm-10">
