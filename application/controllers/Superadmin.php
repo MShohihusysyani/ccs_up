@@ -273,10 +273,10 @@ class Superadmin extends CI_Controller
             $row[] = $pelaporan->no_tiket;
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
             $row[] = $pelaporan->nama;
-            $row[] = $pelaporan->perihal;
+            $row[] = $pelaporan->judul;
             // $row[] = $pelaporan->impact;
-            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
-            $pelaporan->file;
+            // $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
+            // $pelaporan->file;
             $row[] = $pelaporan->kategori;
             $row[] = $pelaporan->tags;
             // Proses nilai prioritas di server-side
@@ -927,7 +927,7 @@ class Superadmin extends CI_Controller
             $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
             $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
-            $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
+            $row['judul'] = isset($dataItem->judul) ? $dataItem->judul : '';
             $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
             $row['priority'] = $this->get_priority_label($dataItem->priority);

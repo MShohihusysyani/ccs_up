@@ -213,7 +213,7 @@
                         <ul class="ml-menu">
                             <li
                                 <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('superadmin/rekapPelaporan') ?>">Rekap Pelaporan</a>
+                                <a href="<?php echo base_url('superadmin/rekapPelaporan') ?>">Rincian Pelaporan</a>
                             </li>
                             <!-- 
                             <li

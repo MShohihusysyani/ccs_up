@@ -113,7 +113,7 @@
                                     <th>Tanggal</th>
                                     <th>No Tiket</th>
                                     <th>Nama</th>
-                                    <th>Perihal</th>
+                                    <th>Judul</th>
                                     <th>Tags</th>
                                     <th>Kategori</th>
                                     <th>Priority</th>
@@ -226,7 +226,7 @@
                     "data": "nama"
                 },
                 {
-                    "data": "perihal"
+                    "data": "judul"
                 },
                 {
                     "data": "tags"

@@ -35,7 +35,7 @@
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
                                             <!-- <th>Perihal</th> -->
-                                            <th>Attachment</th>
+                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
@@ -54,7 +54,7 @@
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
                                             <!-- <th>Perihal</th> -->
-                                            <th>Attachment</th>
+                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
