@@ -35,7 +35,7 @@
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
                                             <!-- <th>Perihal</th> -->
-                                            <th>Attachment</th>
+                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
@@ -59,7 +59,7 @@
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
                                             <!-- <th>Perihal</th> -->
-                                            <th>Attachment</th>
+                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
@@ -86,7 +86,7 @@
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
                                                 <!-- <td><?= $dp['perihal']; ?></td> -->
-                                                <td>
+                                                <!-- <td>
                                                     <?php
                                                     $file_path = base_url('assets/files/' . $dp['file']);
                                                     $file_ext = pathinfo($dp['file'], PATHINFO_EXTENSION);
@@ -96,7 +96,7 @@
                                                             <img src="<?= $file_path; ?>" alt="<?= $dp['file']; ?>" style="max-width: 150px;">
                                                         </a>
 
-                                                        <!-- Modal Bootstrap -->
+                                                        Modal Bootstrap 
                                                         <div class="modal fade" id="imageModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                                 <div class="modal-content">
@@ -115,7 +115,7 @@
                                                     <?php else: ?>
                                                         <a href="<?= $file_path; ?>"><?= $dp['file']; ?></a>
                                                     <?php endif; ?>
-                                                </td>
+                                                </td> -->
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
                                                     <?php if (!empty($dp['tags'])): ?>
