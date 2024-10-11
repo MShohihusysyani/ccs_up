@@ -414,7 +414,7 @@ class Helpdesk extends CI_Controller
             $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
             $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
-            $row['perihal'] = isset($dataItem->perihal) ? $dataItem->perihal : '';
+            $row['judul'] = isset($dataItem->judul) ? $dataItem->judul : '';
             $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
             $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';

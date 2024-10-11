@@ -132,7 +132,7 @@
                                                     <th>Judul</th>
                                                     <th>Nama</th>
                                                     <!-- <th>Perihal</th> -->
-                                                    <th>Attachment</th>
+                                                    <!-- <th>Attachment</th> -->
                                                     <th>kategori</th>
                                                     <th>Tags</th>
                                                     <th>Aksi</th>
@@ -148,8 +148,8 @@
                                                         <td><?= $tmp['judul']; ?></td>
                                                         <td><?= $tmp['nama']; ?></td>
                                                         <!-- <td><?= $tmp['perihal']; ?></td> -->
-                                                        <td> <a href="<?= base_url('assets/files/' . $tmp['file']); ?>"><?= $tmp['file']; ?></a>
-                                                        </td>
+                                                        <!-- <td> <a href="<?= base_url('assets/files/' . $tmp['file']); ?>"><?= $tmp['file']; ?></a>
+                                                        </td> -->
                                                         <td><?= $tmp['kategori']; ?></td>
                                                         <td>
                                                             <span class="label label-info" data-role="tagsinput"><?= $tmp['tags']; ?></span>

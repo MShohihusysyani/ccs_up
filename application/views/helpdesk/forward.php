@@ -29,7 +29,7 @@
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
                                             <!-- <th>Impact</th> -->
-                                            <th>Attachment</th>
+                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
                                             <th>Priority</th>
                                             <th>Max Day</th>
@@ -50,7 +50,7 @@
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
                                             <!-- <th>Impact</th> -->
-                                            <th>Attachment</th>
+                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
                                             <th>Priority</th>
                                             <th>Max Day</th>
@@ -77,11 +77,11 @@
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
                                                 <!-- <td><?= $dp['impact']; ?></td> -->
-                                                <td>
+                                                <!-- <td>
                                                     <?php if (!empty($dp['file'])) : ?>
                                                         <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                     <?php endif; ?>
-                                                </td>
+                                                </td> -->
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
