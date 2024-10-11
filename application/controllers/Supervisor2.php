@@ -42,9 +42,9 @@ class Supervisor2 extends CI_Controller
             $row[] = $pelaporan->no_tiket;
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
             $row[] = $pelaporan->nama;
-            $row[] = $pelaporan->perihal;
-            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
-            $pelaporan->file;
+            $row[] = $pelaporan->judul;
+            // $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
+            // $pelaporan->file;
             $row[] = $pelaporan->kategori;
             $row[] = $pelaporan->tags;
             // Proses nilai prioritas di server-side
@@ -531,7 +531,7 @@ class Supervisor2 extends CI_Controller
     {
         if ($id === null) {
             $this->session->set_flashdata('alert', 'Forward gagal.');
-            redirect('supervisor2/pelaporan'); 
+            redirect('supervisor2/pelaporan');
             return;
         }
 
