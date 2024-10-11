@@ -82,14 +82,14 @@
                                         FROM t1_forward
                                         LEFT JOIN pelaporan ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE t1_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')
+                                        AND pelaporan.status_ccs IN ('HANDLED', 'HANDLED 2')
                                     
                                         UNION ALL
                                         SELECT t2_forward.pelaporan_id
                                         FROM t2_forward
                                         LEFT JOIN pelaporan ON t2_forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE t2_forward.user_id = $user_id
-                                        AND pelaporan.status_ccs IN ('HANDLE', 'HANDLE 2')
+                                        AND pelaporan.status_ccs IN ('HANDLED', 'HANDLED 2')
                                     ) AS combined_forwards";
 
                                 $handle = $this->db->query($query)->result_array();
@@ -110,7 +110,32 @@
                                         </div>
                                     <?php endforeach; ?>
 
+                                    <?php
+                                    $user_id =  $this->session->userdata('id_user');
+                                    $handle = $this->db->query("SELECT 
+                                        COUNT(*) as ticket_finish
+                                        FROM t1_forward
+                                        LEFT JOIN pelaporan ON t1_forward.pelaporan_id = pelaporan.id_pelaporan
+                                        WHERE t1_forward.user_id = $user_id
+                                        AND pelaporan.status_ccs = 'FINISHED' ")->result_array();
+                                    foreach ($handle as $hd) : ?>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                            <div class="info-box bg-light-green hover-expand-effect">
+                                                <div class="icon">
+                                                    <a href="<?php echo base_url('helpdesk/data_finish') ?>">
+                                                        <i class="material-icons">done_all</i>
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="text">FINISHED</div>
+                                                    <div class="number count-to" data-from="0" data-to="<?= $hd['ticket_finish'] ?>" data-speed="1000" data-fresh-interval="20"><?= $hd['ticket_finish'] ?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
                                     </div>
+
+
                             </div>
                         </div>
                     </div>

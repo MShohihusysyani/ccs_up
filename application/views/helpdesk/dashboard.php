@@ -58,7 +58,7 @@
                                         FROM forward
                                         LEFT JOIN pelaporan ON forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE forward.user_id = $user_id
-                                        AND pelaporan.status_ccs  = 'HANDLE'")->result_array();
+                                        AND pelaporan.status_ccs  = 'HANDLED' or pelaporan.status_ccs = 'HANDLED 2'")->result_array();
                                 foreach ($handle as $hd) : ?>
                                     <div class="row clearfix">
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -69,7 +69,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="text">New Ticket</div>
+                                                    <div class="text">HANDLED</div>
                                                     <div class="number count-to" data-from="0" data-to="<?= $hd['ticket_finish'] ?>" data-speed="1000" data-fresh-interval="20">
                                                         <?= $hd['ticket_finish'] ?>
                                                     </div>
@@ -85,7 +85,7 @@
                                         FROM forward
                                         LEFT JOIN pelaporan ON forward.pelaporan_id = pelaporan.id_pelaporan
                                         WHERE forward.user_id = $user_id
-                                        AND pelaporan.status_ccs = 'FINISH' ")->result_array();
+                                        AND pelaporan.status_ccs = 'FINISHED' ")->result_array();
                                     foreach ($handle as $hd) : ?>
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div class="info-box bg-light-green hover-expand-effect">
@@ -95,7 +95,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="text">FINISH</div>
+                                                    <div class="text">FINISHED</div>
                                                     <div class="number count-to" data-from="0" data-to="<?= $hd['ticket_finish'] ?>" data-speed="1000" data-fresh-interval="20"><?= $hd['ticket_finish'] ?></div>
                                                 </div>
                                             </div>
