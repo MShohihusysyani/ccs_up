@@ -40,7 +40,7 @@
                                                 <th>Nama Klien</th>
                                                 <th>Judul</th>
                                                 <!-- <th>Impact</th> -->
-                                                <th>Attachment</th>
+                                                <!-- <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
@@ -63,7 +63,7 @@
                                                 <th>Nama Klien</th>
                                                 <th>Judul</th>
                                                 <!-- <th>Impact</th> -->
-                                                <th>Attachment</th>
+                                                <!-- <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
@@ -90,8 +90,8 @@
                                                     <td><?= $dp['nama']; ?></td>
                                                     <td><?= $dp['judul']; ?></td>
                                                     <!-- <td><?= $dp['impact']; ?></td> -->
-                                                    <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                    </td>
+                                                    <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                    </td> -->
                                                     <td><?= $dp['kategori']; ?></td>
                                                     <td>
                                                         <?php if (!empty($dp['tags'])): ?>

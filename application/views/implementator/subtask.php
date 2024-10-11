@@ -39,8 +39,8 @@
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
                                                 <!-- <th>Perihal</th> -->
-                                                <th>Impact</th>
-                                                <th>Attachment</th>
+                                                <!-- <th>Impact</th>
+                                                <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
@@ -59,8 +59,8 @@
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
                                                 <!-- <th>Perihal</th> -->
-                                                <th>Impact</th>
-                                                <th>Attachment</th>
+                                                <!-- <th>Impact</th>
+                                                <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
@@ -84,8 +84,8 @@
                                                     <td><?= $st['nama']; ?></td>
                                                     <!-- <td><?= $st['perihal']; ?></td> -->
                                                     <td><?= $st['impact']; ?></td>
-                                                    <td> <a href="<?= base_url('assets/files/' . $st['file']); ?>"><?= $st['file']; ?></a>
-                                                    </td>
+                                                    <!-- <td> <a href="<?= base_url('assets/files/' . $st['file']); ?>"><?= $st['file']; ?></a>
+                                                    </td> -->
                                                     <td><?= $st['kategori']; ?></td>
                                                     <td>
                                                         <?php if (!empty($dp['tags'])): ?>
