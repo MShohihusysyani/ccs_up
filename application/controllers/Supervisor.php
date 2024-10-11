@@ -229,7 +229,7 @@ class Supervisor extends CI_Controller
             $row[] = $pelaporan->nama;
             $row[] = $pelaporan->judul;
             // $row[] = $pelaporan->impact;
-            $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
+            // $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
             $pelaporan->file;
             $row[] = $pelaporan->kategori;
             $row[] = $pelaporan->tags;
