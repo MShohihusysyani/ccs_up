@@ -129,11 +129,11 @@
                                                     <td><?= $dp['handle_by']; ?></td>
 
                                                     <td style="display: flex; gap: 10px; justify-content: flex-end;">
-                                                        <div class="btn btn-sm btn-warning">
+                                                        <!-- <div class="btn btn-sm btn-warning">
                                                             <div class="demo-google-material-icon" data-toggle="modal" data-target="#editModal<?= $dp['id_pelaporan']; ?>">
                                                                 <i class="material-icons">edit</i> Edit
                                                             </div>
-                                                        </div>
+                                                        </div> -->
 
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporan/<?= $dp['id_pelaporan']; ?>">
                                                             <i class="material-icons">visibility</i> Detail
