@@ -227,7 +227,7 @@ class Supervisor extends CI_Controller
             $row[] = $pelaporan->no_tiket;
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
             $row[] = $pelaporan->nama;
-            $row[] = $pelaporan->perihal;
+            $row[] = $pelaporan->judul;
             // $row[] = $pelaporan->impact;
             $row[] = '<a href="' . site_url('assets/files/' . $pelaporan->file) . '">' . $pelaporan->file . '</a>';
             $pelaporan->file;
