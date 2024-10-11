@@ -90,38 +90,27 @@ class Helpdesk extends CI_Controller
 
     public function add_temp_tiket()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
 
-        // Set validation rules
         $this->form_validation->set_rules('perihal', 'Perihal', 'required|min_length[50]');
-
-        // Check if the form validation passed
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, set an error message and redirect back
             $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter.');
-            // $referred_from = $this->session->userdata('referred_from');
             redirect('helpdesk/pengajuan');
         } else {
-            // Retrieve the ticket number from the form input
             $user_id_hd = $this->input->post('user_id_hd');
 
-            // Check if the ticket number already exists in the database
             $this->db->where('user_id_hd', $user_id_hd);
             $existing_ticket = $this->db->get('tiket_temp')->row();
 
             if ($existing_ticket) {
-                // If the ticket number already exists, set an error message and redirect back
                 $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan terlebih dahulu tiket yang sudah diproses!!!');
-                // $referred_from = $this->session->userdata('referred_from');
                 redirect('helpdesk/pengajuan');
             } else {
-                // Handle file upload if there is a file
                 $photo = $_FILES['file']['name'];
 
                 if ($photo) {
                     $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
-                    $config['max_size'] = '2048';
+                    $config['max_size'] = '25600';
                     $config['upload_path'] = './assets/files/';
 
                     $this->load->library('upload', $config);
@@ -130,14 +119,12 @@ class Helpdesk extends CI_Controller
                     if ($this->upload->do_upload('file')) {
                         $photo = $this->upload->data('file_name');
                     } else {
-                        // Log the error and set a flash message for failed upload
                         log_message('error', 'File upload error: ' . $this->upload->display_errors());
                         $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
                         redirect('helpdesk/pengajuan');
                     }
                 }
 
-                // Prepare the data for insertion
                 $data = [
                     'no_tiket' => $this->input->post('no_tiket'),
                     'perihal'  => $this->input->post('perihal'),
@@ -158,10 +145,7 @@ class Helpdesk extends CI_Controller
                 $pattern = '/<a\s+href="([^"]+)"/i';
                 $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
 
-                // Insert the data into the database
                 $this->db->insert('tiket_temp', $data);
-
-                // Set a success message and redirect to the submission page
                 $this->session->set_flashdata('pesan', 'Pelaporan Added!');
                 redirect('helpdesk/pengajuan');
             }
@@ -184,14 +168,12 @@ class Helpdesk extends CI_Controller
     public function fungsi_pengajuan()
     {
         $this->load->model('Helpdesk_model', 'helpdesk_model');
-        // Cek apakah ada tiket yang selesai tetapi belum diberi rating
         $klien_id = $this->input->post('user_id');
         $has_unrated_finished_tickets = $this->helpdesk_model->has_unrated_finished_tickets($klien_id);
 
         if ($has_unrated_finished_tickets) {
-            // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
             $this->session->set_flashdata('alert', 'Mohon hubungi BPR terkait untuk memberikan rating, agar tiket dapat diproses. Terima kasih!');
-            redirect(Base_url('helpdesk/pengajuan')); // Alihkan ke halaman untuk memberi rating
+            redirect(Base_url('helpdesk/pengajuan'));
         } else {
             // Tambahkan tiket baru
             $this->helpdesk_model->add_pelaporan($klien_id);
@@ -273,16 +255,114 @@ class Helpdesk extends CI_Controller
 
     public function data_finish()
     {
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Helpdesk_model', 'helpdesk_model');
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->helpdesk_model->getDataPelaporanHD();
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
-        $this->load->view('helpdesk/finish', $data);
+        $this->load->view('helpdesk/finish');
         $this->load->view('templates/footer');
+    }
+
+    public function get_data_finish()
+    {
+        $this->load->model('Serversidehd_model', 'serversidehd_model');
+
+        $list = $this->serversidehd_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($list as $dp) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $dp->no_tiket;
+            $row[] = tanggal_indo($dp->waktu_pelaporan);
+            $row[] = $dp->nama;
+            $row[] = $dp->judul;
+            $row[] = $dp->kategori;
+            $row[] = $dp->tags ? '<span class="label label-info">' . $dp['tags'] . '</span>' : '';
+
+            // Proses nilai prioritas di server-side
+            if ($dp->priority == 'Low') {
+                $priority_label = '<span class="label label-info">Low</span>';
+            } elseif ($dp->priority == 'Medium') {
+                $priority_label = '<span class="label label-warning">Medium</span>';
+            } elseif ($dp->priority == 'High') {
+                $priority_label = '<span class="label label-danger">High</span>';
+            } else {
+                $priority_label = $dp->priority;
+            }
+            $row[] = $priority_label;
+
+            // Proses nilai maxday di server-side
+            if ($dp->maxday == '90') {
+                $maxday_label = '<span class="label label-info">90</span>';
+            } elseif ($dp->maxday == '60') {
+                $maxday_label = '<span class="label label-warning">60</span>';
+            } elseif ($dp->maxday == '7') {
+                $maxday_label = '<span class="label label-danger">7</span>';
+            } else {
+                $maxday_label = $dp->maxday;
+            }
+            $row[] = $maxday_label;
+
+            // Proses nilai status_ccs di server-side
+            if ($dp->status_ccs == 'ADDED') {
+                $status_ccs_label = '<span class="label label-primary">ADDED</span>';
+            } elseif ($dp->status_ccs == 'ADDED 2') {
+                $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
+            } elseif ($dp->status_ccs == 'HANDLED') {
+                $status_ccs_label = '<span class="label label-info">HANDLED</span>';
+            } elseif ($dp->status_ccs == 'HANDLED 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLED 2</span>';
+            } elseif ($dp->status_ccs == 'CLOSED') {
+                $status_ccs_label = '<span class="label label-warning">CLOSED</span>';
+            } elseif ($dp->status_ccs == 'FINISHED') {
+                $status_ccs_label = '<span class="label label-success">FINISHED</span>';
+            } else {
+                $status_ccs_label = $dp->status_ccs;
+            }
+            $row[] = $status_ccs_label;
+
+            // Proses handle_by
+            $handle_combined = $dp->handle_by;
+            if ($dp->handle_by2) {
+                $handle_combined .= ', ' . $dp->handle_by2;
+            }
+            if ($dp->handle_by3) {
+                $handle_combined .= ', ' . $dp->handle_by3;
+            }
+            $row[] = $handle_combined;
+
+            // Proses rating bintang
+            $star_rating = '';
+            if ($dp->rating !== null) {
+                $rating = $dp->rating; // Get the rating value
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i <= $rating) {
+                        $star_rating .= '<span class="star selected">&#9733;</span>'; // Full star for rating
+                    } else {
+                        $star_rating .= '<span class="star">&#9734;</span>'; // Empty star for remaining
+                    }
+                }
+            }
+            $row[] = '<div class="star-rating">' . $star_rating . '</div>'; // Wrap in div for styling
+
+            // Tombol Aksi
+            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('helpdesk/detail_finish/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
+
+            // Tambahkan row ke data
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->serversidehd_model->count_all(),
+            "recordsFiltered" => $this->serversidehd_model->count_filtered(),
+            "data" => $data,
+        );
+
+        echo json_encode($output);  // Kirim JSON ke DataTables
+        die();
     }
 
 
@@ -890,7 +970,7 @@ class Helpdesk extends CI_Controller
 
         if ($photo) {
             $config['allowed_types'] = 'txt|csv|xlsx|docx|pdf|jpeg|jpg|zip|rar|png';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/comment/';
 
             $this->load->library('upload', $config);
@@ -935,7 +1015,7 @@ class Helpdesk extends CI_Controller
 
         if ($photo) {
             $config['allowed_types'] = 'txt|csv|xlsx|docx|pdf|jpeg|jpg|zip|rar|png';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/reply/';
 
             $this->load->library('upload', $config);
