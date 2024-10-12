@@ -1093,6 +1093,62 @@ class Export extends CI_Controller
     //     redirect('superadmin/AllTicket');
     // }
 
+    // public function import_excel()
+    // {
+    //     $file = $_FILES['file']['tmp_name'];
+
+    //     // Load the Excel file using PHPSpreadsheet
+    //     $spreadsheet = IOFactory::load($file);
+    //     $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+    //     // Process each row of the Excel file
+    //     foreach ($sheetData as $row) {
+    //         $noTiket = $row['A']; // Assuming 'B' is the "no_tiket" column
+
+    //         // Skip if no_tiket is empty
+    //         if (empty($noTiket)) {
+    //             log_message('error', 'No Tiket is missing in one of the rows.');
+    //             continue; // Skip this row
+    //         }
+
+    //         // Check if no_tiket already exists in the database
+    //         $existingTicket = $this->db->get_where('pelaporan', ['no_tiket' => $noTiket])->row_array();
+    //         if ($existingTicket) {
+    //             log_message('info', 'Duplicate no_tiket: ' . $noTiket . ' - Skipping row.');
+    //             continue; // Skip this row if no_tiket already exists
+    //         }
+
+    //         // Remove the comma from the datetime format and convert it
+    //         $tanggal = !empty($row['K']) ? date('Y-m-d H:i:s', strtotime(str_replace(',', '', $row['K']))) : null;
+    //         $waktuApprove = !empty($row['L']) ? date('Y-m-d H:i:s', strtotime(str_replace(',', '', $row['L']))) : null;
+
+    //         $data = [
+    //             'no_tiket' => $noTiket,
+    //             'judul' => $row['B'],
+    //             'user_id' => $row['C'],
+    //             'perihal' => $row['D'],
+    //             'nama' => $row['E'],
+    //             'kategori' => $row['F'],
+    //             'priority' => $row['G'],
+    //             'handle_by' => $row['H'],
+    //             'handle_by2' => $row['I'],
+    //             'status_ccs' => $row['J'],
+    //             'waktu_pelaporan' => $tanggal, // Converted datetime
+    //             'waktu_approve' => $waktuApprove, // Converted datetime
+    //             'rating' => $row['M'],
+    //             'has_rated' => $row['N'],
+    //             'maxday' => $row['O'],
+    //             'catatan_finish' => $row['P'],
+    //             // Map other fields as necessary
+    //         ];
+
+    //         // Insert the data into the database
+    //         $this->db->insert('pelaporan', $data);
+    //     }
+
+    //     // Redirect back with a success message
+    //     redirect('superadmin/AllTicket');
+    // }
     public function import_excel()
     {
         $file = $_FILES['file']['tmp_name'];
@@ -1103,7 +1159,7 @@ class Export extends CI_Controller
 
         // Process each row of the Excel file
         foreach ($sheetData as $row) {
-            $noTiket = $row['B']; // Assuming 'B' is the "no_tiket" column
+            $noTiket = $row['A']; // Assuming 'B' is the "no_tiket" column
 
             // Skip if no_tiket is empty
             if (empty($noTiket)) {
@@ -1118,25 +1174,27 @@ class Export extends CI_Controller
                 continue; // Skip this row if no_tiket already exists
             }
 
-            // Remove the comma from the datetime format and convert it
-            $tanggal = !empty($row['K']) ? date('Y-m-d H:i:s', strtotime(str_replace(',', '', $row['K']))) : null;
-            $waktuApprove = !empty($row['L']) ? date('Y-m-d H:i:s', strtotime(str_replace(',', '', $row['L']))) : null;
+            // Handle inconsistent date formats
+            $tanggal = $this->convert_date_format($row['K']);
+            $waktuApprove = $this->convert_date_format($row['L']);
 
             $data = [
                 'no_tiket' => $noTiket,
-                'judul' => $row['C'],
-                'user_id' => $row['D'],
-                'perihal' => $row['E'],
-                'nama' => $row['F'],
-                'kategori' => $row['G'],
-                'priority' => $row['H'],
+                'judul' => $row['B'],
+                'user_id' => $row['C'],
+                'perihal' => $row['D'],
+                'nama' => $row['E'],
+                'kategori' => $row['F'],
+                'priority' => $row['G'],
+                'handle_by' => $row['H'],
                 'handle_by2' => $row['I'],
                 'status_ccs' => $row['J'],
                 'waktu_pelaporan' => $tanggal, // Converted datetime
                 'waktu_approve' => $waktuApprove, // Converted datetime
                 'rating' => $row['M'],
                 'has_rated' => $row['N'],
-                // Map other fields as necessary
+                'maxday' => $row['O'],
+                'catatan_finish' => $row['P'],
             ];
 
             // Insert the data into the database
@@ -1147,6 +1205,47 @@ class Export extends CI_Controller
         redirect('superadmin/AllTicket');
     }
 
+    private function convert_date_format($dateString)
+    {
+        // If the date is empty, return null
+        if (empty($dateString)) {
+            return null;
+        }
+
+        // Check if the date contains a month name (e.g., "10 Oktober 2024")
+        $monthNames = [
+            'Januari' => 'January',
+            'Februari' => 'February',
+            'Maret' => 'March',
+            'April' => 'April',
+            'Mei' => 'May',
+            'Juni' => 'June',
+            'Juli' => 'July',
+            'Agustus' => 'August',
+            'September' => 'September',
+            'Oktober' => 'October',
+            'November' => 'November',
+            'Desember' => 'December'
+        ];
+
+        // Replace Indonesian month names with English ones
+        foreach ($monthNames as $indonesian => $english) {
+            if (stripos($dateString, $indonesian) !== false) {
+                $dateString = str_ireplace($indonesian, $english, $dateString);
+                break;
+            }
+        }
+
+        // Try to convert the date string to a valid format
+        $timestamp = strtotime($dateString);
+        if ($timestamp === false) {
+            log_message('error', 'Invalid date format: ' . $dateString);
+            return null;
+        }
+
+        // Return the date in 'Y-m-d H:i:s' format
+        return date('Y-m-d H:i:s', $timestamp);
+    }
 
 
 
