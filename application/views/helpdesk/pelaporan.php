@@ -45,7 +45,7 @@
                                                 <th>Category</th>
                                                 <th>Priority</th>
                                                 <th>Max Day</th>
-                                                <th>Impact</th>
+                                                <!-- <th>Impact</th> -->
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
                                                 <th>Aksi</th>
@@ -62,7 +62,7 @@
                                                 <th>Category</th>
                                                 <th>Priority</th>
                                                 <th>Max Day</th>
-                                                <th>Impact</th>
+                                                <!-- <th>Impact</th> -->
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
                                                 <th>Aksi</th>
@@ -79,10 +79,9 @@
                                                     <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                     <td><?= $dp['nama']; ?></td>
                                                     <td><?= $dp['judul']; ?></td>
-                                                    <td><?= $dp['impact']; ?></td>
+                                                    <td><?= $dp['kategori']; ?></td>
                                                     <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                     </td> -->
-                                                    <td><?= $dp['kategori']; ?></td>
                                                     <td>
                                                         <?php if ($dp['priority'] == 'Low') : ?>
                                                             <span class="label label-info">Low</span>
