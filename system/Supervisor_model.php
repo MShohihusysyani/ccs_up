@@ -264,7 +264,7 @@
         public function updateForward($id_pelaporan, $nama_user)
         {
 
-            $query = "UPDATE pelaporan SET status_ccs='HANDLED', handle_by = '$nama_user', status='Forward To Helpdesk' WHERE id_pelaporan=$id_pelaporan";
+            $query = "UPDATE pelaporan SET status_ccs='HANDLE', handle_by = '$nama_user', status='Forward To Helpdesk' WHERE id_pelaporan=$id_pelaporan";
             return $this->db->query($query);
         }
 
@@ -272,14 +272,14 @@
         public function updateHD($id_pelaporan, $nama_user)
         {
 
-            $query = "UPDATE pelaporan SET status_ccs='HANDLED', handle_by = '$nama_user', status='Forward To Helpdesk'  WHERE id_pelaporan=$id_pelaporan";
+            $query = "UPDATE pelaporan SET status_ccs='HANDLE', handle_by = '$nama_user', status='Forward To Helpdesk'  WHERE id_pelaporan=$id_pelaporan";
             return $this->db->query($query);
         }
 
         public function updateTeknisi($id_pelaporan, $nama_user)
         {
 
-            $query = "UPDATE pelaporan SET status_ccs='HANDLED 2', handle_by2 = '$nama_user', status='Forward To Teknisi'  WHERE id_pelaporan=$id_pelaporan";
+            $query = "UPDATE pelaporan SET status_ccs='HANDLE 2', handle_by2 = '$nama_user', status='Forward To Teknisi'  WHERE id_pelaporan=$id_pelaporan";
             return $this->db->query($query);
         }
 
@@ -306,7 +306,7 @@
         public function updateReject($id_pelaporan, $nama_user)
         {
 
-            $query = "UPDATE pelaporan SET status_ccs='REJECTED', status='Return To Helpdesk', handle_by = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
+            $query = "UPDATE pelaporan SET status_ccs='REJECT', status='Return To Helpdesk', handle_by = '$nama_user'  WHERE id_pelaporan=$id_pelaporan";
             return $this->db->query($query);
         }
 

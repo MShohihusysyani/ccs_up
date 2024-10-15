@@ -405,7 +405,7 @@ class Helpdesk_model extends CI_Model
     ');
         $this->db->from('pelaporan');
         $this->db->join('forward', 'pelaporan.id_pelaporan = forward.pelaporan_id'); // Sesuaikan id join jika berbeda
-        $this->db->where('pelaporan.status_ccs', 'HANDLE');
+        $this->db->where('pelaporan.status_ccs', 'HANDLED');
         $this->db->where('forward.user_id', $user_id);
 
         // Menghitung jumlah notifikasi
@@ -466,7 +466,7 @@ class Helpdesk_model extends CI_Model
     {
         // Pengecekan apakah ada tiket yang statusnya selesai (FINISH) dan belum diberi rating
         $this->db->where('user_id', $klien_id);
-        $this->db->where('status_ccs', 'FINISH');  // Tiket yang sudah selesai
+        $this->db->where('status_ccs', 'FINISHED');  // Tiket yang sudah selesai
         $this->db->where('rating', 0);  // Tiket yang belum diberi rating
         $query = $this->db->get('pelaporan');
 

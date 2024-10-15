@@ -76,8 +76,8 @@
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
                                                 <!-- <td><?= $dp['perihal']; ?></td> -->
-                                                <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                </td>
+                                                <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                </td> -->
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
                                                     <?php if (!empty($dp['tags'])): ?>
