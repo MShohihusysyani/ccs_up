@@ -203,7 +203,7 @@ class Klien extends CI_Controller
         if ($has_unrated_finished_tickets) {
             // Jika ada tiket selesai yang belum diberi rating, berikan pesan dan hentikan proses
             $this->session->set_flashdata('alert', 'Sebelum mengajukan tiket baru, mohon berikan rating pada tiket yang telah finish. Terima kasih!');
-            redirect(Base_url('klien/pengajuan')); 
+            redirect(Base_url('klien/pengajuan'));
         } else {
             // Tambahkan tiket baru
             $this->pelaporan_model->add_pelaporan();
@@ -228,24 +228,44 @@ class Klien extends CI_Controller
 
     public function pengajuan()
     {
-        // $data['noTiket'] = $this->client_model->getkodeticket();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+
         $this->load->model('Temp_model', 'temp_model');
-        $data['category']      = $this->category_model->getCategory();
+        $data['category'] = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTempKlien();
         $id_user = $this->session->userdata('id_user');
-        $no_klien = $this->client_model->getNoKlien($id_user);
-        $no_urut = $this->client_model->getNoUrut($id_user);
-        $bulan = $time = date("m");
-        $tahun = $time = date("Y");
 
-        $data['tiket'] = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
+        // Ambil nomor tiket dari model
+        $data['tiket'] = $this->client_model->getNoUrut($id_user); // Langsung dapatkan tiket lengkap
 
+
+        // Load views
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
         $this->load->view('klien/pengajuan', $data);
         $this->load->view('templates/footer');
     }
+
+    // public function pengajuan()
+    // {
+    //     // $data['noTiket'] = $this->client_model->getkodeticket();
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $this->load->model('Temp_model', 'temp_model');
+    //     $data['category']      = $this->category_model->getCategory();
+    //     $data['tiket_temp'] = $this->temp_model->getTiketTempKlien();
+    //     $id_user = $this->session->userdata('id_user');
+    //     $no_klien = $this->client_model->getNoKlien($id_user);
+    //     $no_urut = $this->client_model->getNoUrut($id_user);
+    //     $bulan = $time = date("m");
+    //     $tahun = $time = date("Y");
+
+    //     $data['tiket'] = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
+
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/klien_sidebar');
+    //     $this->load->view('klien/pengajuan', $data);
+    //     $this->load->view('templates/footer');
+    // }
 
     #data pelaporan
     public function datapelaporan()

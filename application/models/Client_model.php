@@ -45,25 +45,25 @@ class Client_model extends CI_Model
         // Dapatkan bulan dan tahun saat ini
         $currentMonth = date('Ym'); // Format: YYYYMM
 
-        // Transaksi untuk mencegah race condition
+        // Mulai transaksi untuk mencegah race condition
         $this->db->trans_start();
 
         // Ambil nomor tiket terakhir yang terbesar untuk user yang sama
         $query = $this->db->query(
             "SELECT no_tiket 
-             FROM pelaporan 
-             WHERE user_id = ? 
-             ORDER BY no_tiket DESC 
-             LIMIT 1 FOR UPDATE",
+         FROM pelaporan 
+         WHERE user_id = ? 
+         ORDER BY no_tiket DESC 
+         LIMIT 1 FOR UPDATE",
             [$user_id]
         )->row_array();
 
-        // Debugging: Log hasil query
+        // Debugging: Log hasil query untuk melihat nomor tiket terakhir
         log_message('debug', 'Tiket terakhir dari query: ' . json_encode($query));
 
         // Jika tidak ada tiket sebelumnya, mulai dari 0001
         if ($query == NULL || empty($query['no_tiket'])) {
-            $no_urut = 1;
+            $no_urut = 1; // Mulai dari 0001 jika tidak ada tiket sebelumnya
         } else {
             // Ambil bulan dari tiket terakhir (4 sampai 9 adalah YYYYMM)
             $lastTicketMonth = substr($query['no_tiket'], 3, 6);
@@ -79,16 +79,70 @@ class Client_model extends CI_Model
             }
         }
 
-        // Format nomor urut menjadi 4 digit
+        // Format nomor urut menjadi 4 digit (misalnya: 0001, 0002, dst.)
         $no_urut = sprintf('%04d', $no_urut);
 
-        // Gabungkan prefix 'TIC', bulan dan tahun saat ini (YYYYMM), dan nomor urut
+        $no_klien = $this->getNoKlien($user_id);
+        // Gabungkan nomor urut dengan prefix 'TIC', no klien, dan bulan/tahun
+        $no_tiket = 'TIC' . $no_klien . $currentMonth . $no_urut;
+
+
 
         // Selesaikan transaksi
         $this->db->trans_complete();
 
-        return $no_urut;
+        return $no_tiket; // Kembalikan nomor tiket lengkap
     }
+
+    // public function getNoUrut($user_id)
+    // {
+    //     // Dapatkan bulan dan tahun saat ini
+    //     $currentMonth = date('Ym'); // Format: YYYYMM
+
+    //     // Transaksi untuk mencegah race condition
+    //     $this->db->trans_start();
+
+    //     // Ambil nomor tiket terakhir yang terbesar untuk user yang sama
+    //     $query = $this->db->query(
+    //         "SELECT no_tiket 
+    //          FROM pelaporan 
+    //          WHERE user_id = ? 
+    //          ORDER BY no_tiket DESC 
+    //          LIMIT 1 FOR UPDATE",
+    //         [$user_id]
+    //     )->row_array();
+
+    //     // Debugging: Log hasil query
+    //     log_message('debug', 'Tiket terakhir dari query: ' . json_encode($query));
+
+    //     // Jika tidak ada tiket sebelumnya, mulai dari 0001
+    //     if ($query == NULL || empty($query['no_tiket'])) {
+    //         $no_urut = 1;
+    //     } else {
+    //         // Ambil bulan dari tiket terakhir (4 sampai 9 adalah YYYYMM)
+    //         $lastTicketMonth = substr($query['no_tiket'], 3, 6);
+
+    //         // Cek apakah bulan sekarang berbeda dengan bulan terakhir pada tiket
+    //         if ($lastTicketMonth != $currentMonth) {
+    //             // Reset ke 0001 jika bulan sudah berubah
+    //             $no_urut = 1;
+    //         } else {
+    //             // Jika masih bulan yang sama, tambahkan nomor urut
+    //             $lastNoUrut = (int) substr($query['no_tiket'], -4); // Ambil 4 digit terakhir
+    //             $no_urut = $lastNoUrut + 1;
+    //         }
+    //     }
+
+    //     // Format nomor urut menjadi 4 digit
+    //     $no_urut = sprintf('%04d', $no_urut);
+
+    //     // Gabungkan prefix 'TIC', bulan dan tahun saat ini (YYYYMM), dan nomor urut
+
+    //     // Selesaikan transaksi
+    //     $this->db->trans_complete();
+
+    //     return $no_urut;
+    // }
 
 
 
