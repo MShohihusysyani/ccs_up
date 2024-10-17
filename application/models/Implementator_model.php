@@ -329,7 +329,7 @@ class Implementator_model extends CI_Model
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('t1_forward.user_id', $user_id);
         $this->db->where('t1_forward.status', 'PENDING');
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where('pelaporan.status_ccs', 'HANDLED 2');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         return $this->db->get()->result_array();

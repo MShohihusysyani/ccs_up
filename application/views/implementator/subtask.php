@@ -83,7 +83,7 @@
                                                     <td><?= tanggal_indo($st['waktu_pelaporan']) ?></td>
                                                     <td><?= $st['nama']; ?></td>
                                                     <!-- <td><?= $st['perihal']; ?></td> -->
-                                                    <td><?= $st['impact']; ?></td>
+                                                    <!-- <td><?= $st['impact']; ?></td> -->
                                                     <!-- <td> <a href="<?= base_url('assets/files/' . $st['file']); ?>"><?= $st['file']; ?></a>
                                                     </td> -->
                                                     <td><?= $st['kategori']; ?></td>
