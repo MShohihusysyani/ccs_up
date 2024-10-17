@@ -229,15 +229,14 @@ class Klien extends CI_Controller
     public function pengajuan()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-
         $this->load->model('Temp_model', 'temp_model');
         $data['category'] = $this->category_model->getCategory();
         $data['tiket_temp'] = $this->temp_model->getTiketTempKlien();
+
         $id_user = $this->session->userdata('id_user');
 
-        // Ambil nomor tiket dari model
-        $data['tiket'] = $this->client_model->getNoUrut($id_user); // Langsung dapatkan tiket lengkap
-
+        // Ambil nomor tiket lengkap dari model (sudah termasuk no_klien, tahun, bulan, dan nomor urut)
+        $data['tiket'] = $this->client_model->getNoUrut($id_user);
 
         // Load views
         $this->load->view('templates/header');
@@ -245,6 +244,7 @@ class Klien extends CI_Controller
         $this->load->view('klien/pengajuan', $data);
         $this->load->view('templates/footer');
     }
+
 
     // public function pengajuan()
     // {
