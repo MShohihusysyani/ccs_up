@@ -364,7 +364,7 @@ class Supervisor extends CI_Controller
 
         $list = $this->datatable_model->get_datatables();
         $data = array();
-        $no = $_POST['start'];
+        $no = isset($_POST['start']) ? $_POST['start'] : 0; // Nilai default 0 jika tidak ada
 
         foreach ($list as $dp) {
             $no++;
@@ -375,7 +375,7 @@ class Supervisor extends CI_Controller
             $row[] = $dp->nama;
             $row[] = $dp->judul;
             $row[] = $dp->kategori;
-            $row[] = $dp->tags ? '<span class="label label-info">' . $dp['tags'] . '</span>' : '';
+            $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
 
             // Proses nilai prioritas di server-side
             if ($dp->priority == 'Low') {
@@ -451,7 +451,7 @@ class Supervisor extends CI_Controller
         }
 
         $output = array(
-            "draw" => $_POST['draw'],
+            "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
             "recordsTotal" => $this->datatable_model->count_all(),
             "recordsFiltered" => $this->datatable_model->count_filtered(),
             "data" => $data,
