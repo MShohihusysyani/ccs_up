@@ -69,19 +69,35 @@ class Pelaporan_model extends CI_Model
         $this->db->query($query);
     }
 
-    // fungsi cek klien sudah rating atau belum
     public function has_unrated_finished_tickets($user_id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
         $this->db->where('user_id', $user_id);
-        $this->db->where('status_ccs', 'FINISH'); // Status tiket yang sudah selesai
-        $this->db->where('rating', 0); // Tiket yang belum diberi rating
+        $this->db->where('status_ccs', 'FINISHED'); // Status tiket yang sudah selesai
+        $this->db->group_start();
+        $this->db->where('rating', '0');
+        $this->db->or_where('rating IS NULL');
+        $this->db->group_end();
         $query = $this->db->get('pelaporan');
 
         return $query->num_rows() > 0;
     }
+
+    // fungsi cek klien sudah rating atau belum
+    // public function has_unrated_finished_tickets($user_id)
+    // {
+    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+    //     $user_id = $this->session->userdata('id_user');
+
+    //     $this->db->where('user_id', $user_id);
+    //     $this->db->where('status_ccs', 'FINISHED'); // Status tiket yang sudah selesai
+    //     $this->db->where_in('rating', ['0', 'Null']); // Tiket yang belum diberi rating
+    //     $query = $this->db->get('pelaporan');
+
+    //     return $query->num_rows() > 0;
+    // }
 
     function updateCP($id_pelaporan, $data)
     {
