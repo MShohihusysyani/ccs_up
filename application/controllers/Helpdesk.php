@@ -268,7 +268,7 @@ class Helpdesk extends CI_Controller
 
         $list = $this->serversidehd_model->get_datatables();
         $data = array();
-        $no = $_POST['start'];
+        $no = isset($_POST['start']) ? $_POST['start'] : 0;
 
         foreach ($list as $dp) {
             $no++;
@@ -279,7 +279,7 @@ class Helpdesk extends CI_Controller
             $row[] = $dp->nama;
             $row[] = $dp->judul;
             $row[] = $dp->kategori;
-            $row[] = $dp->tags ? '<span class="label label-info">' . $dp['tags'] . '</span>' : '';
+            $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
 
             // Proses nilai prioritas di server-side
             if ($dp->priority == 'Low') {
@@ -355,7 +355,7 @@ class Helpdesk extends CI_Controller
         }
 
         $output = array(
-            "draw" => $_POST['draw'],
+            "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
             "recordsTotal" => $this->serversidehd_model->count_all(),
             "recordsFiltered" => $this->serversidehd_model->count_filtered(),
             "data" => $data,
