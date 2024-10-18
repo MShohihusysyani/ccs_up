@@ -152,6 +152,44 @@ class Helpdesk extends CI_Controller
         }
     }
 
+    public function upload_tiket()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '25600';
+            $config['upload_path'] = './assets/files/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/files/' . $photo);
+                $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
+        }
+    }
+
     public function fungsi_delete_temp($id)
     {
         $result = $this->temp_model->hapus_temp($id);

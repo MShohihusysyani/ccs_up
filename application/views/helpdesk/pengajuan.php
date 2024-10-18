@@ -322,45 +322,6 @@
         });
     });
 </script>
-<!-- <script>
-    $(document).ready(function() {
-        // Trigger when a client is selected from the modal
-        $('.pilih-klien').on('click', function() {
-            var user_id = $(this).data('id-namaklien'); // Get the user_id from the data attribute
-            var nama_klien = $(this).data('nama-klien'); // Get the nama_klien from the data attribute
-
-            // Populate the form fields with client data
-            $('#klien_id').val(user_id);
-            $('#nama_klien').val(nama_klien);
-
-            if (user_id !== "") {
-                // AJAX request to get the No Tiket
-                $.ajax({
-                    url: '<?= base_url("helpdesk/get_no_tiket"); ?>', // URL to your controller
-                    type: 'POST',
-                    data: {
-                        user_id: user_id
-                    },
-                    success: function(response) {
-                        $('#no_tiket').val(response); // Fill in the No Tiket field
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error); // Handle any errors
-                    }
-                });
-            } else {
-                // Clear fields if no client is selected
-                $('#no_tiket').val('');
-                $('#klien_id').val('');
-                $('#nama_klien').val('');
-            }
-
-            // Close the modal after selection
-            $('#defaultModalNamaKlien').modal('hide');
-        });
-    });
-</script> -->
-
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilihKategori', function() {
@@ -393,7 +354,7 @@
                 'bulletedList', 'numberedList', 'todoList', '|',
                 'fontSize', 'fontFamily', 'fontColor', '', '', '|',
                 'alignment', '|',
-                'insertTable', 'mediaEmbed', '', '', '|',
+                'uploadImage', 'ckfinder', '|',
                 'undo', 'redo',
             ],
             shouldNotGroupWhenFull: true
@@ -503,8 +464,12 @@
                 }
             }
         },
-        mediaEmbed: {
-            previewsInData: true
+        // uploadImage: {
+        //     types: ['jpeg', 'png', 'gif', 'bmp', 'webp', 'jpg'],
+        //     previewsInData: true
+        // },
+        ckfinder: {
+            uploadUrl: "<?= base_url('helpdesk/upload_tiket') ?>"
         },
         // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         mention: {
@@ -558,6 +523,7 @@
             'PasteFromOfficeEnhanced',
             'CaseChange'
         ]
+
     });
     RemoveFormat: [
         'paragraph'

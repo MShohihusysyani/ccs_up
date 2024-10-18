@@ -421,7 +421,7 @@ class Helpdesk_model extends CI_Model
 
         // Set the timezone and get the current date
         date_default_timezone_set('Asia/Jakarta');
-        $now = date('Y-m-d');
+        $now = date('Y-m-d H:i:s');
 
         // Retrieve data from tiket_temp for the given user
         $this->db->select('user_id, perihal, file, nama, no_tiket, kategori, tags, judul');
