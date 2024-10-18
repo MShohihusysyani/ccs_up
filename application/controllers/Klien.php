@@ -67,7 +67,7 @@ class Klien extends CI_Controller
             redirect('klien/pengajuan');
         } else {
             // Retrieve the ticket number from the form input
-            $no_tiket = $this->input->post('no_tiket');
+            $no_tiket = trim($this->input->post('no_tiket'));
 
             // Check if the ticket number already exists in the database
             $this->db->where('no_tiket', $no_tiket);

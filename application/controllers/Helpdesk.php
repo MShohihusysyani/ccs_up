@@ -126,7 +126,7 @@ class Helpdesk extends CI_Controller
                 }
 
                 $data = [
-                    'no_tiket' => $this->input->post('no_tiket'),
+                    'no_tiket' => trim($this->input->post('no_tiket')),
                     'perihal'  => $this->input->post('perihal'),
                     'file'     => $photo,
                     'user_id'  => $this->input->post('klien_id'),
