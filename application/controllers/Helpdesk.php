@@ -644,7 +644,7 @@ class Helpdesk extends CI_Controller
 
         if ($photo) {
             $config['allowed_types'] = 'jpeg|jpg|png|docx|pdf|xlsx|csv|txt|zip|rar';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/files/';
 
             $this->load->library('upload', $config);
@@ -871,13 +871,11 @@ class Helpdesk extends CI_Controller
             return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
         }, $data);
 
-        // Insert the data into the database
         $this->pelaporan_model->updateHD($id, $data);
 
         // Clear session images after successful finish
         $this->session->unset_userdata('uploaded_images');
 
-        // Set a success message and redirect to the submission page
         $this->session->set_flashdata('pesan', 'Successfully Finish!');
         redirect('helpdesk/pelaporan');
     }

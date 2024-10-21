@@ -74,7 +74,6 @@ class Klien extends CI_Controller
             $existing_ticket = $this->db->get('tiket_temp')->row();
 
             if ($existing_ticket) {
-                // If the ticket number already exists, set an error message and redirect back
                 $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Tiket sudah ada.');
                 redirect('klien/pengajuan');
             } else {
@@ -92,7 +91,6 @@ class Klien extends CI_Controller
                     if ($this->upload->do_upload('file')) {
                         $photo = $this->upload->data('file_name');
                     } else {
-                        // Log the error and set a flash message for failed upload
                         log_message('error', 'File upload error: ' . $this->upload->display_errors());
                         $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
                         redirect('klien/pengajuan');

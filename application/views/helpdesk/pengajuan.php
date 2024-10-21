@@ -1,3 +1,12 @@
+<style>
+    /* Paksa scrollbar vertikal selalu muncul pada CKEditor 5 */
+    .ck-editor__editable_inline {
+        height: 200px;
+        /* Setara dengan 10 baris */
+        overflow-y: scroll;
+        /* Paksa scrollbar vertikal selalu muncul */
+    }
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="alert alert-lg alert-info"> <i class="material-icons">report</i>
