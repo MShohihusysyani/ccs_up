@@ -235,6 +235,15 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select id="impact" name="impact" class="form-control">
+                                    <option value="">-- Choose Impact--</option>
+                                    <option value="kritikal">Kritikal</option>
+                                    <option value="material">Material</option>
+                                </select>
+                            </div>
+                        </div>
                         <!-- <div class="form-group">
                             <div class="form-line">
                                 <select name="kategori" id="kategori" class="form-control">

@@ -471,13 +471,15 @@ class Supervisor extends CI_Controller
         $priority     = $this->input->post('priority');
         $maxday       = $this->input->post('maxday');
         $tags         = $this->input->post('tags');
+        $impact       = $this->input->post('impact');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
             'status_ccs' => $status_ccs,
             'priority'   => $priority,
             'kategori'   => $kategori,
             'maxday'     => $maxday,
-            'tags'       => $tags
+            'tags'       => $tags,
+            'impact'     => $impact,
 
         );
         $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
