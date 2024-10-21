@@ -438,22 +438,23 @@ class Export extends CI_Controller
 
         $sheet->setCellValue('A2', $periode_text);
         $sheet->setCellValue('A3', "NO");
-        $sheet->setCellValue('B3', "TANGGAL");
-        $sheet->setCellValue('C3', "NO TIKET");
-        $sheet->setCellValue('D3', "NAMA KLIEN");
-        $sheet->setCellValue('E3', "PERIHAL");
-        $sheet->setCellValue('F3', "TAGS");
-        $sheet->setCellValue('G3', "KATEGORI");
-        $sheet->setCellValue('H3', "PRIORITY");
-        $sheet->setCellValue('I3', "IMPACT");
-        $sheet->setCellValue('J3', "MAXDAY");
-        $sheet->setCellValue('K3', "STATUS CCS");
-        $sheet->setCellValue('L3', "HANDLE BY");
+        $sheet->setCellValue('B3', "No Tiket");
+        $sheet->setCellValue('C3', "Judul");
+        $sheet->setCellValue('D3', "Perihal");
+        $sheet->setCellValue('E3', "BPR/Klien");
+        $sheet->setCellValue('F3', "Kategori");
+        $sheet->setCellValue('G3', "Priority");
+        $sheet->setCellValue('H3', "Maxday");
+        $sheet->setCellValue('I3', "Handled By");
+        $sheet->setCellValue('J3', "Status");
+        $sheet->setCellValue('K3', "Created at");
+        $sheet->setCellValue('L3', "Finish at");
+        $sheet->setCellValue('M3', "Rating");
 
         $sheet->getStyle('A2')->getFont()->setBold(true);
         $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->mergeCells('A2:E2');
-        $sheet->getStyle('A3:L3')->applyFromArray($style_col);
+        $sheet->getStyle('A3:M3')->applyFromArray($style_col);
 
         $sheet->getRowDimension('1')->setRowHeight(20);
         $sheet->getRowDimension('2')->setRowHeight(20);
@@ -477,20 +478,21 @@ class Export extends CI_Controller
 
         foreach ($query as $data) {
             $sheet->setCellValue('A' . $row, $no);
-            $sheet->setCellValue('B' . $row, tanggal_indo($data->waktu_pelaporan));
-            $sheet->setCellValue('C' . $row, $data->no_tiket);
-            $sheet->setCellValue('D' . $row, $data->nama);
-            $sheet->setCellValue('E' . $row, $data->perihal);
-            $sheet->setCellValue('F' . $row, $data->tags);
-            $sheet->setCellValue('G' . $row, $data->kategori);
-            $sheet->setCellValue('H' . $row, $data->priority);
-            $sheet->setCellValue('I' . $row, $data->impact);
-            $sheet->setCellValue('J' . $row, $data->maxday);
-            $sheet->setCellValue('K' . $row, $data->status_ccs);
-            $sheet->setCellValue('L' . $row, $data->handle_by);
+            $sheet->setCellValue('B' . $row, $data->no_tiket);
+            $sheet->setCellValue('C' . $row, $data->judul);
+            $sheet->setCellValue('D' . $row, $data->perihal);
+            $sheet->setCellValue('E' . $row, $data->nama);
+            $sheet->setCellValue('F' . $row, $data->kategori);
+            $sheet->setCellValue('G' . $row, $data->priority);
+            $sheet->setCellValue('H' . $row, $data->maxday);
+            $sheet->setCellValue('I' . $row, $data->handle_by);
+            $sheet->setCellValue('J' . $row, $data->status_ccs);
+            $sheet->setCellValue('K' . $row, tanggal_indo($data->waktu_pelaporan));
+            $sheet->setCellValue('L' . $row, tanggal_indo($data->waktu_approve));
+            $sheet->setCellValue('M' . $row, $data->rating);
 
             // Apply style untuk setiap sel data
-            $sheet->getStyle('A' . $row . ':L' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('A' . $row . ':M' . $row)->applyFromArray($style_row);
 
             $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
@@ -510,18 +512,18 @@ class Export extends CI_Controller
             $row++;
         }
 
-        $sheet->getColumnDimension('A')->setWidth(5);
-        $sheet->getColumnDimension('B')->setWidth(15);
-        $sheet->getColumnDimension('C')->setWidth(20);
-        $sheet->getColumnDimension('D')->setWidth(40);
-        $sheet->getColumnDimension('E')->setWidth(235);
-        $sheet->getColumnDimension('F')->setWidth(30);
-        $sheet->getColumnDimension('G')->setWidth(83);
-        $sheet->getColumnDimension('H')->setWidth(10);
-        $sheet->getColumnDimension('I')->setWidth(10);
-        $sheet->getColumnDimension('J')->setWidth(10);
-        $sheet->getColumnDimension('K')->setWidth(15);
-        $sheet->getColumnDimension('L')->setWidth(10);
+        // $sheet->getColumnDimension('A')->setWidth(5);
+        // $sheet->getColumnDimension('B')->setWidth(15);
+        // $sheet->getColumnDimension('C')->setWidth(20);
+        // $sheet->getColumnDimension('D')->setWidth(40);
+        // $sheet->getColumnDimension('E')->setWidth(235);
+        // $sheet->getColumnDimension('F')->setWidth(30);
+        // $sheet->getColumnDimension('G')->setWidth(83);
+        // $sheet->getColumnDimension('H')->setWidth(10);
+        // $sheet->getColumnDimension('I')->setWidth(10);
+        // $sheet->getColumnDimension('J')->setWidth(10);
+        // $sheet->getColumnDimension('K')->setWidth(15);
+        // $sheet->getColumnDimension('L')->setWidth(10);
 
         // Set orientasi halaman dan judul sheet
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
