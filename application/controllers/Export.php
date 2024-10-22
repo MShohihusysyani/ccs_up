@@ -183,17 +183,17 @@ class Export extends CI_Controller
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal</th>
                     <th>No Tiket</th>
-                    <th>Nama Klien</th>
-                    <th>Perihal</th>
-                    <th>Tags</th>
+                    <th>Judul</th>
+    
+                    <th>BPR/Klien</th>
                     <th>Kategori</th>
                     <th>Priority</th>
-                    <th>Impact</th>
                     <th>Maxday</th>
-                    <th>Status CCS</th>
                     <th>Handle By</th>
+                    <th>Status</th>
+                    <th>Create at</th>
+                    <th>Finish at</th>
                 </tr>
             </thead>
             <tbody>
@@ -202,20 +202,36 @@ class Export extends CI_Controller
         // Isi tabel dengan data
         $no = 1;
         foreach ($filteredData as $data) {
+            // Initialize an array to hold the handler names
+            $handleBy = [];
+
+            // Check and add handle_by, handle_by2, and handle_by3 to the array
+            if (!empty($data['handle_by'])) {
+                $handleBy[] = $data['handle_by'];
+            }
+            if (!empty($data['handle_by2'])) {
+                $handleBy[] = $data['handle_by2'];
+            }
+            if (!empty($data['handle_by3'])) {
+                $handleBy[] = $data['handle_by3'];
+            }
+
+            // Join handlers with a comma
+            $handleByString = implode(', ', $handleBy);
             $tableHtml .= '
             <tr>
                 <td>' . $no . '</td>
-                <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
                 <td>' . $data['no_tiket'] . '</td>
+                <td>' . $data['judul'] . '</td>
+                
                 <td>' . $data['nama'] . '</td>
-                <td>' . $data['perihal'] . '</td>
-                <td>' . $data['tags'] . '</td>
                 <td>' . $data['kategori'] . '</td>
                 <td>' . $data['priority'] . '</td>
-                <td>' . $data['impact'] . '</td>
                 <td>' . $data['maxday'] . '</td>
+                <td>' . $handleByString . '</td>
                 <td>' . $data['status_ccs'] . '</td>
-                <td>' . $data['handle_by'] . '</td>
+                <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
+                <td>' . tanggal_indo($data['waktu_approve']) . '</td>
             </tr>
         ';
             $no++;
@@ -411,7 +427,7 @@ class Export extends CI_Controller
             ]
         ];
 
-        $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
+        $sheet->setCellValue('A1', "CCS | RINCIAN PELAPORAN");
         $sheet->mergeCells('A1:E1');
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle('A1')->getFont()->setSize(15);
@@ -447,14 +463,14 @@ class Export extends CI_Controller
         $sheet->setCellValue('H3', "Maxday");
         $sheet->setCellValue('I3', "Handled By");
         $sheet->setCellValue('J3', "Status");
-        $sheet->setCellValue('K3', "Created at");
-        $sheet->setCellValue('L3', "Finish at");
-        $sheet->setCellValue('M3', "Rating");
+        $sheet->setCellValue('K3', "Rating");
+        $sheet->setCellValue('L3', "Create at");
+        $sheet->setCellValue('M3', "Finish at");
 
         $sheet->getStyle('A2')->getFont()->setBold(true);
         $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->mergeCells('A2:E2');
-        $sheet->getStyle('A3:M3')->applyFromArray($style_col);
+        // $sheet->getStyle('A3:M3')->applyFromArray($style_col);
 
         $sheet->getRowDimension('1')->setRowHeight(20);
         $sheet->getRowDimension('2')->setRowHeight(20);
@@ -485,14 +501,26 @@ class Export extends CI_Controller
             $sheet->setCellValue('F' . $row, $data->kategori);
             $sheet->setCellValue('G' . $row, $data->priority);
             $sheet->setCellValue('H' . $row, $data->maxday);
-            $sheet->setCellValue('I' . $row, $data->handle_by);
+
+            $handleBy = [];
+
+            if (!empty($data->handle_by)) {
+                $handleBy[] = $data->handle_by;
+            }
+            if (!empty($data->handle_by2)) {
+                $handleBy[] = $data->handle_by2;
+            }
+            if (!empty($data->handle_by3)) {
+                $handleBy[] = $data->handle_by3;
+            }
+            $sheet->setCellValue('I' . $row, implode(', ', $handleBy));
             $sheet->setCellValue('J' . $row, $data->status_ccs);
-            $sheet->setCellValue('K' . $row, tanggal_indo($data->waktu_pelaporan));
-            $sheet->setCellValue('L' . $row, tanggal_indo($data->waktu_approve));
-            $sheet->setCellValue('M' . $row, $data->rating);
+            $sheet->setCellValue('K' . $row, $data->rating);
+            $sheet->setCellValue('L' . $row, tanggal_indo($data->waktu_pelaporan));
+            $sheet->setCellValue('M' . $row, tanggal_indo($data->waktu_approve));
 
             // Apply style untuk setiap sel data
-            $sheet->getStyle('A' . $row . ':M' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('A' . $row . ':M' . $row)->applyFromArray($style_row);
 
             $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);

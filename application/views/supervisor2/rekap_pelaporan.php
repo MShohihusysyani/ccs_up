@@ -114,8 +114,8 @@
                                     <th>No Tiket</th>
                                     <th>Nama</th>
                                     <th>Judul</th>
-                                    <th>Tags</th>
                                     <th>Kategori</th>
+                                    <th>Tags</th>
                                     <th>Priority</th>
                                     <th>Max Day</th>
                                     <th>Status CCS</th>

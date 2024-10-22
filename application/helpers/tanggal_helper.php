@@ -119,7 +119,7 @@ if (!function_exists('tanggal')) {
 function tanggal_indo($tanggal)
 {
     if (empty($tanggal)) {
-        return 'Invalid date format';
+        return '-';
     }
 
     $bulan = array(
@@ -146,13 +146,13 @@ function tanggal_indo($tanggal)
 
     // Memeriksa apakah $split memiliki setidaknya 3 elemen
     if (count($split) < 3) {
-        return 'Invalid date format';
+        return '-';
     }
 
     // Memastikan $split[1] adalah bulan yang valid
     $bulan_index = (int)$split[1];
     if ($bulan_index < 1 || $bulan_index > 12) {
-        return 'Invalid date format';
+        return '-';
     }
 
     // Format tanggal Indonesia
