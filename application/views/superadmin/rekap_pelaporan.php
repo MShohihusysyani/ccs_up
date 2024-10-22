@@ -72,21 +72,20 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mx-sm-3">
-                                <button type="submit" class="btn btn-primary btn-sm m-l-15 waves-effect">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-sm waves-effect">
                                     <i class="material-icons">search</i><span>Filter</span>
                                 </button>
-                            </div>
-                            <div class="form-group mx-sm-3">
-                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm m-l-15 waves-effect">
-                                    <i class="material-icons">restart_alt</i> <span>Reset Filter</span>
+
+                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                    <i class="material-icons">restart_alt</i><span>Reset Filter</span>
+                                </button>
+
+                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
+                                    <i class="material-icons">sync</i><span>Semua Data</span>
                                 </button>
                             </div>
 
-                            <div class="form-group mx-sm-3">
-                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm m-l-15 waves-effect">
-                                    <i class="material-icons">sync</i><span>Semua Data</span></button>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -255,10 +254,14 @@
             e.preventDefault();
             table.draw(); // Redraw the DataTable based on new filters
         });
-
+        // Handle "Reset Filter" button click
+        $('#resetFilterButton').on('click', function() {
+            $('#filterFormContent')[0].reset();
+            table.draw(); // Redraw the DataTable to reflect reset filters
+        });
         // Handle "Semua Data" button click
         $('#semuaDataButton').on('click', function() {
-            $('#filterForm')[0].reset();
+            $('#filterFormContent')[0].reset();
             table.ajax.reload(); // Reload DataTables to show all data
         });
 
@@ -271,11 +274,6 @@
             exportData('excel');
         });
 
-        // Handle "Reset Filter" button click
-        $('#resetFilterButton').on('click', function() {
-            $('#filterForm')[0].reset();
-            table.draw(); // Redraw the DataTable to reflect reset filters
-        });
 
         function exportData(format) {
             var filters = {
