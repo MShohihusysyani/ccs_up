@@ -61,7 +61,7 @@
                             <label for="kategori">Kategori</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                                    <input value="<?= $dp['kategori']; ?>" type="text" id="kategori" name="kategori" class="form-control" readonly>
                                 </div>
                             </div>
 
