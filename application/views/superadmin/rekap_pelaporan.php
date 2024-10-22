@@ -5,6 +5,9 @@
             <div class="card">
                 <div class="header">
                     <h2>FILTER</h2>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
+                        Filter
+                    </button>
                 </div>
 
                 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
@@ -12,8 +15,8 @@
                 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
                 <div class="body">
-                    <div class="row clearfix">
-                        <form id="filterForm">
+                    <div class="row clearfix collapse" id="filterForm">
+                        <form id="filterFormContent">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
                                 <label for="filter_tanggal_awal">Dari Tanggal</label>
                             </div>
@@ -306,5 +309,14 @@
                 form.remove();
             }, 100);
         }
+    });
+</script>
+
+<!-- expandable -->
+<script>
+    $(document).ready(function() {
+        $('#filterForm').collapse({
+            toggle: false
+        });
     });
 </script>
