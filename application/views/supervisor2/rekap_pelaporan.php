@@ -26,9 +26,9 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
-                    <h2>FILTER</h2>
+                    <!-- <h2>FILTER</h2> -->
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
-                        Filter
+                        <i class="material-icons">filter_alt</i><span>Filter</span>
                     </button>
                 </div>
 
@@ -122,7 +122,7 @@
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-sm waves-effect">
-                                    <i class="material-icons">search</i><span>Filter</span>
+                                    <i class="material-icons">filter_alt</i><span>Filter</span>
                                 </button>
 
                                 <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
