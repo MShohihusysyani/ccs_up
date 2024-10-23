@@ -277,7 +277,7 @@ class Implementator extends CI_Controller
             'maxday'     => $this->input->post('maxday'),
             'catatan_finish' => $this->input->post('catatan_finish'),
             'status'     => 'Solved',
-            'status_ccs' => 'CLOSE'
+            'status_ccs' => 'CLOSED'
         ];
 
         // Remove unwanted HTML tags from data
