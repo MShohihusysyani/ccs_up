@@ -81,7 +81,7 @@ class Implementator extends CI_Controller
 
         $list = $this->serversideteknisi_model->get_datatables();
         $data = array();
-        $no = $_POST['start'];
+        $no = isset($_POST['start']) ? $_POST['start'] : 0;
 
         foreach ($list as $dp) {
             $no++;
@@ -92,7 +92,7 @@ class Implementator extends CI_Controller
             $row[] = $dp->nama;
             $row[] = $dp->judul;
             $row[] = $dp->kategori;
-            $row[] = $dp->tags ? '<span class="label label-info">' . $dp['tags'] . '</span>' : '';
+            $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
 
             // Proses nilai prioritas di server-side
             if ($dp->priority == 'Low') {
