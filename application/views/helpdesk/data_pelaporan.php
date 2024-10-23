@@ -284,7 +284,7 @@
 
         // Handle "Semua Data" button click
         $('#semuaDataButton').on('click', function() {
-            $('#filterForm')[0].reset();
+            $('#filterFormContent')[0].reset();
             table.ajax.reload(); // Reload DataTables to show all data
         });
 
@@ -299,7 +299,7 @@
 
         // Handle "Reset Filter" button click
         $('#resetFilterButton').on('click', function() {
-            $('#filterForm')[0].reset();
+            $('#filterFormContent')[0].reset();
             table.draw(); // Redraw the DataTable to reflect reset filters
         });
 
