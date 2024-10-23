@@ -26,71 +26,33 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
-                    <!-- <h2>FILTER</h2> -->
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
                         <i class="material-icons">filter_alt</i><span>Filter</span>
                     </button>
                 </div>
 
-                <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
-                <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
-                <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-
                 <div class="body">
                     <div class="row clearfix collapse" id="filterForm">
-                        <form id="filterFormContent">
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
-                                <label for="filter_tanggal_awal">Dari Tanggal</label>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <form id="filterFormContent" class="row">
+                            <!-- Kolom pertama (6 grid) -->
+                            <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
+                                    <label for="filter_tanggal_awal">Dari Tanggal</label>
                                     <div class="form-line">
                                         <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control" required>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
-                                <label for="filter_tanggal_akhir">Sampai Tanggal</label>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
+                                    <label for="nama_klien">Pilih Klien</label>
                                     <div class="form-line">
-                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
-                                            name="nama_klien" id="nama_klien" placeholder="Pilih Klien"
-                                            class="form-control" value="" autocomplete="off">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
                                         <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser"
-                                            name="nama_user" id="nama_user" placeholder="Pilih Petugas"
-                                            class="form-control" value="" autocomplete="off">
-                                        <input type="hidden" id="id" name="id">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <div class="form-group">
+                                    <label for="status_ccs">Pilih Status</label>
                                     <div class="form-line">
                                         <select id="status_ccs" name="status_ccs" class="form-control">
                                             <option value="">-- Pilih Status --</option>
@@ -105,8 +67,25 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <!-- Kolom kedua (6 grid) -->
+                            <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
+                                    <label for="filter_tanggal_akhir">Sampai Tanggal</label>
+                                    <div class="form-line">
+                                        <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nama_user">Pilih Petugas</label>
+                                    <div class="form-line">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser" name="nama_user" id="nama_user" placeholder="Pilih Petugas" class="form-control" autocomplete="off">
+                                        <input type="hidden" id="id" name="id">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="rating">Pilih Rating</label>
                                     <div class="form-line">
                                         <select id="rating" name="rating" class="form-control">
                                             <option value="">-- Pilih Rating --</option>
@@ -120,24 +99,27 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-sm waves-effect">
-                                    <i class="material-icons">filter_alt</i><span>Filter</span>
-                                </button>
+                            <!-- Tombol Aksi -->
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-sm waves-effect">
+                                        <i class="material-icons">filter_alt</i><span>Filter</span>
+                                    </button>
 
-                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
-                                    <i class="material-icons">restart_alt</i><span>Reset Filter</span>
-                                </button>
+                                    <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                        <i class="material-icons">restart_alt</i><span>Reset Filter</span>
+                                    </button>
 
-                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
-                                    <i class="material-icons">sync</i><span>Semua Data</span>
-                                </button>
+                                    <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
+                                        <i class="material-icons">sync</i><span>Semua Data</span>
+                                    </button>
+                                </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
+
 
             <div class="card">
                 <div class="header">
@@ -391,9 +373,8 @@
                 tanggal_akhir: $('#tanggal_akhir').val(),
                 nama_klien: $('#nama_klien').val(),
                 nama_user: $('#nama_user').val(),
-                rating: $('#rating').val(),
-                tags: $('#tags').val(),
-                status_ccs: $('#status_ccs').val()
+                status_ccs: $('#status_ccs').val(),
+                rating: $('#rating').val()
             };
 
             var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel'); ?>';

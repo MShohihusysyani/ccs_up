@@ -428,7 +428,7 @@ class Export extends CI_Controller
         ];
 
         $sheet->setCellValue('A1', "CCS | RINCIAN PELAPORAN");
-        $sheet->mergeCells('A1:E1');
+        $sheet->mergeCells('A1:L1');
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle('A1')->getFont()->setSize(15);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
@@ -443,7 +443,8 @@ class Export extends CI_Controller
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $nama_klien = $this->input->post('nama_klien');
-        $tags = $this->input->post('tags');
+        $nama_user = $this->input->post('nama_user');
+        $rating = $this->input->post('rating');
         $status_ccs = $this->input->post('status_ccs');
 
         // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
@@ -469,7 +470,7 @@ class Export extends CI_Controller
 
         $sheet->getStyle('A2')->getFont()->setBold(true);
         $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->mergeCells('A2:E2');
+        $sheet->mergeCells('A2:L2');
         // $sheet->getStyle('A3:M3')->applyFromArray($style_col);
 
         $sheet->getRowDimension('1')->setRowHeight(20);
@@ -487,7 +488,9 @@ class Export extends CI_Controller
         //     $query = $this->pelaporan_model->getDate();
         // }
 
-        $query = $this->pelaporan_model->getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien, $tags, $status_ccs);
+        $query = $this->pelaporan_model->getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien,  $nama_user,  $status_ccs, $rating);
+        // var_dump($query);
+        // die();
 
         $no = 1;
         $row = 4;
