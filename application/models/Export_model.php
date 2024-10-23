@@ -3,7 +3,7 @@
 class Export_model extends CI_Model
 {
 
-    public function getPelaporan($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
+    public function getPelaporan($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
     {
         $this->db->select('*');
         $this->db->from('pelaporan');
@@ -12,20 +12,29 @@ class Export_model extends CI_Model
             $this->db->where('waktu_pelaporan >=', $tanggal_awal);
             $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
         }
-        if ($status_ccs) {
-            $this->db->where('status_ccs', $status_ccs);
-        }
+
         if ($nama_klien) {
             $this->db->like('nama', $nama_klien);
         }
-        if ($tags) {
-            $this->db->where('tags', $tags);
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
+        }
+
+        if ($status_ccs) {
+            $this->db->where('status_ccs', $status_ccs);
+        }
+        if (!empty($tags)) {
+            $this->db->where('rating', $tags);
         }
 
         return $this->db->get()->result_array();
     }
 
-    public function getAllPelaporan($status_ccs = null, $nama_klien = null, $tags = null)
+    public function getAllPelaporan($nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
     {
         $this->db->select('*');
         $this->db->from('pelaporan');
@@ -36,8 +45,15 @@ class Export_model extends CI_Model
         if ($nama_klien) {
             $this->db->like('nama', $nama_klien);
         }
-        if ($tags) {
-            $this->db->like('tags', $tags);
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
+        }
+        if (!empty($tags)) {
+            $this->db->where('rating', $tags);
         }
 
         $query = $this->db->get();

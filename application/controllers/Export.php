@@ -94,20 +94,21 @@ class Export extends CI_Controller
         $this->load->model('Export_model', 'export_model');
 
         // Retrieve POST data
-        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_awal  = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
-        $status_ccs = $this->input->post('status_ccs');
-        $nama_klien = $this->input->post('nama_klien');
-        $tags = $this->input->post('tags');
+        $status_ccs    = $this->input->post('status_ccs');
+        $nama_klien    = $this->input->post('nama_klien');
+        $nama_user     = $this->input->post('nama_user');
+        $rating        = $this->input->post('rating');
 
         // Get filtered data
         if (empty($tanggal_awal) && empty($tanggal_akhir)) {
             // Fetch all data if no date range is selected
-            $filteredData = $this->export_model->getAllPelaporan($status_ccs, $nama_klien, $tags);
+            $filteredData = $this->export_model->getAllPelaporan($nama_klien, $nama_user, $status_ccs, $rating);
             $periode = "Semua Data";
         } else {
             // Fetch data based on the selected date range
-            $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+            $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir,  $nama_klien, $nama_user, $status_ccs, $rating);
             $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
         }
 

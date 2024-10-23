@@ -38,59 +38,26 @@
 
                 <div class="body">
                     <div class="row clearfix collapse" id="filterForm">
-                        <form id="filterFormContent">
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
-                                <label for="filter_tanggal_awal">Dari Tanggal</label>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <form id="filterFormContent" class="row">
+                            <!-- Kolom pertama (6 grid) -->
+                            <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
+                                    <label for="filter_tanggal_awal">Dari Tanggal</label>
                                     <div class="form-line">
                                         <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control" required>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
-                                <label for="filter_tanggal_akhir">Sampai Tanggal</label>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
+                                    <label for="nama_klien">Pilih Klien</label>
                                     <div class="form-line">
-                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
-                                            name="nama_klien" id="nama_klien" placeholder="Pilih Klien"
-                                            class="form-control" value="" autocomplete="off">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
                                         <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser"
-                                            name="nama_user" id="nama_user" placeholder="Pilih Petugas"
-                                            class="form-control" value="" autocomplete="off">
-                                        <input type="hidden" id="id" name="id">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <div class="form-group">
+                                    <label for="status_ccs">Pilih Status</label>
                                     <div class="form-line">
                                         <select id="status_ccs" name="status_ccs" class="form-control">
                                             <option value="">-- Pilih Status --</option>
@@ -105,8 +72,25 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <!-- Kolom kedua (6 grid) -->
+                            <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
+                                    <label for="filter_tanggal_akhir">Sampai Tanggal</label>
+                                    <div class="form-line">
+                                        <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nama_user">Pilih Petugas</label>
+                                    <div class="form-line">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser" name="nama_user" id="nama_user" placeholder="Pilih Petugas" class="form-control" autocomplete="off">
+                                        <input type="hidden" id="id" name="id">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="rating">Pilih Rating</label>
                                     <div class="form-line">
                                         <select id="rating" name="rating" class="form-control">
                                             <option value="">-- Pilih Rating --</option>
@@ -120,20 +104,22 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-sm waves-effect">
-                                    <i class="material-icons">filter_alt</i><span>Filter</span>
-                                </button>
+                            <!-- Tombol Aksi -->
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-sm waves-effect">
+                                        <i class="material-icons">filter_alt</i><span>Filter</span>
+                                    </button>
 
-                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
-                                    <i class="material-icons">restart_alt</i><span>Reset Filter</span>
-                                </button>
+                                    <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                        <i class="material-icons">restart_alt</i><span>Reset Filter</span>
+                                    </button>
 
-                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
-                                    <i class="material-icons">sync</i><span>Semua Data</span>
-                                </button>
+                                    <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
+                                        <i class="material-icons">sync</i><span>Semua Data</span>
+                                    </button>
+                                </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
