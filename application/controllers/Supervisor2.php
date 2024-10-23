@@ -671,18 +671,24 @@ class Supervisor2 extends CI_Controller
     public function rekapPelaporan()
     {
         // Load necessary models
-        $this->load->model('supervisor_model', 'supervisor_model');
+        // Load necessary models
+        $this->load->model('Superadmin_model', 'superadmin_model');
         $this->load->model('Client_model', 'client_model');
+        $this->load->model('User_model', 'user_model');
 
-        // var data for view 
-        $data['tanggal_awal'] = '';
-        $data['tanggal_akhir'] = '';
-        $data['status_ccs'] = '';
-        $data['nama_klien'] = '';
-        $data['tags'] = '';
+        // Initialize empty data for view
+        $data = [
+            'tanggal_awal' => '',
+            'tanggal_akhir' => '',
+            'status_ccs' => '',
+            'nama_klien' => '',
+            'nama_user' => '',
+            'tags' => '',
+        ];
 
-        // Get all data from the models
+        // Fetch data from models
         $data['klien'] = $this->client_model->getClient();
+        $data['user'] = $this->user_model->getNamaPetugas();
         $data['pencarian_data'] = $this->supervisor_model->getAllData(); // A method that returns all data
 
         // Load views with data
@@ -704,12 +710,15 @@ class Supervisor2 extends CI_Controller
         $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
         $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
         $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
+        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
+        $this->form_validation->set_rules('rating', 'rating', 'trim');
         $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
         if ($this->form_validation->run() == FALSE) {
             // Validation failed, prepare data for the view with error messages
             $data['errors'] = validation_errors();
             $data['klien'] = $this->client_model->getClient();
+            $data['user'] = $this->user_model->getNamaPetugas();
             $data['pencarian_data'] = [];
 
             $this->load->view('templates/header');
@@ -729,11 +738,14 @@ class Supervisor2 extends CI_Controller
             $data['tanggal_akhir'] = $tanggal_akhir;
             $data['status_ccs'] = $status_ccs;
             $data['nama_klien'] = $nama_klien;
+            $nama_user     = $this->input->post('nama_user');
+            $rating        = $this->input->post('rating');
             $data['tags'] = $tags;
 
             // Get data from the models
             $data['klien'] = $this->client_model->getClient();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags);
+            $data['user'] = $this->user_model->getNamaPetugas();
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
 
             // Load views with data
             $this->load->view('templates/header');
@@ -745,13 +757,15 @@ class Supervisor2 extends CI_Controller
 
     public function fetch_data()
     {
-        $this->load->model('Server_model', 'serverside_model');
+        $this->load->model('Serverside_model', 'serverside_model');
 
         // Ambil data filter dari POST request
         $filters = array(
             'tanggal_awal' => $this->input->post('tanggal_awal'),
             'tanggal_akhir' => $this->input->post('tanggal_akhir'),
             'nama_klien' => $this->input->post('nama_klien'),
+            'nama_user' => $this->input->post('nama_user'),
+            'rating' => $this->input->post('rating'),
             'tags' => $this->input->post('tags'),
             'status_ccs' => $this->input->post('status_ccs')
         );
@@ -774,11 +788,35 @@ class Supervisor2 extends CI_Controller
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
             $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
             $row['judul'] = isset($dataItem->judul) ? $dataItem->judul : '';
-            $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
+            // $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
             $row['priority'] = $this->get_priority_label($dataItem->priority);
             $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
             $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
+            // Proses handle_by
+            $handle_combined = isset($dataItem->handle_by) ? $dataItem->handle_by : '';
+            if (isset($dataItem->handle_by2) && !empty($dataItem->handle_by2)) {
+                $handle_combined .= ', ' . $dataItem->handle_by2;
+            }
+            if (isset($dataItem->handle_by3) && !empty($dataItem->handle_by3)) {
+                $handle_combined .= ', ' . $dataItem->handle_by3;
+            }
+
+            $row['handle_combined'] = $handle_combined;
+
+            // Proses rating bintang
+            $star_rating = '';
+            if ($dataItem->rating !== null) {
+                $rating = $dataItem->rating; // Ambil nilai rating
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i <= $rating) {
+                        $star_rating .= '<span class="star selected">&#9733;</span>'; // Bintang penuh untuk rating
+                    } else {
+                        $star_rating .= '<span class="star">&#9734;</span>'; // Bintang kosong untuk sisanya
+                    }
+                }
+            }
+            $row['rating'] = '<div class="star-rating">' . $star_rating . '</div>'; // Dibungkus dalam div untuk styling
             $data[] = $row;
         }
 

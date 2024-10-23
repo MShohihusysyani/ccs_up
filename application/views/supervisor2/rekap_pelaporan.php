@@ -1,3 +1,25 @@
+<style>
+    .star-rating {
+        display: inline-block;
+    }
+
+    .star {
+        cursor: pointer;
+        color: gray;
+        font-size: 20px;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+
+    .star-rating .star.selected {
+        font-size: 30px;
+        /* Sesuaikan ukuran sesuai kebutuhan Anda */
+        color: gold;
+        /* Warna emas untuk bintang */
+    }
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header"></div>
@@ -5,6 +27,9 @@
             <div class="card">
                 <div class="header">
                     <h2>FILTER</h2>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
+                        Filter
+                    </button>
                 </div>
 
                 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
@@ -12,8 +37,8 @@
                 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
                 <div class="body">
-                    <div class="row clearfix">
-                        <form id="filterForm">
+                    <div class="row clearfix collapse" id="filterForm">
+                        <form id="filterFormContent">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
                                 <label for="filter_tanggal_awal">Dari Tanggal</label>
                             </div>
@@ -49,10 +74,21 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser"
+                                            name="nama_user" id="nama_user" placeholder="Pilih Petugas"
+                                            class="form-control" value="" autocomplete="off">
+                                        <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
+                                    </div>
+                                </div>
+                            </div> -->
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
@@ -69,21 +105,35 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mx-sm-3">
-                                <button type="submit" class="btn btn-primary btn-sm m-l-15 waves-effect">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <select id="rating" name="rating" class="form-control">
+                                            <option value="">-- Pilih Rating --</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-sm waves-effect">
                                     <i class="material-icons">search</i><span>Filter</span>
                                 </button>
-                            </div>
-                            <div class="form-group mx-sm-3">
-                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm m-l-15 waves-effect">
-                                    <i class="material-icons">restart_alt</i> <span>Reset Filter</span>
+
+                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                    <i class="material-icons">restart_alt</i><span>Reset Filter</span>
                                 </button>
-                            </div>
-                            <div class="form-group mx-sm-3">
-                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm m-l-15 waves-effect">
+
+                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
                                     <i class="material-icons">sync</i><span>Semua Data</span>
                                 </button>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -115,10 +165,12 @@
                                     <th>Nama</th>
                                     <th>Judul</th>
                                     <th>Kategori</th>
-                                    <th>Tags</th>
+                                    <!-- <th>Tags</th> -->
                                     <th>Priority</th>
                                     <th>Max Day</th>
                                     <th>Status CCS</th>
+                                    <th>Handle By</th>
+                                    <th>Rating</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -174,10 +226,53 @@
     </div>
 </div>
 
+<!-- Modal Cari Petugas -->
+<div class="modal fade" id="defaultModalNamaUser" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Petugas</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Petugas</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($user as $usr) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $usr['nama_user']; ?></td>
+                                <td class="hide"><?= $usr['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih4" data-nama-user="<?= $usr['nama_user']; ?>" data-id-namauser="<?= $usr['id_user']; ?>">
+                                        Pilih
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+<!-- pilih klien -->
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilih3', function() {
@@ -186,6 +281,19 @@
             $('#nama_klien').val(nama_klas);
             $('#id').val(id);
             $('#defaultModalNamaKlien').modal('hide');
+        });
+    });
+</script>
+
+<!-- pilih petugas -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih4', function() {
+            var nama_klas = $(this).data('nama-user');
+            var id = $(this).data('id');
+            $('#nama_user').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaUser').modal('hide');
         });
     });
 </script>
@@ -202,6 +310,8 @@
                     data.tanggal_awal = $('#tanggal_awal').val();
                     data.tanggal_akhir = $('#tanggal_akhir').val();
                     data.nama_klien = $('#nama_klien').val();
+                    data.nama_user = $('#nama_user').val();
+                    data.rating = $('#rating').val();
                     data.tags = $('#tags').val();
                     data.status_ccs = $('#status_ccs').val();
                 }
@@ -229,9 +339,6 @@
                     "data": "judul"
                 },
                 {
-                    "data": "tags"
-                },
-                {
                     "data": "kategori"
                 },
                 {
@@ -242,7 +349,13 @@
                 },
                 {
                     "data": "status_ccs"
-                }
+                },
+                {
+                    "data": "handle_combined"
+                },
+                {
+                    "data": "rating"
+                },
             ]
         });
 
@@ -252,10 +365,14 @@
             e.preventDefault();
             table.draw(); // Redraw the DataTable based on new filters
         });
-
+        // Handle "Reset Filter" button click
+        $('#resetFilterButton').on('click', function() {
+            $('#filterFormContent')[0].reset();
+            table.draw(); // Redraw the DataTable to reflect reset filters
+        });
         // Handle "Semua Data" button click
         $('#semuaDataButton').on('click', function() {
-            $('#filterForm')[0].reset();
+            $('#filterFormContent')[0].reset();
             table.ajax.reload(); // Reload DataTables to show all data
         });
 
@@ -268,17 +385,14 @@
             exportData('excel');
         });
 
-        // Handle "Reset Filter" button click
-        $('#resetFilterButton').on('click', function() {
-            $('#filterForm')[0].reset();
-            table.draw(); // Redraw the DataTable to reflect reset filters
-        });
 
         function exportData(format) {
             var filters = {
                 tanggal_awal: $('#tanggal_awal').val(),
                 tanggal_akhir: $('#tanggal_akhir').val(),
                 nama_klien: $('#nama_klien').val(),
+                nama_user: $('#nama_user').val(),
+                rating: $('#rating').val(),
                 tags: $('#tags').val(),
                 status_ccs: $('#status_ccs').val()
             };
@@ -306,5 +420,14 @@
                 form.remove();
             }, 100);
         }
+    });
+</script>
+
+<!-- expandable -->
+<script>
+    $(document).ready(function() {
+        $('#filterForm').collapse({
+            toggle: false
+        });
     });
 </script>
