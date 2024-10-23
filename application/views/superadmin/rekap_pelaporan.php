@@ -1,3 +1,25 @@
+<style>
+    .star-rating {
+        display: inline-block;
+    }
+
+    .star {
+        cursor: pointer;
+        color: gray;
+        font-size: 20px;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+
+    .star-rating .star.selected {
+        font-size: 30px;
+        /* Sesuaikan ukuran sesuai kebutuhan Anda */
+        color: gold;
+        /* Warna emas untuk bintang */
+    }
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header"></div>
@@ -52,10 +74,21 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser"
+                                            name="nama_user" id="nama_user" placeholder="Pilih Petugas"
+                                            class="form-control" value="" autocomplete="off">
+                                        <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
+                                    </div>
+                                </div>
+                            </div> -->
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
@@ -67,6 +100,21 @@
                                             <option value="HANDLED 2">HANDLED 2</option>
                                             <option value="ADDED">ADDED</option>
                                             <option value="ADDED 2">ADDED 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <select id="rating" name="rating" class="form-control">
+                                            <option value="">-- Pilih Rating --</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
                                         </select>
                                     </div>
                                 </div>
@@ -117,10 +165,12 @@
                                     <th>Nama</th>
                                     <th>Judul</th>
                                     <th>Kategori</th>
-                                    <th>Tags</th>
+                                    <!-- <th>Tags</th> -->
                                     <th>Priority</th>
                                     <th>Max Day</th>
                                     <th>Status CCS</th>
+                                    <th>Handle By</th>
+                                    <th>Rating</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -176,10 +226,53 @@
     </div>
 </div>
 
+<!-- Modal Cari Petugas -->
+<div class="modal fade" id="defaultModalNamaUser" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Petugas</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Petugas</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($user as $usr) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $usr['nama_user']; ?></td>
+                                <td class="hide"><?= $usr['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih4" data-nama-user="<?= $usr['nama_user']; ?>" data-id-namauser="<?= $usr['id_user']; ?>">
+                                        Pilih
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+<!-- pilih klien -->
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilih3', function() {
@@ -192,6 +285,18 @@
     });
 </script>
 
+<!-- pilih petugas -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih4', function() {
+            var nama_klas = $(this).data('nama-user');
+            var id = $(this).data('id');
+            $('#nama_user').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaUser').modal('hide');
+        });
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         var table = $('#example').DataTable({
@@ -204,6 +309,8 @@
                     data.tanggal_awal = $('#tanggal_awal').val();
                     data.tanggal_akhir = $('#tanggal_akhir').val();
                     data.nama_klien = $('#nama_klien').val();
+                    data.nama_user = $('#nama_user').val();
+                    data.rating = $('#rating').val();
                     data.tags = $('#tags').val();
                     data.status_ccs = $('#status_ccs').val();
                 }
@@ -231,9 +338,6 @@
                     "data": "judul"
                 },
                 {
-                    "data": "tags"
-                },
-                {
                     "data": "kategori"
                 },
                 {
@@ -244,7 +348,13 @@
                 },
                 {
                     "data": "status_ccs"
-                }
+                },
+                {
+                    "data": "handle_combined"
+                },
+                {
+                    "data": "rating"
+                },
             ]
         });
 
@@ -280,6 +390,8 @@
                 tanggal_awal: $('#tanggal_awal').val(),
                 tanggal_akhir: $('#tanggal_akhir').val(),
                 nama_klien: $('#nama_klien').val(),
+                nama_user: $('#nama_user').val(),
+                rating: $('#rating').val(),
                 tags: $('#tags').val(),
                 status_ccs: $('#status_ccs').val()
             };

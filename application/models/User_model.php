@@ -87,4 +87,10 @@ class User_model extends CI_Model
         $this->db->where('id_user', $user_id);
         return $this->db->update('user', $data);
     }
+
+    public function getNamaPetugas()
+    {
+        $query = "SELECT id_user, nama_user FROM user WHERE divisi IN ('Implementator', 'Helpdesk') ORDER BY nama_user ASC";
+        return $this->db->query($query)->result_array();
+    }
 }

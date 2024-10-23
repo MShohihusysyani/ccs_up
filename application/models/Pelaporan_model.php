@@ -173,14 +173,14 @@ class Pelaporan_model extends CI_Model
         ');
         $this->db->from('pelaporan');
         $this->db->join('user', 'pelaporan.user_id = user.id_user', 'left');
-        $this->db->where('pelaporan.status_ccs', 'FINISH');
+        $this->db->where('pelaporan.status_ccs', 'FINISHED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
-    public function getDate($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
+    public function getDate($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $nama_user = null, $rating = null, $tags = null)
     {
         $this->db->select('*');
         $this->db->from('pelaporan');
@@ -201,15 +201,27 @@ class Pelaporan_model extends CI_Model
             $this->db->where('nama', $nama_klien);
         }
 
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
+        }
+
         if (!empty($tags)) {
             $this->db->where('tags', $tags);
+        }
+
+        if (!empty($tags)) {
+            $this->db->where('rating', $tags);
         }
 
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function getDateFiltered($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $tags = null, $status_ccs = null)
+    public function getDateFiltered($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null,  $tags = null, $status_ccs = null, $rating = null)
     {
         $this->db->select('*');
         $this->db->from('pelaporan'); // Sesuaikan dengan nama tabel yang sesuai
@@ -225,6 +237,15 @@ class Pelaporan_model extends CI_Model
             $this->db->like('nama', $nama_klien);
         }
 
+        // Filter berdasarkan nama_user jika ada
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
+        }
+
         if (!empty($tags)) {
             $this->db->where('tags', $tags);
         }
@@ -233,7 +254,9 @@ class Pelaporan_model extends CI_Model
             $this->db->where('status_ccs', $status_ccs);
         }
 
-
+        if (!empty($rating)) {
+            $this->db->where('rating', $rating);
+        }
 
         $query = $this->db->get();
         return $query->result(); // Mengembalikan hasil query
