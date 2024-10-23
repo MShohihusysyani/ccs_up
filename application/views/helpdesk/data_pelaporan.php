@@ -5,6 +5,9 @@
             <div class="card">
                 <div class="header">
                     <h2>FILTER</h2>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
+                        Filter
+                    </button>
                 </div>
 
                 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
@@ -12,8 +15,8 @@
                 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
                 <div class="body">
-                    <div class="row clearfix">
-                        <form id="filterForm">
+                    <div class="row clearfix collapse" id="filterForm">
+                        <form id="filterFormContent">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
                                 <label for="filter_tanggal_awal">Dari Tanggal</label>
                             </div>
@@ -38,19 +41,33 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih BPR" class="form-control" value="" autocomplete="off">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien"
+                                            name="nama_klien" id="nama_klien" placeholder="Pilih Klien"
+                                            class="form-control" value="" autocomplete="off">
                                         <input type="hidden" id="id" name="id">
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser"
+                                            name="nama_user" id="nama_user" placeholder="Pilih Petugas"
+                                            class="form-control" value="" autocomplete="off">
+                                        <input type="hidden" id="id" name="id">
+                                    </div>
+                                </div>
+                            </div> -->
+
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Pilih Tags">
+                                        <input type="text" name="tags" id="tags" class="form-control" placeholder="Tags">
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <div class="form-group">
                                     <div class="form-line">
@@ -67,21 +84,35 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mx-sm-3">
-                                <button type="submit" class="btn btn-primary btn-sm m-l-15 waves-effect">
+                            <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <select id="rating" name="rating" class="form-control">
+                                            <option value="">-- Pilih Rating --</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-sm waves-effect">
                                     <i class="material-icons">search</i><span>Filter</span>
                                 </button>
-                            </div>
-                            <div class="form-group mx-sm-3">
-                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm m-l-15 waves-effect">
-                                    <i class="material-icons">restart_alt</i> <span>Reset Filter</span>
+
+                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                    <i class="material-icons">restart_alt</i><span>Reset Filter</span>
+                                </button>
+
+                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
+                                    <i class="material-icons">sync</i><span>Semua Data</span>
                                 </button>
                             </div>
 
-                            <div class="form-group mx-sm-3">
-                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm m-l-15 waves-effect">
-                                    <i class="material-icons">sync</i><span>Semua Data</span></button>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -112,9 +143,7 @@
                                     <th>No Tiket</th>
                                     <th>Nama</th>
                                     <th>Judul</th>
-                                    <th>Tags</th>
                                     <th>Kategori</th>
-                                    <th>Impact</th>
                                     <th>Priority</th>
                                     <th>Max Day</th>
                                     <th>Status</th>
@@ -229,13 +258,7 @@
                     "data": "judul"
                 },
                 {
-                    "data": "tags"
-                },
-                {
                     "data": "kategori"
-                },
-                {
-                    "data": "impact"
                 },
                 {
                     "data": "priority"
@@ -312,5 +335,13 @@
                 form.remove();
             }, 100);
         }
+    });
+</script>
+<!-- expandable -->
+<script>
+    $(document).ready(function() {
+        $('#filterForm').collapse({
+            toggle: false
+        });
     });
 </script>

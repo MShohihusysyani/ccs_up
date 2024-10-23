@@ -533,9 +533,8 @@ class Helpdesk extends CI_Controller
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
             $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
             $row['judul'] = isset($dataItem->judul) ? $dataItem->judul : '';
-            $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
-            $row['impact'] = isset($dataItem->impact) ? $dataItem->impact : '';
+            // $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['priority'] = $this->get_priority_label($dataItem->priority);
             $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
             $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
