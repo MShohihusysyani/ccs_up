@@ -359,9 +359,9 @@
             items: [
                 'findAndReplace', 'selectAll', '|',
                 'heading', '|',
-                'bold', 'italic', 'strikethrough', 'underline', '', '|',
+                'bold', 'italic', 'strikethrough', 'underline', '|',
                 'bulletedList', 'numberedList', 'todoList', '|',
-                'fontSize', 'fontFamily', 'fontColor', '', '', '|',
+                'fontSize', 'fontFamily', 'fontColor', '|',
                 'alignment', '|',
                 'uploadImage', 'ckfinder', '|',
                 'undo', 'redo',

@@ -44,19 +44,20 @@ class Helpdesk extends CI_Controller
         $user_id = $this->input->post('user_id'); // user_id klien
 
         if ($user_id) {
-            // Panggil fungsi model untuk mengambil no klien
-            $no_klien = $this->temp_model->getNoKlien($user_id);
+            // // Panggil fungsi model untuk mengambil no klien
+            // $no_klien = $this->temp_model->getNoKlien($user_id);
 
-            // Dapatkan no urut tiket terakhir berdasarkan klien yang dipilih
-            $no_urut = $this->temp_model->getNoUrut($user_id);
+            // // Dapatkan no urut tiket terakhir berdasarkan klien yang dipilih
+            // $no_urut = $this->temp_model->getNoUrut($user_id);
 
-            // Buat format no tiket (misalnya: TICno_klienTahunBulanNoUrut)
-            $tahun = date('Y');
-            $bulan = date('m');
-            $no_tiket = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
-
+            // // Buat format no tiket (misalnya: TICno_klienTahunBulanNoUrut)
+            // $tahun = date('Y');
+            // $bulan = date('m');
+            // $no_tiket = "TIC" . $no_klien . $tahun . $bulan . $no_urut;
+            // // Ambil nomor tiket lengkap dari model (sudah termasuk no_klien, tahun, bulan, dan nomor urut)
+            $data = $this->client_model->getNoUrut($user_id);
             // Kembalikan no tiket ke AJAX
-            echo $no_tiket;
+            echo $data;
         } else {
             echo "";  // Jika tidak ada klien yang dipilih, kembalikan kosong
         }
@@ -98,12 +99,22 @@ class Helpdesk extends CI_Controller
             redirect('helpdesk/pengajuan');
         } else {
             $user_id_hd = $this->input->post('user_id_hd');
+            $no_tiket = trim($this->input->post('no_tiket'));
+
+            // Cek apakah tiket dengan nomor yang sama sudah ada
+            $this->db->where('no_tiket', $no_tiket);
+            $existing_no_tiket = $this->db->get('tiket_temp')->row();
+
+            if ($existing_no_tiket) {
+                $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Nomor tiket sudah ada.');
+                redirect('helpdesk/pengajuan');
+            }
 
             $this->db->where('user_id_hd', $user_id_hd);
             $existing_ticket = $this->db->get('tiket_temp')->row();
 
             if ($existing_ticket) {
-                $this->session->set_flashdata('alert', 'Proses tiket baru gagal!, Silahkan ajukan terlebih dahulu tiket yang sudah diproses!!!');
+                $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Silahkan ajukan terlebih dahulu tiket yang sudah diproses!');
                 redirect('helpdesk/pengajuan');
             } else {
                 $photo = $_FILES['file']['name'];
@@ -126,7 +137,7 @@ class Helpdesk extends CI_Controller
                 }
 
                 $data = [
-                    'no_tiket' => trim($this->input->post('no_tiket')),
+                    'no_tiket' => $no_tiket,
                     'perihal'  => $this->input->post('perihal'),
                     'file'     => $photo,
                     'user_id'  => $this->input->post('klien_id'),
@@ -151,6 +162,7 @@ class Helpdesk extends CI_Controller
             }
         }
     }
+
 
     public function upload_tiket()
     {
