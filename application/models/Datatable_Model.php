@@ -14,11 +14,38 @@ class Datatable_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-    private function _get_datatables_query()
+    private function _get_datatables_query($filters)
     {
         $this->db->from($this->table);
         $this->db->where('status_ccs', 'FINISHED');
 
+        // Apply filters
+        if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
+            $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal']);
+            $this->db->where('waktu_pelaporan <=', $filters['tanggal_akhir']);
+        }
+
+        if (!empty($filters['nama_klien'])) {
+            $this->db->like('nama', $filters['nama_klien']);
+        }
+
+        // Filter nama_user di handle_by, handle_by2, handle_by3
+        if (!empty($filters['nama_user'])) {
+            $this->db->group_start(); // Mulai group untuk pencarian OR
+            $this->db->like('handle_by', $filters['nama_user']);
+            $this->db->or_like('handle_by2', $filters['nama_user']);
+            $this->db->or_like('handle_by3', $filters['nama_user']);
+            $this->db->group_end(); // Akhiri group
+        }
+
+        if (!empty($filters['tags'])) {
+            $this->db->like('tags', $filters['tags']);
+        }
+
+
+        if (!empty($filters['rating'])) {
+            $this->db->where('rating', $filters['rating']);
+        }
         $i = 0;
 
         // Pengecekan untuk 'search'
@@ -49,9 +76,9 @@ class Datatable_model extends CI_Model
         }
     }
 
-    function get_datatables()
+    function get_datatables($filters)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($filters);
 
         // Pengecekan untuk 'length' dan 'start'
         $length = isset($_POST['length']) ? $_POST['length'] : -1; // Nilai default -1 jika tidak ada
@@ -66,9 +93,9 @@ class Datatable_model extends CI_Model
     }
 
 
-    function count_filtered()
+    function count_filtered($filters)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($filters);
         $query = $this->db->get();
         return $query->num_rows();
     }

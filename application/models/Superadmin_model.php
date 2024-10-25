@@ -7,7 +7,7 @@ class Superadmin_model extends CI_Model
     private $table = 'pelaporan';
     private $column_order = array(null, 'no_tiket', 'waktu_pelaporan', 'nama', 'perihal', 'impact', 'file', 'kategori', 'tags', 'priority', 'maxday', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3');
     private $column_search = array('no_tiket', 'waktu_pelaporan', 'nama', 'perihal', 'impact', 'file', 'kategori', 'tags', 'priority', 'maxday', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3');
-    private $order = array('waktu_pelaporan' => 'DESC'); // Default order
+    private $order = array('waktu_pelaporan' => 'DESC');
 
     public function __construct()
     {
@@ -72,12 +72,9 @@ class Superadmin_model extends CI_Model
         // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
 
-        // Ensure the user is retrieved
         if ($data['user']) {
-            // User ID from session
             $user_id = $this->session->userdata('id_user');
 
-            // SQL query to retrieve reports
             $query = "
             SELECT DISTINCT
                 nama, 
@@ -104,21 +101,17 @@ class Superadmin_model extends CI_Model
                 waktu_pelaporan DESC
         ";
 
-            // Execute the query and return the result as an array
             $result = $this->db->query($query);
 
-            // Check for query execution errors
             if ($result) {
                 return $result->result_array();
             } else {
-                // Handle the error appropriately (e.g., log the error, return a message)
                 log_message('error', 'Query failed: ' . $this->db->last_query());
-                return []; // Return an empty array or handle as needed
+                return [];
             }
         } else {
-            // Handle case when user data is not found
             log_message('error', 'User not found in session.');
-            return []; // Return an empty array or handle as needed
+            return [];
         }
     }
 
@@ -185,12 +178,9 @@ class Superadmin_model extends CI_Model
         // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
 
-        // Ensure the user is retrieved
         if ($data['user']) {
-            // User ID from session
             $user_id = $this->session->userdata('id_user');
 
-            // SQL query to retrieve reports with status_ccs='HANDLE', 'HANDLE 2', or 'ADDED 2'
             $query = "
             SELECT DISTINCT
                 nama, 
@@ -219,21 +209,18 @@ class Superadmin_model extends CI_Model
                 waktu_pelaporan DESC
         ";
 
-            // Execute the query and return the result as an array
             $result = $this->db->query($query);
 
-            // Check for query execution errors
             if ($result) {
                 return $result->result_array();
             } else {
-                // Handle the error appropriately (e.g., log the error, return a message)
                 log_message('error', 'Query failed: ' . $this->db->last_query());
-                return []; // Return an empty array or handle as needed
+                return [];
             }
         } else {
             // Handle case when user data is not found
             log_message('error', 'User not found in session.');
-            return []; // Return an empty array or handle as needed
+            return [];
         }
     }
 
@@ -250,10 +237,7 @@ class Superadmin_model extends CI_Model
     public function getKlienPelaporanFinish()
     {
 
-        // Fetch user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-
-        // Ensure the user is retrieved
         if ($data['user']) {
             // User ID from session
             $user_id = $this->session->userdata('id_user');
@@ -289,21 +273,17 @@ class Superadmin_model extends CI_Model
                 waktu_pelaporan DESC
         ";
 
-            // Execute the query and return the result as an array
             $result = $this->db->query($query);
 
-            // Check for query execution errors
             if ($result) {
                 return $result->result_array();
             } else {
-                // Handle the error appropriately (e.g., log the error, return a message)
                 log_message('error', 'Query failed: ' . $this->db->last_query());
-                return []; // Return an empty array or handle as needed
+                return [];
             }
         } else {
-            // Handle case when user data is not found
             log_message('error', 'User not found in session.');
-            return []; // Return an empty array or handle as needed
+            return [];
         }
     }
 
@@ -318,8 +298,17 @@ class Superadmin_model extends CI_Model
     {
 
         $this->db->order_by('waktu_pelaporan', 'DESC');
-        $query = $this->db->get('pelaporan'); // Assuming 'pelaporan' is the name of your table
-        return $query->result(); // Returns an array of object
+        $query = $this->db->get('pelaporan');
+        return $query->result();
+    }
+
+    public function getAllDataFinish()
+    {
+
+        $this->db->order_by('waktu_pelaporan', 'DESC');
+        $this->db->where('status_ccs', 'FINISHED');
+        $query = $this->db->get('pelaporan');
+        return $query->result();
     }
 
     public function ambil_id_pelaporan($id)
@@ -392,7 +381,7 @@ class Superadmin_model extends CI_Model
     public function getPelaporanById($id_pelaporan)
     {
         $this->db->where('id_pelaporan', $id_pelaporan);
-        $query = $this->db->get('pelaporan'); // Replace 'pelaporan' with your actual table name
+        $query = $this->db->get('pelaporan');
         return $query->row_array();
     }
 
@@ -410,9 +399,9 @@ class Superadmin_model extends CI_Model
     {
         $this->db->select('id_pelaporan, no_tiket, judul, nama, waktu_pelaporan, status_ccs');
         $this->db->from('pelaporan');
-        $this->db->where('status_ccs', 'ADDED'); // Contoh filter status
+        $this->db->where('status_ccs', 'ADDED');
         $this->db->order_by('waktu_pelaporan', 'DESC');
-        // $this->db->limit(100); // Batasi hasil notifikasi
+        // $this->db->limit(100);
         $query = $this->db->get();
 
         return $query->result_array();
