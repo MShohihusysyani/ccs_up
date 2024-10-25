@@ -1,212 +1,50 @@
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <h2>
-
-            </h2>
+            <h2></h2>
         </div>
-        <!-- jQuery UI CSS -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-
-        <!-- Basic Examples -->
-        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
-            <?php if ($this->session->flashdata('pesan')) { ?>
-
-            <?php } ?>
-            <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert')) ?>">
-                <?php if ($this->session->flashdata('pesan')) { ?>
-
-                <?php } ?>
-                <?= validation_errors(); ?>
-                <!-- #END# Basic Examples -->
-                <!-- Exportable Table -->
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2>
-                                    ON PROGRESS
-                                </h2>
-
-                            </div>
-                            <div class="body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>No Tiket</th>
-                                                <th>Tanggal</th>
-                                                <th>Nama Klien</th>
-                                                <th>Judul</th>
-                                                <!-- <th>Perihal</th> -->
-                                                <!-- <th>Attachment</th> -->
-                                                <th>Category</th>
-                                                <th>Tags</th>
-                                                <th>Priority</th>
-                                                <th>Max Day</th>
-                                                <th>Status CCS</th>
-                                                <th>Handle By</th>
-                                                <th>Subtask 1</th>
-                                                <th>Status Subtask 1</th>
-                                                <th>Subtask 2</th>
-                                                <th>Status Subtask 2</th>
-                                                <th>Tenggat waktu</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>No Tiket</th>
-                                                <th>Tanggal</th>
-                                                <th>Nama Klien</th>
-                                                <th>Judul</th>
-                                                <!-- <th>Perihal</th> -->
-                                                <!-- <th>Attachment</th> -->
-                                                <th>Category</th>
-                                                <th>Tags</th>
-                                                <th>Priority</th>
-                                                <th>Max Day</th>
-                                                <th>Status CCS</th>
-                                                <th>Handle By</th>
-                                                <th>Subtask 1</th>
-                                                <th>Status Subtask 1</th>
-                                                <th>Subtask 2</th>
-                                                <th>Status Subtask 2</th>
-                                                <th>Tenggat waktu</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody>
-
-                                            <?php
-                                            $no = 1;
-                                            foreach ($datapelaporan as $dp) : ?>
-                                                <tr>
-                                                    <td><?= $no++ ?></td>
-                                                    <td><?= $dp['no_tiket']; ?></td>
-                                                    <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
-                                                    <td><?= $dp['nama']; ?></td>
-                                                    <td><?= $dp['judul']; ?></td>
-                                                    <!-- <td><?= $dp['perihal']; ?></td> -->
-                                                    <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                    </td> -->
-                                                    <td><?= $dp['kategori']; ?></td>
-                                                    <td>
-                                                        <span class="label label-info"><?= $dp['tags']; ?></span>
-                                                    </td>
-                                                    <td>
-                                                        <?php if ($dp['priority'] == 'Low') : ?>
-                                                            <span class="label label-info">Low</span>
-
-                                                        <?php elseif ($dp['priority'] == 'Medium') : ?>
-                                                            <span class="label label-warning">Medium</span>
-
-                                                        <?php elseif ($dp['priority'] == 'High') : ?>
-                                                            <span class="label label-danger">High</span>
-
-                                                        <?php else : ?>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php if ($dp['maxday'] == '90') : ?>
-                                                            <span class="label label-info">90</span>
-
-                                                        <?php elseif ($dp['maxday'] == '60') : ?>
-                                                            <span class="label label-warning">60</span>
-
-                                                        <?php elseif ($dp['maxday'] == '7') : ?>
-                                                            <span class="label label-danger">7</span>
-
-                                                        <?php else : ?>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php if ($dp['status_ccs'] == 'FINISHED') : ?>
-                                                            <span class="label label-success">FINISHED</span>
-
-                                                        <?php elseif ($dp['status_ccs'] == 'CLOSED') : ?>
-                                                            <span class="label label-warning">CLOSED</span>
-
-                                                        <?php elseif ($dp['status_ccs'] == 'HANDLED') : ?>
-                                                            <span class="label label-info">HANDLED</span>
-
-                                                        <?php elseif ($dp['status_ccs'] == 'HANDLED 2') : ?>
-                                                            <span class="label label-info">HANDLED 2</span>
-
-                                                        <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
-                                                            <span class="label label-primary">ADDED</span>
-
-                                                        <?php elseif ($dp['status_ccs'] == 'ADDED 2') : ?>
-                                                            <span class="label label-primary">ADDED 2</span>
-
-                                                        <?php else : ?>
-                                                        <?php endif; ?>
-
-                                                    </td>
-                                                    <td>
-                                                        <?= $dp['handle_by']; ?>
-                                                        <?php if (!empty($dp['handle_by2'])) : ?>
-                                                            , <?= $dp['handle_by2']; ?>
-                                                        <?php endif; ?>
-                                                        <?php if (!empty($dp['handle_by3'])) : ?>
-                                                            , <?= $dp['handle_by3']; ?>
-                                                        <?php endif; ?>
-                                                    </td>
-
-                                                    <td><?= $dp['subtask1']; ?></td>
-                                                    <td>
-                                                        <?php if ($dp['status1'] == 'COMPLETED') : ?>
-                                                            <span class="label label-success">COMPLETED</span>
-
-                                                        <?php elseif ($dp['status1'] == 'PENDING') : ?>
-                                                            <span class="label label-info">PENDING</span>
-
-                                                        <?php else : ?>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td><?= $dp['subtask2']; ?></td>
-                                                    <td>
-                                                        <?php if ($dp['status2'] == 'COMPLETED') : ?>
-                                                            <span class="label label-success">COMPLETED</span>
-
-                                                        <?php elseif ($dp['status2'] == 'PENDING') : ?>
-                                                            <span class="label label-info">PENDING</span>
-
-                                                        <?php else : ?>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td><?= tanggal_indo($dp['tanggal']) ?></td>
-
-
-                                                    <td style="display: flex; gap: 10px; justify-content: flex-end;">
-
-                                                        <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                        <div class="btn btn-sm btn-warning edit-action">
-                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP">
-                                                                <i class="material-icons">edit</i>
-                                                                <span class="icon-name">Edit</span>
-                                                            </a>
-
-                                                        </div>
-
-                                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-                                                        <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
-                                                    </td>
-
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+        <!-- <link rel="stylesheet"  type="text/css" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css"> -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>ON PROGRESS</h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="display table table-bordered table-striped- table-hover" id="example">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Tiket</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Klien</th>
+                                        <th>Judul</th>
+                                        <th>Category</th>
+                                        <th>Tags</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status CCS</th>
+                                        <th>Handle By</th>
+                                        <th>Subtask 1</th>
+                                        <th>Status Subtask 1</th>
+                                        <th>Subtask 2</th>
+                                        <th>Status Subtask 2</th>
+                                        <th>Tenggat waktu</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <!-- #END# Exportable Table -->
             </div>
-            <!-- Button trigger modal -->
+        </div>
+    </div>
 </section>
 
 <!-- MODAL EDIT HELPDESK -->
@@ -309,153 +147,80 @@
         </div>
     </div>
 </div>
-<!-- MODAL EDIT HELPDESK
-<div class="modal fade" id="editModalCP" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Edit Helpdesk</h4>
-            </div>
-            <div class="modal-body">
-                <?= form_open_multipart('supervisor/fungsi_edit') ?>
-                <input type="hidden" name="id_pelaporan" id="id_pelaporan">
-                <div class="body">
-                    <form class="form-horizontal">
 
-                        <label for="no_tiket">No Tiket</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                            </div>
-                        </div>
+<!-- jQuery and DataTables Scripts -->
 
-                        <label for="waktu_pelaporan">Tanggal</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                            </div>
-                        </div>
+<script type="text/javascript">
+    $('#example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('supervisor/fetch_onprogress') ?>",
+            "type": "POST",
 
-                        <label for="nama">Nama Klien</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <label for="nama">Nama Klien</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="perihal">Perihal</label>
-                            <div class="form-line">
-                                <div id="perihal_coba" readonly></div>
-                            </div>
-                        </div>
-
-                        <label for="status_ccs">Status CCS</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <label for="priority">Priority</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <label for="maxday">Max Day</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <label for="kategori">Kategori</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-line">
-                                <select name="namahd" id="namahd" class="form-control">
-                                    <option value=""> -- Pilih Helpdesk -- </option>
-                                    <?php
-                                    foreach ($namahd as $nah) : ?>
-                                        <option value="<?= $nah['id_user']; ?>"><?= $nah['nama_user']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE
-                                CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-
-                </div>
-                <?php echo form_close() ?>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-
-<!-- MODAL CARI HELPDESK -->
-<div class="modal fade" id="defaultModalNamaDivisi" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Cari Helpdesk</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Helpdesk</th>
-                            <th class="hide">ID</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($namahd  as $nah) : ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
-                                <td><?= $nah['nama']; ?></td>
-                                <td class="hide"><?= $div['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-divisi="<?= $nah['nama']; ?>" data-id-divisi="<?= $nah['id']; ?>">
-                                        Pilih</button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                    <?php echo form_close() ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        },
+        "order": [
+            [2, 'desc']
+        ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+        "columnDefs": [{
+            "targets": [0],
+            "orderable": false,
+        }, ],
+        "columns": [{
+                "data": "no"
+            }, // Pastikan ini ada
+            {
+                "data": "no_tiket"
+            },
+            {
+                "data": "waktu_pelaporan"
+            },
+            {
+                "data": "nama"
+            },
+            {
+                "data": "judul"
+            },
+            {
+                "data": "kategori"
+            },
+            {
+                "data": "tags"
+            },
+            {
+                "data": "priority"
+            },
+            {
+                "data": "maxday"
+            },
+            {
+                "data": "status_ccs"
+            },
+            {
+                "data": "handle_by"
+            },
+            {
+                "data": "subtask1"
+            },
+            {
+                "data": "status1"
+            },
+            {
+                "data": "subtask2"
+            },
+            {
+                "data": "status2"
+            },
+            {
+                "data": "tanggal"
+            },
+            {
+                "data": "aksi", // Ini untuk tombol aksi
+                // Pastikan kolom aksi tidak dapat diurutkan
+            }
+        ]
+    });
+</script>
 
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
@@ -481,10 +246,6 @@
     });
 </script>
 
-<!-- Script -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- jQuery UI -->
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
     $(document).ready(function() {
 

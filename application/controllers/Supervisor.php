@@ -317,21 +317,150 @@ class Supervisor extends CI_Controller
 
     public function onprogress()
     {
-        $this->load->model('Supervisor_model', 'supervisor_model');
-        $data['category'] = $this->category_model->getNamakategori();
-        $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanOP();
-
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
 
-
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/pelaporan_onprogress', $data);
+        $this->load->view('supervisor/pelaporan_onprogress', $data);  // <-- Mengirim data ke view
         $this->load->view('templates/footer');
     }
+
+
+    public function fetch_onprogress()
+    {
+        $this->load->model('ServersideSPVOP_model', 'serversidespvop_model');
+        // Mengambil data pelaporan dengan metode server-side
+        $list = $this->serversidespvop_model->get_datatables();
+        $data = array();
+        $no = isset($_POST['start']) ? $_POST['start'] : 0;
+
+        foreach ($list as $pelaporan) {
+            $no++;
+            $row = array();
+            $row['no'] = $no;  // Menambahkan kolom no
+            $row['no_tiket'] = $pelaporan->no_tiket;
+            $row['waktu_pelaporan'] = tanggal_indo($pelaporan->waktu_pelaporan);
+            $row['nama'] = $pelaporan->nama;
+            $row['judul'] = $pelaporan->judul;
+            $row['kategori'] = $pelaporan->kategori;
+            $row['tags'] = $pelaporan->tags;
+
+            // Proses nilai prioritas di server-side
+            if ($pelaporan->priority == 'Low') {
+                $priority_label = '<span class="label label-info">Low</span>';
+            } elseif ($pelaporan->priority == 'Medium') {
+                $priority_label = '<span class="label label-warning">Medium</span>';
+            } elseif ($pelaporan->priority == 'High') {
+                $priority_label = '<span class="label label-danger">High</span>';
+            } else {
+                $priority_label = $pelaporan->priority;
+            }
+            $row['priority'] = $priority_label;
+
+            // Proses nilai maxday di server-side
+            if ($pelaporan->maxday == '90') {
+                $maxday_label = '<span class="label label-info">90</span>';
+            } elseif ($pelaporan->maxday == '60') {
+                $maxday_label = '<span class="label label-warning">60</span>';
+            } elseif ($pelaporan->maxday == '7') {
+                $maxday_label = '<span class="label label-danger">7</span>';
+            } else {
+                $maxday_label = $pelaporan->maxday;
+            }
+
+            $row['maxday'] = $maxday_label;
+
+            // Proses nilai status_ccs di server-side
+            if ($pelaporan->status_ccs == 'ADDED') {
+                $status_ccs_label = '<span class="label label-primary">ADDED</span>';
+            } elseif ($pelaporan->status_ccs == 'ADDED 2') {
+                $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLED') {
+                $status_ccs_label = '<span class="label label-info">HANDLED</span>';
+            } elseif ($pelaporan->status_ccs == 'HANDLED 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLED 2</span>';
+            } elseif ($pelaporan->status_ccs == 'CLOSED') {
+                $status_ccs_label = '<span class="label label-warning">CLOSED</span>';
+            } elseif ($pelaporan->status_ccs == 'FINISHED') {
+                $status_ccs_label = '<span class="label label-success">FINISHED</span>';
+            } else {
+                $status_ccs_label = $pelaporan->status_ccs;
+            }
+
+            $row['status_ccs'] = $status_ccs_label;
+
+            // Gabungkan handle_by, handle_by2, handle_by3
+            $handle_combined = $pelaporan->handle_by;
+            if ($pelaporan->handle_by2) {
+                $handle_combined .= ', ' . $pelaporan->handle_by2;
+            }
+            if ($pelaporan->handle_by3) {
+                $handle_combined .= ', ' . $pelaporan->handle_by3;
+            }
+            $row['handle_by'] = $handle_combined;
+
+            $row['subtask1'] = $pelaporan->subtask1;
+
+            if ($pelaporan->status1 == 'PENDING') {
+                $status1_label = '<span class="label label-info">PENDING</span>';
+            } elseif ($pelaporan->status1 == 'COMPLETED') {
+                $status1_label = '<span class="label label-success">COMPLETED</span>';
+            } else {
+                $status1_label = $pelaporan->status1; // Make sure this is defined
+            }
+            $row['status1'] = $status1_label;
+
+            $row['subtask2'] = $pelaporan->subtask2;
+            if ($pelaporan->status2 == 'PENDING') {
+                $status2_label = '<span class="label label-info">PENDING</span>';
+            } elseif ($pelaporan->status2 == 'COMPLETED') {
+                $status2_label = '<span class="label label-success">COMPLETED</span>';
+            } else {
+                $status2_label = $pelaporan->status2; // Make sure this is defined
+            }
+            $row['status2'] = $status2_label;
+            $row['tanggal'] = tanggal_indo($pelaporan->tanggal);
+
+            // Tombol aksi dengan URL detail dan print detail
+            $row['aksi'] = '
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <a class="btn btn-sm btn-info" href="' . base_url('supervisor/detail_pelaporan/' . $pelaporan->id_pelaporan) . '">
+                <i class="material-icons">visibility</i> Detail
+            </a>
+            <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $pelaporan->no_tiket) . '">
+                <i class="material-icons">print</i> Print Detail
+            </a>
+            <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
+                data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
+                data-no_tiket="' . $pelaporan->no_tiket . '" 
+                data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
+                data-nama="' . $pelaporan->nama . '" 
+                data-judul="' . $pelaporan->judul . '" 
+                data-priority="' . $pelaporan->priority . '" 
+                data-maxday="' . $pelaporan->maxday . '" 
+                data-kategori="' . $pelaporan->kategori . '" 
+                data-tags="' . $pelaporan->tags . '" 
+                data-status_ccs="' . $pelaporan->status_ccs . '">
+                <i class="material-icons">edit</i> Edit Helpdesk
+            </button>
+        </div>
+        ';
+
+            $data[] = $row; // Tambahkan row ke data
+        }
+        $output = array(
+            "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
+            "recordsTotal" => $this->serversidespvop_model->count_all(),
+            "recordsFiltered" => $this->serversidespvop_model->count_filtered(),
+            "data" => $data,
+        );
+
+        echo json_encode($output);  // Kirim JSON ke DataTables
+        die();
+    }
+
+
 
     public function close()
     {
