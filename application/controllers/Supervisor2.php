@@ -174,18 +174,82 @@ class Supervisor2 extends CI_Controller
         // $this->load->model('User_model', 'user_model');
         // $data['user'] = $this->user_model->getDataUser();
         // $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanFinish();
+        $this->load->library('form_validation');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $this->load->model('Client_model', 'client_model');
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor2_sidebar');
-        $this->load->view('supervisor2/pelaporan_finish');
-        $this->load->view('templates/footer');
+        // Set form validation rules (allow empty)
+        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
+        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
+        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
+        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
+        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
+        $this->form_validation->set_rules('rating', 'rating', 'trim');
+        $this->form_validation->set_rules('tags', 'Tags', 'trim');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Validation failed, prepare data for the view with error messages
+            $data['errors'] = validation_errors();
+            $data['klien'] = $this->client_model->getClient();
+            $data['user'] = $this->user_model->getNamaPetugas();
+            $data['pencarian_data'] = [];
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/supervisor2_sidebar');
+            $this->load->view('supervisor2/pelaporan_finish', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Validation passed, retrieve POST data
+            $tanggal_awal  = $this->input->post('tanggal_awal');
+            $tanggal_akhir = $this->input->post('tanggal_akhir');
+            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
+            $nama_klien    = $this->input->post('nama_klien');
+            $nama_user     = $this->input->post('nama_user');
+            $rating        = $this->input->post('rating');
+            $tags          = $this->input->post('tags');
+
+            // var data for view 
+            $data['tanggal_awal']  = $tanggal_awal;
+            $data['tanggal_akhir'] = $tanggal_akhir;
+            $data['status_ccs']    = $status_ccs;
+            $data['nama_klien']    = $nama_klien;
+            $data['nama_user']     = $nama_user;
+            $data['rating']        = $rating;
+            $data['tags']          = $tags;
+
+            // Get data from the models
+            $data['klien'] = $this->client_model->getClient();
+            $data['user'] = $this->user_model->getNamaPetugas();
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/supervisor2_sidebar');
+            $this->load->view('supervisor2/pelaporan_finish');
+            $this->load->view('templates/footer');
+        }
     }
 
     public function get_data_finish()
     {
         $this->load->model('Datatable_model', 'datatable_model');
 
-        $list = $this->datatable_model->get_datatables();
+        // Ambil data filter dari POST request
+        $filters = array(
+            'tanggal_awal' => $this->input->post('tanggal_awal'),
+            'tanggal_akhir' => $this->input->post('tanggal_akhir'),
+            'nama_klien' => $this->input->post('nama_klien'),
+            'nama_user' => $this->input->post('nama_user'),
+            'rating' => $this->input->post('rating'),
+            'tags' => $this->input->post('tags'),
+        );
+
+        // Periksa apakah tombol "Semua Data" diklik
+        if (isset($_POST['semua_data'])) {
+            // Kosongkan filter
+            $filters = array();
+        }
+
+        $list = $this->datatable_model->get_datatables($filters);
         $data = array();
         $no = isset($_POST['start']) ? $_POST['start'] : 0;
 
@@ -276,7 +340,7 @@ class Supervisor2 extends CI_Controller
         $output = array(
             "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
             "recordsTotal" => $this->datatable_model->count_all(),
-            "recordsFiltered" => $this->datatable_model->count_filtered(),
+            "recordsFiltered" => $this->datatable_model->count_filtered($filters),
             "data" => $data,
         );
 
