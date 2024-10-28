@@ -15,7 +15,7 @@ class ServersideSPVOP_model extends CI_Model
         $this->load->database();
     }
 
-    private function _get_datatables_query()
+    private function _get_datatables_query($filters)
     {
 
         // Define the subquery
@@ -82,7 +82,33 @@ class ServersideSPVOP_model extends CI_Model
         $this->db->join("($subquery) AS subtask_data", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+        // Apply filters
+        if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
+            $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal']);
+            $this->db->where('waktu_pelaporan <=', $filters['tanggal_akhir']);
+        }
 
+        if (!empty($filters['nama_klien'])) {
+            $this->db->like('nama', $filters['nama_klien']);
+        }
+
+        // Filter nama_user di handle_by, handle_by2, handle_by3
+        if (!empty($filters['nama_user'])) {
+            $this->db->group_start(); // Mulai group untuk pencarian OR
+            $this->db->like('handle_by', $filters['nama_user']);
+            $this->db->or_like('handle_by2', $filters['nama_user']);
+            $this->db->or_like('handle_by3', $filters['nama_user']);
+            $this->db->group_end(); // Akhiri group
+        }
+
+        if (!empty($filters['tags'])) {
+            $this->db->like('tags', $filters['tags']);
+        }
+
+
+        if (!empty($filters['rating'])) {
+            $this->db->where('rating', $filters['rating']);
+        }
         // Search logic
         $i = 0;
         if (isset($_POST['search']) && $_POST['search']['value'] != '') {
@@ -113,9 +139,9 @@ class ServersideSPVOP_model extends CI_Model
 
 
 
-    function get_datatables()
+    function get_datatables($filters)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($filters);
         $length = isset($_POST['length']) ? $_POST['length'] : -1;
         $start = isset($_POST['start']) ? $_POST['start'] : 0;
 
@@ -127,9 +153,9 @@ class ServersideSPVOP_model extends CI_Model
         return $query->result();
     }
 
-    function count_filtered()
+    function count_filtered($filters)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($filters);
         $query = $this->db->get();
         return $query->num_rows();
     }

@@ -320,18 +320,75 @@ class Supervisor extends CI_Controller
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/pelaporan_onprogress', $data);  // <-- Mengirim data ke view
-        $this->load->view('templates/footer');
+        $this->load->library('form_validation');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $this->load->model('Client_model', 'client_model');
+
+        // Set form validation rules (allow empty)
+        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
+        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
+        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
+        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
+        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Validation failed, prepare data for the view with error messages
+            $data['errors'] = validation_errors();
+            $data['klien'] = $this->client_model->getClient();
+            $data['user'] = $this->user_model->getNamaPetugas();
+            $data['pencarian_data'] = [];
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/supervisor_sidebar');
+            $this->load->view('supervisor/pelaporan_onprogress', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Validation passed, retrieve POST data
+            $tanggal_awal  = $this->input->post('tanggal_awal');
+            $tanggal_akhir = $this->input->post('tanggal_akhir');
+            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
+            $nama_klien    = $this->input->post('nama_klien');
+            $nama_user     = $this->input->post('nama_user');
+
+            // var data for view 
+            $data['tanggal_awal']  = $tanggal_awal;
+            $data['tanggal_akhir'] = $tanggal_akhir;
+            $data['status_ccs']    = $status_ccs;
+            $data['nama_klien']    = $nama_klien;
+            $data['nama_user']     = $nama_user;
+
+
+            // Get data from the models
+            $data['klien'] = $this->client_model->getClient();
+            $data['user'] = $this->user_model->getNamaPetugas();
+            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user);
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/supervisor_sidebar');
+            $this->load->view('supervisor/pelaporan_onprogress', $data);  // <-- Mengirim data ke view
+            $this->load->view('templates/footer');
+        }
     }
 
 
     public function fetch_onprogress()
     {
-        $this->load->model('ServersideSPVOP_model', 'serversidespvop_model');
+        $this->load->model('Serversidespvop_model', 'serversidespvop_model');
+        // Ambil data filter dari POST request
+        $filters = array(
+            'tanggal_awal' => $this->input->post('tanggal_awal'),
+            'tanggal_akhir' => $this->input->post('tanggal_akhir'),
+            'nama_klien' => $this->input->post('nama_klien'),
+            'nama_user' => $this->input->post('nama_user'),
+        );
+
+        // Periksa apakah tombol "Semua Data" diklik
+        if (isset($_POST['semua_data'])) {
+            // Kosongkan filter
+            $filters = array();
+        }
         // Mengambil data pelaporan dengan metode server-side
-        $list = $this->serversidespvop_model->get_datatables();
+        $list = $this->serversidespvop_model->get_datatables($filters);
         $data = array();
         $no = isset($_POST['start']) ? $_POST['start'] : 0;
 
@@ -452,7 +509,7 @@ class Supervisor extends CI_Controller
         $output = array(
             "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
             "recordsTotal" => $this->serversidespvop_model->count_all(),
-            "recordsFiltered" => $this->serversidespvop_model->count_filtered(),
+            "recordsFiltered" => $this->serversidespvop_model->count_filtered($filters),
             "data" => $data,
         );
 
