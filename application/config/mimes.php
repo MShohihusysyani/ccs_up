@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -94,7 +94,8 @@ return array(
 	'html'	=>	array('text/html', 'text/plain'),
 	'htm'	=>	array('text/html', 'text/plain'),
 	'shtml'	=>	array('text/html', 'text/plain'),
-	'txt'	=>	'text/plain',
+	// 'txt'	=>	'text/plain',
+	'txt' => array('text/plain', 'text/x-c', 'application/octet-stream'),
 	'text'	=>	'text/plain',
 	'log'	=>	array('text/plain', 'text/x-log'),
 	'rtx'	=>	'text/richtext',

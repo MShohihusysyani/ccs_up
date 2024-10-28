@@ -81,7 +81,7 @@ class Klien extends CI_Controller
                 $photo = $_FILES['file']['name'];
 
                 if ($photo) {
-                    $config['allowed_types'] = 'pdf|docx|jpeg|jpg|png|csv|xlsx|';
+                    $config['allowed_types'] = 'pdf|docx|jpeg|jpg|png|csv|xlsx||txt|zip|rar';
                     $config['max_size'] = '25600';
                     $config['upload_path'] = './assets/files/';
 
@@ -94,6 +94,11 @@ class Klien extends CI_Controller
                         log_message('error', 'File upload error: ' . $this->upload->display_errors());
                         $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
                         redirect('klien/pengajuan');
+                    }
+                    if ($_FILES['file_finish']['type'] !== 'text/plain') {
+                        $this->session->set_flashdata('alert', 'File harus berformat teks biasa.');
+                        redirect('helpdesk/pelaporan');
+                        return;
                     }
                 }
 
@@ -664,7 +669,7 @@ class Klien extends CI_Controller
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|jpg|png';
+            $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|jpg|png|zip|rar';
             $config['max_size'] = '25600';
             $config['upload_path'] = './assets/comment/';
 
@@ -747,7 +752,7 @@ class Klien extends CI_Controller
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
-            $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|png|jpg';
+            $config['allowed_types'] = 'xlsx|csv|docx|pdf|txt|jpeg|png|jpg|zip|rar';
             $config['max_size'] = '25600';
             $config['upload_path'] = './assets/reply/';
 

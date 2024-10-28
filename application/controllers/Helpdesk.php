@@ -120,7 +120,7 @@ class Helpdesk extends CI_Controller
                 $photo = $_FILES['file']['name'];
 
                 if ($photo) {
-                    $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png';
+                    $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png|zip|rar';
                     $config['max_size'] = '25600';
                     $config['upload_path'] = './assets/files/';
 
@@ -794,7 +794,7 @@ class Helpdesk extends CI_Controller
 
             // Remove uploaded images
             $this->remove_uploaded_images();
-            redirect('helpdesk/finish_tiket');
+            redirect('helpdesk/pelaporan');
             return;
         }
 
@@ -805,7 +805,7 @@ class Helpdesk extends CI_Controller
 
             // Remove uploaded images
             $this->remove_uploaded_images();
-            redirect('helpdesk/finish_tiket');
+            redirect('helpdesk/pelaporan');
         } else {
             $this->processFinish();
         }
@@ -845,7 +845,7 @@ class Helpdesk extends CI_Controller
 
                 log_message('error', 'File upload error: ' . $this->upload->display_errors());
                 $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
-                redirect('helpdesk/finish_tiket');
+                redirect('helpdesk/pelaporan');
                 return;
             }
         }
@@ -857,7 +857,7 @@ class Helpdesk extends CI_Controller
                 unlink('./assets/filefinish/' . $photo);
             }
             $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
-            redirect('helpdesk/finish_tiket');
+            redirect('helpdesk/pelaporan');
             return;
         }
 
