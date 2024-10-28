@@ -376,14 +376,58 @@ class Superadmin_model extends CI_Model
         $query = "SELECT nama, COUNT(nama) AS jumlah FROM pelaporan GROUP BY nama ORDER BY jumlah DESC";
         return $this->db->query($query)->result_array();
     }
-
-
-    public function getPelaporanById($id_pelaporan)
+    public function getPelaporanByNoTiket($no_tiket)
     {
-        $this->db->where('id_pelaporan', $id_pelaporan);
-        $query = $this->db->get('pelaporan');
-        return $query->row_array();
+        // Ambil data pelaporan berdasarkan no_tiket
+        $this->db->where('no_tiket', $no_tiket);
+        $queryPelaporan = $this->db->get('pelaporan');
+        $pelaporan = $queryPelaporan->row();
+
+        if ($pelaporan) {
+            // Ambil komentar yang terkait dengan pelaporan
+            $this->db->where('pelaporan_id', $pelaporan->id_pelaporan);
+            $queryComments = $this->db->get('comment');
+            $comments = $queryComments->result_array();
+
+            foreach ($comments as &$comment) {
+                // Ambil nama user dari tabel users
+                $this->db->select('nama_user'); // Kolom nama di tabel users
+                $this->db->where('id_user', $comment['user_id']); // Menyesuaikan dengan user_id di komentar
+                $queryUser = $this->db->get('user'); // Asumsi tabel user ada
+                $user = $queryUser->row();
+                $comment['nama_user'] = $user ? $user->nama_user : 'Unknown'; // Jika user tidak ditemukan
+
+                // Ambil balasan untuk setiap komentar
+                $this->db->where('comment_id', $comment['id_comment']);
+                $queryReplies = $this->db->get('reply');
+                $replies = $queryReplies->result_array();
+
+                foreach ($replies as &$reply) {
+                    // Ambil nama user dari tabel user untuk setiap balasan
+                    $this->db->select('nama_user');
+                    $this->db->where('id_user', $reply['user_id']); // Menyesuaikan dengan user_id di balasan
+                    $queryReplyUser = $this->db->get('user');
+                    $replyUser = $queryReplyUser->row();
+                    $reply['nama_user'] = $replyUser ? $replyUser->nama_user : 'Unknown'; // Jika user tidak ditemukan
+                }
+
+                $comment['replies'] = $replies; // Menambahkan balasan ke komentar
+            }
+
+            // Menambahkan komentar ke pelaporan
+            $pelaporan->comments = $comments; // Menambahkan komentar ke objek pelaporan
+        }
+
+        return $pelaporan; // Mengembalikan objek pelaporan dengan komentar
     }
+
+
+    // public function getPelaporanById($id_pelaporan)
+    // {
+    //     $this->db->where('id_pelaporan', $id_pelaporan);
+    //     $query = $this->db->get('pelaporan');
+    //     return $query->row_array();
+    // }
 
     public function getTicketDetail($no_tiket)
     {

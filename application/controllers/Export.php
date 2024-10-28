@@ -18,23 +18,40 @@ class Export extends CI_Controller
         $this->load->model('Pelaporan_model');
     }
 
-    public function cetak_tiket()
+    public function print_detail($no_tiket)
     {
         $this->load->model('superadmin_model', 'superadmin_model');
-        $data['no_tiket'] = $this->db->get('pelaporan')->result_array();
-        $data['nama'] = $this->db->get('pelaporan')->result_array();
-        $data['judul'] = $this->db->get('pelaporan')->result_array();
-        $data['perihal'] = $this->db->get('pelaporan')->result_array();
-        $data['kategori'] = $this->db->get('pelaporan')->result_array();
-        $data['priority'] = $this->db->get('pelaporan')->result_array();
-        $data['status_ccs'] = $this->db->get('pelaporan')->result_array();
-        $data['handle_by'] = $this->db->get('pelaporan')->result_array();
-        $data['datapelaporan'] = $this->superadmin_model->getPelaporanById();
+
+        // Ambil data berdasarkan no_tiket
+        $data['datapelaporan'] = $this->superadmin_model->getPelaporanByNoTiket($no_tiket);
+
+        // Debugging: Pastikan data diambil dengan benar
+        // echo '<pre>';
+        // print_r($data['datapelaporan']);
+        // echo '</pre>';
+        // exit; // Hentikan eksekusi untuk memeriksa data
 
         $this->load->view('cetak/print_tiket', $data);
     }
 
-    public function print_detail($no_tiket)
+
+    // public function cetak_tiket()
+    // {
+    //     $this->load->model('superadmin_model', 'superadmin_model');
+    //     $data['no_tiket'] = $this->db->get('pelaporan')->result_array();
+    //     $data['nama'] = $this->db->get('pelaporan')->result_array();
+    //     $data['judul'] = $this->db->get('pelaporan')->result_array();
+    //     $data['perihal'] = $this->db->get('pelaporan')->result_array();
+    //     $data['kategori'] = $this->db->get('pelaporan')->result_array();
+    //     $data['priority'] = $this->db->get('pelaporan')->result_array();
+    //     $data['status_ccs'] = $this->db->get('pelaporan')->result_array();
+    //     $data['handle_by'] = $this->db->get('pelaporan')->result_array();
+    //     $data['datapelaporan'] = $this->superadmin_model->getPelaporanById();
+
+    //     $this->load->view('cetak/print_tiket', $data);
+    // }
+
+    public function print_detail1($no_tiket)
     {
         $this->load->model('Superadmin_model', 'superadmin_model');
 

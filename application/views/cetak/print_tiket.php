@@ -6,35 +6,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style type="text/css">
         @media print {
-            .container {
-                width: 100%;
-            }
-
-            .form-group {
-                display: flex;
-                margin-bottom: 10px;
-            }
-
-            .form-control-static {
-                font-size: 12px;
-                margin-left: 10px;
-            }
-
-            textarea.form-control {
-                width: 90%;
-                font-size: 12px;
-                margin-left: 10px;
-            }
-
-            @page {
-                size: A4;
-                margin: 20mm;
-            }
-
             img {
                 max-width: 100%;
+                /* Pastikan gambar tidak melampaui lebar halaman */
                 height: auto;
+                /* Pertahankan aspek rasio */
             }
+        }
+
+
+        .form-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .form-control-static {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        textarea.form-control {
+            width: 90%;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
         }
     </style>
 </head>
@@ -43,50 +48,50 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h3>Detail #<?= $ticket->no_tiket ?></h3>
-                <h4><?= $ticket->judul ?></h4>
+                <h3>Detail #<?= $datapelaporan->no_tiket ?></h3>
+                <h4><?= $datapelaporan->judul ?></h4>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2"><b>Added By:</b></div>
             <div class="col-sm-10">
-                <p class="form-control-static"><?= $ticket->nama ?></p>
+                <p class="form-control-static"><?= $datapelaporan->nama ?></p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2"><b>BPR/Client:</b></div>
             <div class="col-sm-10">
-                <p class="form-control-static"><?= $ticket->nama ?></p>
+                <p class="form-control-static"><?= $datapelaporan->nama ?></p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2"><b>Perihal:</b></div>
             <div class="col-sm-10">
                 <!-- Rendering CKEditor content directly -->
-                <?= $ticket->perihal ?>
+                <?= $datapelaporan->perihal ?>
             </div>
         </div>
 
         <!-- <div class="row">
             <div class="col-sm-2"><b>Perihal:</b></div>
-            <div class="col-sm-10"><textarea class="form-control" rows="10"><?= $ticket->perihal ?></textarea></div>
+            <div class="col-sm-10"><textarea class="form-control" rows="10"><?= $datapelaporan->perihal ?></textarea></div>
         </div> -->
         <div class="row">
             <div class="col-sm-2"><b>Category:</b></div>
             <div class="col-sm-10">
-                <p class="form-control-static"><?= $ticket->kategori ?></p>
+                <p class="form-control-static"><?= $datapelaporan->kategori ?></p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2"><b>Priority:</b></div>
             <div class="col-sm-10">
-                <p class="form-control-static"><?= $ticket->priority ?></p>
+                <p class="form-control-static"><?= $datapelaporan->priority ?></p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2"><b>Status:</b></div>
             <div class="col-sm-10">
-                <p class="form-control-static"><?= $ticket->status_ccs ?></p>
+                <p class="form-control-static"><?= $datapelaporan->status_ccs ?></p>
             </div>
         </div>
 
@@ -95,19 +100,52 @@
             <div class="col-sm-10">
                 <?php
                 // Ambil semua handler
-                $handlers = array_filter([$ticket->handle_by, $ticket->handle_by2, $ticket->handle_by3]);
+                $handlers = array_filter([$datapelaporan->handle_by, $datapelaporan->handle_by2, $datapelaporan->handle_by3]);
                 foreach ($handlers as $handler) : ?>
                     <p class="form-control-static"><?= $handler ?></p>
                 <?php endforeach; ?>
             </div>
         </div>
 
+        <h4>Comments</h4>
+        <?php if (!empty($datapelaporan->comments)) : ?>
+            <?php foreach ($datapelaporan->comments as $comment) : ?>
+                <div class="comment">
+                    <p><strong><?= htmlspecialchars($comment['nama_user']) ?>:</strong> <?= htmlspecialchars($comment['body']) ?></p>
+                    <?php if (!empty($comment['file'])) : ?>
+                        <img src="<?= base_url('assets/comment/' . $comment['file']) ?>" alt="Comment Image" style="max-width: 100%; height: auto;">
+                    <?php endif; ?>
+                    <div class="replies">
+                        <h5>Replies:</h5>
+                        <?php if (!empty($comment['replies'])) : ?>
+                            <?php foreach ($comment['replies'] as $reply) : ?>
+                                <div class="reply">
+                                    <p><strong><?= htmlspecialchars($reply['nama_user']) ?>:</strong> <?= htmlspecialchars($reply['body']) ?></p>
+                                    <?php if (!empty($reply['file'])) : ?>
+                                        <img src="<?= base_url('assets/reply/' . $reply['file']) ?>" alt="Reply Image" style="max-width: 100%; height: auto;">
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p>No replies available.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <p>No comments available.</p>
+        <?php endif; ?>
+
+
         <!-- Add more rows for other fields -->
     </div>
 
     <script type="text/javascript">
-        window.print();
+        window.onload = function() {
+            window.print();
+        }
     </script>
+
 </body>
 
 </html>
