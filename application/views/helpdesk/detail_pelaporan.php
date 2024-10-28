@@ -274,7 +274,7 @@
                 'bold', 'italic', 'strikethrough', 'underline', '|',
                 'bulletedList', 'numberedList', 'todoList', '|',
                 'fontSize', 'fontFamily', 'fontColor', '|', 'alignment', '|',
-                'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                'uploadImage', 'ckfinder', '|',
                 'undo', 'redo'
             ],
             shouldNotGroupWhenFull: true
@@ -384,6 +384,9 @@
                 }
             }
         },
+        ckfinder: {
+            uploadUrl: "<?= base_url('helpdesk/upload_comment') ?>"
+        },
         // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         mention: {
             feeds: [{
@@ -459,7 +462,7 @@
                         'bold', 'italic', 'strikethrough', 'underline', '|',
                         'bulletedList', 'numberedList', 'todoList', '|',
                         'fontSize', 'fontFamily', 'fontColor', '|', 'alignment', '|',
-                        'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                        'uploadImage', 'ckfinder', '|',
                         'undo', 'redo'
                     ],
                     shouldNotGroupWhenFull: true
@@ -568,6 +571,9 @@
                             }
                         }
                     }
+                },
+                ckfinder: {
+                    uploadUrl: "<?= base_url('helpdesk/upload_reply') ?>"
                 },
                 // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
                 mention: {

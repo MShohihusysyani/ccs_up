@@ -270,7 +270,7 @@
                 'bulletedList', 'numberedList', 'todoList', '|',
                 'fontSize', 'fontFamily', 'fontColor', '|',
                 'alignment', '|',
-                'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                'uploadImage', 'ckfinder', '|',
                 'undo', 'redo',
             ],
             shouldNotGroupWhenFull: true
@@ -380,6 +380,9 @@
                 }
             }
         },
+        ckfinder: {
+            uploadUrl: "<?= base_url('implementator/upload_comment') ?>"
+        },
         // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         mention: {
             feeds: [{
@@ -455,7 +458,7 @@
                         'bulletedList', 'numberedList', 'todoList', '|',
                         'fontSize', 'fontFamily', 'fontColor', '|',
                         'alignment', '|',
-                        'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                        'uploadImage', 'ckfinder', '|',
                         'undo', 'redo',
                     ],
                     shouldNotGroupWhenFull: true
@@ -564,6 +567,9 @@
                             }
                         }
                     }
+                },
+                ckfinder: {
+                    uploadUrl: "<?= base_url('implementator/upload_reply') ?>"
                 },
                 // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
                 mention: {

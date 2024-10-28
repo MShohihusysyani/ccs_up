@@ -40,7 +40,6 @@
             max-width: 100%;
             height: auto;
         }
-        }
     </style>
 </head>
 
@@ -106,24 +105,30 @@
                 <?php endforeach; ?>
             </div>
         </div>
-
         <h4>Comments</h4>
         <?php if (!empty($datapelaporan->comments)) : ?>
             <?php foreach ($datapelaporan->comments as $comment) : ?>
                 <div class="comment">
-                    <p><strong><?= htmlspecialchars($comment['nama_user']) ?>:</strong> <?= htmlspecialchars($comment['body']) ?></p>
-                    <?php if (!empty($comment['file'])) : ?>
-                        <img src="<?= base_url('assets/comment/' . $comment['file']) ?>" alt="Comment Image" style="max-width: 100%; height: auto;">
-                    <?php endif; ?>
+                    <p><strong><?= htmlspecialchars($comment['nama_user']) ?>:</strong></p>
+                    <div>
+                        <?= $comment['body'] ?><br> <!-- Menampilkan konten komentar -->
+                        <?php if (!empty($comment['file'])) : ?>
+                            <img src="<?= base_url('assets/comment/' . $comment['file']) ?>" alt="Comment Image" style="max-width: 100%; height: auto;">
+                        <?php endif; ?>
+                    </div>
+
                     <div class="replies">
                         <h5>Replies:</h5>
                         <?php if (!empty($comment['replies'])) : ?>
                             <?php foreach ($comment['replies'] as $reply) : ?>
                                 <div class="reply">
-                                    <p><strong><?= htmlspecialchars($reply['nama_user']) ?>:</strong> <?= htmlspecialchars($reply['body']) ?></p>
-                                    <?php if (!empty($reply['file'])) : ?>
-                                        <img src="<?= base_url('assets/reply/' . $reply['file']) ?>" alt="Reply Image" style="max-width: 100%; height: auto;">
-                                    <?php endif; ?>
+                                    <p><strong><?= htmlspecialchars($reply['nama_user']) ?>:</strong></p>
+                                    <div>
+                                        <?= $reply['body'] ?><br> <!-- Menampilkan konten balasan -->
+                                        <?php if (!empty($reply['file'])) : ?>
+                                            <img src="<?= base_url('assets/reply/' . $reply['file']) ?>" alt="Reply Image" style="max-width: 100%; height: auto;">
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             <?php endforeach; ?>
                         <?php else : ?>

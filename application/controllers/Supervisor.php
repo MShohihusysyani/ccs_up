@@ -800,6 +800,44 @@ class Supervisor extends CI_Controller
         Redirect(Base_url('supervisor/detail_pelaporan/' . $id_pelaporan));
     }
 
+    public function upload_comment()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '25600';
+            $config['upload_path'] = './assets/comment/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/comment/' . $photo);
+                $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
+        }
+    }
+
     public function add_reply()
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
@@ -843,6 +881,44 @@ class Supervisor extends CI_Controller
         $this->db->insert('reply', $data);
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('supervisor/detail_pelaporan/' . $id_pelaporan));
+    }
+
+    public function upload_reply()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '25600';
+            $config['upload_path'] = './assets/reply/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/reply/' . $photo);
+                $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
+        }
     }
 
     //   FILTER LAPORAN

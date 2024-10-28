@@ -1052,6 +1052,43 @@ class Helpdesk extends CI_Controller
         $this->session->set_flashdata('pesan', 'Successfully Add!');
         Redirect(Base_url('helpdesk/detail_pelaporan/' . $id_pelaporan));
     }
+    public function upload_comment()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '25600';
+            $config['upload_path'] = './assets/comment/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/comment/' . $photo);
+                $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
+        }
+    }
 
     public function add_reply()
     {
@@ -1076,29 +1113,23 @@ class Helpdesk extends CI_Controller
             }
         }
 
-        // Validasi form
-        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $id_user = $this->input->post('user_id');
+        $body = $this->input->post('body');
+        $create_at = date('Y-m-d H:i:s');
+        $comment_id = $this->input->post('id_comment');
 
-        if ($this->form_validation->run() === FALSE) {
-            $this->session->set_flashdata('alert', validation_errors());
-            redirect('helpdesk/detail_pelaporan/' . $this->input->post('id_pelaporan'));
-            return;
-        }
-
-        // Ambil data input
         $data = [
-            'pelaporan_id' => $this->input->post('id_pelaporan'),
-            'user_id' => $this->input->post('user_id'),
-            'body' => $this->input->post('body'),
+            'pelaporan_id' => $id_pelaporan,
+            'user_id' => $id_user,
+            'body' => $body,
             'file' => $photo,
-            'created_at' => date('Y-m-d H:i:s'),
-            'comment_id' => $this->input->post('id_comment')
+            'created_at' => $create_at,
+            'comment_id' => $comment_id
         ];
 
-        // Logging data untuk debugging
-        log_message('info', 'Data yang akan diinsert ke reply: ' . json_encode($data));
-
+        $data = preg_replace("/^<p.*?>/", "", $data);
+        $data = preg_replace("|</p>$|", "", $data);
         // Insert ke database
         if ($this->db->insert('reply', $data)) {
             $this->session->set_flashdata('pesan', 'Reply berhasil ditambahkan.');
@@ -1111,7 +1142,43 @@ class Helpdesk extends CI_Controller
         redirect('helpdesk/detail_pelaporan/' . $this->input->post('id_pelaporan'));
     }
 
+    public function upload_reply()
+    {
+        if ($_FILES['upload']['name']) {
+            $config['allowed_types'] = 'jpeg|jpg|png';
+            $config['max_size'] = '25600';
+            $config['upload_path'] = './assets/reply/';
 
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('upload')) {
+                $photo = $this->upload->data('file_name');
+                $url = base_url('assets/reply/' . $photo);
+                $this->load->helper('url');
+
+                // Store the uploaded file name in session
+                $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
+                $uploaded_images[] = $photo;
+                $this->session->set_userdata('uploaded_images', $uploaded_images);
+
+                $data = array(
+                    'fileName' => $photo,
+                    'uploaded' => 1,
+                    'url' => $url
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            } else {
+                $data = array(
+                    'message' => 'Upload failed',
+                    'uploaded' => 0
+                );
+                $this->output->set_content_type('application/json');
+                echo json_encode($data);
+            }
+        }
+    }
 
     public function statistik()
     {

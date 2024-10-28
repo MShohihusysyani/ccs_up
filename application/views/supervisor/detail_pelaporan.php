@@ -105,7 +105,7 @@
                                     <input type="text" id="status_ccs" name="status_ccs" class="form-control" value="<?= $dp['status_ccs']; ?>" readonly>
                                 </div>
                             </div>
-                            
+
                             <label for="nama">File</label>
                             <div class="form-group">
                                 <div class="form-line">
@@ -294,7 +294,7 @@
                 'bulletedList', 'numberedList', 'todoList', '|',
                 'fontSize', 'fontFamily', 'fontColor', '|',
                 'alignment', '|',
-                'link', 'uploadImage', 'ckbox', 'blockQuote', 'insertTable', '|',
+                'uploadImage', 'ckfinder', '|',
                 'undo', 'redo'
 
             ],
@@ -405,6 +405,9 @@
                 }
             }
         },
+        ckfinder: {
+            uploadUrl: "<?= base_url('supervisor/upload_comment') ?>"
+        },
         // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         // mention: {
         //     feeds: [
@@ -483,7 +486,7 @@
                         'bulletedList', 'numberedList', 'todoList', '|',
                         'fontSize', 'fontFamily', 'fontColor', '|',
                         'alignment', '|',
-                        'link', 'uploadImage', 'ckbox', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                        'uploadImage', 'ckfinder', '|',
                         'undo', 'redo'
 
                     ],
@@ -593,6 +596,9 @@
                             }
                         }
                     }
+                },
+                ckfinder: {
+                    uploadUrl: "<?= base_url('supervisor/upload_reply') ?>"
                 },
                 // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
                 // mention: {
