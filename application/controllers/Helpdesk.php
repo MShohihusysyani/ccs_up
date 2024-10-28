@@ -1055,49 +1055,62 @@ class Helpdesk extends CI_Controller
 
     public function add_reply()
     {
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-        $now = date('Y-m-d H:i:s');
-        $now = date('Y-m-d H:i:s');
-        $photo = $_FILES['file']['name'];
+        date_default_timezone_set('Asia/Jakarta');
 
+        // Ambil nama file
+        $photo = $_FILES['file']['name'];
         if ($photo) {
             $config['allowed_types'] = 'txt|csv|xlsx|docx|pdf|jpeg|jpg|zip|rar|png';
             $config['max_size'] = '25600';
             $config['upload_path'] = './assets/reply/';
 
             $this->load->library('upload', $config);
-            $this->upload->initialize($config);
 
             if ($this->upload->do_upload('file')) {
-
                 $photo = $this->upload->data('file_name');
             } else {
                 log_message('error', 'File upload error: ' . $this->upload->display_errors());
                 $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
-                redirect('helpdesk/detail_pelaporan');
+                redirect('helpdesk/detail_pelaporan/' . $this->input->post('id_pelaporan'));
+                return;
             }
         }
+
+        // Validasi form
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $id_user = $this->input->post('user_id');
-        $body = $this->input->post('body');
-        $create_at  = date('Y-m-d H:i:s');
-        $comment_id = $this->input->post('id_comment');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('helpdesk/detail_pelaporan/' . $this->input->post('id_pelaporan'));
+            return;
+        }
+
+        // Ambil data input
         $data = [
-            'pelaporan_id' => $id_pelaporan,
-            'user_id' => $id_user,
-            'body' => $body,
+            'pelaporan_id' => $this->input->post('id_pelaporan'),
+            'user_id' => $this->input->post('user_id'),
+            'body' => $this->input->post('body'),
             'file' => $photo,
-            'created_at' => $create_at,
-            'comment_id' => $comment_id
+            'created_at' => date('Y-m-d H:i:s'),
+            'comment_id' => $this->input->post('id_comment')
         ];
-        $data = preg_replace("/^<p.*?>/", "", $data);
-        $data = preg_replace("|</p>$|", "", $data);
-        $this->db->insert('reply', $data);
-        $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('helpdesk/detail_pelaporan/' . $id_pelaporan));
+
+        // Logging data untuk debugging
+        log_message('info', 'Data yang akan diinsert ke reply: ' . json_encode($data));
+
+        // Insert ke database
+        if ($this->db->insert('reply', $data)) {
+            $this->session->set_flashdata('pesan', 'Reply berhasil ditambahkan.');
+        } else {
+            log_message('error', 'Gagal menambahkan reply ke database.');
+            $this->session->set_flashdata('alert', 'Gagal menambahkan reply ke database.');
+        }
+
+        // Redirect ke halaman detail pelaporan
+        redirect('helpdesk/detail_pelaporan/' . $this->input->post('id_pelaporan'));
     }
+
 
 
     public function statistik()

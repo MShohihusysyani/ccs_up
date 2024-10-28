@@ -28,7 +28,7 @@
                 </div>
                 <div class="body">
                     <?php echo form_open_multipart('helpdesk/add_comment') ?>
-                    <form>
+                    <form method="post" enctype="multipart/form-data">
                         <?php foreach ($datapelaporan as $dp) : ?>
                             <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control" value="<?= $dp['id_pelaporan']; ?>">
                             <label for="nama_tiket">No Tiket</label>
@@ -127,7 +127,7 @@
                             <label for="comment">Comment</label>
                             <textarea id="editor" class="form-control" name="body" id="body">
 
-                        </textarea>
+                            </textarea>
 
                             <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 2mb</label>
                             <div class="form-group">

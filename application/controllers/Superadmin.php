@@ -1202,7 +1202,7 @@ class Superadmin extends CI_Controller
 
         if ($photo) {
             $config['allowed_types'] = 'txt|csv|xlsx|docx|pdf|jpeg|jpg|zip|rar|png';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/comment/';
 
             $this->load->library('upload', $config);
@@ -1240,35 +1240,32 @@ class Superadmin extends CI_Controller
 
     public function add_reply()
     {
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        date_default_timezone_set('Asia/Jakarta');
         $now = date('Y-m-d H:i:s');
-
         $photo = $_FILES['file']['name'];
 
         if ($photo) {
             $config['allowed_types'] = 'txt|csv|xlsx|docx|pdf|jpeg|jpg|zip|rar|png';
-            $config['max_size'] = '2048';
+            $config['max_size'] = '25600';
             $config['upload_path'] = './assets/reply/';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('file')) {
-
                 $photo = $this->upload->data('file_name');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-                $referred_from = $this->session->userdata('referred_from');
-                redirect($referred_from, 'refresh');
+                return;
             }
         }
-        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('user_id', 'Helpdesk', 'required');
+
         $id_pelaporan = $this->input->post('id_pelaporan');
         $id_user = $this->input->post('user_id');
         $body = $this->input->post('body');
-        $create_at  = date('Y-m-d H:i:s');
+        $create_at = date('Y-m-d H:i:s');
         $comment_id = $this->input->post('id_comment');
+
         $data = [
             'pelaporan_id' => $id_pelaporan,
             'user_id' => $id_user,
@@ -1279,10 +1276,17 @@ class Superadmin extends CI_Controller
         ];
         $data = preg_replace("/^<p.*?>/", "", $data);
         $data = preg_replace("|</p>$|", "", $data);
-        $this->db->insert('reply', $data);
-        $this->session->set_flashdata('pesan', 'Successfully Add!');
-        Redirect(Base_url('superadmin/detail_pelaporan/' . $id_pelaporan));
+        if ($this->db->insert('reply', $data)) {
+            $this->session->set_flashdata('pesan', 'Successfully Add!');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">Failed to add reply.</div>');
+        }
+
+        redirect(base_url('superadmin/detail_pelaporan/' . $id_pelaporan));
     }
+
+
+
 
     // NOTIFICATION
     public function fetch_notifications()
