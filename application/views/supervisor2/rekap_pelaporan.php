@@ -127,7 +127,7 @@
 
             <div class="card">
                 <div class="header">
-                    <h2>LIST PELAPORAN</h2>
+                    <h2>RINCIAN PELAPORAN</h2>
                 </div>
                 <br>
                 <div class="btn-group" role="group" style="margin-left: 20px;">
@@ -254,6 +254,129 @@
     </div>
 </div>
 
+<!-- DATATABLE SERVERSIDE -->
+<script type="text/javascript">
+    var table = $('#example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo base_url('supervisor2/fetch_data'); ?>",
+            "type": "POST",
+            "data": function(data) {
+                data.tanggal_awal = $('#tanggal_awal').val();
+                data.tanggal_akhir = $('#tanggal_akhir').val();
+                data.nama_klien = $('#nama_klien').val();
+                data.nama_user = $('#nama_user').val();
+                data.rating = $('#rating').val();
+                data.tags = $('#tags').val();
+                data.status_ccs = $('#status_ccs').val();
+            }
+        },
+        "order": [
+            [1, 'desc']
+        ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+        "columnDefs": [{
+            "targets": [0],
+            "orderable": false,
+        }, ],
+        "columns": [{
+                "data": "no"
+            },
+            {
+                "data": "waktu_pelaporan"
+            },
+            {
+                "data": "no_tiket"
+            },
+            {
+                "data": "nama"
+            },
+            {
+                "data": "judul"
+            },
+            {
+                "data": "kategori"
+            },
+            {
+                "data": "priority"
+            },
+            {
+                "data": "maxday"
+            },
+            {
+                "data": "status_ccs"
+            },
+            {
+                "data": "handle_combined"
+            },
+            {
+                "data": "rating"
+            },
+        ]
+    });
+
+
+    // Handle form submission for filtering
+    $('#filterForm').on('submit', function(e) {
+        e.preventDefault();
+        table.draw(); // Redraw the DataTable based on new filters
+    });
+    // Handle "Reset Filter" button click
+    $('#resetFilterButton').on('click', function() {
+        $('#filterFormContent')[0].reset();
+        table.draw(); // Redraw the DataTable to reflect reset filters
+    });
+    // Handle "Semua Data" button click
+    $('#semuaDataButton').on('click', function() {
+        $('#filterFormContent')[0].reset();
+        table.ajax.reload(); // Reload DataTables to show all data
+    });
+
+    // Handle export buttons
+    $('#exportPdfButton').on('click', function() {
+        exportData('pdf');
+    });
+
+    $('#exportExcelButton').on('click', function() {
+        exportData('excel');
+    });
+
+
+    function exportData(format) {
+        var filters = {
+            tanggal_awal: $('#tanggal_awal').val(),
+            tanggal_akhir: $('#tanggal_akhir').val(),
+            nama_klien: $('#nama_klien').val(),
+            nama_user: $('#nama_user').val(),
+            rating: $('#rating').val(),
+            tags: $('#tags').val(),
+            status_ccs: $('#status_ccs').val()
+        };
+
+        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel'); ?>';
+
+        var form = $('<form>', {
+            action: actionUrl,
+            method: 'POST',
+            target: '_blank'
+        }).appendTo('body');
+
+        $.each(filters, function(key, value) {
+            form.append($('<input>', {
+                type: 'hidden',
+                name: key,
+                value: value
+            }));
+        });
+
+        form.submit();
+
+        // Remove the form after a slight delay to ensure the submission goes through
+        setTimeout(function() {
+            form.remove();
+        }, 100);
+    }
+</script>
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -281,131 +404,6 @@
             $('#id').val(id);
             $('#defaultModalNamaUser').modal('hide');
         });
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        var table = $('#example').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "<?php echo base_url('supervisor2/fetch_data'); ?>",
-                "type": "POST",
-                "data": function(data) {
-                    data.tanggal_awal = $('#tanggal_awal').val();
-                    data.tanggal_akhir = $('#tanggal_akhir').val();
-                    data.nama_klien = $('#nama_klien').val();
-                    data.nama_user = $('#nama_user').val();
-                    data.rating = $('#rating').val();
-                    data.tags = $('#tags').val();
-                    data.status_ccs = $('#status_ccs').val();
-                }
-            },
-            "order": [
-                [1, 'desc']
-            ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
-            "columnDefs": [{
-                "targets": [0],
-                "orderable": false,
-            }, ],
-            "columns": [{
-                    "data": "no"
-                },
-                {
-                    "data": "waktu_pelaporan"
-                },
-                {
-                    "data": "no_tiket"
-                },
-                {
-                    "data": "nama"
-                },
-                {
-                    "data": "judul"
-                },
-                {
-                    "data": "kategori"
-                },
-                {
-                    "data": "priority"
-                },
-                {
-                    "data": "maxday"
-                },
-                {
-                    "data": "status_ccs"
-                },
-                {
-                    "data": "handle_combined"
-                },
-                {
-                    "data": "rating"
-                },
-            ]
-        });
-
-
-        // Handle form submission for filtering
-        $('#filterForm').on('submit', function(e) {
-            e.preventDefault();
-            table.draw(); // Redraw the DataTable based on new filters
-        });
-        // Handle "Reset Filter" button click
-        $('#resetFilterButton').on('click', function() {
-            $('#filterFormContent')[0].reset();
-            table.draw(); // Redraw the DataTable to reflect reset filters
-        });
-        // Handle "Semua Data" button click
-        $('#semuaDataButton').on('click', function() {
-            $('#filterFormContent')[0].reset();
-            table.ajax.reload(); // Reload DataTables to show all data
-        });
-
-        // Handle export buttons
-        $('#exportPdfButton').on('click', function() {
-            exportData('pdf');
-        });
-
-        $('#exportExcelButton').on('click', function() {
-            exportData('excel');
-        });
-
-
-        function exportData(format) {
-            var filters = {
-                tanggal_awal: $('#tanggal_awal').val(),
-                tanggal_akhir: $('#tanggal_akhir').val(),
-                nama_klien: $('#nama_klien').val(),
-                nama_user: $('#nama_user').val(),
-                rating: $('#rating').val(),
-                tags: $('#tags').val(),
-                status_ccs: $('#status_ccs').val()
-            };
-
-            var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel'); ?>';
-
-            var form = $('<form>', {
-                action: actionUrl,
-                method: 'POST',
-                target: '_blank'
-            }).appendTo('body');
-
-            $.each(filters, function(key, value) {
-                form.append($('<input>', {
-                    type: 'hidden',
-                    name: key,
-                    value: value
-                }));
-            });
-
-            form.submit();
-
-            // Remove the form after a slight delay to ensure the submission goes through
-            setTimeout(function() {
-                form.remove();
-            }, 100);
-        }
     });
 </script>
 

@@ -124,24 +124,23 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            FINISH
+                            DATA FINISHED
                         </h2>
-
-                        <div class="btn-group" role="group" style="margin-left: 20px;">
-                            <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
-                                <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
-                            </ul>
-                        </div>
-
-
                     </div>
+                    <br>
+                    <div class="btn-group" role="group" style="margin-left: 20px;">
+                        <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
+                            <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
+                        </ul>
+                    </div>
+
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                            <table class="display table table-bordered table-striped table-hover" id="example">
                                 <thead>
                                     <tr>
                                         <th>No</th>

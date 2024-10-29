@@ -130,7 +130,7 @@
 
                 <div class="card">
                     <div class="header">
-                        <h2>LIST PELAPORAN</h2>
+                        <h2>RINCIAN PELAPORAN</h2>
                     </div>
                     <br>
                     <div class="btn-group" role="group" style="margin-left: 20px;">
