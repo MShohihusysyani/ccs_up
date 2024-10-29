@@ -153,21 +153,17 @@ class Superadmin_model extends CI_Model
                 waktu_pelaporan DESC
         ";
 
-            // Execute the query and return the result as an array
             $result = $this->db->query($query);
 
-            // Check for query execution errors
             if ($result) {
                 return $result->result_array();
             } else {
-                // Handle the error appropriately (e.g., log the error, return a message)
                 log_message('error', 'Query failed: ' . $this->db->last_query());
-                return []; // Return an empty array or handle as needed
+                return [];
             }
         } else {
-            // Handle case when user data is not found
             log_message('error', 'User not found in session.');
-            return []; // Return an empty array or handle as needed
+            return [];
         }
     }
 
@@ -218,7 +214,6 @@ class Superadmin_model extends CI_Model
                 return [];
             }
         } else {
-            // Handle case when user data is not found
             log_message('error', 'User not found in session.');
             return [];
         }
@@ -242,7 +237,6 @@ class Superadmin_model extends CI_Model
             // User ID from session
             $user_id = $this->session->userdata('id_user');
 
-            // SQL query to retrieve reports with status_ccs='FINISH'
             $query = "
             SELECT DISTINCT
                 nama, 
