@@ -948,6 +948,180 @@ class Export extends CI_Controller
         $writer->save('php://output');
     }
 
+    public function rekap_pelaporan_excel_handle()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical'   => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
+            ]
+        ];
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
+            ]
+        ];
+
+        $sheet->setCellValue('A1', "CCS | RINCIAN PELAPORAN");
+        $sheet->mergeCells('A1:L1');
+        $sheet->getStyle('A1')->getFont()->setBold(true);
+        $sheet->getStyle('A1')->getFont()->setSize(15);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $current_date = date('Y-m-d');
+
+        // Mendapatkan informasi user dari sesi
+        $this->db->where('id_user', $this->session->userdata('id_user'));
+        $user_query = $this->db->get('user');
+        $user = $user_query->row_array();
+
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $nama_klien = $this->input->post('nama_klien');
+        $nama_user = $this->input->post('nama_user');
+        $status_ccs = ['HANDLED', 'HANDLED 2'];
+
+        // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
+        $periode_text = "Semua Data";
+        if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+            $periode_text = "Periode : " . tanggal_indo($tanggal_awal) . " s/d " . tanggal_indo($tanggal_akhir);
+        }
+
+        $sheet->setCellValue('A2', $periode_text);
+        $sheet->setCellValue('A3', "NO");
+        $sheet->setCellValue('B3', "No Tiket");
+        $sheet->setCellValue('C3', "Judul");
+        $sheet->setCellValue('D3', "Perihal");
+        $sheet->setCellValue('E3', "BPR/Klien");
+        $sheet->setCellValue('F3', "Kategori");
+        $sheet->setCellValue('G3', "Priority");
+        $sheet->setCellValue('H3', "Maxday");
+        $sheet->setCellValue('I3', "Handled By");
+        $sheet->setCellValue('J3', "Status");
+        $sheet->setCellValue('K3', "Create at");
+        $sheet->setCellValue('L3', "Finish at");
+
+        $sheet->getStyle('A2')->getFont()->setBold(true);
+        $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('A2:L2');
+        // $sheet->getStyle('A3:M3')->applyFromArray($style_col);
+
+        $sheet->getRowDimension('1')->setRowHeight(20);
+        $sheet->getRowDimension('2')->setRowHeight(20);
+        $sheet->getRowDimension('3')->setRowHeight(20);
+
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+
+        // // Mendapatkan data berdasarkan filter tanggal jika diisi
+        // if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+        //     $query = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir);
+
+        // } else {
+        //     // Mendapatkan semua data jika tanggal tidak diisi
+        //     $query = $this->pelaporan_model->getDate();
+        // }
+
+        $query = $this->pelaporan_model->getDateFilteredHandle($tanggal_awal, $tanggal_akhir, $nama_klien,  $nama_user,  $status_ccs);
+        // var_dump($query);
+        // die();
+
+        $no = 1;
+        $row = 4;
+
+        foreach ($query as $data) {
+            $sheet->setCellValue('A' . $row, $no);
+            $sheet->setCellValue('B' . $row, $data->no_tiket);
+            $sheet->setCellValue('C' . $row, $data->judul);
+            $sheet->setCellValue('D' . $row, $data->perihal);
+            $sheet->setCellValue('E' . $row, $data->nama);
+            $sheet->setCellValue('F' . $row, $data->kategori);
+            $sheet->setCellValue('G' . $row, $data->priority);
+            $sheet->setCellValue('H' . $row, $data->maxday);
+
+            $handleBy = [];
+
+            if (!empty($data->handle_by)) {
+                $handleBy[] = $data->handle_by;
+            }
+            if (!empty($data->handle_by2)) {
+                $handleBy[] = $data->handle_by2;
+            }
+            if (!empty($data->handle_by3)) {
+                $handleBy[] = $data->handle_by3;
+            }
+            $sheet->setCellValue('I' . $row, implode(', ', $handleBy));
+            $sheet->setCellValue('J' . $row, $data->status_ccs);
+            $sheet->setCellValue('K' . $row, tanggal_indo($data->waktu_pelaporan));
+            $sheet->setCellValue('L' . $row, tanggal_indo($data->waktu_approve));
+
+            // Apply style untuk setiap sel data
+            // $sheet->getStyle('A' . $row . ':M' . $row)->applyFromArray($style_row);
+
+            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('D' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('E' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('F' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('G' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('I' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('K' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('L' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getRowDimension($row)->setRowHeight(20);
+
+            $no++;
+            $row++;
+        }
+
+        // $sheet->getColumnDimension('A')->setWidth(5);
+        // $sheet->getColumnDimension('B')->setWidth(15);
+        // $sheet->getColumnDimension('C')->setWidth(20);
+        // $sheet->getColumnDimension('D')->setWidth(40);
+        // $sheet->getColumnDimension('E')->setWidth(235);
+        // $sheet->getColumnDimension('F')->setWidth(30);
+        // $sheet->getColumnDimension('G')->setWidth(83);
+        // $sheet->getColumnDimension('H')->setWidth(10);
+        // $sheet->getColumnDimension('I')->setWidth(10);
+        // $sheet->getColumnDimension('J')->setWidth(10);
+        // $sheet->getColumnDimension('K')->setWidth(15);
+        // $sheet->getColumnDimension('L')->setWidth(10);
+
+        // Set orientasi halaman dan judul sheet
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->setTitle("Data Rekap Pelaporan");
+
+        // Set header untuk mendownload file Excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Simpan file Excel
+        $writer = new Xlsx($spreadsheet);
+        ob_end_clean(); //digunakan ketika file tidak bisa dibuka diexcel
+        $writer->save('php://output');
+    }
+
     public function rekap_pelaporan_excel1()
     {
         try {

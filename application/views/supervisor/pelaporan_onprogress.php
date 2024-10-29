@@ -83,6 +83,16 @@
                     <div class="header">
                         <h2>ON PROGRESS</h2>
                     </div>
+                    <br>
+                    <div class="btn-group" role="group" style="margin-left: 20px;">
+                        <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
+                            <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
+                        </ul>
+                    </div>
                     <div class="body">
                         <div class="table-responsive">
                             <table class="display table table-bordered table-striped- table-hover" id="example">
@@ -398,6 +408,50 @@
         $('#filterFormContent')[0].reset();
         table.ajax.reload(); // Reload DataTables to show all data
     });
+
+    // Handle export buttons
+    $('#exportPdfButton').on('click', function() {
+        exportData('pdf');
+    });
+
+    $('#exportExcelButton').on('click', function() {
+        exportData('excel');
+    });
+
+
+    function exportData(format) {
+        var filters = {
+            tanggal_awal: $('#tanggal_awal').val(),
+            tanggal_akhir: $('#tanggal_akhir').val(),
+            nama_klien: $('#nama_klien').val(),
+            nama_user: $('#nama_user').val(),
+            status_ccs: $('#status_ccs').val(),
+            rating: $('#rating').val()
+        };
+
+        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_handle'); ?>';
+
+        var form = $('<form>', {
+            action: actionUrl,
+            method: 'POST',
+            target: '_blank'
+        }).appendTo('body');
+
+        $.each(filters, function(key, value) {
+            form.append($('<input>', {
+                type: 'hidden',
+                name: key,
+                value: value
+            }));
+        });
+
+        form.submit();
+
+        // Remove the form after a slight delay to ensure the submission goes through
+        setTimeout(function() {
+            form.remove();
+        }, 100);
+    }
 </script>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->

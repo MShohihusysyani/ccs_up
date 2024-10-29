@@ -100,15 +100,11 @@ class ServersideSPVOP_model extends CI_Model
             $this->db->or_like('handle_by3', $filters['nama_user']);
             $this->db->group_end(); // Akhiri group
         }
-
-        if (!empty($filters['tags'])) {
-            $this->db->like('tags', $filters['tags']);
+        if (!empty($status_ccs)) {
+            $status_ccs_array = json_decode($status_ccs, true); // Decode jika perlu
+            $this->db->where_in('status_ccs', $status_ccs_array);
         }
 
-
-        if (!empty($filters['rating'])) {
-            $this->db->where('rating', $filters['rating']);
-        }
         // Search logic
         $i = 0;
         if (isset($_POST['search']) && $_POST['search']['value'] != '') {
