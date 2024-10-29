@@ -28,9 +28,12 @@
 
             </h2>
         </div>
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
-        <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+        <!-- <link rel="stylesheet"  type="text/css" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css"> -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -50,7 +53,7 @@
                                     <div class="form-group">
                                         <label for="filter_tanggal_awal">Dari Tanggal</label>
                                         <div class="form-line">
-                                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control" required>
+                                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control">
                                         </div>
                                     </div>
 
@@ -83,7 +86,7 @@
                                     <div class="form-group">
                                         <label for="filter_tanggal_akhir">Sampai Tanggal</label>
                                         <div class="form-line">
-                                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
+                                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control">
                                         </div>
                                     </div>
 
@@ -175,111 +178,6 @@
                                 </tfoot>
                                 <tbody>
 
-                                    <!-- <?php
-                                            $no = 1;
-                                            foreach ($datapelaporan as $dp) : ?>
-                                            <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $dp['no_tiket']; ?></td>
-                                                <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
-                                                <td><?= $dp['nama']; ?></td>
-                                                <td><?= $dp['judul']; ?></td>
-                                                <td><?= $dp['kategori']; ?></td>
-                                                <td>
-                                                    <?php if (!empty($dp['tags'])): ?>
-                                                        <span class="label label-info">
-                                                            <?= $dp['tags']; ?>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['priority'] == 'Low') : ?>
-                                                        <span class="label label-info">Low</span>
-
-                                                    <?php elseif ($dp['priority'] == 'Medium') : ?>
-                                                        <span class="label label-warning">Medium</span>
-
-                                                    <?php elseif ($dp['priority'] == 'High') : ?>
-                                                        <span class="label label-danger">High</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['maxday'] == '90') : ?>
-                                                        <span class="label label-info">90</span>
-
-                                                    <?php elseif ($dp['maxday'] == '60') : ?>
-                                                        <span class="label label-warning">60</span>
-
-                                                    <?php elseif ($dp['maxday'] == '7') : ?>
-                                                        <span class="label label-danger">7</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($dp['status_ccs'] == 'FINISHED') : ?>
-                                                        <span class="label label-success">FINISHED</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'CLOSED') : ?>
-                                                        <span class="label label-warning">CLOSED</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'HANDLED') : ?>
-                                                        <span class="label label-info">HANDLED</span>
-
-                                                    <?php elseif ($dp['status_ccs'] == 'ADDED') : ?>
-                                                        <span class="label label-primary">ADDED</span>
-
-                                                    <?php else : ?>
-                                                    <?php endif; ?>
-
-                                                </td>
-
-                                                <td>
-                                                    <?php
-                                                    $handleByList = [
-                                                        $dp['handle_by'],
-                                                        $dp['handle_by2'],
-                                                        $dp['handle_by3']
-                                                    ];
-
-                                                    $first = true;
-                                                    foreach ($handleByList as $handleBy) :
-                                                        if (!empty($handleBy)) :
-                                                            if (!$first) {
-                                                                echo ', ';
-                                                            }
-                                                            $first = false;
-                                                    ?>
-                                                            <div class="handle-by-item">
-                                                                <?= $handleBy; ?>
-                                                            </div>
-                                                    <?php
-                                                        endif;
-                                                    endforeach;
-                                                    ?>
-                                                </td>
-                                                <td>
-                                            
-                                                    <?php if ($dp['rating'] !== null) : ?>
-                                                        <div class="star-rating">
-                                                            <?php
-                                                            $rating = $dp['rating'];
-                                                            for ($i = 1; $i <= 5; $i++) {
-                                                                if ($i <= $rating) {
-                                                                    echo '<span class="star selected">&#9733;</span>';
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td><a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor2/detail_finish/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>
-                                                        Detail</a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?> -->
                                 </tbody>
                             </table>
                         </div>
@@ -378,10 +276,96 @@
     </div>
 </div>
 
+<!-- Datatable -->
+<script type="text/javascript">
+    var table = $('#example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('superadmin/get_data_finish') ?>",
+            "type": "POST",
+            "data": function(data) {
+                data.tanggal_awal = $('#tanggal_awal').val();
+                data.tanggal_akhir = $('#tanggal_akhir').val();
+                data.nama_klien = $('#nama_klien').val();
+                data.nama_user = $('#nama_user').val();
+                data.rating = $('#rating').val();
+                data.tags = $('#tags').val();
+            }
+        },
+        "order": [
+            [2, 'desc']
+        ],
+        "columnDefs": [{
+            "targets": [0],
+            "orderable": false,
+        }]
+    });
+
+    // Handle form submission for filtering
+    $('#filterForm').on('submit', function(e) {
+        e.preventDefault();
+        table.draw(); // Redraw the DataTable based on new filters
+    });
+
+    // Handle "Reset Filter" button click
+    $('#resetFilterButton').on('click', function() {
+        $('#filterFormContent')[0].reset();
+        table.draw(); // Redraw the DataTable to reflect reset filters
+    });
+
+    // Handle "Semua Data" button click
+    $('#semuaDataButton').on('click', function() {
+        $('#filterFormContent')[0].reset();
+        table.ajax.reload(); // Reload DataTables to show all data
+    });
+
+    // Handle export buttons
+    $('#exportPdfButton').on('click', function() {
+        exportData('pdf');
+    });
+
+    $('#exportExcelButton').on('click', function() {
+        exportData('excel');
+    });
+
+    function exportData(format) {
+        var filters = {
+            tanggal_awal: $('#tanggal_awal').val(),
+            tanggal_akhir: $('#tanggal_akhir').val(),
+            nama_klien: $('#nama_klien').val(),
+            nama_user: $('#nama_user').val(),
+            status_ccs: $('#status_ccs').val(),
+            rating: $('#rating').val()
+        };
+
+        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_finish'); ?>';
+
+        var form = $('<form>', {
+            action: actionUrl,
+            method: 'POST',
+            target: '_blank'
+        }).appendTo('body');
+
+        $.each(filters, function(key, value) {
+            form.append($('<input>', {
+                type: 'hidden',
+                name: key,
+                value: value
+            }));
+        });
+
+        form.submit();
+
+        // Remove the form after a slight delay to ensure the submission goes through
+        setTimeout(function() {
+            form.remove();
+        }, 100);
+    }
+</script>
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
 <!-- pilih klien -->
 <script>
     $(document).ready(function() {
@@ -407,102 +391,6 @@
         });
     });
 </script>
-
-<!-- Datatable -->
-<script>
-    $(document).ready(function() {
-        // Hancurkan instance DataTable jika sudah ada
-        if ($.fn.dataTable.isDataTable('#example')) {
-            $('#example').DataTable().destroy();
-        }
-
-        var table = $('#example').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "<?php echo site_url('superadmin/get_data_finish') ?>",
-                "type": "POST",
-                "data": function(data) {
-                    data.tanggal_awal = $('#tanggal_awal').val();
-                    data.tanggal_akhir = $('#tanggal_akhir').val();
-                    data.nama_klien = $('#nama_klien').val();
-                    data.nama_user = $('#nama_user').val();
-                    data.rating = $('#rating').val();
-                    data.tags = $('#tags').val();
-                }
-            },
-            "order": [
-                [2, 'desc']
-            ],
-            "columnDefs": [{
-                "targets": [0],
-                "orderable": false,
-            }]
-        });
-
-        // Handle form submission for filtering
-        $('#filterForm').on('submit', function(e) {
-            e.preventDefault();
-            table.draw(); // Redraw the DataTable based on new filters
-        });
-
-        // Handle "Reset Filter" button click
-        $('#resetFilterButton').on('click', function() {
-            $('#filterFormContent')[0].reset();
-            table.draw(); // Redraw the DataTable to reflect reset filters
-        });
-
-        // Handle "Semua Data" button click
-        $('#semuaDataButton').on('click', function() {
-            $('#filterFormContent')[0].reset();
-            table.ajax.reload(); // Reload DataTables to show all data
-        });
-
-        // Handle export buttons
-        $('#exportPdfButton').on('click', function() {
-            exportData('pdf');
-        });
-
-        $('#exportExcelButton').on('click', function() {
-            exportData('excel');
-        });
-
-        function exportData(format) {
-            var filters = {
-                tanggal_awal: $('#tanggal_awal').val(),
-                tanggal_akhir: $('#tanggal_akhir').val(),
-                nama_klien: $('#nama_klien').val(),
-                nama_user: $('#nama_user').val(),
-                status_ccs: $('#status_ccs').val(),
-                rating: $('#rating').val()
-            };
-
-            var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_finish'); ?>';
-
-            var form = $('<form>', {
-                action: actionUrl,
-                method: 'POST',
-                target: '_blank'
-            }).appendTo('body');
-
-            $.each(filters, function(key, value) {
-                form.append($('<input>', {
-                    type: 'hidden',
-                    name: key,
-                    value: value
-                }));
-            });
-
-            form.submit();
-
-            // Remove the form after a slight delay to ensure the submission goes through
-            setTimeout(function() {
-                form.remove();
-            }, 100);
-        }
-    });
-</script>
-
 
 <!-- expandable -->
 <script>
