@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Serversidespvop_model extends CI_Model
+class Serversidehandlespv2_model extends CI_Model
 {
 
     private $table = 'pelaporan';
@@ -17,38 +17,10 @@ class Serversidespvop_model extends CI_Model
 
     private function _get_datatables_query($filters)
     {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $user_id = $this->session->userdata('id_user');
 
-        // Define the subquery
-        $subquery = "
-            SELECT
-                pelaporan_id,
-                MAX(CASE WHEN row_num = 1 THEN subtask END) AS subtask1,
-                MAX(CASE WHEN row_num = 1 THEN status END) AS status1,
-                MAX(CASE WHEN row_num = 2 THEN subtask END) AS subtask2,
-                MAX(CASE WHEN row_num = 2 THEN status END) AS status2,
-                MAX(CASE WHEN row_num = 3 THEN subtask END) AS subtask3,
-                MAX(CASE WHEN row_num = 3 THEN status END) AS status3,
-                MAX(CASE WHEN row_num = 1 THEN tanggal END) AS tanggal,
-                MAX(CASE WHEN row_num = 1 THEN judul END) AS forward_judul,
-                MAX(CASE WHEN row_num = 1 THEN id_forward END) AS id_forward,
-                MAX(CASE WHEN row_num = 1 THEN status END) AS forward_status
-            FROM (
-                SELECT
-                    pelaporan_id,
-                    subtask,
-                    status,
-                    tanggal,
-                    judul,
-                    id_forward,
-                    @row_num := IF(@current_pelaporan = pelaporan_id, @row_num + 1, 1) AS row_num,
-                    @current_pelaporan := pelaporan_id
-                FROM t1_forward
-                ORDER BY pelaporan_id, id_forward
-            ) AS sub
-            GROUP BY pelaporan_id
-        ";
-
-        // Main query
+        // Build the query using Query Builder
         $this->db->select('
             pelaporan.kategori,
             pelaporan.id_pelaporan,
@@ -67,20 +39,22 @@ class Serversidespvop_model extends CI_Model
             pelaporan.handle_by3,
             pelaporan.status,
             pelaporan.tags,
-            subtask_data.subtask1,
-            subtask_data.status1,
-            subtask_data.subtask2,
-            subtask_data.status2,
-            subtask_data.subtask3,
-            subtask_data.status3,
-            subtask_data.tanggal,
-            subtask_data.forward_judul,
-            subtask_data.id_forward,
-            subtask_data.forward_status
+            t1_forward1.subtask as subtask1,
+            t1_forward1.status as status1,
+            t1_forward2.subtask as subtask2,
+            t1_forward2.status as status2,
+            t1_forward3.subtask as subtask3,
+            t1_forward3.status as status3,
+            t1_forward1.tanggal as tanggal,
         ');
         $this->db->from('pelaporan');
-        $this->db->join("($subquery) AS subtask_data", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
+        $this->db->join('t1_forward as t1_forward1', 't1_forward1.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan AND t1_forward2.id_forward != t1_forward1.id_forward', 'left');
+        $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
+        $this->db->join('s_forward', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('s_forward.user_id', $user_id);
+        $this->db->where('pelaporan.status_ccs', 'HANDLED 2');
+        $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
         // Apply filters
         if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
@@ -159,7 +133,7 @@ class Serversidespvop_model extends CI_Model
     public function count_all()
     {
         $this->db->from($this->table);
-        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
+        $this->db->where('pelaporan.status_ccs', 'HANDLED 2');
         return $this->db->count_all_results();
     }
 }
