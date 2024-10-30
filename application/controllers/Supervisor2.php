@@ -314,45 +314,45 @@ class Supervisor2 extends CI_Controller
             // Tombol aksi dengan URL detail dan print detail
             // Tombol aksi dengan URL detail, print detail, edit, dan tambah teknisi
             $row['aksi'] = '
-<div style="display: flex; gap: 10px; justify-content: flex-end;">
-    <a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_pelaporan/' . $pelaporan->id_pelaporan) . '">
-        <i class="material-icons">visibility</i> Detail
-    </a>
-    <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $pelaporan->no_tiket) . '">
-        <i class="material-icons">print</i> Print Detail
-    </a>
-    <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
-        data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
-        data-no_tiket="' . $pelaporan->no_tiket . '" 
-        data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
-        data-nama="' . $pelaporan->nama . '" 
-        data-judul="' . $pelaporan->judul . '" 
-        data-priority="' . $pelaporan->priority . '" 
-        data-maxday="' . $pelaporan->maxday . '" 
-        data-kategori="' . $pelaporan->kategori . '" 
-        data-tags="' . $pelaporan->tags . '" 
-        data-status_ccs="' . $pelaporan->status_ccs . '">
-        <i class="material-icons">edit</i> Edit 
-    </button>
-    <div class="btn btn-sm btn-info">
-        <a href="javascript:;" data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
-            data-no_tiket="' . $pelaporan->no_tiket . '" 
-            data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
-            data-nama="' . $pelaporan->nama . '" 
-            data-perihal="' . htmlspecialchars($pelaporan->perihal, ENT_QUOTES) . '" 
-            data-status="' . $pelaporan->status . '" 
-            data-status_ccs="' . $pelaporan->status_ccs . '" 
-            data-kategori="' . $pelaporan->kategori . '" 
-            data-judul="' . $pelaporan->judul . '" 
-            data-priority="' . $pelaporan->priority . '" 
-            data-maxday="' . $pelaporan->maxday . '" 
-            data-toggle="modal" 
-            data-target="#editModal">
-            <i class="material-icons">add</i> <span class="icon-name">Tambah Teknisi</span>
-        </a>
-    </div>
-</div>
-';
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_pelaporan/' . $pelaporan->id_pelaporan) . '">
+                        <i class="material-icons">visibility</i> Detail
+                    </a>
+                    <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $pelaporan->no_tiket) . '">
+                        <i class="material-icons">print</i> Print Detail
+                    </a>
+                    <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
+                            data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
+                            data-no_tiket="' . $pelaporan->no_tiket . '" 
+                            data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
+                            data-nama="' . $pelaporan->nama . '" 
+                            data-judul="' . $pelaporan->judul . '" 
+                            data-priority="' . $pelaporan->priority . '" 
+                            data-maxday="' . $pelaporan->maxday . '" 
+                            data-kategori="' . $pelaporan->kategori . '" 
+                            data-tags="' . $pelaporan->tags . '" 
+                            data-status_ccs="' . $pelaporan->status_ccs . '">
+                        <i class="material-icons">edit</i> Edit 
+                    </button>
+                    <div class="btn btn-sm btn-info">
+                        <a href="javascript:;" data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
+                        data-no_tiket="' . $pelaporan->no_tiket . '" 
+                        data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
+                        data-nama="' . $pelaporan->nama . '" 
+                        data-perihal="' . htmlspecialchars($pelaporan->perihal, ENT_QUOTES) . '" 
+                        data-status="' . $pelaporan->status . '" 
+                        data-status_ccs="' . $pelaporan->status_ccs . '" 
+                        data-kategori="' . $pelaporan->kategori . '" 
+                        data-judul="' . $pelaporan->judul . '" 
+                        data-priority="' . $pelaporan->priority . '" 
+                        data-maxday="' . $pelaporan->maxday . '" 
+                        data-toggle="modal" 
+                        data-target="#editModal">
+                        <i class="material-icons">add</i> <span class="icon-name">Tambah Teknisi</span>
+                        </a>
+                    </div>
+                </div>
+                ';
 
 
             $data[] = $row; // Tambahkan row ke data
