@@ -19,14 +19,107 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
+                            <i class="material-icons">filter_alt</i><span>Filter</span>
+                        </button>
+                    </div>
+
+                    <div class="body">
+                        <div class="row clearfix collapse" id="filterForm">
+                            <form id="filterFormContent" class="row">
+                                <!-- Kolom pertama (6 grid) -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="filter_tanggal_awal">Dari Tanggal</label>
+                                        <div class="form-line">
+                                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nama_klien">Pilih Klien</label>
+                                        <div class="form-line">
+                                            <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
+                                            <input type="hidden" id="id" name="id">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="rating">Pilih Rating</label>
+                                        <div class="form-line">
+                                            <select id="rating" name="rating" class="form-control">
+                                                <option value="">-- Pilih Rating --</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Kolom kedua (6 grid) -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="filter_tanggal_akhir">Sampai Tanggal</label>
+                                        <div class="form-line">
+                                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nama_user">Pilih Petugas</label>
+                                        <div class="form-line">
+                                            <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser" name="nama_user" id="nama_user" placeholder="Pilih Petugas" class="form-control" autocomplete="off">
+                                            <input type="hidden" id="id" name="id">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Tombol Aksi -->
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-sm waves-effect">
+                                            <i class="material-icons">filter_alt</i><span>Filter</span>
+                                        </button>
+
+                                        <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                            <i class="material-icons">restart_alt</i><span>Reset Filter</span>
+                                        </button>
+
+                                        <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
+                                            <i class="material-icons">sync</i><span>Semua Data</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="header">
                         <h2>
                             ON PROGRESS
                         </h2>
 
                     </div>
+                    <br>
+                    <div class="btn-group" role="group" style="margin-left: 20px;">
+                        <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
+                            <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
+                        </ul>
+                    </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                            <table class="table table-bordered table-striped table-hover" id="example">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -377,6 +470,92 @@
     </div>
 </div>
 
+<!-- Modal Cari Klien -->
+<div class="modal fade" id="defaultModalNamaKlien" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Klien</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode Klien</th>
+                            <th>Nama Klien</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($klien as $cln) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $cln['no_klien']; ?></td>
+                                <td><?= $cln['nama_klien']; ?></td>
+                                <td class="hide"><?= $cln['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>">
+                                        Pilih
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Cari Petugas -->
+<div class="modal fade" id="defaultModalNamaUser" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Petugas</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Petugas</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($user as $usr) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $usr['nama_user']; ?></td>
+                                <td class="hide"><?= $usr['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih4" data-nama-user="<?= $usr['nama_user']; ?>" data-id-namauser="<?= $usr['id_user']; ?>">
+                                        Pilih
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- modal cari kategori -->
 <div class="modal fade" id="modalPilihKategori" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -597,6 +776,33 @@
         })
     });
 </script>
+
+<!-- pilih klien -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih3', function() {
+            var nama_klas = $(this).data('nama-klien');
+            var id = $(this).data('id');
+            $('#nama_klien').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaKlien').modal('hide');
+        });
+    });
+</script>
+
+<!-- pilih petugas -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih4', function() {
+            var nama_klas = $(this).data('nama-user');
+            var id = $(this).data('id');
+            $('#nama_user').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaUser').modal('hide');
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function() {
 

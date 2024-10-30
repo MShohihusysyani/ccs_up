@@ -50,7 +50,7 @@
                                     <div class="form-group">
                                         <label for="filter_tanggal_awal">Dari Tanggal</label>
                                         <div class="form-line">
-                                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control" required>
+                                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control">
                                         </div>
                                     </div>
 
@@ -83,7 +83,7 @@
                                     <div class="form-group">
                                         <label for="filter_tanggal_akhir">Sampai Tanggal</label>
                                         <div class="form-line">
-                                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control" required>
+                                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control">
                                         </div>
                                     </div>
 
