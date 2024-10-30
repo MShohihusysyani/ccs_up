@@ -56,8 +56,8 @@
                                 <textarea id="editor" class="form-control" name="perihal" id="perihal" rows="10" required>
 
                                 </textarea>
-
-                                <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx) max 25mb</label>
+                                <br>
+                                <label for="nama">File (jpg/jpeg/png/pdf/xlsx/docx/txt) max 25mb</label>
                                 <div class="form-group">
                                     <label for="exampleInputFile"></label>
                                     <div class="input-group">

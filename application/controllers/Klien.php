@@ -95,11 +95,6 @@ class Klien extends CI_Controller
                         $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
                         redirect('klien/pengajuan');
                     }
-                    if ($_FILES['file_finish']['type'] !== 'text/plain') {
-                        $this->session->set_flashdata('alert', 'File harus berformat teks biasa.');
-                        redirect('helpdesk/pelaporan');
-                        return;
-                    }
                 }
 
                 // Validate the note content
