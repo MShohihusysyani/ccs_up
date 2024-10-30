@@ -15,7 +15,7 @@ class Serversidehd_model extends CI_Model
         $this->load->database();
     }
 
-    private function _get_datatables_query()
+    private function _get_datatables_query($filters)
     {
         $user_id = $this->session->userdata('id_user');
 
@@ -25,7 +25,28 @@ class Serversidehd_model extends CI_Model
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('status_ccs', 'FINISHED');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+
+
+        // Apply filters
+        if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
+            $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal']);
+            $this->db->where('waktu_pelaporan <=', $filters['tanggal_akhir']);
+        }
+
+        if (!empty($filters['nama_klien'])) {
+            $this->db->like('nama', $filters['nama_klien']);
+        }
+
+
+        if (!empty($filters['tags'])) {
+            $this->db->like('tags', $filters['tags']);
+        }
+
+
+        if (!empty($filters['rating'])) {
+            $this->db->where('rating', $filters['rating']);
+        }
 
         $i = 0;
 
@@ -57,9 +78,9 @@ class Serversidehd_model extends CI_Model
         }
     }
 
-    function get_datatables()
+    function get_datatables($filters)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($filters);
 
         // Pengecekan untuk 'length' dan 'start'
         $length = isset($_POST['length']) ? $_POST['length'] : -1; // Nilai default -1 jika tidak ada
@@ -73,9 +94,9 @@ class Serversidehd_model extends CI_Model
         return $query->result();
     }
 
-    function count_filtered()
+    function count_filtered($filters)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($filters);
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -84,7 +105,7 @@ class Serversidehd_model extends CI_Model
     {
         $user_id = $this->session->userdata('id_user');
         $this->db->from($this->table);
-        $this->db->join('forward', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left'); // Join with forward table
+        $this->db->join('forward', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
         $this->db->where('status_ccs', 'FINISHED');
         return $this->db->count_all_results();

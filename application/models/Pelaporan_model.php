@@ -334,6 +334,42 @@ class Pelaporan_model extends CI_Model
         return $query->result();
     }
 
+    public function getDateFilteredH($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $rating = null)
+    {
+        $user_id = $this->session->userdata('id_user');
+
+        $this->db->select('pelaporan.*'); // Select fields from both tables
+        $this->db->from('forward'); // Specify the base table
+        $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('forward.user_id', $user_id);
+        $this->db->where('pelaporan.status_ccs', 'FINISHED');
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+
+        // Filter berdasarkan tanggal_awal dan tanggal_akhir jika ada
+        if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+            $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+            $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+        }
+
+        // Apply status_ccs filter
+        if (!empty($status_ccs)) {
+            $this->db->where('status_ccs', $status_ccs);
+        }
+
+        // Apply client name filter
+        if (!empty($nama_klien)) {
+            $this->db->where('nama', $nama_klien);
+        }
+
+        // Apply tags filter
+        if (!empty($rating)) {
+            $this->db->where('rating', $rating);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     // LAPORAN KATEGORI
 
     public function getAllCategory()

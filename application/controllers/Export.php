@@ -623,8 +623,8 @@ class Export extends CI_Controller
             ]
         ];
 
-        $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
-        $sheet->mergeCells('A1:E1');
+        $sheet->setCellValue('A1', "CCS | RINCIAN PELAPORAN");
+        $sheet->mergeCells('A1:M1');
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle('A1')->getFont()->setSize(15);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
@@ -651,36 +651,37 @@ class Export extends CI_Controller
 
         // Buat header tabel pada baris ke 3
         $sheet->setCellValue('A2', $periode_text);
-        $sheet->setCellValue('A3', "NO");
-        $sheet->setCellValue('B3', "TANGGAL");
-        $sheet->setCellValue('C3', "NO TIKET");
-        $sheet->setCellValue('D3', "NAMA KLIEN");
-        $sheet->setCellValue('E3', "PERIHAL");
-        $sheet->setCellValue('F3', "TAGS");
-        $sheet->setCellValue('G3', "KATEGORI");
-        $sheet->setCellValue('H3', "PRIORITY");
-        $sheet->setCellValue('I3', "IMPACT");
-        $sheet->setCellValue('J3', "MAXDAY");
-        $sheet->setCellValue('K3', "STATUS CCS");
-        $sheet->setCellValue('L3', "HANDLE BY");
+        $sheet->setCellValue('A3', "No");
+        $sheet->setCellValue('B3', "No Tiket");
+        $sheet->setCellValue('C3', "Judul");
+        $sheet->setCellValue('D3', "Perihal");
+        $sheet->setCellValue('E3', "BPR/Klien");
+        $sheet->setCellValue('F3', "Kategori");
+        $sheet->setCellValue('G3', "Priority");
+        $sheet->setCellValue('H3', "Maxday");
+        $sheet->setCellValue('I3', "Handled By");
+        $sheet->setCellValue('J3', "Status");
+        $sheet->setCellValue('K3', "Rating");
+        $sheet->setCellValue('L3', "Create at");
+        $sheet->setCellValue('M3', "Finish at");
 
         $sheet->getStyle('A2')->getFont()->setBold(true);
         $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->mergeCells('A2:E2');
-        $sheet->getStyle('A3:L3')->applyFromArray($style_col);
+        $sheet->mergeCells('A2:M2');
+        // $sheet->getStyle('A3:L3')->applyFromArray($style_col);
 
-        $sheet->getStyle('A3')->applyFromArray($style_col);
-        $sheet->getStyle('B3')->applyFromArray($style_col);
-        $sheet->getStyle('C3')->applyFromArray($style_col);
-        $sheet->getStyle('D3')->applyFromArray($style_col);
-        $sheet->getStyle('E3')->applyFromArray($style_col);
-        $sheet->getStyle('F3')->applyFromArray($style_col);
-        $sheet->getStyle('G3')->applyFromArray($style_col);
-        $sheet->getStyle('H3')->applyFromArray($style_col);
-        $sheet->getStyle('I3')->applyFromArray($style_col);
-        $sheet->getStyle('J3')->applyFromArray($style_col);
-        $sheet->getStyle('K3')->applyFromArray($style_col);
-        $sheet->getStyle('L3')->applyFromArray($style_col);
+        // $sheet->getStyle('A3')->applyFromArray($style_col);
+        // $sheet->getStyle('B3')->applyFromArray($style_col);
+        // $sheet->getStyle('C3')->applyFromArray($style_col);
+        // $sheet->getStyle('D3')->applyFromArray($style_col);
+        // $sheet->getStyle('E3')->applyFromArray($style_col);
+        // $sheet->getStyle('F3')->applyFromArray($style_col);
+        // $sheet->getStyle('G3')->applyFromArray($style_col);
+        // $sheet->getStyle('H3')->applyFromArray($style_col);
+        // $sheet->getStyle('I3')->applyFromArray($style_col);
+        // $sheet->getStyle('J3')->applyFromArray($style_col);
+        // $sheet->getStyle('K3')->applyFromArray($style_col);
+        // $sheet->getStyle('L3')->applyFromArray($style_col);
 
 
         $sheet->getRowDimension('1')->setRowHeight(20);
@@ -703,30 +704,43 @@ class Export extends CI_Controller
 
         foreach ($query as $data) {
             $sheet->setCellValue('A' . $row, $no);
-            $sheet->setCellValue('B' . $row, tanggal_indo($data->waktu_pelaporan));
-            $sheet->setCellValue('C' . $row, $data->no_tiket);
-            $sheet->setCellValue('D' . $row, $data->nama);
-            $sheet->setCellValue('E' . $row, $data->perihal);
-            $sheet->setCellValue('F' . $row, $data->tags);
-            $sheet->setCellValue('G' . $row, $data->kategori);
-            $sheet->setCellValue('H' . $row, $data->priority);
-            $sheet->setCellValue('I' . $row, $data->impact);
-            $sheet->setCellValue('J' . $row, $data->maxday);
-            $sheet->setCellValue('K' . $row, $data->status_ccs);
-            $sheet->setCellValue('L' . $row, $data->handle_by);
+            $sheet->setCellValue('B' . $row, $data->no_tiket);
+            $sheet->setCellValue('C' . $row, $data->judul);
+            $sheet->setCellValue('D' . $row, $data->perihal);
+            $sheet->setCellValue('E' . $row, $data->nama);
+            $sheet->setCellValue('F' . $row, $data->kategori);
+            $sheet->setCellValue('G' . $row, $data->priority);
+            $sheet->setCellValue('H' . $row, $data->maxday);
 
-            $sheet->getStyle('A' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('B' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('C' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('D' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('E' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('F' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('G' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('H' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('I' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('J' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('K' . $row)->applyFromArray($style_row);
-            $sheet->getStyle('L' . $row)->applyFromArray($style_row);
+            $handleBy = [];
+
+            if (!empty($data->handle_by)) {
+                $handleBy[] = $data->handle_by;
+            }
+            if (!empty($data->handle_by2)) {
+                $handleBy[] = $data->handle_by2;
+            }
+            if (!empty($data->handle_by3)) {
+                $handleBy[] = $data->handle_by3;
+            }
+            $sheet->setCellValue('I' . $row, implode(', ', $handleBy));
+            $sheet->setCellValue('J' . $row, $data->status_ccs);
+            $sheet->setCellValue('K' . $row, $data->rating);
+            $sheet->setCellValue('L' . $row, tanggal_indo($data->waktu_pelaporan));
+            $sheet->setCellValue('M' . $row, tanggal_indo($data->waktu_approve));
+
+            // $sheet->getStyle('A' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('B' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('C' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('D' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('E' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('F' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('G' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('H' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('I' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('J' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('K' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('L' . $row)->applyFromArray($style_row);
 
             $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
@@ -746,18 +760,214 @@ class Export extends CI_Controller
             $row++;
         }
 
-        $sheet->getColumnDimension('A')->setWidth(5);
-        $sheet->getColumnDimension('B')->setWidth(15);
-        $sheet->getColumnDimension('C')->setWidth(20);
-        $sheet->getColumnDimension('D')->setWidth(40);
-        $sheet->getColumnDimension('E')->setWidth(235);
-        $sheet->getColumnDimension('F')->setWidth(30);
-        $sheet->getColumnDimension('G')->setWidth(83);
-        $sheet->getColumnDimension('H')->setWidth(10);
-        $sheet->getColumnDimension('I')->setWidth(10);
-        $sheet->getColumnDimension('J')->setWidth(10);
-        $sheet->getColumnDimension('K')->setWidth(15);
-        $sheet->getColumnDimension('L')->setWidth(10);
+        // $sheet->getColumnDimension('A')->setWidth(5);
+        // $sheet->getColumnDimension('B')->setWidth(15);
+        // $sheet->getColumnDimension('C')->setWidth(20);
+        // $sheet->getColumnDimension('D')->setWidth(40);
+        // $sheet->getColumnDimension('E')->setWidth(235);
+        // $sheet->getColumnDimension('F')->setWidth(30);
+        // $sheet->getColumnDimension('G')->setWidth(83);
+        // $sheet->getColumnDimension('H')->setWidth(10);
+        // $sheet->getColumnDimension('I')->setWidth(10);
+        // $sheet->getColumnDimension('J')->setWidth(10);
+        // $sheet->getColumnDimension('K')->setWidth(15);
+        // $sheet->getColumnDimension('L')->setWidth(10);
+
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->setTitle("Data Rekap Pelaporan");
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        ob_end_clean(); //digunakan ketika file tidak bisa dibuka diexcel
+        $writer->save('php://output');
+    }
+
+    public function rekap_pelaporan_excel_hdfinish()
+    {
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical'   => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
+            ]
+        ];
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => Alignment::VERTICAL_CENTER
+            ],
+            'borders' => [
+                'top' => ['borderStyle'    => Border::BORDER_THIN],
+                'right' => ['borderStyle'  => Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                'left' => ['borderStyle'   => Border::BORDER_THIN]
+            ]
+        ];
+
+        $sheet->setCellValue('A1', "CCS | RINCIAN PELAPORAN");
+        $sheet->mergeCells('A1:M1');
+        $sheet->getStyle('A1')->getFont()->setBold(true);
+        $sheet->getStyle('A1')->getFont()->setSize(15);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        $current_date = date('Y-m-d');
+
+        $this->db->where('id_user', $this->session->userdata('id_user')); // Assuming user_id is stored in session
+        $user_query = $this->db->get('user');
+
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $nama_klien = $this->input->post('nama_klien');
+        $rating = $this->input->post('rating');
+        $status_ccs = 'FINISHED';
+
+        // Membuat teks untuk periode berdasarkan tanggal_awal dan tanggal_akhir
+        $periode_text = "Semua Data";
+        if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+            $periode_text = "Periode : " . tanggal_indo($tanggal_awal) . " s/d " . tanggal_indo($tanggal_akhir);
+        }
+
+        // Buat header tabel pada baris ke 3
+        $sheet->setCellValue('A2', $periode_text);
+        $sheet->setCellValue('A3', "No");
+        $sheet->setCellValue('B3', "No Tiket");
+        $sheet->setCellValue('C3', "Judul");
+        $sheet->setCellValue('D3', "Perihal");
+        $sheet->setCellValue('E3', "BPR/Klien");
+        $sheet->setCellValue('F3', "Kategori");
+        $sheet->setCellValue('G3', "Priority");
+        $sheet->setCellValue('H3', "Maxday");
+        $sheet->setCellValue('I3', "Handled By");
+        $sheet->setCellValue('J3', "Status");
+        $sheet->setCellValue('K3', "Rating");
+        $sheet->setCellValue('L3', "Create at");
+        $sheet->setCellValue('M3', "Finish at");
+
+        $sheet->getStyle('A2')->getFont()->setBold(true);
+        $sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('A2:M2');
+        // $sheet->getStyle('A3:L3')->applyFromArray($style_col);
+
+        // $sheet->getStyle('A3')->applyFromArray($style_col);
+        // $sheet->getStyle('B3')->applyFromArray($style_col);
+        // $sheet->getStyle('C3')->applyFromArray($style_col);
+        // $sheet->getStyle('D3')->applyFromArray($style_col);
+        // $sheet->getStyle('E3')->applyFromArray($style_col);
+        // $sheet->getStyle('F3')->applyFromArray($style_col);
+        // $sheet->getStyle('G3')->applyFromArray($style_col);
+        // $sheet->getStyle('H3')->applyFromArray($style_col);
+        // $sheet->getStyle('I3')->applyFromArray($style_col);
+        // $sheet->getStyle('J3')->applyFromArray($style_col);
+        // $sheet->getStyle('K3')->applyFromArray($style_col);
+        // $sheet->getStyle('L3')->applyFromArray($style_col);
+
+
+        $sheet->getRowDimension('1')->setRowHeight(20);
+        $sheet->getRowDimension('2')->setRowHeight(20);
+        $sheet->getRowDimension('3')->setRowHeight(20);
+
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+
+        // Retrieve POST data
+        $tanggal_awal = $this->input->post('tanggal_awal');
+        $tanggal_akhir = $this->input->post('tanggal_akhir');
+        $nama_klien = $this->input->post('nama_klien');
+        $rating = $this->input->post('rating');
+        $status_ccs = 'FINISHED';
+
+        // Get filtered data
+        $query = $this->pelaporan_model->getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $rating);
+        var_dump($query);
+        die();
+        $no = 1;
+        $row = 4;
+
+        foreach ($query as $data) {
+            $sheet->setCellValue('A' . $row, $no);
+            $sheet->setCellValue('B' . $row, $data->no_tiket);
+            $sheet->setCellValue('C' . $row, $data->judul);
+            $sheet->setCellValue('D' . $row, $data->perihal);
+            $sheet->setCellValue('E' . $row, $data->nama);
+            $sheet->setCellValue('F' . $row, $data->kategori);
+            $sheet->setCellValue('G' . $row, $data->priority);
+            $sheet->setCellValue('H' . $row, $data->maxday);
+
+            $handleBy = [];
+
+            if (!empty($data->handle_by)) {
+                $handleBy[] = $data->handle_by;
+            }
+            if (!empty($data->handle_by2)) {
+                $handleBy[] = $data->handle_by2;
+            }
+            if (!empty($data->handle_by3)) {
+                $handleBy[] = $data->handle_by3;
+            }
+            $sheet->setCellValue('I' . $row, implode(', ', $handleBy));
+            $sheet->setCellValue('J' . $row, $data->status_ccs);
+            $sheet->setCellValue('K' . $row, $data->rating);
+            $sheet->setCellValue('L' . $row, tanggal_indo($data->waktu_pelaporan));
+            $sheet->setCellValue('M' . $row, tanggal_indo($data->waktu_approve));
+
+            // $sheet->getStyle('A' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('B' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('C' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('D' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('E' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('F' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('G' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('H' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('I' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('J' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('K' . $row)->applyFromArray($style_row);
+            // $sheet->getStyle('L' . $row)->applyFromArray($style_row);
+
+            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('D' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('E' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('F' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('G' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('I' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('K' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('L' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+            $sheet->getRowDimension($row)->setRowHeight(20);
+
+            $no++;
+            $row++;
+        }
+
+        // $sheet->getColumnDimension('A')->setWidth(5);
+        // $sheet->getColumnDimension('B')->setWidth(15);
+        // $sheet->getColumnDimension('C')->setWidth(20);
+        // $sheet->getColumnDimension('D')->setWidth(40);
+        // $sheet->getColumnDimension('E')->setWidth(235);
+        // $sheet->getColumnDimension('F')->setWidth(30);
+        // $sheet->getColumnDimension('G')->setWidth(83);
+        // $sheet->getColumnDimension('H')->setWidth(10);
+        // $sheet->getColumnDimension('I')->setWidth(10);
+        // $sheet->getColumnDimension('J')->setWidth(10);
+        // $sheet->getColumnDimension('K')->setWidth(15);
+        // $sheet->getColumnDimension('L')->setWidth(10);
 
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->setTitle("Data Rekap Pelaporan");
