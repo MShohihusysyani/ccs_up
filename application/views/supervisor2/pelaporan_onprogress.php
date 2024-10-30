@@ -463,9 +463,6 @@
                 "data": "kategori"
             },
             {
-                "data": "tags"
-            },
-            {
                 "data": "priority"
             },
             {

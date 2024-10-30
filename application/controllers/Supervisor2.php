@@ -151,7 +151,7 @@ class Supervisor2 extends CI_Controller
     public function onprogress()
     {
         $this->load->model('User_model', 'user_model');
-        $data['namahd'] = $this->user_model->getNamaUser();
+        $data['namateknisi'] = $this->user_model->getNamaTeknisi();
 
         $this->load->library('form_validation');
         $this->load->model('Pelaporan_model', 'pelaporan_model');
@@ -233,7 +233,7 @@ class Supervisor2 extends CI_Controller
             $row['nama'] = $pelaporan->nama;
             $row['judul'] = $pelaporan->judul;
             $row['kategori'] = $pelaporan->kategori;
-            $row['tags'] = $pelaporan->tags;
+            // $row['tags'] = $pelaporan->tags;
 
             // Proses nilai prioritas di server-side
             if ($pelaporan->priority == 'Low') {
@@ -289,7 +289,7 @@ class Supervisor2 extends CI_Controller
             }
             $row['handle_by'] = $handle_combined;
 
-            $row['subtask1'] = $pelaporan->subtask1;
+            $row['subtask2'] = $pelaporan->subtask1;
 
             if ($pelaporan->status1 == 'PENDING') {
                 $status1_label = '<span class="label label-info">PENDING</span>';
@@ -298,9 +298,9 @@ class Supervisor2 extends CI_Controller
             } else {
                 $status1_label = $pelaporan->status1; // Make sure this is defined
             }
-            $row['status1'] = $status1_label;
+            $row['status2'] = $status1_label;
 
-            $row['subtask2'] = $pelaporan->subtask2;
+            $row['subtask1'] = $pelaporan->subtask2;
             if ($pelaporan->status2 == 'PENDING') {
                 $status2_label = '<span class="label label-info">PENDING</span>';
             } elseif ($pelaporan->status2 == 'COMPLETED') {
@@ -308,33 +308,52 @@ class Supervisor2 extends CI_Controller
             } else {
                 $status2_label = $pelaporan->status2; // Make sure this is defined
             }
-            $row['status2'] = $status2_label;
+            $row['status1'] = $status2_label;
             $row['tanggal'] = tanggal_indo($pelaporan->tanggal);
 
             // Tombol aksi dengan URL detail dan print detail
+            // Tombol aksi dengan URL detail, print detail, edit, dan tambah teknisi
             $row['aksi'] = '
-        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            <a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_pelaporan/' . $pelaporan->id_pelaporan) . '">
-                <i class="material-icons">visibility</i> Detail
-            </a>
-            <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $pelaporan->no_tiket) . '">
-                <i class="material-icons">print</i> Print Detail
-            </a>
-            <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
-                data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
-                data-no_tiket="' . $pelaporan->no_tiket . '" 
-                data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
-                data-nama="' . $pelaporan->nama . '" 
-                data-judul="' . $pelaporan->judul . '" 
-                data-priority="' . $pelaporan->priority . '" 
-                data-maxday="' . $pelaporan->maxday . '" 
-                data-kategori="' . $pelaporan->kategori . '" 
-                data-tags="' . $pelaporan->tags . '" 
-                data-status_ccs="' . $pelaporan->status_ccs . '">
-                <i class="material-icons">edit</i> Edit 
-            </button>
-        </div>
-        ';
+<div style="display: flex; gap: 10px; justify-content: flex-end;">
+    <a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_pelaporan/' . $pelaporan->id_pelaporan) . '">
+        <i class="material-icons">visibility</i> Detail
+    </a>
+    <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $pelaporan->no_tiket) . '">
+        <i class="material-icons">print</i> Print Detail
+    </a>
+    <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
+        data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
+        data-no_tiket="' . $pelaporan->no_tiket . '" 
+        data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
+        data-nama="' . $pelaporan->nama . '" 
+        data-judul="' . $pelaporan->judul . '" 
+        data-priority="' . $pelaporan->priority . '" 
+        data-maxday="' . $pelaporan->maxday . '" 
+        data-kategori="' . $pelaporan->kategori . '" 
+        data-tags="' . $pelaporan->tags . '" 
+        data-status_ccs="' . $pelaporan->status_ccs . '">
+        <i class="material-icons">edit</i> Edit 
+    </button>
+    <div class="btn btn-sm btn-info">
+        <a href="javascript:;" data-id_pelaporan="' . $pelaporan->id_pelaporan . '" 
+            data-no_tiket="' . $pelaporan->no_tiket . '" 
+            data-waktu_pelaporan="' . $pelaporan->waktu_pelaporan . '" 
+            data-nama="' . $pelaporan->nama . '" 
+            data-perihal="' . htmlspecialchars($pelaporan->perihal, ENT_QUOTES) . '" 
+            data-status="' . $pelaporan->status . '" 
+            data-status_ccs="' . $pelaporan->status_ccs . '" 
+            data-kategori="' . $pelaporan->kategori . '" 
+            data-judul="' . $pelaporan->judul . '" 
+            data-priority="' . $pelaporan->priority . '" 
+            data-maxday="' . $pelaporan->maxday . '" 
+            data-toggle="modal" 
+            data-target="#editModal">
+            <i class="material-icons">add</i> <span class="icon-name">Tambah Teknisi</span>
+        </a>
+    </div>
+</div>
+';
+
 
             $data[] = $row; // Tambahkan row ke data
         }
