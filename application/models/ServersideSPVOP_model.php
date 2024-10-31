@@ -19,69 +19,8 @@ class Serversidespvop_model extends CI_Model
     {
 
         // Define the subquery
-        $subquery = "
-            SELECT
-                pelaporan_id,
-                MAX(CASE WHEN row_num = 1 THEN subtask END) AS subtask1,
-                MAX(CASE WHEN row_num = 1 THEN status END) AS status1,
-                MAX(CASE WHEN row_num = 2 THEN subtask END) AS subtask2,
-                MAX(CASE WHEN row_num = 2 THEN status END) AS status2,
-                MAX(CASE WHEN row_num = 3 THEN subtask END) AS subtask3,
-                MAX(CASE WHEN row_num = 3 THEN status END) AS status3,
-                MAX(CASE WHEN row_num = 1 THEN tanggal END) AS tanggal,
-                MAX(CASE WHEN row_num = 1 THEN judul END) AS forward_judul,
-                MAX(CASE WHEN row_num = 1 THEN id_forward END) AS id_forward,
-                MAX(CASE WHEN row_num = 1 THEN status END) AS forward_status
-            FROM (
-                SELECT
-                    pelaporan_id,
-                    subtask,
-                    status,
-                    tanggal,
-                    judul,
-                    id_forward,
-                    @row_num := IF(@current_pelaporan = pelaporan_id, @row_num + 1, 1) AS row_num,
-                    @current_pelaporan := pelaporan_id
-                FROM t1_forward
-                ORDER BY pelaporan_id, id_forward
-            ) AS sub
-            GROUP BY pelaporan_id
-        ";
-
-        // Main query
-        $this->db->select('
-            pelaporan.kategori,
-            pelaporan.id_pelaporan,
-            pelaporan.waktu_pelaporan,
-            pelaporan.status_ccs,
-            pelaporan.priority,
-            pelaporan.maxday,
-            pelaporan.judul,
-            pelaporan.perihal,
-            pelaporan.file,
-            pelaporan.nama,
-            pelaporan.no_tiket,
-            pelaporan.impact,
-            pelaporan.handle_by,
-            pelaporan.handle_by2,
-            pelaporan.handle_by3,
-            pelaporan.status,
-            pelaporan.tags,
-            subtask_data.subtask1,
-            subtask_data.status1,
-            subtask_data.subtask2,
-            subtask_data.status2,
-            subtask_data.subtask3,
-            subtask_data.status3,
-            subtask_data.tanggal,
-            subtask_data.forward_judul,
-            subtask_data.id_forward,
-            subtask_data.forward_status
-        ');
-        $this->db->from('pelaporan');
-        $this->db->join("($subquery) AS subtask_data", 'subtask_data.pelaporan_id = pelaporan.id_pelaporan', 'left');
-        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+        $this->db->from($this->table);
+        $this->db->where('status_ccs', 'HANDLED');
         // Apply filters
         if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
             $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal']);
@@ -134,7 +73,6 @@ class Serversidespvop_model extends CI_Model
     }
 
 
-
     function get_datatables($filters)
     {
         $this->_get_datatables_query($filters);
@@ -159,7 +97,7 @@ class Serversidespvop_model extends CI_Model
     public function count_all()
     {
         $this->db->from($this->table);
-        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
+        $this->db->where('status_ccs', 'HANDLED');
         return $this->db->count_all_results();
     }
 }

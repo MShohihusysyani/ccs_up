@@ -109,11 +109,6 @@
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
-                                        <th>Subtask 1</th>
-                                        <th>Status Subtask 1</th>
-                                        <th>Subtask 2</th>
-                                        <th>Status Subtask 2</th>
-                                        <th>Tenggat waktu</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -315,7 +310,7 @@
 
 <!-- jQuery and DataTables Scripts -->
 <script type="text/javascript">
-    table = $('#example').DataTable({
+    var table = $('#example').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": {
@@ -336,59 +331,6 @@
             "targets": [0],
             "orderable": false,
         }, ],
-        "columns": [{
-                "data": "no"
-            }, // Pastikan ini ada
-            {
-                "data": "no_tiket"
-            },
-            {
-                "data": "waktu_pelaporan"
-            },
-            {
-                "data": "nama"
-            },
-            {
-                "data": "judul"
-            },
-            {
-                "data": "kategori"
-            },
-            {
-                "data": "tags"
-            },
-            {
-                "data": "priority"
-            },
-            {
-                "data": "maxday"
-            },
-            {
-                "data": "status_ccs"
-            },
-            {
-                "data": "handle_by"
-            },
-            {
-                "data": "subtask1"
-            },
-            {
-                "data": "status1"
-            },
-            {
-                "data": "subtask2"
-            },
-            {
-                "data": "status2"
-            },
-            {
-                "data": "tanggal"
-            },
-            {
-                "data": "aksi", // Ini untuk tombol aksi
-                // Pastikan kolom aksi tidak dapat diurutkan
-            }
-        ]
 
     });
     // Handle form submission for filtering
