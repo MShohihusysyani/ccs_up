@@ -296,7 +296,7 @@ class Pelaporan_model extends CI_Model
     }
 
     // Rekap pelaporan per user helpdesk
-    public function getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $tags)
+    public function getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien)
     {
         $user_id = $this->session->userdata('id_user');
 
@@ -365,6 +365,8 @@ class Pelaporan_model extends CI_Model
         return $query->result();
     }
 
+    // FILTER TEKNISI
+
     public function getDateFilteredTeknisi($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $rating = null)
     {
         $user_id = $this->session->userdata('id_user');
@@ -396,6 +398,39 @@ class Pelaporan_model extends CI_Model
         if (!empty($rating)) {
             $this->db->where('rating', $rating);
         }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getDateTeknisi($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien)
+    {
+        $user_id = $this->session->userdata('id_user');
+
+        $this->db->select('pelaporan.*'); // Select fields from both tables
+        $this->db->from('t1_forward'); // Specify the base table
+        $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('t1_forward.user_id', $user_id);
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+
+        // Apply date filters
+        if (!empty($tanggal_awal)) {
+            $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+        }
+        if (!empty($tanggal_akhir)) {
+            $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+        }
+
+        // Apply status_ccs filter
+        if (!empty($status_ccs)) {
+            $this->db->where('status_ccs', $status_ccs);
+        }
+
+        // Apply client name filter
+        if (!empty($nama_klien)) {
+            $this->db->like('nama', $nama_klien);
+        }
+
 
         $query = $this->db->get();
         return $query->result();

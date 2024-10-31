@@ -52,8 +52,8 @@ class Export_model extends CI_Model
             $this->db->or_like('handle_by3', $nama_user);
             $this->db->group_end();
         }
-        if (!empty($tags)) {
-            $this->db->where('rating', $tags);
+        if (!empty($rating)) {
+            $this->db->where('rating', $rating);
         }
 
         $query = $this->db->get();
@@ -91,6 +91,7 @@ class Export_model extends CI_Model
     //     return $this->db->get()->result_array();
     // }
 
+    // EXPORT PDF HELPDESK
     public function getPelaporanHD($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
     {
         $user_id = $this->session->userdata('id_user');
@@ -141,6 +142,61 @@ class Export_model extends CI_Model
         }
         if ($tags) {
             $this->db->like('tags', $tags);
+        }
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // EXPORT PDF IMPLEMENTATOR
+
+    public function getPelaporanTeknisi($tanggal_awal = null, $tanggal_akhir = null, $status_ccs = null, $nama_klien = null, $tags = null)
+    {
+        $user_id = $this->session->userdata('id_user');
+
+        $this->db->select('pelaporan.*');
+        $this->db->from('t1_forward');
+        $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('t1_forward.user_id', $user_id);
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
+
+        if ($tanggal_awal && $tanggal_akhir) {
+            $this->db->where('pelaporan.waktu_pelaporan >=', $tanggal_awal);
+            $this->db->where('pelaporan.waktu_pelaporan <=', $tanggal_akhir);
+        }
+        if (!empty($status_ccs)) {
+            $this->db->where('pelaporan.status_ccs', $status_ccs);
+        }
+        if (!empty($nama_klien)) {
+            $this->db->where('pelaporan.nama', $nama_klien);
+        }
+        if (!empty($tags)) {
+            $this->db->where('pelaporan.tags', $tags);
+        }
+
+        $query = $this->db->get();
+        log_message('debug', 'Query: ' . $this->db->last_query()); // Log the query for debugging
+        return $query->result_array();
+    }
+    public function getAllPelaporanTeknisi($status_ccs = null, $nama_klien = null, $rating = null)
+    {
+
+        $user_id = $this->session->userdata('id_user');
+
+        $this->db->select('pelaporan.*'); // Select fields from both tables
+        $this->db->from('t1_forward'); // Specify the base table
+        $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
+        $this->db->where('t1_forward.user_id', $user_id);
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+
+        if ($status_ccs) {
+            $this->db->where('status_ccs', $status_ccs);
+        }
+        if ($nama_klien) {
+            $this->db->like('nama', $nama_klien);
+        }
+        if ($rating) {
+            $this->db->like('rating', $rating);
         }
 
         $query = $this->db->get();

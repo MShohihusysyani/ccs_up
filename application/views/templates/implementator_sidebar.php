@@ -155,6 +155,13 @@
                         </ul>
                     </li>
 
+                    <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                        <a href="<?php echo base_url('implementator/data_pelaporan') ?>">
+                            <i class="material-icons">view_list</i>
+                            <span>Data Pelaporan</span>
+                        </a>
+                    </li>
+
                     <li <?= $this->uri->segment(2) == 'subtask' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?php echo base_url('implementator/subtask') ?>">
                             <i class="material-icons">task</i>
