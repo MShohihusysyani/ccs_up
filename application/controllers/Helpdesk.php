@@ -329,16 +329,16 @@ class Helpdesk extends CI_Controller
             // Validation passed, retrieve POST data
             $tanggal_awal  = $this->input->post('tanggal_awal');
             $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
             $nama_klien    = $this->input->post('nama_klien');
             $rating        = $this->input->post('rating');
+            $status_ccs    = 'FINISHED';
 
             // var data for view 
             $data['tanggal_awal']  = $tanggal_awal;
             $data['tanggal_akhir'] = $tanggal_akhir;
-            $data['status_ccs']    = $status_ccs;
             $data['nama_klien']    = $nama_klien;
             $data['rating']        = $rating;
+            $data['status_ccs']    = $status_ccs;
 
             // Get data from the models
             $data['klien'] = $this->client_model->getClient();
