@@ -342,7 +342,7 @@ class Helpdesk extends CI_Controller
 
             // Get data from the models
             $data['klien'] = $this->client_model->getClient();
-            $data['pencarian_data'] = $this->pelaporan_model->getDateFilteredH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $rating);
+            $data['pencarian_data'] = $this->pelaporan_model->getDateFilteredTeknisi($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $rating);
 
             $this->load->view('templates/header');
             $this->load->view('templates/helpdesk_sidebar');

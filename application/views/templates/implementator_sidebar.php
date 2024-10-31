@@ -131,7 +131,7 @@
                         </a>
                     </li> -->
 
-                    <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' || $this->uri->segment(2) == 'close' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
+                    <li <?= $this->uri->segment(2) == 'pelaporan' || $this->uri->segment(2) == 'detail_pelaporan' || $this->uri->segment(2) == 'forward' || $this->uri->segment(2) == 'detail_pelaporann' || $this->uri->segment(2) == 'close' || $this->uri->segment(2) == 'reject' || $this->uri->segment(2) == 'pelaporan_finish' || $this->uri->segment(2) == 'finish' ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">confirmation_number</i>
                             <span>List Ticket</span>
@@ -149,8 +149,8 @@
                                 <a href="<?php echo base_url('implementator/reject') ?>">Reject</a>
                             </li>
 
-                            <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('implementator/data_pelaporan') ?>">Finish</a>
+                            <li <?= $this->uri->segment(2) == 'pelaporan_finish' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('implementator/pelaporan_finish') ?>">Finish</a>
                             </li>
                         </ul>
                     </li>
@@ -170,7 +170,7 @@
                     </li> -->
 
                     <!-- <li <?= $this->uri->segment(2) == 'data_pelaporan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
-                        <a href="<?php echo base_url('implementator/data_pelaporan') ?>">
+                        <a href="<?php echo base_url('implementator/pelaporan_finish') ?>">
                             <i class="material-icons">view_list</i>
                             <span>Data Pelaporan</span>
                         </a>

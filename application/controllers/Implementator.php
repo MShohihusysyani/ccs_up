@@ -66,20 +66,73 @@ class Implementator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function data_pelaporan()
+    public function pelaporan_finish()
     {
+        $this->load->library('form_validation');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $this->load->model('Client_model', 'client_model');
 
-        $this->load->view('templates/header');
-        $this->load->view('templates/implementator_sidebar');
-        $this->load->view('implementator/data_pelaporan');
-        $this->load->view('templates/footer');
+        // Set form validation rules (allow empty)
+        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
+        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
+        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
+        $this->form_validation->set_rules('rating', 'rating', 'trim');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Validation failed, prepare data for the view with error messages
+            $data['errors'] = validation_errors();
+            $data['klien'] = $this->client_model->getClient();
+            $data['pencarian_data'] = [];
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/implementator_sidebar');
+            $this->load->view('implementator/pelaporan_finish', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Validation passed, retrieve POST data
+            $tanggal_awal  = $this->input->post('tanggal_awal');
+            $tanggal_akhir = $this->input->post('tanggal_akhir');
+            $nama_klien    = $this->input->post('nama_klien');
+            $rating        = $this->input->post('rating');
+            $status_ccs    = 'FINISHED';
+
+            // var data for view 
+            $data['tanggal_awal']  = $tanggal_awal;
+            $data['tanggal_akhir'] = $tanggal_akhir;
+            $data['nama_klien']    = $nama_klien;
+            $data['rating']        = $rating;
+            $data['status_ccs']    = $status_ccs;
+
+            // Get data from the models
+            $data['klien'] = $this->client_model->getClient();
+            $data['pencarian_data'] = $this->pelaporan_model->getDateFilteredH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $rating);
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/implementator_sidebar');
+            $this->load->view('implementator/pelaporan_finish');
+            $this->load->view('templates/footer');
+        }
     }
 
     public function get_data_finish()
     {
         $this->load->model('Serversideteknisi_model', 'serversideteknisi_model');
 
-        $list = $this->serversideteknisi_model->get_datatables();
+        // Ambil data filter dari POST request
+        $filters = array(
+            'tanggal_awal' => $this->input->post('tanggal_awal'),
+            'tanggal_akhir' => $this->input->post('tanggal_akhir'),
+            'nama_klien' => $this->input->post('nama_klien'),
+            'rating' => $this->input->post('rating'),
+        );
+
+        // Periksa apakah tombol "Semua Data" diklik
+        if (isset($_POST['semua_data'])) {
+            // Kosongkan filter
+            $filters = array();
+        }
+
+        $list = $this->serversideteknisi_model->get_datatables($filters);
         $data = array();
         $no = isset($_POST['start']) ? $_POST['start'] : 0;
 
@@ -92,7 +145,7 @@ class Implementator extends CI_Controller
             $row[] = $dp->nama;
             $row[] = $dp->judul;
             $row[] = $dp->kategori;
-            $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
+            // $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
 
             // Proses nilai prioritas di server-side
             if ($dp->priority == 'Low') {
@@ -170,7 +223,7 @@ class Implementator extends CI_Controller
         $output = array(
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->serversideteknisi_model->count_all(),
-            "recordsFiltered" => $this->serversideteknisi_model->count_filtered(),
+            "recordsFiltered" => $this->serversideteknisi_model->count_filtered($filters),
             "data" => $data,
         );
 
