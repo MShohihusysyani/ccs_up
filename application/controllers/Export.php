@@ -893,8 +893,8 @@ class Export extends CI_Controller
 
         // Get filtered data
         $query = $this->pelaporan_model->getDateH($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $rating);
-        var_dump($query);
-        die();
+        // var_dump($query);
+        // die();
         $no = 1;
         $row = 4;
 
