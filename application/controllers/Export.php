@@ -209,6 +209,7 @@ class Export extends CI_Controller
                     <th>Maxday</th>
                     <th>Handle By</th>
                     <th>Status</th>
+                    <th>Rating</th>
                     <th>Create at</th>
                     <th>Finish at</th>
                 </tr>
@@ -247,6 +248,7 @@ class Export extends CI_Controller
                 <td>' . $data['maxday'] . '</td>
                 <td>' . $handleByString . '</td>
                 <td>' . $data['status_ccs'] . '</td>
+                <td>'  . $data['rating'] . '</td>
                 <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
                 <td>' . tanggal_indo($data['waktu_approve']) . '</td>
             </tr>
@@ -1895,143 +1897,6 @@ class Export extends CI_Controller
         ob_end_clean(); //digunakan ketika file tidak bisa dibuka diexcel
         $writer->save('php://output');
     }
-
-    public function rekap_pelaporan_excel1()
-    {
-        try {
-            // Load PhpSpreadsheet
-            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-            $sheet = $spreadsheet->getActiveSheet();
-
-            // Define column and row styles
-            $style_col = [
-                'font' => ['bold' => true],
-                'alignment' => [
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-                ],
-                'borders' => [
-                    'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                ],
-            ];
-
-            $style_row = [
-                'alignment' => [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-                ],
-                'borders' => [
-                    'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                    'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                    'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                    'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
-                ],
-            ];
-
-            // Set header title
-            $sheet->setCellValue('A1', "CCS | REKAP PELAPORAN");
-            $sheet->mergeCells('A1:L1');
-            $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(15);
-            $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-            // Set timezone and get current date
-            date_default_timezone_set('Asia/Jakarta');
-            $current_date = date('Y-m-d H:i:s');
-
-            // Get user information
-            $this->db->where('id_user', $this->session->userdata('id_user'));
-            $user_query = $this->db->get('user');
-            $user = $user_query->row_array();
-
-            // Print user and date information
-            $sheet->setCellValue('A2', 'Rekap Pelaporan dicetak oleh ' . $user['nama_user'] . ' pada ' . format_indo($current_date));
-            $sheet->mergeCells('A2:L2');
-            $sheet->getStyle('A2')->getFont()->setBold(true)->setSize(15);
-            $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-            // Set table headers
-            $headers = ["NO", "TANGGAL", "NO TIKET", "NAMA KLIEN", "PERIHAL", "TAGS", "KATEGORI", "PRIORITY", "IMPACT", "MAXDAY", "STATUS CCS", "HANDLE BY"];
-            $column = 'A';
-            foreach ($headers as $header) {
-                $sheet->setCellValue($column . '3', $header);
-                $sheet->getStyle($column . '3')->applyFromArray($style_col);
-                $column++;
-            }
-            $sheet->getRowDimension('1')->setRowHeight(20);
-            $sheet->getRowDimension('2')->setRowHeight(20);
-            $sheet->getRowDimension('3')->setRowHeight(20);
-
-            // Fetch data based on date range
-            $tanggal_awal = $this->input->post('tanggal_awal');
-            $tanggal_akhir = $this->input->post('tanggal_akhir');
-
-            if (empty($tanggal_awal) || empty($tanggal_akhir)) {
-                throw new Exception('Tanggal awal dan akhir harus diisi.');
-            }
-
-            $query = "SELECT * FROM pelaporan WHERE waktu_pelaporan BETWEEN '$tanggal_awal' AND  '$tanggal_akhir'";
-            $data = $this->db->query($query, [$tanggal_awal, $tanggal_akhir])->result_array();
-
-            // Display data or message if no data found
-            if (empty($data)) {
-                $sheet->setCellValue('A4', 'Tidak ada data ditemukan untuk rentang tanggal yang dipilih.');
-                $sheet->mergeCells('A4:L4');
-                $sheet->getStyle('A4')->getFont()->setBold(true);
-                $sheet->getStyle('A4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            } else {
-                $row = 4;
-                foreach ($data as $no => $item) {
-                    $sheet->setCellValue('A' . $row, $no + 1);
-                    $sheet->setCellValue('B' . $row, tanggal_indo($item['waktu_pelaporan']));
-                    $sheet->setCellValue('C' . $row, $item['no_tiket']);
-                    $sheet->setCellValue('D' . $row, $item['nama']);
-                    $sheet->setCellValue('E' . $row, $item['perihal']);
-                    $sheet->setCellValue('F' . $row, $item['tags']);
-                    $sheet->setCellValue('G' . $row, $item['kategori']);
-                    $sheet->setCellValue('H' . $row, $item['priority']);
-                    $sheet->setCellValue('I' . $row, $item['impact']);
-                    $sheet->setCellValue('J' . $row, $item['maxday']);
-                    $sheet->setCellValue('K' . $row, $item['status_ccs']);
-                    $sheet->setCellValue('L' . $row, $item['handle_by']);
-                    foreach (range('A', 'L') as $columnID) {
-                        $sheet->getStyle($columnID . $row)->applyFromArray($style_row);
-                        $sheet->getStyle($columnID . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-                    }
-                    $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                    $row++;
-                }
-                var_dump($data);
-                die;
-
-                // Set column widths
-                $columnWidths = [5, 15, 20, 35, 50, 30, 20, 10, 10, 10, 15, 10];
-                foreach (range('A', 'L') as $index => $columnID) {
-                    $sheet->getColumnDimension($columnID)->setWidth($columnWidths[$index]);
-                }
-
-                // Set page orientation
-                $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-            }
-
-            // Output the file
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-            ob_end_clean();
-            $filename = 'Rekap_Pelaporan_' . date('Y-m-d_H:i:s') . '.xlsx';
-
-            header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename="' . $filename . '"');
-            header('Cache-Control: max-age=0');
-
-            $writer->save('php://output');
-        } catch (Exception $e) {
-            // Improved error handling
-            error_log('Error generating report: ' . $e->getMessage());
-            echo 'Error generating report. Please try again later.';
-        }
-    }
-
 
 
     // REKAP KATEGORI
