@@ -338,7 +338,7 @@
             rating: $('#rating').val()
         };
 
-        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_finish'); ?>';
+        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/export_pdf_finished'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_finish'); ?>';
 
         var form = $('<form>', {
             action: actionUrl,
