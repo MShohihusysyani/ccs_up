@@ -27,8 +27,64 @@ class Export_model extends CI_Model
         if ($status_ccs) {
             $this->db->where('status_ccs', $status_ccs);
         }
-        if (!empty($tags)) {
-            $this->db->where('rating', $tags);
+        if (!empty($rating)) {
+            $this->db->where('rating', $rating);
+        }
+
+        return $this->db->get()->result_array();
+    }
+
+    public function getPelaporanHandled($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null, $status_ccs = null)
+    {
+        $this->db->select('*');
+        $this->db->from('pelaporan');
+
+        if ($tanggal_awal && $tanggal_akhir) {
+            $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+            $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+        }
+
+        if ($nama_klien) {
+            $this->db->like('nama', $nama_klien);
+        }
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
+        }
+
+        if ($status_ccs) {
+            $this->db->where_in('status_ccs', ['HANDLED', 'HANDLED 2']);
+        }
+
+        return $this->db->get()->result_array();
+    }
+
+    public function getPelaporanHandled2($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null, $status_ccs = null)
+    {
+        $this->db->select('*');
+        $this->db->from('pelaporan');
+
+        if ($tanggal_awal && $tanggal_akhir) {
+            $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+            $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+        }
+
+        if ($nama_klien) {
+            $this->db->like('nama', $nama_klien);
+        }
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
+        }
+
+        if ($status_ccs) {
+            $this->db->where('status_ccs', 'HANDLED 2');
         }
 
         return $this->db->get()->result_array();
@@ -54,6 +110,52 @@ class Export_model extends CI_Model
         }
         if (!empty($rating)) {
             $this->db->where('rating', $rating);
+        }
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getAllHandled($nama_klien = null, $nama_user = null, $status_ccs = null)
+    {
+        $this->db->select('*');
+        $this->db->from('pelaporan');
+
+        if ($status_ccs) {
+            $this->db->where_in('status_ccs', ['HANDLED', 'HANDLED 2']);
+        }
+        if ($nama_klien) {
+            $this->db->like('nama', $nama_klien);
+        }
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
+        }
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getAllHandled2($nama_klien = null, $nama_user = null, $status_ccs = null)
+    {
+        $this->db->select('*');
+        $this->db->from('pelaporan');
+
+        if ($status_ccs) {
+            $this->db->where('status_ccs', 'HANDLED 2');
+        }
+        if ($nama_klien) {
+            $this->db->like('nama', $nama_klien);
+        }
+        if (!empty($nama_user)) {
+            $this->db->group_start();
+            $this->db->like('handle_by', $nama_user);
+            $this->db->or_like('handle_by2', $nama_user);
+            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->group_end();
         }
 
         $query = $this->db->get();

@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="rating">Pilih Rating</label>
                                         <div class="form-line">
                                             <select id="rating" name="rating" class="form-control">
@@ -56,7 +56,7 @@
                                                 <option value="5">5</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                 </div>
 
@@ -713,7 +713,7 @@
             rating: $('#rating').val()
         };
 
-        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_handle'); ?>';
+        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/export_pdf_handle'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel_handle'); ?>';
 
         var form = $('<form>', {
             action: actionUrl,
