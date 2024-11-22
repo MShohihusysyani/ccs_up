@@ -190,9 +190,19 @@
                                                         class="icon-name">Approve</span>
                                                 </div>
                                             </div> -->
-                                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/finish_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">launch</i> <span class="icon-name"></span>Approve</a>
-                                                        <br>
-                                                        <br>
+                                                        <?php
+                                                        // Hitung jumlah handle_by yang tidak kosong
+                                                        $handle_count = !empty($dp['handle_by']) + !empty($dp['handle_by2']) + !empty($dp['handle_by3']);
+                                                        ?>
+                                                        <?php if ($handle_count > 1): ?>
+                                                            <button class="btn btn-sm btn-secondary" disabled>
+                                                                <i class="material-icons">block</i> <span class="icon-name"></span>Approve
+                                                            </button>
+                                                        <?php else: ?>
+                                                            <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/finish_pelaporan/<?= $dp['id_pelaporan']; ?>">
+                                                                <i class="material-icons">launch</i> <span class="icon-name"></span>Approve
+                                                            </a>
+                                                        <?php endif; ?>
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-warning">
                                                             <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">cancel</i> <span class="icon-name">Reject</span></a>
