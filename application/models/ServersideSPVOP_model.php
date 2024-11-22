@@ -20,7 +20,7 @@ class Serversidespvop_model extends CI_Model
 
         // Define the subquery
         $this->db->from($this->table);
-        $this->db->where('status_ccs', 'HANDLED');
+        $this->db->where_in('status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
         // Apply filters
         if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
             $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal']);
@@ -97,7 +97,7 @@ class Serversidespvop_model extends CI_Model
     public function count_all()
     {
         $this->db->from($this->table);
-        $this->db->where('status_ccs', 'HANDLED');
+        $this->db->where_in('status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
         return $this->db->count_all_results();
     }
 }
