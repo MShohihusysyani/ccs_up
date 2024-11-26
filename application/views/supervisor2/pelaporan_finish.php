@@ -29,8 +29,11 @@
             </h2>
         </div>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css">
         <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -275,6 +278,7 @@
 <script>
     var table = $('#example').DataTable({
         "processing": true,
+        "responsive": true,
         "serverSide": true,
         "ajax": {
             "url": "<?php echo site_url('supervisor2/get_data_finish') ?>",

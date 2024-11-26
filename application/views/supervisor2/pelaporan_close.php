@@ -7,7 +7,6 @@
         </div>
         <!-- jQuery UI CSS -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-
         <!-- Basic Examples -->
         <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
             <?php if ($this->session->flashdata('pesan')) { ?>
@@ -26,7 +25,7 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example">
+                                <table class="table table-bordered table-striped table-hover" id="example">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -423,8 +422,18 @@ foreach ($datapelaporan as $dp) : $no++; ?>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+<script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            responsive: true
+        });
+    });
+</script>
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
-
 <script type="text/javascript">
     //Get references to the select and input elements
     const select = document.getElementById('priority');
