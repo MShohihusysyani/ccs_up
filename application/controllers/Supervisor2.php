@@ -959,10 +959,10 @@ class Supervisor2 extends CI_Controller
 
                     $this->session->set_flashdata('pesan', 'Teknisi kedua telah diperbarui!');
                 } else {
-                    $this->session->set_flashdata('error', 'Teknisi kedua tidak ditemukan.');
+                    $this->session->set_flashdata('alert', 'Teknisi kedua tidak ditemukan.');
                 }
             } else {
-                $this->session->set_flashdata('error', 'User tidak ditemukan.');
+                $this->session->set_flashdata('alert', 'User tidak ditemukan.');
             }
 
             redirect(base_url('supervisor2/onprogress'));

@@ -8,43 +8,56 @@
         <!-- jQuery UI CSS -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css">
         <!-- <link rel="stylesheet"  type="text/css" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css"> -->
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
         <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
 
-        <!-- Basic Examples -->
-        <!-- #END# Basic Examples -->
-        <!-- Exportable Table -->
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="header">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
-                            <i class="material-icons">filter_alt</i><span>Filter</span>
-                        </button>
-                    </div>
+        <div class="login" data-login="<?= $this->session->flashdata('pesan') ?>">
+            <?php if ($this->session->flashdata('pesan')) { ?>
 
-                    <div class="body">
-                        <div class="row clearfix collapse" id="filterForm">
-                            <form id="filterFormContent" class="row">
-                                <!-- Kolom pertama (6 grid) -->
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label for="filter_tanggal_awal">Dari Tanggal</label>
-                                        <div class="form-line">
-                                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control">
-                                        </div>
-                                    </div>
+            <?php } ?>
+            <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert')) ?>">
+                <?php if ($this->session->flashdata('pesan')) { ?>
 
-                                    <div class="form-group">
-                                        <label for="nama_klien">Pilih Klien</label>
-                                        <div class="form-line">
-                                            <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
-                                            <input type="hidden" id="id" name="id">
-                                        </div>
-                                    </div>
+                <?php } ?>
+                <?= validation_errors(); ?>
 
-                                    <!-- <div class="form-group">
+                <!-- Basic Examples -->
+                <!-- #END# Basic Examples -->
+                <!-- Exportable Table -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
+                                    <i class="material-icons">filter_alt</i><span>Filter</span>
+                                </button>
+                            </div>
+
+                            <div class="body">
+                                <div class="row clearfix collapse" id="filterForm">
+                                    <form id="filterFormContent" class="row">
+                                        <!-- Kolom pertama (6 grid) -->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="filter_tanggal_awal">Dari Tanggal</label>
+                                                <div class="form-line">
+                                                    <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="nama_klien">Pilih Klien</label>
+                                                <div class="form-line">
+                                                    <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
+                                                    <input type="hidden" id="id" name="id">
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="form-group">
                                         <label for="rating">Pilih Rating</label>
                                         <div class="form-line">
                                             <select id="rating" name="rating" class="form-control">
@@ -58,125 +71,125 @@
                                         </div>
                                     </div> -->
 
-                                </div>
-
-                                <!-- Kolom kedua (6 grid) -->
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label for="filter_tanggal_akhir">Sampai Tanggal</label>
-                                        <div class="form-line">
-                                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control">
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="nama_user">Pilih Petugas</label>
-                                        <div class="form-line">
-                                            <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser" name="nama_user" id="nama_user" placeholder="Pilih Petugas" class="form-control" autocomplete="off">
-                                            <input type="hidden" id="id" name="id">
+                                        <!-- Kolom kedua (6 grid) -->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="filter_tanggal_akhir">Sampai Tanggal</label>
+                                                <div class="form-line">
+                                                    <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="nama_user">Pilih Petugas</label>
+                                                <div class="form-line">
+                                                    <input type="text" data-toggle="modal" data-target="#defaultModalNamaUser" name="nama_user" id="nama_user" placeholder="Pilih Petugas" class="form-control" autocomplete="off">
+                                                    <input type="hidden" id="id" name="id">
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </div>
 
+                                        <!-- Tombol Aksi -->
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-sm waves-effect">
+                                                    <i class="material-icons">filter_alt</i><span>Filter</span>
+                                                </button>
+
+                                                <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                                    <i class="material-icons">restart_alt</i><span>Reset Filter</span>
+                                                </button>
+
+                                                <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
+                                                    <i class="material-icons">sync</i><span>Semua Data</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Tombol Aksi -->
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-sm waves-effect">
-                                            <i class="material-icons">filter_alt</i><span>Filter</span>
-                                        </button>
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    ON PROGRESS
+                                </h2>
 
-                                        <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
-                                            <i class="material-icons">restart_alt</i><span>Reset Filter</span>
-                                        </button>
-
-                                        <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
-                                            <i class="material-icons">sync</i><span>Semua Data</span>
-                                        </button>
-                                    </div>
+                            </div>
+                            <br>
+                            <div class="btn-group" role="group" style="margin-left: 20px;">
+                                <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
+                                    <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover display" id="example">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>No Tiket</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Klien</th>
+                                                <th>Judul</th>
+                                                <!-- <th>Perihal</th> -->
+                                                <!-- <th>Attachment</th> -->
+                                                <th>Category</th>
+                                                <th>Priority</th>
+                                                <!-- <th>Impact</th> -->
+                                                <th>Max Day</th>
+                                                <th>Status CCS</th>
+                                                <th>Handle_by</th>
+                                                <th>Subtask 1</th>
+                                                <th>Status Subtask 1</th>
+                                                <th>Subtask 2</th>
+                                                <th>Status Subtask 2</th>
+                                                <th>Tenggat waktu</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>No Tiket</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Klien</th>
+                                                <th>Judul</th>
+                                                <!-- <th>Perihal</th> -->
+                                                <!-- <th>Attachment</th> -->
+                                                <th>Category</th>
+                                                <th>Priority</th>
+                                                <!-- <th>Impact</th> -->
+                                                <th>Max Day</th>
+                                                <th>Status CCS</th>
+                                                <th>Handle By</th>
+                                                <th>Subtask 1</th>
+                                                <th>Status Subtask 1</th>
+                                                <th>Subtask 2</th>
+                                                <th>Status Subtask 2</th>
+                                                <th>Tenggat waktu</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="header">
-                        <h2>
-                            ON PROGRESS
-                        </h2>
-
-                    </div>
-                    <br>
-                    <div class="btn-group" role="group" style="margin-left: 20px;">
-                        <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
-                            <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Export Excel</button></li>
-                        </ul>
-                    </div>
-                    <div class="body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" id="example">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Klien</th>
-                                        <th>Judul</th>
-                                        <!-- <th>Perihal</th> -->
-                                        <!-- <th>Attachment</th> -->
-                                        <th>Category</th>
-                                        <th>Priority</th>
-                                        <!-- <th>Impact</th> -->
-                                        <th>Max Day</th>
-                                        <th>Status CCS</th>
-                                        <th>Handle_by</th>
-                                        <th>Subtask 1</th>
-                                        <th>Status Subtask 1</th>
-                                        <th>Subtask 2</th>
-                                        <th>Status Subtask 2</th>
-                                        <th>Tenggat waktu</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Klien</th>
-                                        <th>Judul</th>
-                                        <!-- <th>Perihal</th> -->
-                                        <!-- <th>Attachment</th> -->
-                                        <th>Category</th>
-                                        <th>Priority</th>
-                                        <!-- <th>Impact</th> -->
-                                        <th>Max Day</th>
-                                        <th>Status CCS</th>
-                                        <th>Handle By</th>
-                                        <th>Subtask 1</th>
-                                        <th>Status Subtask 1</th>
-                                        <th>Subtask 2</th>
-                                        <th>Status Subtask 2</th>
-                                        <th>Tenggat waktu</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <!-- #END# Exportable Table -->
             </div>
-        </div>
-        <!-- #END# Exportable Table -->
-    </div>
-    <!-- Button trigger modal -->
+            <!-- Button trigger modal -->
 </section>
 
 
@@ -604,6 +617,7 @@
 <script type="text/javascript">
     table = $('#example').DataTable({
         "processing": true,
+        "responsive": true,
         "serverSide": true,
         "ajax": {
             "url": "<?php echo site_url('supervisor2/fetch_onprogress') ?>",
