@@ -1365,6 +1365,17 @@ class Superadmin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function detail_close($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Superadmin_model', 'superadmin_model');
+        $data['datapelaporan'] = $this->superadmin_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/detail_close', $data);
+        $this->load->view('templates/footer');
+    }
     public function detail_finish($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();

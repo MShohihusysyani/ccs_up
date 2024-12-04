@@ -37,9 +37,9 @@
                                             <!-- <th>Perihal</th> -->
                                             <!-- <th>Attachment</th> -->
                                             <th>Category</th>
-                                            <th>Tags</th>
+                                            <!-- <th>Tags</th> -->
                                             <th>Priority</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
@@ -56,9 +56,9 @@
                                             <!-- <th>Perihal</th> -->
                                             <!-- <th>Attachment</th> -->
                                             <th>Category</th>
-                                            <th>Tags</th>
+                                            <!-- <th>Tags</th> -->
                                             <th>Priority</th>
-                                            <th>Impact</th>
+                                            <!-- <th>Impact</th> -->
                                             <th>Max Day</th>
                                             <th>Status CCS</th>
                                             <th>Handle By</th>
@@ -79,13 +79,13 @@
                                                 <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
                                                 </td> -->
                                                 <td><?= $dp['kategori']; ?></td>
-                                                <td>
+                                                <!-- <td>
                                                     <?php if (!empty($dp['tags'])): ?>
                                                         <span class="label label-info">
                                                             <?= $dp['tags']; ?>
                                                         </span>
                                                     <?php endif; ?>
-                                                </td>
+                                                </td> -->
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
                                                         <span class="label label-info">Low</span>
@@ -99,7 +99,7 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?= $dp['impact']; ?></td>
+                                                <!-- <td><?= $dp['impact']; ?></td> -->
                                                 <td>
                                                     <?php if ($dp['maxday'] == '90') : ?>
                                                         <span class="label label-info">90</span>
@@ -149,6 +149,7 @@
                                                     <div class="btn btn-sm btn-warning">
                                                         <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">cancel</i> <span class="icon-name">Reject</span></a>
                                                     </div>
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_close/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

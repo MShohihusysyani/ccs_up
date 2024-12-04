@@ -307,7 +307,7 @@ class Superadmin_model extends CI_Model
 
     public function ambil_id_pelaporan($id)
     {
-        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, judul, nama, status_ccs, kategori, priority, maxday, impact, file, tags, catatan_finish, file_finish  FROM pelaporan WHERE id_pelaporan='$id'";
+        $query = "SELECT  id_pelaporan, no_tiket, waktu_pelaporan, perihal, judul, nama, status_ccs, kategori, priority, maxday, impact, file, tags, catatan_finish, file_finish, handle_by, handle_by2, handle_by3  FROM pelaporan WHERE id_pelaporan='$id'";
         return $this->db->query($query)->result_array();
     }
 

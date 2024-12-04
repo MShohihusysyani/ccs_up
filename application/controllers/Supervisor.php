@@ -776,6 +776,17 @@ class Supervisor extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function detail_close($id)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Supervisor_model', 'supervisor_model');
+        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/detail_close', $data);
+        $this->load->view('templates/footer');
+    }
     public function detail_finish($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
