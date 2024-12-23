@@ -160,7 +160,7 @@
                         <a href="<?= base_url('helpdesk/pelaporan') ?>" class="btn btn-primary m-t-15 waves-effect">Kembali</a>
                         <button type="button" class="btn btn-primary m-t-15 waves-effect" id="tambah-komen">Tambah Komen</button>
                         <button type="button" class="btn btn-primary m-t-15 waves-effect" id="forward">Forward</button>
-                        <button type="button" class="btn btn-primary m-t-15 waves-effect" id="finish">Finish</button></button>
+                        <button type="button" class="btn btn-primary m-t-15 waves-effect" id="finish">Finish</button>
                     <?php endforeach; ?>
                     <?php echo form_close() ?>
                 </div>

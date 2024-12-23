@@ -18,40 +18,39 @@
                         Forward_tiket</h2>
                 </div>
                 <div class="body">
-                    <?php echo form_open_multipart('supervisor2/fungsi_forward') ?>
-                    <form enctype="multipart/form-data">
-                        <?php foreach ($datapelaporan as $dp) : ?>
-                            <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control" value="<?= $dp['id_pelaporan']; ?>">
+                    <?php echo form_open_multipart('', ['id' => 'form-action']) ?>
+                    <?php foreach ($datapelaporan as $dp) : ?>
+                        <input type="hidden" id="id_pelaporan" name="id_pelaporan" class="form-control" value="<?= $dp['id_pelaporan']; ?>">
 
-                            <label for="nama_tiket">No Tiket</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="no_tiket" name="no_tiket" class="form-control" value="<?= $dp['no_tiket']; ?>" readonly>
-                                </div>
+                        <label for="nama_tiket">No Tiket</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="no_tiket" name="no_tiket" class="form-control" value="<?= $dp['no_tiket']; ?>" readonly>
                             </div>
+                        </div>
 
-                            <label for="nama_tiket">Tanggal </label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" value="<?= $dp['waktu_pelaporan']; ?>" readonly>
-                                </div>
+                        <label for="nama_tiket">Tanggal </label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" value="<?= $dp['waktu_pelaporan']; ?>" readonly>
                             </div>
+                        </div>
 
-                            <label for="judul">Nama Klien</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="nama" name="nama" class="form-control" value="<?= $dp['nama']; ?>" readonly>
-                                </div>
+                        <label for="judul">Nama Klien</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="nama" name="nama" class="form-control" value="<?= $dp['nama']; ?>" readonly>
                             </div>
+                        </div>
 
-                            <label for="judul">Judul</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="judul" name="judul" class="form-control" value="<?= $dp['judul']; ?>" readonly>
-                                </div>
+                        <label for="judul">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="judul" name="judul" class="form-control" value="<?= $dp['judul']; ?>" readonly>
                             </div>
+                        </div>
 
-                            <!-- <label for="perihal">Perihal</label>
+                        <!-- <label for="perihal">Perihal</label>
                             <div class="form-group">
                                 <div class="form-line">
                                     <div id="perihal" readonly><?= $dp['perihal']; ?></div>
@@ -59,101 +58,101 @@
                             </div> -->
 
 
-                            <label for="priority">Priority</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="priority" name="priority" class="form-control" value="<?= $dp['priority']; ?>" readonly>
-                                </div>
+                        <label for="priority">Priority</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="priority" name="priority" class="form-control" value="<?= $dp['priority']; ?>" readonly>
                             </div>
+                        </div>
 
-                            <label for="maxday">Maxday</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="maxday" name="maxday" class="form-control" value="<?= $dp['maxday']; ?>" readonly>
-                                </div>
+                        <label for="maxday">Maxday</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="maxday" name="maxday" class="form-control" value="<?= $dp['maxday']; ?>" readonly>
                             </div>
+                        </div>
 
-                            <label for="perihal">Perihal</label>
-                            <textarea id="editor" class="form-control" name="perihal" id="perihal" readonly>
+                        <label for="perihal">Perihal</label>
+                        <textarea id="editor" class="form-control" name="perihal" id="perihal" readonly>
                             <?= $dp['perihal']; ?>
                             </textarea>
 
-                            <!-- <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
+                        <!-- <label for="nama">File (jpeg/png/pdf/xlsx/docx) max 2mb</label>
                             <div class="form-group">
                                 <div class="form-line">
                                     <img src="<?= base_url('assets/filefinish/') . $dp['file_finish']; ?>" width="500" height="500" class="img-thumbnail">
                                 </div>
                             </div> -->
 
-                            <label for="nama">File</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <?php
-                                    $file_finish = $dp['file']; // File yang dilampirkan
-                                    if (!empty($file_finish)) {
-                                        $file_path = base_url('assets/file/') . $file_finish;
-                                        $file_name = basename($file_finish);  // Mengambil nama file
-                                        $file_ext = pathinfo($file_finish, PATHINFO_EXTENSION);
+                        <label for="nama">File</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <?php
+                                $file_finish = $dp['file']; // File yang dilampirkan
+                                if (!empty($file_finish)) {
+                                    $file_path = base_url('assets/file/') . $file_finish;
+                                    $file_name = basename($file_finish);  // Mengambil nama file
+                                    $file_ext = pathinfo($file_finish, PATHINFO_EXTENSION);
 
-                                        // Tampilkan nama file
-                                        echo '<p>' . $file_name . '</p>';
+                                    // Tampilkan nama file
+                                    echo '<p>' . $file_name . '</p>';
 
-                                        // Periksa apakah file adalah gambar
-                                        if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])) {
-                                            // Jika file gambar, tampilkan dengan tag <img>
-                                            echo '<img src="' . $file_path . '" width="500" height="500" class="img-thumbnail">';
-                                        } else {
-                                            // Jika file bukan gambar, tampilkan tautan untuk mengunduh atau melihat file
-                                            echo '<a href="' . $file_path . '" target="_blank" class="btn btn-primary">Download file</a>';
-                                        }
+                                    // Periksa apakah file adalah gambar
+                                    if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+                                        // Jika file gambar, tampilkan dengan tag <img>
+                                        echo '<img src="' . $file_path . '" width="500" height="500" class="img-thumbnail">';
                                     } else {
-                                        // Jika tidak ada file yang dilampirkan
-                                        echo '<span class= "label label-info" style="font-size:12px;">Tidak ada file yang dilampirkan.</span/';
+                                        // Jika file bukan gambar, tampilkan tautan untuk mengunduh atau melihat file
+                                        echo '<a href="' . $file_path . '" target="_blank" class="btn btn-primary">Download file</a>';
                                     }
-                                    ?>
-                                </div>
+                                } else {
+                                    // Jika tidak ada file yang dilampirkan
+                                    echo '<span class= "label label-info" style="font-size:12px;">Tidak ada file yang dilampirkan.</span/';
+                                }
+                                ?>
                             </div>
-                            <br>
+                        </div>
+                        <br>
 
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select name="namateknisi" id="namateknisi" class="form-control">
-                                        <option value=""> -- Pilih Teknisi -- </option>
-                                        <?php
-                                        foreach ($namateknisi as $nat) : ?>
-                                            <option value="<?= $nat['id_user']; ?>"><?= $nat['nama_user']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
+
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select name="namateknisi" id="namateknisi" class="form-control">
+                                    <option value=""> -- Pilih Teknisi -- </option>
+                                    <?php
+                                    foreach ($namateknisi as $nat) : ?>
+                                        <option value="<?= $nat['id_user']; ?>"><?= $nat['nama_user']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
+                        </div>
 
-                            <label for="judul">Judul</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="judul" name="judul" class="form-control" value="<?= $dp['judul']; ?>" readonly>
-                                </div>
+                        <label for="judul">Judul</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="judul" name="judul" class="form-control" value="<?= $dp['judul']; ?>" readonly>
                             </div>
+                        </div>
 
-                            <label for="subtask">subtask</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input value="" type="text" id="subtask" name="subtask" class="form-control">
-                                </div>
+                        <label for="subtask">subtask</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="text" id="subtask" name="subtask" class="form-control">
                             </div>
+                        </div>
 
-                            <label for="tanggal">Tenggat waktu</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input value="" type="date" id="tanggal" name="tanggal" class="form-control">
-                                </div>
+                        <label for="tanggal">Tenggat waktu</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="date" id="tanggal" name="tanggal" class="form-control">
                             </div>
+                        </div>
 
-                            <a href="<?= base_url('supervisor2/added') ?>" type="button" class="btn btn-primary m-t-15 waves-effect">Kembali</a>
+                        <a href="<?= base_url('supervisor2/added') ?>" type="button" class="btn btn-primary m-t-15 waves-effect">Kembali</a>
 
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Forward</button>
-                        <?php endforeach; ?>
-                    </form>
-
+                        <button type="button" class="btn btn-primary m-t-15 waves-effect" id="forward">Forward</button>
+                        <button type="button" class="btn btn-primary m-t-15 waves-effect" id="batal">Batal</button>
+                    <?php endforeach; ?>
                     <?php echo form_close() ?>
                 </div>
             </div>
@@ -163,10 +162,26 @@
 </section>
 
 
+
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    const form = document.getElementById('form-action');
+
+    // Event untuk tombol Forward
+    document.getElementById('forward').addEventListener('click', function() {
+        form.action = "<?= base_url('supervisor2/fungsi_forward') ?>";
+        form.submit();
+    });
+
+    // Event untuk tombol Finish
+    document.getElementById('batal').addEventListener('click', function() {
+        form.action = "<?= base_url('supervisor2/batal') ?>";
+        form.submit();
+    });
+</script>
 
 <script>
     // This sample still does not showcase all CKEditor&nbsp;5 features (!)

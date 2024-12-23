@@ -323,6 +323,13 @@ class Spv2_model extends CI_Model
         return $this->db->query($query);
     }
 
+    public function pembatalanForward($id_pelaporan)
+    {
+
+        $query = "UPDATE pelaporan SET status_ccs='HANDLED' WHERE id_pelaporan=$id_pelaporan";
+        return $this->db->query($query);
+    }
+
     public function get_notifications()
     {
 

@@ -296,7 +296,7 @@ class Supervisor2 extends CI_Controller
             } elseif ($pelaporan->status1 == 'COMPLETED') {
                 $status1_label = '<span class="label label-success">COMPLETED</span>';
             } else {
-                $status1_label = $pelaporan->status1; // Make sure this is defined
+                $status1_label = $pelaporan->status1;
             }
             $row['status2'] = $status1_label;
 
@@ -306,12 +306,11 @@ class Supervisor2 extends CI_Controller
             } elseif ($pelaporan->status2 == 'COMPLETED') {
                 $status2_label = '<span class="label label-success">COMPLETED</span>';
             } else {
-                $status2_label = $pelaporan->status2; // Make sure this is defined
+                $status2_label = $pelaporan->status2;
             }
             $row['status1'] = $status2_label;
             $row['tanggal'] = tanggal_indo($pelaporan->tanggal);
 
-            // Tombol aksi dengan URL detail dan print detail
             // Tombol aksi dengan URL detail, print detail, edit, dan tambah teknisi
             $row['aksi'] = '
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
@@ -422,7 +421,7 @@ class Supervisor2 extends CI_Controller
             // Validation passed, retrieve POST data
             $tanggal_awal  = $this->input->post('tanggal_awal');
             $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
+            $status_ccs    = 'FINISHED';
             $nama_klien    = $this->input->post('nama_klien');
             $nama_user     = $this->input->post('nama_user');
             $rating        = $this->input->post('rating');
@@ -917,6 +916,15 @@ class Supervisor2 extends CI_Controller
         $this->load->view('templates/supervisor2_sidebar');
         $this->load->view('supervisor2/forward_tiket', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function batal()
+    {
+        $id_pelaporan = $this->input->post('id_pelaporan');
+        $this->db->delete('s_forward', ['pelaporan_id' => $id_pelaporan]);
+        $this->spv2_model->pembatalanForward($id_pelaporan);
+        $this->session->set_flashdata('pesan', 'Pembatalan Berhasil!');
+        redirect(base_url('supervisor2/added'));
     }
 
     public function fungsi_edit()

@@ -149,7 +149,7 @@
                                                         </div>
 
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor2/forward_tiket/<?= $dp['id_pelaporan']; ?>">
-                                                            <i class="material-icons">forward</i> Forward
+                                                            <i class="material-icons"></i> Forward / Batalkan
                                                         </a>
 
                                                         <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
