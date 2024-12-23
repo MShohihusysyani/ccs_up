@@ -919,7 +919,7 @@ class Helpdesk extends CI_Controller
         $data = [
             'id_pelaporan' => $id,
             'no_tiket' => $this->input->post('no_tiket'),
-            'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
+            // 'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
             'file_finish'     => $photo,
             'nama'     => $this->input->post('nama'),
             'kategori' => $this->input->post('kategori'),
@@ -1003,6 +1003,9 @@ class Helpdesk extends CI_Controller
         $data['datapelaporan'] = $this->helpdesk_model->ambil_id_pelaporan($id);
         $data['datacomment']   = $this->helpdesk_model->get_latest_comments($id);
         $data['datareply']     = $this->helpdesk_model->get_replies_by_pelaporan_id($id);
+
+        $this->load->model('User_model', 'user_model');
+        $data['namaspv'] = $this->user_model->getNamaSpv();
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
