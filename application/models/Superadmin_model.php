@@ -116,7 +116,7 @@ class Superadmin_model extends CI_Model
     }
 
     //ADDED
-    public function getKlienPelaporanAdd()
+    public function getDataAdded()
     {
 
         // Fetch user data from the session
@@ -220,7 +220,7 @@ class Superadmin_model extends CI_Model
     }
 
     //CLOSE
-    public function getKlienPelaporanClose()
+    public function getDataClosed()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');

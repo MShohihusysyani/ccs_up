@@ -163,7 +163,6 @@ class Superadmin extends CI_Controller
             // Hash password
             $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 
-            // Data yang akan diinsert
             $data = [
                 'divisi'       => $this->input->post('divisi'),
                 'nama_user'    => $this->input->post('nama_user'),
@@ -173,7 +172,6 @@ class Superadmin extends CI_Controller
                 'tgl_register' => $this->input->post('tgl_register')
             ];
 
-            // Insert data ke tabel user
             $this->db->insert('user', $data);
             $this->session->set_flashdata('pesan', 'Successfully Added!');
             redirect('superadmin/user');
@@ -212,10 +210,8 @@ class Superadmin extends CI_Controller
             );
         }
 
-        // Update the user data in the database
         $this->usermaster_model->updateUser($id, $ArrUpdate);
 
-        // Set success message and redirect
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
         Redirect(base_url('superadmin/user'));
     }
@@ -351,7 +347,7 @@ class Superadmin extends CI_Controller
         $data['category']      = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
-        $data['dataAdded'] = $this->superadmin_model->getKlienPelaporanAdd();
+        $data['dataAdded'] = $this->superadmin_model->getDataAdded();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -575,7 +571,7 @@ class Superadmin extends CI_Controller
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->superadmin_model->getKlienPelaporanClose();
+        $data['datapelaporan'] = $this->superadmin_model->getDataClosed();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -815,7 +811,6 @@ class Superadmin extends CI_Controller
             'required' => 'Kolom Max Day wajib diisi.'
         ]);
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, redirect back to the form with error messages
             $this->session->set_flashdata('alert', validation_errors());
             redirect('superadmin/added');
         } else {
@@ -951,19 +946,14 @@ class Superadmin extends CI_Controller
     public function fungsi_reject()
     {
 
-        // Load the form validation library
         $this->load->library('form_validation');
-
-        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
 
-        // Check if the form passes validation
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
             redirect(base_url('supervisor/onprogress'));
         } else {
-            // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namahd');
             $data = [
@@ -986,17 +976,13 @@ class Superadmin extends CI_Controller
                 $this->db->where('pelaporan_id', $id_pelaporan);
                 $this->db->update('forward', $data);
 
-                // Update the Helpdesk in the supervisor_model
                 $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
 
-                // Set success message
                 $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
             } else {
-                // Set error message if user not found
                 $this->session->set_flashdata('error', 'User not found.');
             }
 
-            // Redirect to the onprogress page
             redirect(base_url('superadmin/close'));
         }
     }
@@ -1086,14 +1072,13 @@ class Superadmin extends CI_Controller
         // Load views with data
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
-        $this->load->view('superadmin/rekap_pelaporan', $data); // Pass data to the view
+        $this->load->view('superadmin/rekap_pelaporan', $data);
         $this->load->view('templates/footer');
     }
 
 
     public function datepelaporan()
     {
-        // Load necessary libraries and models
         $this->load->library('form_validation');
         $this->load->model('Pelaporan_model', 'pelaporan_model');
         $this->load->model('Client_model', 'client_model');
@@ -1108,7 +1093,6 @@ class Superadmin extends CI_Controller
         $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
         if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
             $data['errors'] = validation_errors();
             $data['klien'] = $this->client_model->getClient();
             $data['user'] = $this->user_model->getNamaPetugas();
@@ -1137,12 +1121,11 @@ class Superadmin extends CI_Controller
             $data['rating']        = $rating;
             $data['tags']          = $tags;
 
-            // Get data from the models
+            // Fetch data from models
             $data['klien'] = $this->client_model->getClient();
             $data['user'] = $this->user_model->getNamaPetugas();
             $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
 
-            // Load views with data
             $this->load->view('templates/header');
             $this->load->view('templates/superadmin_sidebar');
             $this->load->view('superadmin/rekap_pelaporan', $data);
@@ -1176,10 +1159,9 @@ class Superadmin extends CI_Controller
         $list = $this->serverside_model->get_datatables($filters);
         $data = array();
 
-        // Format data sesuai kebutuhan DataTables
         foreach ($list as $key => $dataItem) {
             $row = array();
-            $row['no'] = $key + 1; // Nomor urutan
+            $row['no'] = $key + 1; 
             $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
             $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
@@ -1218,7 +1200,6 @@ class Superadmin extends CI_Controller
             $data[] = $row;
         }
 
-        // Menyiapkan output JSON untuk DataTables
         $output = array(
             "draw" => $this->input->post('draw'),
             "recordsTotal" => $this->serverside_model->count_all(),
@@ -1298,7 +1279,6 @@ class Superadmin extends CI_Controller
         $this->form_validation->set_rules('kategori', 'Category Name', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
             $data['errors'] = validation_errors();
             $data['category'] = $this->category_model->getCategory();
             $data['pencarian_data'] = [];
@@ -1308,12 +1288,10 @@ class Superadmin extends CI_Controller
             $this->load->view('superadmin/rekap_kategori', $data);
             $this->load->view('templates/footer');
         } else {
-            // Validation passed, retrieve POST data
             $tgla = $this->input->post('tgla');
             $tglb = $this->input->post('tglb');
             $kategori = $this->input->post('kategori');
 
-            // Get data from the models
             $data['category'] = $this->category_model->getCategory();
             $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb,  $kategori);
 
@@ -1450,7 +1428,6 @@ class Superadmin extends CI_Controller
                 $url = base_url('assets/comment/' . $photo);
                 $this->load->helper('url');
 
-                // Store the uploaded file name in session
                 $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
                 $uploaded_images[] = $photo;
                 $this->session->set_userdata('uploaded_images', $uploaded_images);
@@ -1535,7 +1512,6 @@ class Superadmin extends CI_Controller
                 $url = base_url('assets/reply/' . $photo);
                 $this->load->helper('url');
 
-                // Store the uploaded file name in session
                 $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
                 $uploaded_images[] = $photo;
                 $this->session->set_userdata('uploaded_images', $uploaded_images);

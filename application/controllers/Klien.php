@@ -41,14 +41,11 @@ class Klien extends CI_Controller
 
     public function add_temp_tiket()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
-
-        // Set validation rules
         $this->form_validation->set_rules('perihal', 'Perihal', 'required|min_length[50]');
         $this->form_validation->set_rules('judul', 'Judul', 'required');
 
-        // Check if the form validation passed
+        // Cek validasi form
         if ($this->form_validation->run() == FALSE) {
             // Jika validasi gagal, buat pesan error yang sesuai dengan kesalahan field
             $errors = validation_errors('<p>', '</p>');
@@ -62,14 +59,12 @@ class Klien extends CI_Controller
                 $error_message .= 'Judul harus diisi.';
             }
 
-            // Set flashdata dengan pesan error yang sudah dibuat
             $this->session->set_flashdata('alert', $error_message);
             redirect('klien/pengajuan');
         } else {
-            // Retrieve the ticket number from the form input
             $no_tiket = trim($this->input->post('no_tiket'));
 
-            // Check if the ticket number already exists in the database
+            // Check jika no tiket sudah ada ditable temporary
             $this->db->where('no_tiket', $no_tiket);
             $existing_ticket = $this->db->get('tiket_temp')->row();
 
@@ -77,7 +72,6 @@ class Klien extends CI_Controller
                 $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Tiket sudah ada.');
                 redirect('klien/pengajuan');
             } else {
-                // Handle file upload if there is a file
                 $photo = $_FILES['file']['name'];
 
                 if ($photo) {
@@ -97,7 +91,6 @@ class Klien extends CI_Controller
                     }
                 }
 
-                // Validate the note content
                 $perihal = $this->input->post('perihal');
                 if ($this->contains_only_images($perihal) || strlen(strip_tags($perihal)) < 50) {
                     if ($photo) {
@@ -108,7 +101,6 @@ class Klien extends CI_Controller
                     return;
                 }
 
-                // Prepare the data for insertion
                 $id = $this->input->post('id_temp');
                 $data = [
                     'id_temp'  => $id,
@@ -122,12 +114,12 @@ class Klien extends CI_Controller
                     'judul'    => $this->input->post('judul')
                 ];
 
-                // Remove unwanted HTML tags from data
+                // Remove tag
                 $data = array_map(function ($value) {
                     return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
                 }, $data);
 
-                // Prevent certain HTML tags such as <a> from being inserted in 'perihal'
+                // Remove link
                 $pattern = '/<a\s+href="([^"]+)"/i';
                 $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
 
@@ -157,7 +149,6 @@ class Klien extends CI_Controller
                 $url = base_url('assets/files/' . $photo);
                 $this->load->helper('url');
 
-                // Store the uploaded file name in session
                 $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
                 $uploaded_images[] = $photo;
                 $this->session->set_userdata('uploaded_images', $uploaded_images);
@@ -283,7 +274,7 @@ class Klien extends CI_Controller
         $this->load->model('M_Klien', 'M_Klien');
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
-        $data['dataAdded'] = $this->M_Klien->getKlienPelaporanAdd();
+        $data['dataAdded'] = $this->M_Klien->getDataAdded();
 
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
@@ -296,7 +287,7 @@ class Klien extends CI_Controller
         $this->load->model('M_Klien', 'M_Klien');
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->M_Klien->getKlienPelaporanOP();
+        $data['datapelaporan'] = $this->M_Klien->getDataHandled();
 
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');
@@ -309,7 +300,7 @@ class Klien extends CI_Controller
         $this->load->model('M_Klien', 'M_Klien');
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->M_Klien->getKlienPelaporanClose();
+        $data['datapelaporan'] = $this->M_Klien->getDataClosed();
 
 
         $this->load->view('templates/header');

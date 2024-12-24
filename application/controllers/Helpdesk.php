@@ -477,7 +477,7 @@ class Helpdesk extends CI_Controller
 
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->helpdesk_model->getDataPelaporanHD();
+        $data['datapelaporan'] = $this->helpdesk_model->getDataPelaporan();
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
@@ -831,18 +831,13 @@ class Helpdesk extends CI_Controller
 
     public function finish()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
-
-        // Set validation rules
         $this->form_validation->set_rules('catatan_finish', 'Catatan Finish', 'callback_validateCatatanFinish');
 
-        // Get catatan finish content from the request
         $catatan_finish = $this->input->post('catatan_finish');
 
-        // Check if catatan finish only contains images
+        // cek jika hanya berisi gambar
         if ($this->contains_only_images($catatan_finish)) {
-            // If only images, set an error message and redirect back
             $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish tidak boleh hanya berisi gambar.');
 
             // Remove uploaded images
@@ -851,9 +846,8 @@ class Helpdesk extends CI_Controller
             return;
         }
 
-        // Check if the form validation passed
+        // cek jika kurang dari 50 karakter
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, set an error message and redirect back
             $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
 
             // Remove uploaded images
@@ -869,7 +863,6 @@ class Helpdesk extends CI_Controller
     {
         $minLength = 50;
 
-        // Strip tags to get text content and check if length is less than min length
         $textContent = strip_tags($str);
         if (strlen($textContent) < $minLength) {
             $this->form_validation->set_message('validateCatatanFinish', 'Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
@@ -881,7 +874,6 @@ class Helpdesk extends CI_Controller
 
     private function processFinish()
     {
-        // Handle file upload if there is a file
         $photo = $_FILES['file_finish']['name'];
 
         if ($photo) {
@@ -903,7 +895,6 @@ class Helpdesk extends CI_Controller
             }
         }
 
-        // Validate the note content
         $catatan_finish = $this->input->post('catatan_finish');
         if ($this->contains_only_images($catatan_finish) || strlen(strip_tags($catatan_finish)) < 50) {
             if ($photo) {
@@ -914,7 +905,6 @@ class Helpdesk extends CI_Controller
             return;
         }
 
-        // Prepare the data for insertion
         $id = $this->input->post('id_pelaporan');
         $data = [
             'id_pelaporan' => $id,
@@ -930,12 +920,12 @@ class Helpdesk extends CI_Controller
             'status_ccs' => 'CLOSED'
         ];
 
-        // Remove unwanted HTML tags from data
+        // Remove tag
         $data = array_map(function ($value) {
             return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
         }, $data);
 
-        $this->pelaporan_model->updateHD($id, $data);
+        $this->pelaporan_model->updateFinish($id, $data);
 
         // Clear session images after successful finish
         $this->session->unset_userdata('uploaded_images');
@@ -1123,7 +1113,6 @@ class Helpdesk extends CI_Controller
                 $url = base_url('assets/comment/' . $photo);
                 $this->load->helper('url');
 
-                // Store the uploaded file name in session
                 $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
                 $uploaded_images[] = $photo;
                 $this->session->set_userdata('uploaded_images', $uploaded_images);

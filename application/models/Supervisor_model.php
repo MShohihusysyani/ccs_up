@@ -75,7 +75,7 @@
         }
 
         //ADDED
-        public function getKlienPelaporanAdd()
+        public function getDataAdded()
         {
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $user_id = $this->session->userdata('id_user');
@@ -158,7 +158,7 @@
 
 
         //CLOSE
-        public function getKlienPelaporanClose()
+        public function getDataClosed()
         {
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $user_id = $this->session->userdata('id_user');

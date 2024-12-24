@@ -98,7 +98,7 @@ class Spv2_model extends CI_Model
     }
 
 
-    public function getKlienPelaporanAdd()
+    public function getDataAdded()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();

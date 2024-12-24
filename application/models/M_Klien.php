@@ -28,7 +28,7 @@ class M_Klien extends CI_Model
         return $this->db->get();
     }
 
-    public function getKlienPelaporanAdd()
+    public function getDataAdded()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -62,7 +62,7 @@ class M_Klien extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function getKlienPelaporanOP()
+    public function getDataHandled()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -111,7 +111,7 @@ class M_Klien extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function getKlienPelaporanClose()
+    public function getDataClosed()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();

@@ -112,7 +112,7 @@ class Pelaporan_model extends CI_Model
     }
 
     // update finish HELPDESK
-    function updateHD($id, $data)
+    function updateFinish($id, $data)
     {
         $this->db->where('id_pelaporan', $id);
         $this->db->update('pelaporan', $data);
@@ -126,17 +126,7 @@ class Pelaporan_model extends CI_Model
         $this->db->update('pelaporan', $data);
     }
 
-    // REJECT HD1
-    function rejecthd1($id, $data)
-    {
-        $this->db->where('id_pelaporan', $id);
-        $this->db->update('pelaporan', $data);
-    }
-
-
-
     // forward to implementator
-
     function updateForward($id, $data)
     {
         $this->db->where('id_pelaporan', $id);

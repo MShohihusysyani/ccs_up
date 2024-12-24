@@ -143,7 +143,7 @@ class Helpdesk_model extends CI_Model
     }
 
     //DATA PELAPORAN HELPDESK FINISH
-    public function getDataPelaporanHD()
+    public function getDataPelaporan()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();

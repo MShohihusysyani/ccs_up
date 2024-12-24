@@ -119,7 +119,7 @@ class Supervisor2 extends CI_Controller
         $data['category']      = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
-        $data['dataAdded'] = $this->spv2_model->getKlienPelaporanAdd();
+        $data['dataAdded'] = $this->spv2_model->getDataAdded();
 
         $this->load->model('User_model', 'user_model');
         $data['namateknisi'] = $this->user_model->getNamaTeknisi();
@@ -179,7 +179,7 @@ class Supervisor2 extends CI_Controller
             // Validation passed, retrieve POST data
             $tanggal_awal  = $this->input->post('tanggal_awal');
             $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
+            $status_ccs    = 'FINISHED';
             $nama_klien    = $this->input->post('nama_klien');
             $nama_user     = $this->input->post('nama_user');
 
@@ -198,7 +198,7 @@ class Supervisor2 extends CI_Controller
 
             $this->load->view('templates/header');
             $this->load->view('templates/supervisor2_sidebar');
-            $this->load->view('supervisor2/pelaporan_onprogress', $data);  // <-- Mengirim data ke view
+            $this->load->view('supervisor2/pelaporan_onprogress', $data);
             $this->load->view('templates/footer');
         }
     }
@@ -365,7 +365,7 @@ class Supervisor2 extends CI_Controller
             "data" => $data,
         );
 
-        echo json_encode($output);  // Kirim JSON ke DataTables
+        echo json_encode($output);
         die();
     }
 
@@ -543,13 +543,13 @@ class Supervisor2 extends CI_Controller
                 $rating = $dp->rating; // Get the rating value
                 for ($i = 1; $i <= 5; $i++) {
                     if ($i <= $rating) {
-                        $star_rating .= '<span class="star selected">&#9733;</span>'; // Full star for rating
+                        $star_rating .= '<span class="star selected">&#9733;</span>'; 
                     } else {
-                        $star_rating .= '<span class="star">&#9734;</span>'; // Empty star for remaining
+                        $star_rating .= '<span class="star">&#9734;</span>'; 
                     }
                 }
             }
-            $row[] = '<div class="star-rating">' . $star_rating . '</div>'; // Wrap in div for styling
+            $row[] = '<div class="star-rating">' . $star_rating . '</div>'; 
 
             // Tombol Aksi
             $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_finish/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
@@ -565,7 +565,7 @@ class Supervisor2 extends CI_Controller
             "data" => $data,
         );
 
-        echo json_encode($output);  // Kirim JSON ke DataTables
+        echo json_encode($output);
         die();
     }
 
@@ -734,7 +734,6 @@ class Supervisor2 extends CI_Controller
                 $url = base_url('assets/comment/' . $photo);
                 $this->load->helper('url');
 
-                // Store the uploaded file name in session
                 $uploaded_images = $this->session->userdata('uploaded_images') ?? [];
                 $uploaded_images[] = $photo;
                 $this->session->set_userdata('uploaded_images', $uploaded_images);
@@ -1050,8 +1049,6 @@ class Supervisor2 extends CI_Controller
     //   FILTER LAPORAN
     public function rekapPelaporan()
     {
-        // Load necessary models
-        // Load necessary models
         $this->load->model('Superadmin_model', 'superadmin_model');
         $this->load->model('Client_model', 'client_model');
         $this->load->model('User_model', 'user_model');
@@ -1069,7 +1066,7 @@ class Supervisor2 extends CI_Controller
         // Fetch data from models
         $data['klien'] = $this->client_model->getClient();
         $data['user'] = $this->user_model->getNamaPetugas();
-        $data['pencarian_data'] = $this->supervisor_model->getAllData(); // A method that returns all data
+        $data['pencarian_data'] = $this->supervisor_model->getAllData(); 
 
         // Load views with data
         $this->load->view('templates/header');
@@ -1095,7 +1092,6 @@ class Supervisor2 extends CI_Controller
         $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
         if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
             $data['errors'] = validation_errors();
             $data['klien'] = $this->client_model->getClient();
             $data['user'] = $this->user_model->getNamaPetugas();

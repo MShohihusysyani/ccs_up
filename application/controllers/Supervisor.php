@@ -304,7 +304,7 @@ class Supervisor extends CI_Controller
         $data['category']      = $this->category_model->getCategory();
         $this->load->model('User_model', 'user_model');
         $data['user']          = $this->user_model->getDataUser();
-        $data['dataAdded'] = $this->supervisor_model->getKlienPelaporanAdd();
+        $data['dataAdded'] = $this->supervisor_model->getDataAdded();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -490,7 +490,7 @@ class Supervisor extends CI_Controller
             "data" => $data,
         );
 
-        echo json_encode($output);  // Kirim JSON ke DataTables
+        echo json_encode($output);
         die();
     }
 
@@ -502,7 +502,7 @@ class Supervisor extends CI_Controller
         $data['category'] = $this->category_model->getNamakategori();
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->supervisor_model->getKlienPelaporanClose();
+        $data['datapelaporan'] = $this->supervisor_model->getDataClosed();
 
         $this->load->model('User_model', 'user_model');
         $data['namahd'] = $this->user_model->getNamaUser();
@@ -543,7 +543,7 @@ class Supervisor extends CI_Controller
             // Validation passed, retrieve POST data
             $tanggal_awal  = $this->input->post('tanggal_awal');
             $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
+            $status_ccs    = 'FINISHED';
             $nama_klien    = $this->input->post('nama_klien');
             $nama_user     = $this->input->post('nama_user');
             $rating        = $this->input->post('rating');
@@ -661,16 +661,16 @@ class Supervisor extends CI_Controller
             // Proses rating bintang
             $star_rating = '';
             if ($dp->rating !== null) {
-                $rating = $dp->rating; // Get the rating value
+                $rating = $dp->rating;
                 for ($i = 1; $i <= 5; $i++) {
                     if ($i <= $rating) {
-                        $star_rating .= '<span class="star selected">&#9733;</span>'; // Full star for rating
+                        $star_rating .= '<span class="star selected">&#9733;</span>';
                     } else {
-                        $star_rating .= '<span class="star">&#9734;</span>'; // Empty star for remaining
+                        $star_rating .= '<span class="star">&#9734;</span>';
                     }
                 }
             }
-            $row[] = '<div class="star-rating">' . $star_rating . '</div>'; // Wrap in div for styling
+            $row[] = '<div class="star-rating">' . $star_rating . '</div>';
 
             // Tombol Aksi
             $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor/detail_finish/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
@@ -686,7 +686,7 @@ class Supervisor extends CI_Controller
             "data" => $data,
         );
 
-        echo json_encode($output);  // Kirim JSON ke DataTables
+        echo json_encode($output);
         die();
     }
 
@@ -1317,7 +1317,6 @@ class Supervisor extends CI_Controller
                 'user_id' => $id_user
             ];
 
-            // Fetch the user name based on the user ID
             $this->db->select('id_user, nama_user');
             $this->db->from('user');
             $this->db->where('id_user', $id_user);
@@ -1348,19 +1347,14 @@ class Supervisor extends CI_Controller
     public function fungsi_reject()
     {
 
-        // Load the form validation library
         $this->load->library('form_validation');
-
-        // Set validation rules
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
         $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
 
-        // Check if the form passes validation
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
             redirect(base_url('supervisor/onprogress'));
         } else {
-            // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namahd');
             $data = [
@@ -1368,7 +1362,6 @@ class Supervisor extends CI_Controller
                 'user_id' => $id_user
             ];
 
-            // Fetch the user name based on the user ID
             $this->db->select('id_user, nama_user');
             $this->db->from('user');
             $this->db->where('id_user', $id_user);
@@ -1383,17 +1376,11 @@ class Supervisor extends CI_Controller
                 $this->db->where('pelaporan_id', $id_pelaporan);
                 $this->db->update('forward', $data);
 
-                // Update the Helpdesk in the supervisor_model
                 $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
-
-                // Set success message
                 $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
             } else {
-                // Set error message if user not found
                 $this->session->set_flashdata('error', 'User not found.');
             }
-
-            // Redirect to the onprogress page
             redirect(base_url('supervisor/close'));
         }
     }

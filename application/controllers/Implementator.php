@@ -258,19 +258,14 @@ class Implementator extends CI_Controller
 
     public function finish()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
-
-        // Set validation rules
         $this->form_validation->set_rules('catatan_finish', 'Catatan Finish', 'callback_validateCatatanFinish');
 
-        // Check if the form validation passed
         if ($this->form_validation->run() == FALSE) {
-            // If validation fails, set an error message and redirect back
             $this->session->set_flashdata('alert', 'Finish gagal! Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
             redirect('implementator/pelaporan');
         } else {
-            // Check if there are any pending subtasks
+            // Cek jika ada subtas yang masih pending
             $id = $this->input->post('id_pelaporan');
             $this->load->model('Implementator_model', 'implementator_model');
             $pendingSubtasks = $this->implementator_model->countPendingSubtasks($id);
@@ -289,7 +284,6 @@ class Implementator extends CI_Controller
     {
         $minLength = 50;
 
-        // Strip tags to get text content and check if length is less than min length
         $textContent = strip_tags($str);
         if (strlen($textContent) < $minLength) {
             $this->form_validation->set_message('validateCatatanFinish', 'Catatan Finish harus diisi minimal 50 karakter dan tidak boleh hanya berisi gambar.');
@@ -301,7 +295,6 @@ class Implementator extends CI_Controller
 
     private function processFinish()
     {
-        // Handle file upload if there is a file
         $photo = $_FILES['file_finish']['name'];
 
         if ($photo) {
@@ -320,7 +313,6 @@ class Implementator extends CI_Controller
             }
         }
 
-        // Prepare the data for insertion
         $id = $this->input->post('id_pelaporan');
         $data = [
             'id_pelaporan' => $id,
@@ -337,15 +329,12 @@ class Implementator extends CI_Controller
             'status_ccs' => 'CLOSED'
         ];
 
-        // Remove unwanted HTML tags from data
+        // Remove tag
         $data = array_map(function ($value) {
             return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
         }, $data);
 
-        // Insert the data into the database
         $this->pelaporan_model->updateImplementator($id, $data);
-
-        // Set a success message and redirect to the submission page
         $this->session->set_flashdata('pesan', 'Successfully Finish!');
         redirect('implementator/pelaporan');
     }
@@ -768,7 +757,6 @@ class Implementator extends CI_Controller
 
     public function statistik()
     {
-        // // Fetch total active data from the model
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('user_id');
 
@@ -780,7 +768,6 @@ class Implementator extends CI_Controller
 
     public function subtask()
     {
-        // // Fetch total active data from the model
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Implementator_model', 'Implementator_model');
@@ -799,7 +786,7 @@ class Implementator extends CI_Controller
     public function finish_subtask()
     {
         $this->load->model('Implementator_model', 'implementator_model');
-        date_default_timezone_set('Asia/Jakarta'); // Set local time zone
+        date_default_timezone_set('Asia/Jakarta'); 
 
         $id_forward = $this->input->post('id_forward');
         $judul = $this->input->post('judul');
@@ -847,7 +834,6 @@ class Implementator extends CI_Controller
     }
     public function fetch_notifications()
     {
-        // // Fetch total active data from the model
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('user_id');
 
