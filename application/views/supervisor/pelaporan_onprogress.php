@@ -332,6 +332,15 @@
             "orderable": false,
         }, ],
 
+        "createdRow": function(row, data, dataIndex) {
+            // console.log(data); // Debug data untuk melihat isinya
+            if (data[12] === 'Fokus') {
+                $(row).css("background-color", "#d4edda"); // Warna hijau lembut
+            }
+        },
+
+
+
     });
     // Handle form submission for filtering
     $('#filterForm').on('submit', function(e) {

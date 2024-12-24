@@ -1,3 +1,9 @@
+<style>
+    .table .current-task {
+        background-color: #d1e7dd !important;
+        /* Hijau muda */
+    }
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -73,7 +79,7 @@
                                             <?php
                                             $no = 1;
                                             foreach ($datapelaporan as $dp) : ?>
-                                                <tr>
+                                                <tr class="<?= $dp['mode_fokus'] ? 'current-task' : ''; ?>">
                                                     <td><?= $no++ ?></td>
                                                     <td><?= $dp['no_tiket']; ?></td>
                                                     <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
@@ -146,6 +152,10 @@
                                                             <i class="material-icons">done</i> Finish
                                                         </a> -->
 
+                                                        <a class="btn btn-sm btn-info tombol-fokus" data-type="success" href="<?= base_url() ?>helpdesk/mode_fokus/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">done</i>
+                                                            Fokus
+                                                        </a>
+
                                                         <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>">
                                                             <i class="material-icons">print</i> Print Detail
                                                         </a>
@@ -166,81 +176,7 @@
             <!-- Button trigger modal -->
 </section>
 
-<!-- MODAL EDIT -->
-<?php
-$no = 0;
-foreach ($datapelaporan as $dp) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $dp['id_pelaporan']; ?>" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Add Impact</h4>
-                </div>
-                <div class="modal-body">
-                    <?= form_open_multipart('helpdesk/edit_pelaporan') ?>
-                    <input type="hidden" name="id_pelaporan" value="<?= $dp['id_pelaporan']; ?>">
-                    <div class="body">
-                        <form class="form-horizontal">
 
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['no_tiket']; ?>" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
-                                    <label class="form-label">No tiket</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['waktu_pelaporan']; ?>" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
-                                    <label class="form-label">Waktu Pelaporan</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['nama']; ?>" type="text" id="nama" name="nama" class="form-control" readonly>
-                                    <label class="form-label">Nama Klien</label>
-                                </div>
-                            </div>
-
-                            <label for="perihal">Perihal</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <div id="perihal" readonly> <?= $dp['perihal']; ?></div>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input value="<?= $dp['status_ccs']; ?>" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
-                                    <label class="form-label">Status CCS</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select id="impact" name="impact" class="form-control">
-                                        <option value="">-- Choose Impact--</option>
-                                        <option value="kritikal">Kritikal</option>
-                                        <option value="material">Material</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
-                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                <?php echo form_close() ?>
-
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endforeach ?>
 
 
 <!-- MODAL FORWARD TO SPV 2 -->
@@ -438,7 +374,6 @@ foreach ($datapelaporan as $dp) : $no++; ?>
                             </div>
                         </div>
 
-
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">FINISH</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
@@ -455,7 +390,31 @@ foreach ($datapelaporan as $dp) : $no++; ?>
 <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- jQuery UI -->
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>\
+
+<script>
+    $(document).ready(function() {
+        $(".tombol-fokus").on("click", function(e) {
+            e.preventDefault(); // Matikan fungsi default tombol
+
+            const href = $(this).attr("href"); // Ambil link dari tombol
+
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Tiket ini masuk ke mode fokus!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Mode Fokus!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.location.href = href; // Redirect jika dikonfirmasi
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -545,9 +504,9 @@ foreach ($datapelaporan as $dp) : $no++; ?>
             items: [
                 'findAndReplace', 'selectAll', '|',
                 'heading', '|',
-                'bold', 'italic', 'strikethrough', 'underline', '', '|',
+                'bold', 'italic', 'strikethrough', 'underline', '|',
                 'bulletedList', 'numberedList', 'todoList', '|',
-                'fontSize', 'fontFamily', 'fontColor', '', '', '|',
+                'fontSize', 'fontFamily', 'fontColor', '|',
                 'alignment', '|',
                 'uploadImage', 'ckfinder', '|',
                 'undo', 'redo',

@@ -1284,4 +1284,19 @@ class Helpdesk extends CI_Controller
             'unread_count' => $unread_count
         ]);
     }
+
+    // MODE FOKUS
+    public function mode_fokus($id_pelaporan)
+    {
+        $this->load->model('Helpdesk_model', 'helpdesk_model');
+        $status = $this->helpdesk_model->set_mode_fokus($id_pelaporan, 1);
+
+        if ($status) {
+            $this->session->set_flashdata('pesan', 'Berhasil menambahkan mode fokus!');
+            redirect('helpdesk/pelaporan');
+        } else {
+            $this->session->set_flashdata('alert', 'Gagal menambahkan mode fokus!');
+            redirect('helpdesk/pelaporan');
+        }
+    }
 }

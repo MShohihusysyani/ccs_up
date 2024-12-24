@@ -32,7 +32,8 @@ class Helpdesk_model extends CI_Model
             pelaporan.impact,
             pelaporan.handle_by,
             pelaporan.status,
-            pelaporan.tags
+            pelaporan.tags,
+            pelaporan.mode_fokus
         ');
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
@@ -471,5 +472,18 @@ class Helpdesk_model extends CI_Model
         $query = $this->db->get('pelaporan');
 
         return $query->num_rows() > 0;  // Jika ada tiket yang belum diberi rating, kembalikan true
+    }
+
+    // Mode fokus
+    public function set_mode_fokus($id_pelaporan, $status)
+    {
+        // Pastikan $task_id valid
+        if (!$id_pelaporan) {
+            return false;
+        }
+
+        // Perbarui status mode_fokus hanya untuk tugas tertentu
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        return $this->db->update('pelaporan', ['mode_fokus' => $status]);
     }
 }

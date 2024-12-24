@@ -336,6 +336,12 @@
             "orderable": false,
         }, ],
 
+        'createdRow': function(row, data, dataIndex) {
+            if (data[12] === 'Fokus') {
+                $(row).css('background-color', '#d4edda');
+            }
+        }
+
     });
     $('#filterForm').on('submit', function(e) {
         e.preventDefault();

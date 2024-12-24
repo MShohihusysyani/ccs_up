@@ -479,6 +479,7 @@ class Supervisor extends CI_Controller
             </button>
         </div>
         ';
+            $row[] = $dp->mode_fokus == 1  ? 'Fokus' : '';
 
             $data[] = $row; // Tambahkan row ke data
         }

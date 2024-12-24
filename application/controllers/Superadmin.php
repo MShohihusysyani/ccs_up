@@ -551,6 +551,8 @@ class Superadmin extends CI_Controller
             </div>
             ';
 
+            $row[] = $dp->mode_fokus == 1 ? 'Fokus' : '';
+
             // Tambahkan row ke data
             $data[] = $row;
         }
