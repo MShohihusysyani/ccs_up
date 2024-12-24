@@ -39,6 +39,7 @@ class Serversidehandlespv2_model extends CI_Model
             pelaporan.handle_by3,
             pelaporan.status,
             pelaporan.tags,
+            pelaporan.mode_fokus,
             t1_forward1.subtask as subtask1,
             t1_forward1.status as status1,
             t1_forward2.subtask as subtask2,

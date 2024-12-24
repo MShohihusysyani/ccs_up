@@ -25,7 +25,7 @@ class Implementator extends CI_Controller
 
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->Implementator_model->getKlienPelaporanImplementator();
+        $data['datapelaporan'] = $this->Implementator_model->getDataHandled();
 
         $this->load->view('templates/header');
         $this->load->view('templates/implementator_sidebar');
@@ -40,7 +40,7 @@ class Implementator extends CI_Controller
         $this->load->model('Implementator_model', 'implementator_model');
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->implementator_model->getKlienPelaporanClose();
+        $data['datapelaporan'] = $this->implementator_model->getDataClosed();
 
         $this->load->model('User_model', 'user_model');
         $data['namaspv'] = $this->user_model->getNamaSpv();
@@ -860,5 +860,20 @@ class Implementator extends CI_Controller
             'notifications' => $notifications,
             'unread_count' => $unread_count
         ]);
+    }
+
+    // MODE FOKUS
+    public function mode_fokus($id_pelaporan)
+    {
+        $this->load->model('Implementator_model', 'implementator_model');
+        $status = $this->implementator_model->set_mode_fokus($id_pelaporan, 1);
+
+        if ($status) {
+            $this->session->set_flashdata('pesan', 'Berhasil menambahkan mode fokus!');
+            redirect('implementator/pelaporan');
+        } else {
+            $this->session->set_flashdata('alert', 'Gagal menambahkan mode fokus!');
+            redirect('implementator/pelaporan');
+        }
     }
 }

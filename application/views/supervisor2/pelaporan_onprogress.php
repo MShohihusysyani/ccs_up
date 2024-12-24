@@ -276,19 +276,6 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
-                            <div class="form-line">
-                                <select name="kategori" id="kategori" class="form-control">
-                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
-                                    <?php
-                                    foreach ($category as $cat) : ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                    <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div> -->
 
 
                         <div class="form-group">
@@ -411,19 +398,6 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
-                            <div class="form-line">
-                                <select name="kategori" id="kategori" class="form-control">
-                                    <option value="<?= $dp['kategori']; ?> "><?= $dp['kategori']; ?></option>
-                                    <?php
-                                    foreach ($category as $cat) : ?>
-                                    <option value="<?php echo $cat['nama_kategori']; ?>">
-                                    <?php echo $cat['nama_kategori']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div> -->
 
                         <div class="form-group">
                             <div class="form-line">
@@ -633,60 +607,71 @@
         "order": [
             [2, 'desc']
         ], // Urutkan berdasarkan kolom ke-3 (indeks 2) secara descending (dari yang terbaru)
+
         "columnDefs": [{
             "targets": [0],
             "orderable": false,
         }, ],
-        "columns": [{
-                "data": "no"
-            }, // Pastikan ini ada
-            {
-                "data": "no_tiket"
-            },
-            {
-                "data": "waktu_pelaporan"
-            },
-            {
-                "data": "nama"
-            },
-            {
-                "data": "judul"
-            },
-            {
-                "data": "kategori"
-            },
-            {
-                "data": "priority"
-            },
-            {
-                "data": "maxday"
-            },
-            {
-                "data": "status_ccs"
-            },
-            {
-                "data": "handle_by"
-            },
-            {
-                "data": "subtask1"
-            },
-            {
-                "data": "status1"
-            },
-            {
-                "data": "subtask2"
-            },
-            {
-                "data": "status2"
-            },
-            {
-                "data": "tanggal"
-            },
-            {
-                "data": "aksi", // Ini untuk tombol aksi
-                // Pastikan kolom aksi tidak dapat diurutkan
+
+        "createdRow": function(row, data, dataIndex) {
+            // console.log(data); // Debug data untuk melihat isinya
+            if (data[16] === 'Fokus') {
+                $(row).css("background-color", "#d4edda"); // Warna hijau lembut
             }
-        ]
+        },
+
+        // "columns": [{
+        //         "data": "no"
+        //     }, // Pastikan ini ada
+        //     {
+        //         "data": "no_tiket"
+        //     },
+        //     {
+        //         "data": "waktu_pelaporan"
+        //     },
+        //     {
+        //         "data": "nama"
+        //     },
+        //     {
+        //         "data": "judul"
+        //     },
+        //     {
+        //         "data": "kategori"
+        //     },
+        //     {
+        //         "data": "priority"
+        //     },
+        //     {
+        //         "data": "maxday"
+        //     },
+        //     {
+        //         "data": "status_ccs"
+        //     },
+        //     {
+        //         "data": "handle_by"
+        //     },
+        //     {
+        //         "data": "subtask1"
+        //     },
+        //     {
+        //         "data": "status1"
+        //     },
+        //     {
+        //         "data": "subtask2"
+        //     },
+        //     {
+        //         "data": "status2"
+        //     },
+        //     {
+        //         "data": "tanggal"
+        //     },
+        //     {
+        //         "data": "aksi", // Ini untuk tombol aksi
+        //         // Pastikan kolom aksi tidak dapat diurutkan
+        //     },
+
+        // ]
+
 
     });
     // Handle form submission for filtering

@@ -227,12 +227,12 @@ class Supervisor2 extends CI_Controller
         foreach ($list as $pelaporan) {
             $no++;
             $row = array();
-            $row['no'] = $no;  // Menambahkan kolom no
-            $row['no_tiket'] = $pelaporan->no_tiket;
-            $row['waktu_pelaporan'] = tanggal_indo($pelaporan->waktu_pelaporan);
-            $row['nama'] = $pelaporan->nama;
-            $row['judul'] = $pelaporan->judul;
-            $row['kategori'] = $pelaporan->kategori;
+            $row[] = $no;  // Menambahkan kolom no
+            $row[] = $pelaporan->no_tiket;
+            $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
+            $row[] = $pelaporan->nama;
+            $row[] = $pelaporan->judul;
+            $row[] = $pelaporan->kategori;
             // $row['tags'] = $pelaporan->tags;
 
             // Proses nilai prioritas di server-side
@@ -245,7 +245,7 @@ class Supervisor2 extends CI_Controller
             } else {
                 $priority_label = $pelaporan->priority;
             }
-            $row['priority'] = $priority_label;
+            $row[] = $priority_label;
 
             // Proses nilai maxday di server-side
             if ($pelaporan->maxday == '90') {
@@ -258,7 +258,7 @@ class Supervisor2 extends CI_Controller
                 $maxday_label = $pelaporan->maxday;
             }
 
-            $row['maxday'] = $maxday_label;
+            $row[] = $maxday_label;
 
             // Proses nilai status_ccs di server-side
             if ($pelaporan->status_ccs == 'ADDED') {
@@ -277,7 +277,7 @@ class Supervisor2 extends CI_Controller
                 $status_ccs_label = $pelaporan->status_ccs;
             }
 
-            $row['status_ccs'] = $status_ccs_label;
+            $row[] = $status_ccs_label;
 
             // Gabungkan handle_by, handle_by2, handle_by3
             $handle_combined = $pelaporan->handle_by;
@@ -287,9 +287,9 @@ class Supervisor2 extends CI_Controller
             if ($pelaporan->handle_by3) {
                 $handle_combined .= ', ' . $pelaporan->handle_by3;
             }
-            $row['handle_by'] = $handle_combined;
+            $row[] = $handle_combined;
 
-            $row['subtask2'] = $pelaporan->subtask1;
+            $row[] = $pelaporan->subtask1;
 
             if ($pelaporan->status1 == 'PENDING') {
                 $status1_label = '<span class="label label-info">PENDING</span>';
@@ -298,9 +298,9 @@ class Supervisor2 extends CI_Controller
             } else {
                 $status1_label = $pelaporan->status1;
             }
-            $row['status2'] = $status1_label;
+            $row[] = $status1_label;
 
-            $row['subtask1'] = $pelaporan->subtask2;
+            $row[] = $pelaporan->subtask2;
             if ($pelaporan->status2 == 'PENDING') {
                 $status2_label = '<span class="label label-info">PENDING</span>';
             } elseif ($pelaporan->status2 == 'COMPLETED') {
@@ -308,11 +308,11 @@ class Supervisor2 extends CI_Controller
             } else {
                 $status2_label = $pelaporan->status2;
             }
-            $row['status1'] = $status2_label;
-            $row['tanggal'] = tanggal_indo($pelaporan->tanggal);
+            $row[] = $status2_label;
+            $row[] = tanggal_indo($pelaporan->tanggal);
 
             // Tombol aksi dengan URL detail, print detail, edit, dan tambah teknisi
-            $row['aksi'] = '
+            $row[] = '
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
                     <a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_pelaporan/' . $pelaporan->id_pelaporan) . '">
                         <i class="material-icons">visibility</i> Detail
@@ -352,6 +352,8 @@ class Supervisor2 extends CI_Controller
                     </div>
                 </div>
                 ';
+
+            $row[] = $pelaporan->mode_fokus == 1 ? 'Fokus' : '';
 
 
             $data[] = $row; // Tambahkan row ke data

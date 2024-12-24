@@ -1,3 +1,9 @@
+<style>
+    .table .current-task {
+        background-color: #d1e7dd !important;
+        /* Hijau muda */
+    }
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -83,7 +89,7 @@
                                             <?php
                                             $no = 1;
                                             foreach ($datapelaporan as $dp) : ?>
-                                                <tr>
+                                                <tr class="<?= $dp['mode_fokus'] ? 'current-task' : ''; ?>">
                                                     <td><?= $no++ ?></td>
                                                     <td><?= $dp['no_tiket']; ?></td>
                                                     <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
@@ -180,6 +186,9 @@
                                                     <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
                                                     <td style="display: flex; gap: 10px; justify-content: flex-end;">
+                                                        <a class="btn btn-sm btn-info tombol-fokus" data-type="success" href="<?= base_url() ?>implementator/mode_fokus/<?= $dp['id_pelaporan']; ?>"><i class="material-icons"></i>
+                                                            Fokus
+                                                        </a>
 
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>implementator/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
 
@@ -338,6 +347,30 @@
 
         }
 
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(".tombol-fokus").on("click", function(e) {
+            e.preventDefault(); // Matikan fungsi default tombol
+
+            const href = $(this).attr("href"); // Ambil link dari tombol
+
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Tiket ini masuk ke mode fokus!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Mode Fokus!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.location.href = href; // Redirect jika dikonfirmasi
+                }
+            });
+        });
     });
 </script>
 

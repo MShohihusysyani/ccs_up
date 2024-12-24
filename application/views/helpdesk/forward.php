@@ -1,3 +1,10 @@
+<style>
+    .table .mode-fokus {
+        background-color: #d1e7dd !important;
+        /* Hijau muda */
+    }
+</style>
+
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -70,7 +77,7 @@
                                             // Assuming $dp['subtasks'] is an array of subtask data
 
                                         ?>
-                                            <tr>
+                                            <tr class="<?= $dp['mode_fokus'] ? 'mode-fokus' : ''; ?>">
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $dp['no_tiket']; ?></td>
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>

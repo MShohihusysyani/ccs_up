@@ -8,7 +8,7 @@ class Implementator_model extends CI_Model
     private $column_search = array('waktu_pelaporan', 'no_tiket', 'nama', 'perihal', 'tags', 'kategori', 'impact', 'priority', 'maxday', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3', 't1_forward.pelaporan_id'); // Add the column from forward table for searching
     private $order = array('waktu_pelaporan' => 'desc');
     // HANDLE
-    public function getKlienPelaporanImplementator()
+    public function getDataHandled()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -33,6 +33,7 @@ class Implementator_model extends CI_Model
             pelaporan.handle_by3,
             pelaporan.status,
             pelaporan.tags,
+            pelaporan.mode_fokus,
             t1_forward1.subtask as subtask1,
             t1_forward1.status as status1,
             t1_forward2.subtask as subtask2,
@@ -174,7 +175,7 @@ class Implementator_model extends CI_Model
 
 
     // CLOSE
-    public function getKlienPelaporanClose()
+    public function getDataClosed()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -495,7 +496,6 @@ class Implementator_model extends CI_Model
             $this->db->where('status_ccs', $filters['status_ccs']);
         }
 
-        // Add other conditions or filters as necessary
 
         $i = 0;
         // Pengecekan untuk 'search'
@@ -554,5 +554,18 @@ class Implementator_model extends CI_Model
         $this->db->join('t1_forward', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left'); // Join with forward table
         $this->db->where('t1_forward.user_id', $user_id);
         return $this->db->count_all_results();
+    }
+
+    // MODE FOKUS
+    public function set_mode_fokus($id_pelaporan, $status)
+    {
+        // Pastikan $task_id valid
+        if (!$id_pelaporan) {
+            return false;
+        }
+
+        // Perbarui status mode_fokus hanya untuk tugas tertentu
+        $this->db->where('id_pelaporan', $id_pelaporan);
+        return $this->db->update('pelaporan', ['mode_fokus' => $status]);
     }
 }
