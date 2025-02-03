@@ -858,7 +858,82 @@
             'CaseChange'
         ]
 
+    }).then(editor => {
+        // Blokir paste gambar (termasuk clipboard dan base64)
+        editor.editing.view.document.on('clipboardInput', (evt, data) => {
+            const clipboardData = data.dataTransfer;
+
+            // Jika ada file gambar yang di-paste, blokir dan hapus
+            if (clipboardData && clipboardData.files.length > 0) {
+                for (let file of clipboardData.files) {
+                    if (file.type.startsWith('image/')) {
+                        evt.stop();
+                        evt.preventDefault();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Mohon tidak mempaste gambar secara langsung. Gunakan fitur upload!',
+                        }).then(() => {
+                            editor.setData(editor.getData().replace(/<img[^>]+>/g, '')); // Hapus gambar
+                        });
+                        return;
+                    }
+                }
+            }
+
+            // Cek apakah ada gambar dari clipboard dalam bentuk HTML
+            const htmlData = clipboardData.getData('text/html');
+            if (htmlData.includes('<img')) {
+                evt.stop();
+                evt.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Mohon tidak mempaste gambar secara langsung. Gunakan fitur upload!',
+                }).then(() => {
+                    editor.setData(editor.getData().replace(/<img[^>]+>/g, '')); // Hapus gambar
+                });
+            }
+        });
+
+        // Hapus gambar base64 yang mungkin lolos dari paste
+        editor.model.document.on('change:data', () => {
+            let data = editor.getData();
+
+            // Deteksi dan hapus gambar base64
+            const base64Pattern = /<img[^>]+src=["']data:image\/[^;]+;base64,[^"']+["'][^>]*>/g;
+            if (base64Pattern.test(data)) {
+                editor.setData(data.replace(base64Pattern, '')); // Hapus gambar base64
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Gambar yang di-paste telah dihapus. Gunakan fitur upload!',
+                });
+            }
+        });
+
+        // Blokir paste gambar menggunakan event paste langsung di editor
+        editor.ui.view.editable.element.addEventListener('paste', (event) => {
+            const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (let item of items) {
+                if (item.type.indexOf('image') !== -1) {
+                    event.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Mohon tidak mempaste gambar secara langsung. Gunakan fitur upload!',
+                    }).then(() => {
+                        editor.setData(editor.getData().replace(/<img[^>]+>/g, '')); // Hapus gambar
+                    });
+                    return;
+                }
+            }
+        });
+
+    }).catch(error => {
+        console.error(error);
     });
+
     RemoveFormat: [
         'paragraph'
 
