@@ -135,7 +135,7 @@ foreach ($user as $u) : $no++; ?>
                                 <select id="divisi" name="divisi" class="form-control show-tick">
                                     <option><?= $u['divisi']; ?></option>
                                     <option value="Klien">Klien</option>
-                                    <option value="Helpdesk"></option>
+                                    <option value="Helpdesk">Helpdesk</option>
                                     <option value="Supervisor 1">Supervisor 1</option>
                                     <option value="Implementator">Implementator</option>
                                     <option value="Support">Support</option>
@@ -160,10 +160,10 @@ foreach ($user as $u) : $no++; ?>
                                 </div>
                             </div>
 
-                            <div class="form-group form-float">
+                            <label for="password">Password</label>
+                            <div class="form-group">
                                 <div class="form-line">
-                                    <input type="password" value="<?= $u['password']; ?>" id="password" name="password" class="form-control">
-                                    <label class="form-label">password</label>
+                                    <input type="text" id="password" name="password" class="form-control" placeholder="Kosongkan jika tidak ingin mengganti password">
                                 </div>
                             </div>
 

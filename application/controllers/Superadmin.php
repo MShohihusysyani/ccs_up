@@ -184,37 +184,41 @@ class Superadmin extends CI_Controller
         $divisi   = $this->input->post('divisi');
         $nama     = $this->input->post('nama_user');
         $username = $this->input->post('username');
-        $password = $this->input->post('password');
+        $password = trim($this->input->post('password'));
         $role     = $this->input->post('role');
         $active   = $this->input->post('active');
 
-        // Check if the password field is not empty, then hash it
-        if (!empty($password)) {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $ArrUpdate = array(
-                'divisi'   => $divisi,
-                'nama_user' => $nama,
-                'username' => $username,
-                'password' => $hashed_password,  // Hash the password
-                'role'     => $role,
-                'active'   => $active,
-            );
-        } else {
-            // If password is empty, don't update the password field
-            $ArrUpdate = array(
-                'divisi'   => $divisi,
-                'nama_user' => $nama,
-                'username' => $username,
-                'role'     => $role,
-                'active'   => $active,
-            );
+        // Ambil data user lama dari database
+        $user = $this->usermaster_model->getUserById($id);
+
+        if (!$user) {
+            $this->session->set_flashdata('pesan', 'User tidak ditemukan!');
+            redirect(base_url('superadmin/user'));
+            return;
         }
 
+        // Buat array update tanpa password terlebih dahulu
+        $ArrUpdate = array(
+            'divisi'   => $divisi,
+            'nama_user' => $nama,
+            'username' => $username,
+            'role'     => $role,
+            'active'   => $active,
+        );
+
+        // Jika password diisi, baru tambahkan ke array update
+        if (!empty($password)) {
+            $ArrUpdate['password'] = password_hash($password, PASSWORD_DEFAULT);
+        }
+
+        // Lakukan update data
         $this->usermaster_model->updateUser($id, $ArrUpdate);
 
         $this->session->set_flashdata('pesan', 'Successfully Edited!');
-        Redirect(base_url('superadmin/user'));
+        redirect(base_url('superadmin/user'));
     }
+
+
 
     // public function edit_user()
     // {
@@ -225,19 +229,35 @@ class Superadmin extends CI_Controller
     //     $password = $this->input->post('password');
     //     $role     = $this->input->post('role');
     //     $active   = $this->input->post('active');
-    //     $ArrUpdate = array(
-    //         'divisi'   => $divisi,
-    //         'nama_user'     => $nama,
-    //         'username' => $username,
-    //         'password' => $password,
-    //         'role'     => $role,
-    //         'active'   => $active,
 
-    //     );
+    //     // Check if the password field is not empty, then hash it
+    //     if (!empty($password)) {
+    //         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    //         $ArrUpdate = array(
+    //             'divisi'   => $divisi,
+    //             'nama_user' => $nama,
+    //             'username' => $username,
+    //             'password' => $hashed_password,  // Hash the password
+    //             'role'     => $role,
+    //             'active'   => $active,
+    //         );
+    //     } else {
+    //         // If password is empty, don't update the password field
+    //         $ArrUpdate = array(
+    //             'divisi'   => $divisi,
+    //             'nama_user' => $nama,
+    //             'username' => $username,
+    //             'role'     => $role,
+    //             'active'   => $active,
+    //         );
+    //     }
+
     //     $this->usermaster_model->updateUser($id, $ArrUpdate);
+
     //     $this->session->set_flashdata('pesan', 'Successfully Edited!');
     //     Redirect(base_url('superadmin/user'));
     // }
+
 
     public function hapus_user($id)
     {
@@ -1161,7 +1181,7 @@ class Superadmin extends CI_Controller
 
         foreach ($list as $key => $dataItem) {
             $row = array();
-            $row['no'] = $key + 1; 
+            $row['no'] = $key + 1;
             $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
             $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';

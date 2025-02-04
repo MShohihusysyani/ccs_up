@@ -22,5 +22,8 @@ class Usermaster_model extends CI_Model
         $this->db->update('user', $data);
     }
 
-
+    public function getUserById($id)
+    {
+        return $this->db->where('id_user', $id)->get('user')->row_array();
+    }
 }
