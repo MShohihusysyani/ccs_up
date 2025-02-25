@@ -1283,6 +1283,16 @@ class Supervisor extends CI_Controller
             $nama_user = $user->nama_user;
 
             $this->db->insert('forward', $data);
+
+            $priority = $this->input->post('priority');
+            $maxday = $this->input->post('maxday');
+            $kategori = $this->input->post('kategori');
+            $ArrUpdate = array(
+                'priority'   => $priority,
+                'maxday'     => $maxday,
+                'kategori'   => $kategori
+            );
+            $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
             $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
             $this->session->set_flashdata('pesan', 'Successfully Forward!');
             Redirect(Base_url('supervisor/added'));

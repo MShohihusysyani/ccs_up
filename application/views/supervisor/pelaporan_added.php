@@ -345,31 +345,36 @@
                                 <?= $dp['perihal']; ?>
                         </textarea>-->
 
-                        <label for="status_ccs">Status CCS</label>
+                        <label for="status_ccs">Status</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
                             </div>
                         </div>
 
-                        <label for="priority">Priority</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="text" id="priority" name="priority" class="form-control" readonly>
+                                <select id="priority_forward" name="priority" class="form-control">
+                                    <option value="">-- Please select Priority--</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
                             </div>
                         </div>
 
                         <label for="maxday">Max Day</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                                <input value="" type="text" id="maxday_forward" name="maxday" class="form-control" readonly>
                             </div>
                         </div>
 
-                        <label for="kategori">Kategori</label>
+                        <label for="kategori">Category</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="text" id="kategori" name="kategori" class="form-control" readonly>
+                                <input type="text" data-toggle="modal" data-target="#modalPilihKategori" name="kategori" id="kategori_forward" placeholder="" class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
+                                <input type="hidden" id="id" name="id">
                             </div>
                         </div>
 
@@ -457,6 +462,16 @@
             $('#modalPilihKategori').modal('hide');
         })
     });
+
+    $(document).ready(function() {
+        $(document).on('click', '#pilihKategori', function() {
+            var nama_klas = $(this).data('nama-kategori');
+            var id = $(this).data('id-kategori');
+            $('#kategori_forward').val(nama_klas);
+            $('#id').val(id);
+            $('#modalPilihKategori').modal('hide');
+        })
+    });
 </script>
 
 <script>
@@ -474,25 +489,36 @@
 </script>
 
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
-<script type="text/javascript">
-    //Get references to the select and input elements
-    const select = document.getElementById('priority');
-    const input = document.getElementById('maxday');
+<script>
+    $(document).ready(function() {
+        function updateMaxDay(prioritySelector, maxDaySelector) {
+            var priority = $(prioritySelector).val();
+            var maxDay = "";
 
-    // Add event listener to the select element
-    select.addEventListener('change', function() {
-        // Set the value of the input field to the selected option's value
-        if (select.value == "Low") {
-            input.value = "90";
-        } else if (select.value == "Medium") {
-            input.value = "60";
-        } else if (select.value == "High") {
-            input.value = "7";
-        } else {
-            input.value = "";
+            if (priority === "Low") {
+                maxDay = "90";
+            } else if (priority === "Medium") {
+                maxDay = "60";
+            } else if (priority === "High") {
+                maxDay = "7";
+            }
 
+            $(maxDaySelector).val(maxDay);
         }
 
+        // Untuk modal edit
+        $('#editModalCP').on('shown.bs.modal', function() {
+            $('#priority').on('change', function() {
+                updateMaxDay('#priority', '#maxday');
+            }).trigger('change'); // Auto set saat modal dibuka
+        });
+
+        // Untuk modal forward
+        $('#forwardModal').on('shown.bs.modal', function() {
+            $('#priority_forward').on('change', function() {
+                updateMaxDay('#priority_forward', '#maxday_forward');
+            }).trigger('change'); // Auto set saat modal dibuka
+        });
     });
 </script>
 
@@ -555,24 +581,15 @@
             modal.find('#perihal_coba').html(div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            modal.find('#priority').attr("value", div.data('priority'));
-            // modal.find('#priority').value = div.data('priority');
+            // modal.find('#priority').attr("value", div.data('priority'));
+            modal.find('#priority').value = div.data('priority');
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
-            modal.find('#kategori').attr("value", div.data('kategori'));
+            modal.find('#kategori_forward').attr("value", div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
             // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
 
         });
 
