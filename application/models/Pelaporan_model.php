@@ -213,13 +213,15 @@ class Pelaporan_model extends CI_Model
 
     public function getDateFiltered($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null,   $status_ccs = null, $rating = null)
     {
-        $this->db->select('*');
+        //$this->db->select('*')
+        $this->db->select('no_tiket, waktu_pelaporan, waktu_approve, kategori, status_ccs, priority, maxday, judul, perihal, nama, handle_by, handle_by2, handle_by3, rating');
         $this->db->from('pelaporan'); // Sesuaikan dengan nama tabel yang sesuai
 
         // Filter berdasarkan tanggal_awal dan tanggal_akhir jika ada
         if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
-            $this->db->where('waktu_pelaporan >=', $tanggal_awal);
-            $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+            $this->db->where("waktu_pelaporan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'");
+            // $this->db->where('waktu_pelaporan >=', $tanggal_awal);
+            // $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
         }
 
         // Filter berdasarkan nama_klien jika ada

@@ -5,7 +5,8 @@ class Export_model extends CI_Model
 
     public function getPelaporan($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
     {
-        $this->db->select('*');
+        // $this->db->select('*');
+        $this->db->select('no_tiket, waktu_pelaporan, waktu_approve, kategori, status_ccs, priority, maxday, judul, perihal, nama, handle_by, handle_by2, handle_by3, rating');
         $this->db->from('pelaporan');
 
         if ($tanggal_awal && $tanggal_akhir) {
@@ -124,7 +125,8 @@ class Export_model extends CI_Model
 
     public function getAllPelaporan($nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
     {
-        $this->db->select('*');
+        // $this->db->select('*');
+        $this->db->select('no_tiket, waktu_pelaporan, waktu_approve, kategori, status_ccs, priority, maxday, judul, perihal, nama, handle_by, handle_by2, handle_by3, rating');
         $this->db->from('pelaporan');
 
         if ($status_ccs) {
@@ -196,7 +198,8 @@ class Export_model extends CI_Model
 
     public function getAllFinished($nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
     {
-        $this->db->select('*');
+        // $this->db->select('*');
+        $this->db->select('no_tiket, waktu_pelaporan, waktu_approve, kategori, status_ccs, priority, maxday, judul, perihal, nama, handle_by, handle_by2, handle_by3, rating');
         $this->db->from('pelaporan');
 
         if ($status_ccs) {

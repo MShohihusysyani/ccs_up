@@ -132,6 +132,9 @@
                     <div class="header">
                         <h2>RINCIAN PELAPORAN</h2>
                     </div>
+                    <div class="progress mt-2" style="display: none;">
+                        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                    </div>
                     <br>
                     <div class="btn-group" role="group" style="margin-left: 20px;">
                         <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -362,46 +365,97 @@
 
     // Handle export buttons
     $('#exportPdfButton').on('click', function() {
-        exportData('pdf');
+        exportData('pdf', this);
     });
 
     $('#exportExcelButton').on('click', function() {
-        exportData('excel');
+        exportData('excel', this);
     });
 
+    function exportData(format, button) {
+        var filters = new FormData();
+        filters.append('tanggal_awal', $('#tanggal_awal').val());
+        filters.append('tanggal_akhir', $('#tanggal_akhir').val());
+        filters.append('nama_klien', $('#nama_klien').val());
+        filters.append('nama_user', $('#nama_user').val());
+        filters.append('status_ccs', $('#status_ccs').val());
+        filters.append('rating', $('#rating').val());
 
-    function exportData(format) {
-        var filters = {
-            tanggal_awal: $('#tanggal_awal').val(),
-            tanggal_akhir: $('#tanggal_akhir').val(),
-            nama_klien: $('#nama_klien').val(),
-            nama_user: $('#nama_user').val(),
-            status_ccs: $('#status_ccs').val(),
-            rating: $('#rating').val()
+        var actionUrl = format === 'pdf' ? '<?= base_url('export/rekap_pelaporan_pdf'); ?>' :
+            '<?= base_url('export/rekap_pelaporan_excel'); ?>';
+
+        var progressBar = $('#progressBar');
+        var progressContainer = $('.progress');
+        progressContainer.show();
+        progressBar.css('width', '0%').text('0%');
+        $(button).prop('disabled', true);
+
+        let progress = 0;
+        let interval = setInterval(() => {
+            if (progress < 90) {
+                progress += 10;
+                progressBar.css('width', progress + '%').text(progress + '%');
+            }
+        }, 500);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', actionUrl, true);
+        xhr.responseType = 'blob';
+
+        xhr.onload = function() {
+            clearInterval(interval);
+            progressBar.css('width', '100%').text('100%');
+
+            if (xhr.status === 200) {
+                var disposition = xhr.getResponseHeader('Content-Disposition');
+                var filename = "export." + format;
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var matches = /filename="([^"]*)"/.exec(disposition);
+                    if (matches !== null && matches[1]) filename = matches[1];
+                }
+
+                var blob = new Blob([xhr.response], {
+                    type: xhr.getResponseHeader('Content-Type')
+                });
+                var blobUrl = window.URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(blobUrl);
+            } else {
+                alert("Gagal mendownload file. Silakan coba lagi.");
+            }
+
+            setTimeout(() => {
+                progressContainer.hide();
+                progressBar.css('width', '0%').text('0%');
+                $(button).prop('disabled', false);
+            }, 1000);
         };
 
-        var actionUrl = format === 'pdf' ? '<?php echo base_url('export/rekap_pelaporan_pdf'); ?>' : '<?php echo base_url('export/rekap_pelaporan_excel'); ?>';
+        xhr.onerror = function() {
+            clearInterval(interval);
+            progressBar.css('width', '100%').text('Gagal');
+            alert('Gagal mendownload file. Silakan coba lagi.');
+            setTimeout(() => {
+                progressContainer.hide();
+                progressBar.css('width', '0%').text('0%');
+                $(button).prop('disabled', false);
+            }, 2000);
+        };
 
-        var form = $('<form>', {
-            action: actionUrl,
-            method: 'POST',
-            target: '_blank'
-        }).appendTo('body');
+        xhr.send(filters);
 
-        $.each(filters, function(key, value) {
-            form.append($('<input>', {
-                type: 'hidden',
-                name: key,
-                value: value
-            }));
-        });
 
-        form.submit();
 
-        // Remove the form after a slight delay to ensure the submission goes through
-        setTimeout(function() {
-            form.remove();
-        }, 100);
+        // form.submit();
+        // // Remove the form after a slight delay to ensure the submission goes through
+        // setTimeout(function() {
+        //     form.remove();
+        // }, 100);
     }
 </script>
 
