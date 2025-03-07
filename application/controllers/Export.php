@@ -108,6 +108,8 @@ class Export extends CI_Controller
 
     public function rekap_pelaporan_pdf()
     {
+        ini_set('memory_limit', '5096M');
+        ini_set('max_execution_time', '0');
         $this->load->model('Export_model', 'export_model');
 
         // Retrieve POST data
@@ -120,12 +122,10 @@ class Export extends CI_Controller
 
         // Get filtered data
         if (empty($tanggal_awal) && empty($tanggal_akhir)) {
-            // Fetch all data if no date range is selected
             $filteredData = $this->export_model->getAllPelaporan($nama_klien, $nama_user, $status_ccs, $rating);
             $periode = "Semua Data";
         } else {
-            // Fetch data based on the selected date range
-            $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir,  $nama_klien, $nama_user, $status_ccs, $rating);
+            $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir, $nama_klien, $nama_user, $status_ccs, $rating);
             $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
         }
 
@@ -133,22 +133,22 @@ class Export extends CI_Controller
         $this->load->library('pdf');
         $mpdf = new \Mpdf\Mpdf([
             'format' => 'A4',
-            'margin_top' => 30, // Margin atas yang cukup untuk header
-            'margin_bottom' => 20, // Adjusted margin bottom
+            'margin_top' => 30,
+            'margin_bottom' => 20,
             'margin_left' => 15,
             'margin_right' => 15,
         ]);
 
+        // Set Header
         $header = '
-        <div class="pdf-header" style="text-align: center; margin-bottom: 20px;"> <!-- Added margin-bottom -->
+        <div class="pdf-header" style="text-align: center; margin-bottom: 20px;">
             <h3>CCS | RINCIAN PELAPORAN</h3>
             <p>' . $periode . '</p>
-        </div>
-    ';
+        </div>';
         $mpdf->SetHTMLHeader($header, 'O');
         $mpdf->SetHTMLHeader($header, 'E');
 
-        // Set HTML Footer
+        // Set Footer
         $footer = '
         <div style="width: 100%; text-align: right; margin-top: 25px;">
             <div style="display: inline-block; width: 100%; text-align: right;">
@@ -160,116 +160,268 @@ class Export extends CI_Controller
         <div style="width: 100%; text-align: left;">
             <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
         </div>';
-
         $mpdf->SetHTMLFooter($footer);
         $mpdf->setAutoTopMargin = 'pad';
         $mpdf->setAutoBottomMargin = 'pad';
 
-        $tableHtml = '
-    <style>
+        // Buat Header Tabel
+        $mpdf->WriteHTML('<style>
         .pdf-header {
             text-align: center;
-            font-weight: bold;
+             font-weight: bold;
             font-size: 14pt;
-            margin-bottom: 20px; /* Margin bawah untuk header */
-        }
-        .table-bordered {
+             margin-bottom: 20px; /* Margin bawah untuk header */
+         }
+         .table-bordered {
             border: 1px solid black;
             border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px; /* Adjusted margin atas untuk tabel */
-        }
-        .table-bordered th, .table-bordered td {
-            border: 1px solid black;
-            padding: 7px;
-            text-align: left;
-        }
-        .table-bordered th {
+         width: 100%;
+             margin-top: 20px; /* Adjusted margin atas untuk tabel */
+         }
+         .table-bordered th, .table-bordered td {
+             border: 1px solid black;
+             padding: 7px;
+             text-align: left;
+         }
+         .table-bordered th {
             background-color: #f2f2f2; /* Background color for table header */
-            color: #000000; /* Text color for table header */
-        }
-        .table-bordered tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
-        .page-break {
-                page-break-before: always;
-            }
-        
-    </style>
-        <table class="table-bordered">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>No Tiket</th>
-                    <th>Judul</th>
-                    <th>BPR/Klien</th>
-                    <th>Kategori</th>
-                    <th>Priority</th>
-                    <th>Maxday</th>
-                    <th>Handle By</th>
-                    <th>Status</th>
-                    <th>Rating</th>
-                    <th>Create at</th>
-                    <th>Finish at</th>
-                </tr>
-            </thead>
-            <tbody>
-    ';
+             color: #000000; /* Text color for table header */
+         }
+         .table-bordered tr {
+             page-break-inside: avoid;
+             page-break-after: auto;
+         }
+         .page-break {
+                 page-break-before: always;
+             }
+    </style>');
 
-        // Isi tabel dengan data
+        $mpdf->WriteHTML('<table class="table-bordered">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>No Tiket</th>
+                <th>Judul</th>
+                <th>BPR/Klien</th>
+                <th>Kategori</th>
+                <th>Priority</th>
+                <th>Maxday</th>
+                <th>Handle By</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Create at</th>
+                <th>Finish at</th>
+            </tr>
+        </thead>
+        <tbody>');
+
+        // Isi tabel dengan data dalam batch kecil
         $no = 1;
         foreach ($filteredData as $data) {
-            // Initialize an array to hold the handler names
-            $handleBy = [];
-
-            // Check and add handle_by, handle_by2, and handle_by3 to the array
-            if (!empty($data['handle_by'])) {
-                $handleBy[] = $data['handle_by'];
-            }
-            if (!empty($data['handle_by2'])) {
-                $handleBy[] = $data['handle_by2'];
-            }
-            if (!empty($data['handle_by3'])) {
-                $handleBy[] = $data['handle_by3'];
-            }
-
-            // Join handlers with a comma
+            // Handle multiple implementators
+            $handleBy = array_filter([$data['handle_by'], $data['handle_by2'], $data['handle_by3']]);
             $handleByString = implode(', ', $handleBy);
-            $tableHtml .= '
+
+            // Buat baris tabel
+            $row = '
             <tr>
                 <td>' . $no . '</td>
                 <td>' . $data['no_tiket'] . '</td>
                 <td>' . $data['judul'] . '</td>
-                
                 <td>' . $data['nama'] . '</td>
                 <td>' . $data['kategori'] . '</td>
                 <td>' . $data['priority'] . '</td>
                 <td>' . $data['maxday'] . '</td>
                 <td>' . $handleByString . '</td>
                 <td>' . $data['status_ccs'] . '</td>
-                <td>'  . $data['rating'] . '</td>
+                <td>' . $data['rating'] . '</td>
                 <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
                 <td>' . tanggal_indo($data['waktu_approve']) . '</td>
-            </tr>
-        ';
+            </tr>';
+
+            $mpdf->WriteHTML($row);
+
+            // Buat halaman baru jika sudah 2000 data
+            if ($no % 5000 == 0) {
+                $mpdf->writeHTML('</pagebreak>');
+            }
+
             $no++;
         }
 
-        $tableHtml .= '
-            </tbody>
-        </table>
-    ';
+        $mpdf->WriteHTML('</tbody></table>');
 
-        // Tulis Header dan Table ke PDF
-        $mpdf->WriteHTML('<div style="margin-bottom: 10px;"></div>'); // Tambahkan jarak antara header dan tabel
-        $mpdf->WriteHTML($tableHtml);
-
-        // Add additional margin below the table to separate it from the footer
+        // Tambahkan margin bawah untuk footer
         $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
+        // Set Nama File yang Benar
         $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
+
+    // public function rekap_pelaporan_pdf()
+    // {
+    //     $this->load->model('Export_model', 'export_model');
+
+    //     // Retrieve POST data
+    //     $tanggal_awal  = $this->input->post('tanggal_awal');
+    //     $tanggal_akhir = $this->input->post('tanggal_akhir');
+    //     $status_ccs    = $this->input->post('status_ccs');
+    //     $nama_klien    = $this->input->post('nama_klien');
+    //     $nama_user     = $this->input->post('nama_user');
+    //     $rating        = $this->input->post('rating');
+
+    //     // Get filtered data
+    //     if (empty($tanggal_awal) && empty($tanggal_akhir)) {
+    //         // Fetch all data if no date range is selected
+    //         $filteredData = $this->export_model->getAllPelaporan($nama_klien, $nama_user, $status_ccs, $rating);
+    //         $periode = "Semua Data";
+    //     } else {
+    //         // Fetch data based on the selected date range
+    //         $filteredData = $this->export_model->getPelaporan($tanggal_awal, $tanggal_akhir,  $nama_klien, $nama_user, $status_ccs, $rating);
+    //         $periode = 'Periode ' . tanggal_indo($tanggal_awal) . ' s/d ' . tanggal_indo($tanggal_akhir);
+    //     }
+
+    //     // Load the mPDF library
+    //     $this->load->library('pdf');
+    //     $mpdf = new \Mpdf\Mpdf([
+    //         'format' => 'A4',
+    //         'margin_top' => 30, // Margin atas yang cukup untuk header
+    //         'margin_bottom' => 20, // Adjusted margin bottom
+    //         'margin_left' => 15,
+    //         'margin_right' => 15,
+    //     ]);
+
+    //     $header = '
+    //     <div class="pdf-header" style="text-align: center; margin-bottom: 20px;"> <!-- Added margin-bottom -->
+    //         <h3>CCS | RINCIAN PELAPORAN</h3>
+    //         <p>' . $periode . '</p>
+    //     </div>
+    // ';
+    //     $mpdf->SetHTMLHeader($header, 'O');
+    //     $mpdf->SetHTMLHeader($header, 'E');
+
+    //     // Set HTML Footer
+    //     $footer = '
+    //     <div style="width: 100%; text-align: right; margin-top: 25px;">
+    //         <div style="display: inline-block; width: 100%; text-align: right;">
+    //             <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+    //             <div style="float: right; width: 100px; height: 50px; border: 1px solid black; margin-bottom: 10px;"></div>
+    //             <div style="float: right; width: 100px; height: 50px; border: 1px solid black;"></div>
+    //         </div>
+    //     </div>
+    //     <div style="width: 100%; text-align: left;">
+    //         <span style="font-size: 11px;">Dicetak oleh: ' . $this->session->userdata('nama_user') . ' | ' . tanggal_indo(date("Y-m-d")) . '</span>
+    //     </div>';
+
+    //     $mpdf->SetHTMLFooter($footer);
+    //     $mpdf->setAutoTopMargin = 'pad';
+    //     $mpdf->setAutoBottomMargin = 'pad';
+
+    //     $tableHtml = '
+    // <style>
+    //     .pdf-header {
+    //         text-align: center;
+    //         font-weight: bold;
+    //         font-size: 14pt;
+    //         margin-bottom: 20px; /* Margin bawah untuk header */
+    //     }
+    //     .table-bordered {
+    //         border: 1px solid black;
+    //         border-collapse: collapse;
+    //         width: 100%;
+    //         margin-top: 20px; /* Adjusted margin atas untuk tabel */
+    //     }
+    //     .table-bordered th, .table-bordered td {
+    //         border: 1px solid black;
+    //         padding: 7px;
+    //         text-align: left;
+    //     }
+    //     .table-bordered th {
+    //         background-color: #f2f2f2; /* Background color for table header */
+    //         color: #000000; /* Text color for table header */
+    //     }
+    //     .table-bordered tr {
+    //         page-break-inside: avoid;
+    //         page-break-after: auto;
+    //     }
+    //     .page-break {
+    //             page-break-before: always;
+    //         }
+
+    // </style>
+    //     <table class="table-bordered">
+    //         <thead>
+    //             <tr>
+    //                 <th>No</th>
+    //                 <th>No Tiket</th>
+    //                 <th>Judul</th>
+    //                 <th>BPR/Klien</th>
+    //                 <th>Kategori</th>
+    //                 <th>Priority</th>
+    //                 <th>Maxday</th>
+    //                 <th>Handle By</th>
+    //                 <th>Status</th>
+    //                 <th>Rating</th>
+    //                 <th>Create at</th>
+    //                 <th>Finish at</th>
+    //             </tr>
+    //         </thead>
+    //         <tbody>
+    // ';
+
+    //     // Isi tabel dengan data
+    //     $no = 1;
+    //     foreach ($filteredData as $data) {
+    //         // Initialize an array to hold the handler names
+    //         $handleBy = [];
+
+    //         // Check and add handle_by, handle_by2, and handle_by3 to the array
+    //         if (!empty($data['handle_by'])) {
+    //             $handleBy[] = $data['handle_by'];
+    //         }
+    //         if (!empty($data['handle_by2'])) {
+    //             $handleBy[] = $data['handle_by2'];
+    //         }
+    //         if (!empty($data['handle_by3'])) {
+    //             $handleBy[] = $data['handle_by3'];
+    //         }
+
+    //         // Join handlers with a comma
+    //         $handleByString = implode(', ', $handleBy);
+    //         $tableHtml .= '
+    //         <tr>
+    //             <td>' . $no . '</td>
+    //             <td>' . $data['no_tiket'] . '</td>
+    //             <td>' . $data['judul'] . '</td>
+
+    //             <td>' . $data['nama'] . '</td>
+    //             <td>' . $data['kategori'] . '</td>
+    //             <td>' . $data['priority'] . '</td>
+    //             <td>' . $data['maxday'] . '</td>
+    //             <td>' . $handleByString . '</td>
+    //             <td>' . $data['status_ccs'] . '</td>
+    //             <td>'  . $data['rating'] . '</td>
+    //             <td>' . tanggal_indo($data['waktu_pelaporan']) . '</td>
+    //             <td>' . tanggal_indo($data['waktu_approve']) . '</td>
+    //         </tr>
+    //     ';
+    //         $no++;
+    //     }
+
+    //     $tableHtml .= '
+    //         </tbody>
+    //     </table>
+    // ';
+
+    //     // Tulis Header dan Table ke PDF
+    //     $mpdf->WriteHTML('<div style="margin-bottom: 10px;"></div>'); // Tambahkan jarak antara header dan tabel
+    //     $mpdf->WriteHTML($tableHtml);
+
+    //     // Add additional margin below the table to separate it from the footer
+    //     $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
+
+    //     $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+    // }
 
     public function export_pdf_handle()
     {
