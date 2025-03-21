@@ -28,9 +28,9 @@
                         <h2>
                             All Ticket
                         </h2>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
                             Import Excel
-                        </button>
+                        </button> -->
                     </div>
                     <div class="body">
                         <div class="table-responsive">

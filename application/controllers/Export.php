@@ -255,7 +255,7 @@ class Export extends CI_Controller
         $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
         // Set Nama File yang Benar
-        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+        $mpdf->Output('Rincian_Pelaporan.pdf', 'D');
     }
 
     // public function rekap_pelaporan_pdf()
@@ -582,7 +582,7 @@ class Export extends CI_Controller
         // Add additional margin below the table to separate it from the footer
         $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
-        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+        $mpdf->Output('Rincian_Pelaporan.pdf', 'D');
     }
 
     public function export_pdf_handle2()
@@ -744,7 +744,7 @@ class Export extends CI_Controller
         // Add additional margin below the table to separate it from the footer
         $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
-        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+        $mpdf->Output('Rincian_Pelaporan.pdf', 'D');
     }
 
     public function export_pdf_finished()
@@ -1076,11 +1076,11 @@ class Export extends CI_Controller
 
         // Set orientasi halaman dan judul sheet
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->setTitle("Data Rekap Pelaporan");
+        $sheet->setTitle("Data Rincian Pelaporan");
 
         // Set header untuk mendownload file Excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Content-Disposition: attachment; filename="Rincian_Pelaporan.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Simpan file Excel
@@ -1255,11 +1255,11 @@ class Export extends CI_Controller
 
         // Set orientasi halaman dan judul sheet
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->setTitle("Data Rekap Pelaporan");
+        $sheet->setTitle("Data Rincian Pelaporan");
 
         // Set header untuk mendownload file Excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Content-Disposition: attachment; filename="Rincian_Pelaporan.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Simpan file Excel
@@ -1429,11 +1429,11 @@ class Export extends CI_Controller
 
         // Set orientasi halaman dan judul sheet
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->setTitle("Data Rekap Pelaporan");
+        $sheet->setTitle("Data Rincian Pelaporan");
 
         // Set header untuk mendownload file Excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Content-Disposition: attachment; filename="Rincian_Pelaporan.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Simpan file Excel
@@ -1628,10 +1628,10 @@ class Export extends CI_Controller
         // $sheet->getColumnDimension('L')->setWidth(10);
 
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->setTitle("Data Rekap Pelaporan");
+        $sheet->setTitle("Data Rincian Pelaporan");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Content-Disposition: attachment; filename="Rincian_Pelaporan.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
@@ -1824,10 +1824,10 @@ class Export extends CI_Controller
         // $sheet->getColumnDimension('L')->setWidth(10);
 
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->setTitle("Data Rekap Pelaporan");
+        $sheet->setTitle("Data Rincian Pelaporan");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Content-Disposition: attachment; filename="Rincian_Pelaporan.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
@@ -1869,7 +1869,7 @@ class Export extends CI_Controller
 
         $header = '
         <div class="pdf-header" style="text-align: center; margin-bottom: 20px;"> <!-- Added margin-bottom -->
-            <h3>CCS | REKAP PELAPORAN</h3>
+            <h3>CCS | Rincian PELAPORAN</h3>
             <p>' . $periode . '</p>
         </div>
     ';
@@ -1988,7 +1988,7 @@ class Export extends CI_Controller
         // Add additional margin below the table to separate it from the footer
         $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
-        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+        $mpdf->Output('Rincian_Pelaporan.pdf', 'D');
     }
 
     // EXPORT DATA IMPLEMENTATOR
@@ -2177,10 +2177,10 @@ class Export extends CI_Controller
         // $sheet->getColumnDimension('L')->setWidth(10);
 
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->setTitle("Data Rekap Pelaporan");
+        $sheet->setTitle("Data Rincian Pelaporan");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Content-Disposition: attachment; filename="Rincian_Pelaporan.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
@@ -2223,7 +2223,7 @@ class Export extends CI_Controller
 
         $header = '
         <div class="pdf-header" style="text-align: center; margin-bottom: 20px;"> <!-- Added margin-bottom -->
-            <h3>CCS | REKAP PELAPORAN</h3>
+            <h3>CCS | RINCIAN PELAPORAN</h3>
             <p>' . $periode . '</p>
         </div>
     ';
@@ -2342,7 +2342,7 @@ class Export extends CI_Controller
         // Add additional margin below the table to separate it from the footer
         $mpdf->WriteHTML('<div style="margin-bottom: 50px;"></div>');
 
-        $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
+        $mpdf->Output('Rincian_Pelaporan.pdf', 'D');
     }
 
     public function export_excel_teknisi_finish()
@@ -2530,10 +2530,10 @@ class Export extends CI_Controller
         // $sheet->getColumnDimension('L')->setWidth(10);
 
         $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->setTitle("Data Rekap Pelaporan");
+        $sheet->setTitle("Data Rincian Pelaporan");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Rekap_Pelaporan.xlsx"');
+        header('Content-Disposition: attachment; filename="Rincian_Pelaporan.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
