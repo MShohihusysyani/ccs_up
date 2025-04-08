@@ -693,27 +693,35 @@ class Supervisor extends CI_Controller
 
     public function edit_pelaporan()
     {
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $no_tiket     = $this->input->post('no_tiket');
-        $status_ccs   = $this->input->post('status_ccs');
-        $kategori     = $this->input->post('kategori');
-        $priority     = $this->input->post('priority');
-        $maxday       = $this->input->post('maxday');
-        $tags         = $this->input->post('tags');
-        $impact       = $this->input->post('impact');
-        $ArrUpdate = array(
-            'no_tiket'   => $no_tiket,
-            'status_ccs' => $status_ccs,
-            'priority'   => $priority,
-            'kategori'   => $kategori,
-            'maxday'     => $maxday,
-            'tags'       => $tags,
-            'impact'     => $impact,
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required', [
+            'required' => 'Kolom Kategori wajib diisi.'
+        ]);
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('supervisor/added');
+        } else {
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $no_tiket     = $this->input->post('no_tiket');
+            $status_ccs   = $this->input->post('status_ccs');
+            $kategori     = $this->input->post('kategori');
+            $priority     = $this->input->post('priority');
+            $maxday       = $this->input->post('maxday');
+            $tags         = $this->input->post('tags');
+            $impact       = $this->input->post('impact');
+            $ArrUpdate = array(
+                'no_tiket'   => $no_tiket,
+                'status_ccs' => $status_ccs,
+                'priority'   => $priority,
+                'kategori'   => $kategori,
+                'maxday'     => $maxday,
+                'tags'       => $tags,
+                'impact'     => $impact,
 
-        );
-        $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Edited!');
-        Redirect(base_url('supervisor/added'));
+            );
+            $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
+            $this->session->set_flashdata('pesan', 'Successfully Edited!');
+            Redirect(base_url('supervisor/added'));
+        }
     }
 
     //   Approve Tiket
@@ -1261,6 +1269,9 @@ class Supervisor extends CI_Controller
         ]);
         $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
             'required' => 'Kolom Max Day wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required', [
+            'required' => 'Kolom Kategori wajib diisi.'
         ]);
 
         if ($this->form_validation->run() == FALSE) {

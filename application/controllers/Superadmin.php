@@ -795,26 +795,37 @@ class Superadmin extends CI_Controller
     // EDIT PELAPORAN
     public function edit_pelaporan()
     {
-        $id_pelaporan = $this->input->post('id_pelaporan');
-        $no_tiket     = $this->input->post('no_tiket');
-        $status_ccs   = $this->input->post('status_ccs');
-        $kategori     = $this->input->post('kategori');
-        $priority     = $this->input->post('priority');
-        $maxday       = $this->input->post('maxday');
-        $tags         = $this->input->post('tags');
-        $ArrUpdate = array(
-            'no_tiket'   => $no_tiket,
-            'status_ccs' => $status_ccs,
-            'priority'   => $priority,
-            'kategori'   => $kategori,
-            'maxday'     => $maxday,
-            'tags'       => $tags
+        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required', [
+            'required' => 'Kolom Kategori wajib diisi.'
+        ]);
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('alert', validation_errors());
+            redirect('superadmin/added');
+        } else {
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $no_tiket     = $this->input->post('no_tiket');
+            $status_ccs   = $this->input->post('status_ccs');
+            $kategori     = $this->input->post('kategori');
+            $priority     = $this->input->post('priority');
+            $maxday       = $this->input->post('maxday');
+            $tags         = $this->input->post('tags');
+            $ArrUpdate = array(
+                'no_tiket'   => $no_tiket,
+                'status_ccs' => $status_ccs,
+                'priority'   => $priority,
+                'kategori'   => $kategori,
+                'maxday'     => $maxday,
+                'tags'       => $tags
 
-        );
-        $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Edited!');
-        Redirect(base_url('superadmin/added'));
+            );
+            $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
+            $this->session->set_flashdata('pesan', 'Successfully Edited!');
+            Redirect(base_url('superadmin/added'));
+        }
     }
+
+
 
     //DISTRIBUSI TO HELPDESK
     public function fungsi_forward()
@@ -829,6 +840,9 @@ class Superadmin extends CI_Controller
         ]);
         $this->form_validation->set_rules('maxday', 'Max Day', 'required', [
             'required' => 'Kolom Max Day wajib diisi.'
+        ]);
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required', [
+            'required' => 'Kolom Kategori wajib diisi.'
         ]);
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('alert', validation_errors());
