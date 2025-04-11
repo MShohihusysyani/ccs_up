@@ -8,8 +8,7 @@ class Client_model extends CI_Model
     public function getClient()
     {
         $query = "SELECT *
-                    FROM klien
-                    ";
+                    FROM klien ORDER BY no_klien ASC";
         return $this->db->query($query)->result_array();
     }
 

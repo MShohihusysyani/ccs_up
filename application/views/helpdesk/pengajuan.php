@@ -54,7 +54,9 @@
                                         <select id="klien" name="klien" class="form-control" required>
                                             <option value="">-- Pilih Klien --</option>
                                             <?php foreach ($klien as $u) : ?>
-                                                <option value="<?= $u['id_user_klien']; ?>"><?= $u['nama_klien']; ?></option>
+                                                <option value="<?= $u['id_user_klien']; ?>" data-nama="<?= $u['nama_klien']; ?>">
+                                                    <?= $u['no_klien'] . ' - ' . $u['nama_klien']; ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -305,11 +307,11 @@
     $(document).ready(function() {
         $('#klien').change(function() {
             var user_id = $(this).val(); // Ambil value id_user dari klien yang dipilih
-            var nama_klien = $('#klien option:selected').text(); // Ambil nama klien dari option yang dipilih
+            var nama_klien = $('#klien option:selected').data('nama'); // Ambil nama klien dari option yang dipilih
 
             if (user_id !== "") {
                 $.ajax({
-                    url: '<?= base_url("helpdesk/get_no_tiket"); ?>', // Ganti URL ini dengan URL ke controller yang benar
+                    url: '<?= base_url("helpdesk/get_no_tiket"); ?>',
                     type: 'POST',
                     data: {
                         user_id: user_id
