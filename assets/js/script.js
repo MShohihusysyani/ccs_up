@@ -44,13 +44,24 @@ if (sukses) {
 const eror = $(".eror").data("eror");
 
 if (eror) {
-	new Swal({
-		title: "Error",
-		text: eror,
-		icon: "error",
-		showConfirmButton: true,
-	});
+    Swal.fire({
+        title: "Ooops",
+        text: eror,
+        icon: "error",
+        showConfirmButton: true,
+    });
 }
+
+// const eror = $(".eror").data("eror");
+
+// if (eror) {
+// 	new Swal({
+// 		title: "Opsss",
+// 		text: eror,
+// 		icon: "error",
+// 		showConfirmButton: true,
+// 	});
+// }
 
 //tombol hapus
 $(".tombol-tolak").on("click", function (e) {
