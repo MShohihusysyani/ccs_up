@@ -183,7 +183,7 @@
                     </li>
 
 
-                    <li>
+                    <!-- <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">account_balance</i>
                             <span>Bank Knowlage</span>
@@ -196,7 +196,7 @@
                             </li>
 
                         </ul>
-                    </li>
+                    </li> -->
 
                     <li class="header">LABELS</li>
                     <li>

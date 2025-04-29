@@ -48,7 +48,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" id="example">
+                            <table class="display table-bordered" id="example">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -56,12 +56,8 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Judul</th>
-                                        <!-- <th>Perihal</th> -->
-                                        <!-- <th>Attachment</th> -->
                                         <th>Category</th>
-                                        <!-- <th>Tags</th> -->
                                         <th>Priority</th>
-                                        <!-- <th>Impact</th> -->
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
@@ -77,12 +73,8 @@
                                         <th>Tanggal</th>
                                         <th>Nama Klien</th>
                                         <th>Judul</th>
-                                        <!-- <th>Perihal</th> -->
-                                        <!-- <th>Attachment</th> -->
                                         <th>Category</th>
-                                        <!-- <th>Tags</th> -->
                                         <th>Priority</th>
-                                        <!-- <th>Impact</th> -->
                                         <th>Max Day</th>
                                         <th>Status CCS</th>
                                         <th>Handle By</th>
@@ -109,6 +101,7 @@
         var table = $('#example').DataTable({
             "processing": true,
             "serverSide": true,
+            "responsive": true,
             "ajax": {
                 "url": "<?php echo site_url('klien/get_data_finish') ?>",
                 "type": "POST"
