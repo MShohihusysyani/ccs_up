@@ -22,7 +22,13 @@ class Serversideklien_model extends CI_Model
         $this->db->from($this->table);
         $this->db->where('status_ccs', 'FINISHED');
         $this->db->where('user_id', $user_id);
-        $this->db->order_by('waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+        // $this->db->order_by('waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+
+        // 1. Prioritaskan yang belum dirating
+        $this->db->order_by('(rating IS NULL OR rating = 0)', 'DESC', FALSE);
+
+        // 2. Di dalamnya, urutkan berdasarkan tanggal laporan terbaru
+        $this->db->order_by('waktu_pelaporan', 'DESC');
 
         $i = 0;
 
