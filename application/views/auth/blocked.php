@@ -2,21 +2,48 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Akses Ditolak</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            background-color: #f3f4f6;
+        }
+
+        .icon-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+    </style>
 </head>
 
-<body class="flex items-center justify-center h-screen bg-gray-100">
-    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md text-center" data-aos="zoom-in">
-        <img src="https://cdn-icons-png.flaticon.com/512/564/564619.png" alt="No Access" class="w-24 mx-auto mb-12 animate-pulse">
-        <h1 class="text-2xl font-bold text-red-600">Akses Ditolak</h1>
-        <p class="text-gray-600 mt-12">Anda tidak memiliki izin untuk mengakses halaman ini.</p>
+<body class="flex items-center justify-center h-screen">
+    <div class="bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl px-10 py-12 max-w-lg text-center" data-aos="zoom-in">
+        <img src="https://cdn-icons-png.flaticon.com/512/2913/2913465.png" alt="Access Denied"
+            class="w-24 mx-auto mb-8 icon-bounce" />
+        <h1 class="text-3xl font-black text-red-600 mb-4">Akses Ditolak</h1>
+        <p class="text-gray-700 text-base leading-relaxed mb-8">
+            Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.
+        </p>
         <a href="<?= base_url('auth/logout'); ?>"
-            class="mt-12 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition transform hover:scale-105 active:scale-95">
-            Kembali ke Halaman Login
+            class="inline-block px-5 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 hover:scale-105 active:scale-95 transition">
+            ⬅ Kembali ke Halaman Login
         </a>
     </div>
 
@@ -29,12 +56,3 @@
 </body>
 
 </html>
-
-<!-- <body class="four-zero-four">
-    <div class="four-zero-four-container">
-        <div class="error-code">404</div>
-        <div class="error-message">This page doesn't exist</div>
-        <div class="button-place">
-            <a href="<?= base_url('auth/logout'); ?>" class="btn btn-default btn-lg waves-effect">GO TO LOGIN</a>
-        </div>
-    </div> -->
