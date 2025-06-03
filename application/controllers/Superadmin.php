@@ -826,7 +826,6 @@ class Superadmin extends CI_Controller
     }
 
 
-
     //DISTRIBUSI TO HELPDESK
     public function fungsi_forward()
     {
@@ -1290,6 +1289,124 @@ class Superadmin extends CI_Controller
         } elseif ($status == 'ADDED') {
             return '<span class="label label-primary">ADDED</span>';
         }
+    }
+
+    public function sla()
+    {
+
+        $data['klien'] = $this->client_model->getClient();
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/sla', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function get_sla()
+    {
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+        $nama_klien = $this->input->post('nama_klien');
+
+        $this->load->model('Sla_model', 'sla_model');
+
+        $list = $this->sla_model->get_datatables($bulan, $tahun, $nama_klien);
+        $data = array();
+        $no = isset($_POST['start']) ? $_POST['start'] : 0;
+
+        foreach ($list as $dp) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $dp->no_tiket;
+            $row[] = tanggal_indo($dp->waktu_pelaporan);
+            $row[] = $dp->nama;
+            $row[] = $dp->judul;
+            $row[] = $dp->kategori;
+            // $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
+
+            // Proses nilai prioritas di server-side
+            if ($dp->priority == 'Low') {
+                $priority_label = '<span class="label label-info">Low</span>';
+            } elseif ($dp->priority == 'Medium') {
+                $priority_label = '<span class="label label-warning">Medium</span>';
+            } elseif ($dp->priority == 'High') {
+                $priority_label = '<span class="label label-danger">High</span>';
+            } else {
+                $priority_label = $dp->priority;
+            }
+            $row[] = $priority_label;
+
+            // Proses nilai maxday di server-side
+            if ($dp->maxday == '90') {
+                $maxday_label = '<span class="label label-info">90</span>';
+            } elseif ($dp->maxday == '60') {
+                $maxday_label = '<span class="label label-warning">60</span>';
+            } elseif ($dp->maxday == '7') {
+                $maxday_label = '<span class="label label-danger">7</span>';
+            } else {
+                $maxday_label = $dp->maxday;
+            }
+            $row[] = $maxday_label;
+
+            // Proses nilai status_ccs di server-side
+            if ($dp->status_ccs == 'ADDED') {
+                $status_ccs_label = '<span class="label label-primary">ADDED</span>';
+            } elseif ($dp->status_ccs == 'ADDED 2') {
+                $status_ccs_label = '<span class="label label-primary">ADDED 2</span>';
+            } elseif ($dp->status_ccs == 'HANDLED') {
+                $status_ccs_label = '<span class="label label-info">HANDLED</span>';
+            } elseif ($dp->status_ccs == 'HANDLED 2') {
+                $status_ccs_label = '<span class="label label-info">HANDLED 2</span>';
+            } elseif ($dp->status_ccs == 'CLOSED') {
+                $status_ccs_label = '<span class="label label-warning">CLOSED</span>';
+            } elseif ($dp->status_ccs == 'FINISHED') {
+                $status_ccs_label = '<span class="label label-success">FINISHED</span>';
+            } else {
+                $status_ccs_label = $dp->status_ccs;
+            }
+            $row[] = $status_ccs_label;
+
+            // Proses handle_by
+            $handle_combined = $dp->handle_by;
+            if ($dp->handle_by2) {
+                $handle_combined .= ', ' . $dp->handle_by2;
+            }
+            if ($dp->handle_by3) {
+                $handle_combined .= ', ' . $dp->handle_by3;
+            }
+            $row[] = $handle_combined;
+
+            // Tambahkan row ke data
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
+            "recordsTotal" => $this->sla_model->count_all($bulan, $tahun, $nama_klien),
+            "recordsFiltered" => $this->sla_model->count_filtered($bulan, $tahun, $nama_klien),
+            "data" => $data,
+        );
+
+        echo json_encode($output);  // Kirim JSON ke DataTables
+        die();
+    }
+
+    // REKAP PROGRESS
+    public function rekapProgres()
+    {
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+
+        $periode = $this->input->post('periode');
+        $tahun   = $this->input->post('tahun');
+
+        $data['rekap']   = $this->pelaporan_model->get_rekap_progress($periode, $tahun);
+        $data['periode'] = $periode;
+        $data['tahun']   = $tahun;
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/rekap_progres', $data);
+        $this->load->view('templates/footer');
     }
 
 

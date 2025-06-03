@@ -182,6 +182,13 @@
                         </ul>
                     </li>
 
+                    <li <?= $this->uri->segment(2) == 'sla' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
+                        <a href="<?php echo base_url('klien/sla') ?>">
+                            <i class="material-icons">archive</i>
+                            <span>SLA</span>
+                        </a>
+                    </li>
+
 
                     <!-- <li>
                         <a href="javascript:void(0);" class="menu-toggle">

@@ -514,4 +514,57 @@ class Pelaporan_model extends CI_Model
 
         return $result;
     }
+
+    // REKAP PROGRESS
+    public function get_rekap_progress($periode, $tahun)
+    {
+        $bulan_range = ($periode == 1) ? range(1, 6) : range(7, 12);
+
+        $this->db->select('MONTH(waktu_pelaporan) AS bulan');
+        $this->db->select('SUM(CASE WHEN status_ccs = "FINISHED" THEN 1 ELSE 0 END) AS finished', false);
+        $this->db->select('SUM(CASE WHEN status_ccs IN ("HANDLED", "HANDLED 2", "ADDED 2") THEN 1 ELSE 0 END) AS handled', false);
+        $this->db->select('COUNT(*) AS total', false);
+        $this->db->from('pelaporan');
+        $this->db->where('YEAR(waktu_pelaporan)', $tahun);
+        $this->db->where_in('MONTH(waktu_pelaporan)', $bulan_range);
+        $this->db->group_by('MONTH(waktu_pelaporan)');
+        $this->db->order_by('MONTH(waktu_pelaporan)', 'ASC');
+
+        $query = $this->db->get();
+        $results = $query->result_array();
+
+        // Bulan dalam nama Indonesia
+        $bulan_nama = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+
+        // Lengkapi bulan yang kosong
+        $rekap = [];
+        foreach ($bulan_range as $b) {
+            $data = array_filter($results, function ($item) use ($b) {
+                return (int)$item['bulan'] === $b;
+            });
+            $data = reset($data);
+
+            $rekap[] = [
+                'bulan'    => $bulan_nama[$b],
+                'finished' => isset($data['finished']) ? (int)$data['finished'] : 0,
+                'handled'  => isset($data['handled']) ? (int)$data['handled'] : 0,
+                'total'    => isset($data['total']) ? (int)$data['total'] : 0,
+            ];
+        }
+
+        return $rekap;
+    }
 }

@@ -2542,6 +2542,254 @@ class Export extends CI_Controller
     }
 
 
+    // Export Service level agreement(SLA)
+
+    public function sla_pdf()
+    {
+        ini_set('memory_limit', '5096M');
+        ini_set('max_execution_time', '0');
+        $this->load->library('pdf');
+        $this->load->model('Sla_model', 'sla_model');
+
+        // Ambil dari POST filter
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+        $nama_klien = $this->input->post('nama_klien');
+
+        // Validasi
+        if (empty($bulan) || empty($tahun)) {
+            show_error('Bulan dan Tahun harus dipilih!');
+        }
+
+        $data_sla = $this->sla_model->get_sla($bulan, $tahun, $nama_klien);
+
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 50,
+            'margin_bottom' => 25,
+        ]);
+
+        // Header (otomatis muncul di setiap halaman)
+        $mpdf->SetHTMLHeader('
+        <table width="100%">
+            <tr>
+                <td width="20%">
+                    <img src="' . base_url('assets/images/mso.png') . '" height="50px">
+                </td>
+                <td width="80%" style="text-align: left;">
+                    <h3 style="margin: 0;">PT. Mitranet Software Online</h3>
+                    <small>IT Consultant & Software Development</small>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin: 5px 0;">
+        <div style="text-align:center;">
+            <h4 style="margin: 0;">LAPORAN HASIL KINERJA SLA</h4>
+            <h4 style="margin: 0;">' . $nama_klien . '</h4>
+            <h5 style="margin: 0;">PERIODE BULAN ' . strtoupper(date('F', mktime(0, 0, 0, $bulan, 1))) . ' ' . $tahun . '</h5>
+        </div>
+    ');
+
+        // Footer (juga otomatis muncul di semua halaman)
+        $mpdf->SetHTMLFooter("
+        <table width='100%' style='font-size:10px;'>
+            <tr>
+                <td width='70%'>
+                    Jalan Gerilya Tengah, Komplek Griya Karang Indah B4-5, Purwokerto<br>
+                    Telp: (0281) 623 789 | Email: official@msodc.co.id | www.msodc.co.id
+                </td>
+                <td style='text-align: right; padding-left: 10px;'>
+                    <table border='1' style='border-collapse: collapse; width: 100%; text-align: center;'>
+                        <tr>
+                            <td colspan='3' style='height: 20px; font-weight: bold;'>Paraf</td>
+                        </tr>
+                        <tr>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    ");
+
+        // View tabel (satu view, tidak dipisah)
+        $html = $this->load->view('cetak/sla', [
+            'data_sla' => $data_sla,
+            'bulan' => $bulan,
+            'tahun' => $tahun
+        ], TRUE);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output("Laporan_SLA_{$bulan}_{$tahun}.pdf", 'D');
+    }
+
+    public function sla_pdf_klien()
+    {
+        ini_set('memory_limit', '5096M');
+        ini_set('max_execution_time', '0');
+        $this->load->library('pdf');
+        $this->load->model('Sla_model', 'sla_model');
+
+        // Ambil dari POST filter
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+
+        // Validasi
+        if (empty($bulan) || empty($tahun)) {
+            show_error('Bulan dan Tahun harus dipilih!');
+        }
+
+        $id_user = $this->session->userdata('id_user');
+        $data_sla = $this->sla_model->get_sla_klien($bulan, $tahun, $id_user);
+
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 50,
+            'margin_bottom' => 25,
+        ]);
+
+        // Header (otomatis muncul di setiap halaman)
+        $mpdf->SetHTMLHeader('
+        <table width="100%">
+            <tr>
+                <td width="20%">
+                    <img src="' . base_url('assets/images/mso.png') . '" height="50px">
+                </td>
+                <td width="80%" style="text-align: left;">
+                    <h3 style="margin: 0;">PT. Mitranet Software Online</h3>
+                    <small>IT Consultant & Software Development</small>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin: 5px 0;">
+        <div style="text-align:center;">
+            <h4 style="margin: 0;">LAPORAN HASIL KINERJA SLA</h4>
+            <h5 style="margin: 0;">PERIODE BULAN ' . strtoupper(date('F', mktime(0, 0, 0, $bulan, 1))) . ' ' . $tahun . '</h5>
+        </div>
+    ');
+
+        // Footer (juga otomatis muncul di semua halaman)
+        $mpdf->SetHTMLFooter("
+        <table width='100%' style='font-size:10px;'>
+            <tr>
+                <td width='70%'>
+                    Jalan Gerilya Tengah, Komplek Griya Karang Indah B4-5, Purwokerto<br>
+                    Telp: (0281) 623 789 | Email: official@msodc.co.id | www.msodc.co.id
+                </td>
+                <td style='text-align: right; padding-left: 10px;'>
+                    <table border='1' style='border-collapse: collapse; width: 100%; text-align: center;'>
+                        <tr>
+                            <td colspan='3' style='height: 20px; font-weight: bold;'>Paraf</td>
+                        </tr>
+                        <tr>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    ");
+
+        // View tabel (satu view, tidak dipisah)
+        $html = $this->load->view('cetak/sla', [
+            'data_sla' => $data_sla,
+            'bulan' => $bulan,
+            'tahun' => $tahun
+        ], TRUE);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output("Laporan_SLA_{$bulan}_{$tahun}.pdf", 'D');
+    }
+
+
+    // REKAP PROGRES
+    public function rekap_progres_pdf()
+    {
+        ini_set('memory_limit', '5096M');
+        ini_set('max_execution_time', '0');
+        $this->load->library('pdf');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+
+        // Ambil dari POST filter
+        $periode = $this->input->post('periode');
+        $tahun = $this->input->post('tahun');
+
+        // Validasi
+        if (empty($periode) || empty($tahun)) {
+            show_error('Periode dan Tahun harus dipilih!');
+        }
+
+        // Ambil data rekap dari model
+        $rekap = $this->pelaporan_model->get_rekap_progress($periode, $tahun);
+
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 50,
+            'margin_bottom' => 25,
+        ]);
+
+        // Header
+        $mpdf->SetHTMLHeader('
+        <table width="100%">
+            <tr>
+                <td width="20%">
+                    <img src="' . base_url('assets/images/mso.png') . '" height="50px">
+                </td>
+                <td width="80%" style="text-align: left;">
+                    <h3 style="margin: 0;">PT. Mitranet Software Online</h3>
+                    <small>IT Consultant & Software Development</small>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin: 5px 0;">
+        <div style="text-align:center;">
+            <h4 style="margin: 0;">REKAP REQUEST BERDASARKAN PROGRESS</h4>
+            <h5 style="margin: 0;">PERIODE ' . (($periode == 1) ? 'Januari - Juni' : 'Juli - Desember') . ' ' . $tahun . '</h5>
+        </div>
+    ');
+
+        // Footer
+        $mpdf->SetHTMLFooter("
+        <hr style='margin: 5px 0;'>
+        <table width='100%' style='font-size:10px;'>
+            <tr>
+                <td width='70%'>
+                    Jalan Gerilya Tengah, Komplek Griya Karang Indah B4-5, Purwokerto<br>
+                    Telp: (0281) 623 789 | Email: official@msodc.co.id | www.msodc.co.id
+                </td>
+                <td style='text-align: right; padding-left: 10px;'>
+                    <table border='1' style='border-collapse: collapse; width: 100%; text-align: center;'>
+                        <tr>
+                            <td colspan='3' style='height: 20px; font-weight: bold;'>Paraf</td>
+                        </tr>
+                        <tr>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    ");
+
+        // Load view cetak
+        $html = $this->load->view('cetak/rekap_progres', [
+            'rekap' => $rekap,
+            'periode' => $periode,
+            'tahun' => $tahun
+        ], TRUE);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output("Rekap_Progress_{$periode}_{$tahun}.pdf", 'D');
+    }
+
+
+
     // REKAP KATEGORI
     public function rekap_kategori()
     {

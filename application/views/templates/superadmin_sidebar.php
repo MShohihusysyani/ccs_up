@@ -205,7 +205,7 @@
 
 
                     <li
-                        <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' || $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == 'rekapProgres'  ? 'class="active"' : '' ?>>
+                        <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' || $this->uri->segment(2) == 'sla' ||  $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == 'rekapProgres'  ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">archive</i>
                             <span>Laporan</span>
@@ -214,6 +214,16 @@
                             <li
                                 <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('superadmin/rekapPelaporan') ?>">Rincian Pelaporan</a>
+                            </li>
+
+                            <li
+                                <?= $this->uri->segment(2) == 'sla' || $this->uri->segment(2) == 'sla' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('superadmin/sla') ?>">SLA</a>
+                            </li>
+
+                            <li
+                                <?= $this->uri->segment(2) == 'rekaProgres' || $this->uri->segment(2) == 'rekapProgres' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('superadmin/rekapProgres') ?>">Rekap Progres</a>
                             </li>
                             <!-- 
                             <li
@@ -233,6 +243,7 @@
 
                         </ul>
                     </li>
+
 
                     <li class="header">LABELS</li>
                     <li>
