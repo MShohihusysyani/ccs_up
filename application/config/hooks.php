@@ -1,5 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
+
+$hook['pre_system'][] = array(
+    'class'    => 'MaintinanceHook',
+    'function' => 'check_maintenance',
+    'filename' => 'MaintinanceHook.php',
+    'filepath' => 'hooks'
+);
+
 
 /*
 | -------------------------------------------------------------------------
