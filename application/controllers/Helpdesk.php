@@ -812,11 +812,39 @@ class Helpdesk extends CI_Controller
 
 
 
+    // private function contains_only_images($content)
+    // {
+    //     $doc = new DOMDocument();
+    //     @$doc->loadHTML($content);
+    //     $body = $doc->getElementsByTagName('body')->item(0);
+
+    //     foreach ($body->childNodes as $node) {
+    //         if ($node->nodeType === XML_TEXT_NODE && trim($node->textContent) !== '') {
+    //             return false;
+    //         }
+    //         if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName !== 'img') {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
     private function contains_only_images($content)
     {
+        if (empty(trim($content))) {
+            // Kosong = bukan hanya gambar, dianggap tidak valid
+            return false;
+        }
+
         $doc = new DOMDocument();
+
+        // suppress error karena HTML yang tidak valid
         @$doc->loadHTML($content);
+
         $body = $doc->getElementsByTagName('body')->item(0);
+
+        if (!$body) {
+            return false;
+        }
 
         foreach ($body->childNodes as $node) {
             if ($node->nodeType === XML_TEXT_NODE && trim($node->textContent) !== '') {
@@ -828,6 +856,7 @@ class Helpdesk extends CI_Controller
         }
         return true;
     }
+
 
     public function finish()
     {
