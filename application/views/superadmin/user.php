@@ -11,7 +11,7 @@
             <?php if ($this->session->flashdata('pesan')) { ?>
 
             <?php } ?>
-            <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert')) ?>">
+            <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert') ?? '') ?>">
                 <?php if ($this->session->flashdata('pesan')) { ?>
 
                 <?php } ?>
