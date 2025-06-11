@@ -9,164 +9,165 @@
             <?php if ($this->session->flashdata('pesan')) { ?>
 
             <?php } ?>
-            <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert')) ?>">
-                <?php if ($this->session->flashdata('pesan')) { ?>
+        </div>
+        <div class="eror" data-eror="<?= strip_tags($this->session->flashdata('alert')) ?>">
+            <?php if ($this->session->flashdata('pesan')) { ?>
 
-                <?php } ?>
-            </div>
-            <?= validation_errors(); ?>
+            <?php } ?>
+        </div>
+        <?= validation_errors(); ?>
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <!-- Basic Examples -->
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
-            <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
-            <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-            <!-- #END# Basic Examples -->
-            <!-- Exportable Table -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
-                                <i class="material-icons">filter_alt</i><span>Filter</span>
-                            </button>
-                        </div>
-
-                        <div class="body">
-                            <div class="row clearfix collapse" id="filterForm">
-                                <form id="filterFormContent" class="row">
-                                    <!-- Kolom pertama (6 grid) -->
-                                    <div class="col-lg-6 col-md-6">
-
-                                        <div class="form-group">
-                                            <label for="bulan">Pilih Bulan</label>
-                                            <div class="form-line">
-                                                <select id="bulan" name="bulan" class="form-control">
-                                                    <option value="">-- Pilih Bulan --</option>
-                                                    <option value="1">Januari</option>
-                                                    <option value="2">Februari</option>
-                                                    <option value="3">Maret</option>
-                                                    <option value="4">April</option>
-                                                    <option value="5">Mei</option>
-                                                    <option value="6">Juni</option>
-                                                    <option value="7">Juli</option>
-                                                    <option value="8">Agustus</option>
-                                                    <option value="9">September</option>
-                                                    <option value="10">Oktober</option>
-                                                    <option value="11">November</option>
-                                                    <option value="12">Desember</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="nama_klien">Pilih Klien</label>
-                                            <div class="form-line">
-                                                <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
-                                                <input type="hidden" id="id" name="id">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Kolom kedua (6 grid) -->
-                                    <div class="col-lg-6 col-md-6">
-                                        <label for="bulan">Pilih Tahun</label>
-                                        <div class="form-line">
-                                            <select id="tahun" name="tahun" class="form-control">
-                                                <option value="">-- Pilih Tahun --</option>
-                                                <?php for ($y = 2018; $y <= date('Y'); $y++): ?>
-                                                    <option value="<?= $y ?>"><?= $y ?></option>
-                                                <?php endfor; ?>
-                                            </select>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- Tombol Aksi -->
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-sm waves-effect">
-                                                <i class="material-icons">filter_alt</i><span>Filter</span>
-                                            </button>
-
-                                            <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
-                                                <i class="material-icons">restart_alt</i><span>Reset Filter</span>
-                                            </button>
-
-                                            <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
-                                                <i class="material-icons">sync</i><span>Semua Data</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Basic Examples -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+        <!-- #END# Basic Examples -->
+        <!-- Exportable Table -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
+                            <i class="material-icons">filter_alt</i><span>Filter</span>
+                        </button>
                     </div>
 
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                SLA
-                            </h2>
-                            <div class="progress mt-2" style="display: none;">
-                                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
-                            </div>
-                            <br>
-                            <div class="btn-group" role="group" style="margin-left: 20px;">
-                                <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
-                                    <!-- <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Excel</button></li> -->
-                                </ul>
-                            </div>
+                    <div class="body">
+                        <div class="row clearfix collapse" id="filterForm">
+                            <form id="filterFormContent" class="row">
+                                <!-- Kolom pertama (6 grid) -->
+                                <div class="col-lg-6 col-md-6">
 
+                                    <div class="form-group">
+                                        <label for="bulan">Pilih Bulan</label>
+                                        <div class="form-line">
+                                            <select id="bulan" name="bulan" class="form-control">
+                                                <option value="">-- Pilih Bulan --</option>
+                                                <option value="1">Januari</option>
+                                                <option value="2">Februari</option>
+                                                <option value="3">Maret</option>
+                                                <option value="4">April</option>
+                                                <option value="5">Mei</option>
+                                                <option value="6">Juni</option>
+                                                <option value="7">Juli</option>
+                                                <option value="8">Agustus</option>
+                                                <option value="9">September</option>
+                                                <option value="10">Oktober</option>
+                                                <option value="11">November</option>
+                                                <option value="12">Desember</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nama_klien">Pilih Klien</label>
+                                        <div class="form-line">
+                                            <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
+                                            <input type="hidden" id="id" name="id">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Kolom kedua (6 grid) -->
+                                <div class="col-lg-6 col-md-6">
+                                    <label for="bulan">Pilih Tahun</label>
+                                    <div class="form-line">
+                                        <select id="tahun" name="tahun" class="form-control">
+                                            <option value="">-- Pilih Tahun --</option>
+                                            <?php for ($y = 2018; $y <= date('Y'); $y++): ?>
+                                                <option value="<?= $y ?>"><?= $y ?></option>
+                                            <?php endfor; ?>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <!-- Tombol Aksi -->
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-sm waves-effect">
+                                            <i class="material-icons">filter_alt</i><span>Filter</span>
+                                        </button>
+
+                                        <button type="button" id="resetFilterButton" class="btn btn-info btn-sm waves-effect">
+                                            <i class="material-icons">restart_alt</i><span>Reset Filter</span>
+                                        </button>
+
+                                        <button type="button" id="semuaDataButton" class="btn btn-success btn-sm waves-effect">
+                                            <i class="material-icons">sync</i><span>Semua Data</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table class="display table-bordered" id="example">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>BPR/Klien</th>
-                                            <th>Judul</th>
-                                            <th>Category</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status</th>
-                                            <th>Handle By</th>
+                    </div>
+                </div>
 
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>BPR/Klien</th>
-                                            <th>Judul</th>
-                                            <th>Category</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status</th>
-                                            <th>Handle By</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            SLA
+                        </h2>
+                        <div class="progress mt-2" style="display: none;">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                        </div>
+                        <br>
+                        <div class="btn-group" role="group" style="margin-left: 20px;">
+                            <button type="button" class="btn btn-primary waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">save</i> <span>Export</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button id="exportPdfButton" class="btn btn-sm btn-white" style="width:100%;">Export PDF</button></li>
+                                <!-- <li><button id="exportExcelButton" class="btn btn-sm btn-white" style="width:100%;">Excel</button></li> -->
+                            </ul>
+                        </div>
 
-                                    </tbody>
-                                </table>
-                            </div>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="display table-bordered" id="example">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Tiket</th>
+                                        <th>Tanggal</th>
+                                        <th>BPR/Klien</th>
+                                        <th>Judul</th>
+                                        <th>Category</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status</th>
+                                        <th>Handle By</th>
+
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Tiket</th>
+                                        <th>Tanggal</th>
+                                        <th>BPR/Klien</th>
+                                        <th>Judul</th>
+                                        <th>Category</th>
+                                        <th>Priority</th>
+                                        <th>Max Day</th>
+                                        <th>Status</th>
+                                        <th>Handle By</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- #END# Exportable Table -->
         </div>
-        <!-- Button trigger modal -->
+        <!-- #END# Exportable Table -->
+    </div>
+    <!-- Button trigger modal -->
 </section>
 
 <!-- Modal Cari Klien -->
