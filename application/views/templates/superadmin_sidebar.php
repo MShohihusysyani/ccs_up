@@ -225,6 +225,10 @@
                                 <?= $this->uri->segment(2) == 'rekaProgres' || $this->uri->segment(2) == 'rekapProgres' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('superadmin/rekapProgres') ?>">Rekap Progres</a>
                             </li>
+                            <li
+                                <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapKategori' ? 'class="active"' : '' ?>>
+                                <a href="<?php echo base_url('superadmin/rekapKategori') ?>">Rekap Kategori</a>
+                            </li>
                             <!-- 
                             <li
                                 <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>

@@ -2788,6 +2788,87 @@ class Export extends CI_Controller
         $mpdf->Output("Rekap_Progress_{$periode}_{$tahun}.pdf", 'D');
     }
 
+    public function rekap_kategori_pdf()
+    {
+        ini_set('memory_limit', '5096M');
+        ini_set('max_execution_time', '0');
+        $this->load->library('pdf');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+
+        // Ambil dari POST filter
+        $periode = $this->input->post('periode');
+        $tahun = $this->input->post('tahun');
+
+        // Validasi
+        if (empty($periode) || empty($tahun)) {
+            show_error('Periode dan Tahun harus dipilih!');
+        }
+
+        // Ambil data rekap dari model
+        $rekap_kategori = $this->pelaporan_model->get_rekap_kategori($periode, $tahun);
+
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_top' => 50,
+            'margin_bottom' => 25,
+        ]);
+
+        // Header
+        $mpdf->SetHTMLHeader('
+        <table width="100%">
+            <tr>
+                <td width="20%">
+                    <img src="' . base_url('assets/images/mso.png') . '" height="50px">
+                </td>
+                <td width="80%" style="text-align: left;">
+                    <h3 style="margin: 0;">PT. Mitranet Software Online</h3>
+                    <small>IT Consultant & Software Development</small>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin: 5px 0;">
+        <div style="text-align:center;">
+            <h4 style="margin: 0;">REKAP REQUEST BERDASARKAN KATEGORI</h4>
+            <h5 style="margin: 0;">PERIODE ' . (($periode == 1) ? 'Januari - Juni' : 'Juli - Desember') . ' ' . $tahun . '</h5>
+        </div>
+    ');
+
+        // Footer
+        $mpdf->SetHTMLFooter("
+        <hr style='margin: 5px 0;'>
+        <table width='100%' style='font-size:10px;'>
+            <tr>
+                <td width='70%'>
+                    Jalan Gerilya Tengah, Komplek Griya Karang Indah B4-5, Purwokerto<br>
+                    Telp: (0281) 623 789 | Email: official@msodc.co.id | www.msodc.co.id
+                </td>
+                <td style='text-align: right; padding-left: 10px;'>
+                    <table border='1' style='border-collapse: collapse; width: 100%; text-align: center;'>
+                        <tr>
+                            <td colspan='3' style='height: 20px; font-weight: bold;'>Paraf</td>
+                        </tr>
+                        <tr>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                            <td style='height: 30px;'></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    ");
+
+        // Load view cetak
+        $html = $this->load->view('cetak/rekap_kategori', [
+            'rekap_kategori' => $rekap_kategori,
+            'periode' => $periode,
+            'tahun' => $tahun
+        ], TRUE);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output("Rekap_Kategori_{$periode}_{$tahun}.pdf", 'D');
+    }
+
 
 
     // REKAP KATEGORI

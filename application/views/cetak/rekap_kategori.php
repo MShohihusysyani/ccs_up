@@ -2,134 +2,106 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Rekap Kategori</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th,
+        td {
+            padding: 6px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #dcedc8;
+        }
+
+        .right-side {
+            text-align: right;
+            page-break-inside: avoid;
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 100px;
+            width: 100%;
+        }
+    </style>
 </head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <body>
-
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Footer-Basic-icons.css">
-    <!-- Setting CSS bagian header/ kop -->
-    <style type="text/css">
-    table.page_header {
-        width: 1020px;
-        border: none;
-        background-color: #DDDDFF;
-        border-bottom: solid 1mm #AAAADD;
-        padding: 2mm
-    }
-
-    table.page_footer {
-        width: 1020px;
-        border: none;
-        background-color: #DDDDFF;
-        border-top: solid 1mm #AAAADD;
-        padding: 2mm
-    }
-    </style>
-    <!-- Setting Margin header/ kop -->
-    <!-- Setting CSS Tabel data yang akan ditampilkan -->
-    <style type="text/css">
-    .tabel2 {
-        border-collapse: collapse;
-        margin: 0 auto;
-        width: 90%;
-        margin-left: 30px;
-        margin-right: 30px;
-    }
-
-    .tabel2 th,
-    .tabel2 td {
-        padding: 5px 5px;
-        border: 1px solid #000000;
-
-    }
-
-    p {
-        margin-left: 30px;
-    }
-
-
-
-    div.kanan {
-        position: absolute;
-
-        right: 50px;
-
-    }
-
-    div.tengah {
-        position: absolute;
-
-        right: 330px;
-
-    }
-
-    div.kiri {
-        position: absolute;
-
-        left: 10px;
-    }
-    </style>
-
-    <table>
-        <tr>
-            <th rowspan="3"><img src="<?= base_url('assets/'); ?>images/mso.png" style="width:100px;height:80px" />
-            </th>
-            <td align="center" style="width: 520px;">
-                <font style="font-size: 18px"><b>PT Mitranet Software Online Purwokerto</b></font>
-                <br>Jl. Gerilya Tengah, Komp.Ruko Perum Griya Karangindah Blok B4-5 Purwokerto
-            </td>
-
-        </tr>
-    </table>
-    <hr>
-    <p align="center" style="font-weight: bold; font-size: 18px;"><u>CCS | Rekap Kategori</u></p>
-     <?php
-            date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-            $current_date = date('Y-m-d H:i:s');
-            ?>
-
-
-    <div class="isi" style="margin: 0 auto;">
-        <p>Rekap Pelaporan ini dicetak oleh <b><?= $user['nama_user']?></b> pada Hari <?= format_indo($current_date)?></p>
-        <!-- <p style="color: black; text-align: left;"><br>Rekap Pelaporan:</p> -->
-
-        <table class="tabel2">
-            <thead>
-                <tr>
-                    <th style="text-align: center;  "><b>No</b></th>
-                    <th style="text-align: center;  "><b>kategori</b></th>
-                    <th style="text-align: center;  "><b>Total</b></th>
-                </tr>
-            </thead>
-
-            <tbody>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kategori</th>
                 <?php
-                $no = 1;
-                foreach ($rekapCategory as $rc) : ?>
-                <tr>
-                    <td style="text-align: center; font-size: 12px;"><?php echo $no++; ?></td>
-                    <td style="text-align: left; font-size: 12px;"><?php echo $rc['kategori']; ?></td>
-                    <td style="text-align: left; font-size: 12px;"><?php echo $rc['total']; ?></td>
-                </tr>
-                <?php endforeach;
+                $start = ($periode == 1) ? 1 : 7;
+                $end = ($periode == 1) ? 6 : 12;
+                for ($i = $start; $i <= $end; $i++): ?>
+                    <th><?= DateTime::createFromFormat('!m', $i)->format('F'); ?></th>
+                <?php endfor; ?>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $data_kategori = [];
+            $total_per_bulan = [];
+            $grand_total = 0;
+
+            foreach ($rekap_kategori as $row) {
+                $kat = ($row['kategori'] == '' || is_null($row['kategori'])) ? '(Tanpa Kategori)' : $row['kategori'];
+                $bulan = (int)$row['bulan'];
+                $jumlah = $row['jumlah'];
+
+                $data_kategori[$kat][$bulan] = $jumlah;
+
+                if (!isset($total_per_bulan[$bulan])) $total_per_bulan[$bulan] = 0;
+                $total_per_bulan[$bulan] += $jumlah;
+
+                $grand_total += $jumlah;
+            }
+
+            $no = 1;
+            foreach ($data_kategori as $kategori => $bulan_data):
+                $total = 0;
+                echo "<tr><td>{$no}</td><td>{$kategori}</td>";
+                for ($i = $start; $i <= $end; $i++) {
+                    $jml = isset($bulan_data[$i]) ? $bulan_data[$i] : 0;
+                    $total += $jml;
+                    echo "<td>{$jml}</td>";
+                }
+                echo "<td>{$total}</td></tr>";
+                $no++;
+            endforeach;
+            ?>
+            <tr style="background-color: #dcedc8; font-weight: bold;">
+                <td colspan="2">Total</td>
+                <?php
+                for ($i = $start; $i <= $end; $i++) {
+                    $tot = isset($total_per_bulan[$i]) ? $total_per_bulan[$i] : 0;
+                    echo "<td>{$tot}</td>";
+                }
+                echo "<td>{$grand_total}</td>";
                 ?>
-            </tbody>
-        </table>
+            </tr>
+        </tbody>
+    </table>
+
+    <?php
+    date_default_timezone_set('Asia/Jakarta');
+    $now = date('Y-m-d');
+    ?>
+
+    <div class="right-side">
+        <p>Purwokerto, <?= tanggal_indo($now); ?></p>
+        <p>PT. Mitranet Software Online</p>
+        <p><img src="assets/images/ttd.png" style="height: 100px;" alt="TTD" loading="lazy"></p>
+        <p>Plt Kadiv Corebanking</p>
     </div>
-
-
-
-
 </body>
-
-<script type="text/javascript">
-window.print();
-</script>
-
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
 </html>

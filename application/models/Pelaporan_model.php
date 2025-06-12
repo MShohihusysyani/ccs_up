@@ -567,4 +567,25 @@ class Pelaporan_model extends CI_Model
 
         return $rekap;
     }
+
+    // REKAP KATEGORI
+    public function get_rekap_kategori($periode, $tahun)
+    {
+        $this->db->select('kategori, MONTH(waktu_pelaporan) as bulan, COUNT(*) as jumlah');
+        $this->db->from('pelaporan');
+        $this->db->where('YEAR(waktu_pelaporan)', $tahun);
+
+        if ($periode == 1) {
+            $this->db->where('MONTH(waktu_pelaporan) >=', 1);
+            $this->db->where('MONTH(waktu_pelaporan) <=', 6);
+        } elseif ($periode == 2) {
+            $this->db->where('MONTH(waktu_pelaporan) >=', 7);
+            $this->db->where('MONTH(waktu_pelaporan) <=', 12);
+        }
+
+        $this->db->group_by(['kategori', 'MONTH(waktu_pelaporan)']);
+        $this->db->order_by('kategori');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

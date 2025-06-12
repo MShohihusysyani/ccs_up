@@ -1409,58 +1409,22 @@ class Superadmin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-
-
     // REKAP KATEGORI
     public function rekapKategori()
     {
-        $this->load->model('Category_model', 'category_model');
         $this->load->model('Pelaporan_model', 'pelaporan_model');
-        $data['pencarian_data'] = $this->pelaporan_model->getAllCategory();
-        $data['category'] = $this->category_model->getCategory();
+
+        $periode = $this->input->post('periode');
+        $tahun   = $this->input->post('tahun');
+
+        $data['rekap_kategori']   = $this->pelaporan_model->get_rekap_kategori($periode, $tahun);
+        $data['periode'] = $periode;
+        $data['tahun']   = $tahun;
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/rekap_kategori', $data);
         $this->load->view('templates/footer');
-    }
-
-    public function dateKategori()
-    {
-
-        //Load necessary libraries and models
-        $this->load->library('form_validation');
-        $this->load->model('Pelaporan_model', 'pelaporan_model');
-        $this->load->model('Category_model', 'category_model');
-
-        // Set form validation rules
-        $this->form_validation->set_rules('tgla', 'Start Date', 'required');
-        $this->form_validation->set_rules('tglb', 'End Date', 'required');
-        $this->form_validation->set_rules('kategori', 'Category Name', 'required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $data['errors'] = validation_errors();
-            $data['category'] = $this->category_model->getCategory();
-            $data['pencarian_data'] = [];
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/superadmin_sidebar');
-            $this->load->view('superadmin/rekap_kategori', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $tgla = $this->input->post('tgla');
-            $tglb = $this->input->post('tglb');
-            $kategori = $this->input->post('kategori');
-
-            $data['category'] = $this->category_model->getCategory();
-            $data['pencarian_data'] = $this->pelaporan_model->getDateKategori($tgla, $tglb,  $kategori);
-
-            // Load views with data
-            $this->load->view('templates/header');
-            $this->load->view('templates/superadmin_sidebar');
-            $this->load->view('superadmin/rekap_kategori', $data);
-            $this->load->view('templates/footer');
-        }
     }
 
     // REKAP HANDLE BY HELPDESK
