@@ -282,6 +282,14 @@
     });
 
     function exportData(format, button) {
+        var bulan = $('#bulan').val();
+        var tahun = $('#tahun').val();
+
+        // Validasi: bulan dan tahun wajib diisi
+        if (!bulan || !tahun) {
+            alert('Silakan pilih Bulan dan Tahun terlebih dahulu sebelum export.');
+            return; // hentikan proses export
+        }
         var filters = new FormData();
         filters.append('bulan', $('#bulan').val());
         filters.append('tahun', $('#tahun').val());
