@@ -147,6 +147,8 @@
                                                     <div class="btn btn-sm btn-info forward-action">
                                                         <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name">Forward</span></a>
                                                     </div>
+
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_add/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

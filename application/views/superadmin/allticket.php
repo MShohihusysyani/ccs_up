@@ -40,7 +40,7 @@
                                         <th>No</th>
                                         <th>No Tiket</th>
                                         <th>Tanggal</th>
-                                        <th>Nama Klien</th>
+                                        <th>Bpr/Klien</th>
                                         <th>Judul</th>
                                         <!-- <th>Impact</th> -->
                                         <!-- <th>Attachment</th> -->
@@ -48,8 +48,9 @@
                                         <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
-                                        <th>Status CCS</th>
+                                        <th>Status</th>
                                         <th>Handle By</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -57,7 +58,7 @@
                                         <th>No</th>
                                         <th>No Tiket</th>
                                         <th>Tanggal</th>
-                                        <th>Nama Klien</th>
+                                        <th>Bpr/Klien</th>
                                         <th>Judul</th>
                                         <!-- <th>Impact</th> -->
                                         <!-- <th>Attachment</th> -->
@@ -65,8 +66,9 @@
                                         <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
-                                        <th>Status CCS</th>
+                                        <th>Status</th>
                                         <th>Handle By</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
