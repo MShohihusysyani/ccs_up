@@ -2749,6 +2749,7 @@ class Export extends CI_Controller
         <hr style="margin: 5px 0;">
         <div style="text-align:center;">
             <h4 style="margin: 0;">REKAP REQUEST BERDASARKAN PROGRESS</h4>
+            <h4 style="margin: 0;">' . $nama_klien . '</h4>
             <h5 style="margin: 0;">PERIODE ' . (($periode == 1) ? 'Januari - Juni' : 'Juli - Desember') . ' ' . $tahun . '</h5>
         </div>
     ');
@@ -2800,6 +2801,7 @@ class Export extends CI_Controller
         // Ambil dari POST filter
         $periode = $this->input->post('periode');
         $tahun = $this->input->post('tahun');
+        $nama_klien = $this->input->post('nama_klien');
 
         // Validasi
         if (empty($periode) || empty($tahun)) {
@@ -2807,7 +2809,7 @@ class Export extends CI_Controller
         }
 
         // Ambil data rekap dari model
-        $rekap_kategori = $this->pelaporan_model->get_rekap_kategori($periode, $tahun);
+        $rekap_kategori = $this->pelaporan_model->get_rekap_kategori($periode, $tahun, $nama_klien);
 
         $mpdf = new \Mpdf\Mpdf([
             'format' => 'A4',
@@ -2831,6 +2833,7 @@ class Export extends CI_Controller
         <hr style="margin: 5px 0;">
         <div style="text-align:center;">
             <h4 style="margin: 0;">REKAP REQUEST BERDASARKAN KATEGORI</h4>
+            <h4 style="margin: 0;">' . $nama_klien . '</h4>
             <h5 style="margin: 0;">PERIODE ' . (($periode == 1) ? 'Januari - Juni' : 'Juli - Desember') . ' ' . $tahun . '</h5>
         </div>
     ');
@@ -2864,7 +2867,8 @@ class Export extends CI_Controller
         $html = $this->load->view('cetak/rekap_kategori', [
             'rekap_kategori' => $rekap_kategori,
             'periode' => $periode,
-            'tahun' => $tahun
+            'tahun' => $tahun,
+            'nama_klien' => $nama_klien
         ], TRUE);
 
         $mpdf->WriteHTML($html);

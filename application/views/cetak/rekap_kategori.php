@@ -99,7 +99,7 @@
     <div class="right-side">
         <p>Purwokerto, <?= tanggal_indo($now); ?></p>
         <p>PT. Mitranet Software Online</p>
-        <p><img src="assets/images/ttd.png" style="height: 100px;" alt="TTD" loading="lazy"></p>
+        <p><img src="assets/images/ttd.jpg" style="height: 100px;" alt="TTD" loading="lazy"></p>
         <p>Plt Kadiv Corebanking</p>
     </div>
 </body>

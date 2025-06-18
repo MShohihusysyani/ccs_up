@@ -12,25 +12,39 @@
                     <?= form_open('superadmin/rekapKategori'); ?>
                     <div class="row clearfix">
                         <div class="col-lg-6">
-                            <label for="periode">Periode</label>
-                            <select id="periode" name="periode" class="form-control show-tick" required>
-                                <option value="">-- Pilih Periode --</option>
-                                <option value="1" <?= ($periode == 1) ? 'selected' : ''; ?>>Periode 1 (Jan–Jun)</option>
-                                <option value="2" <?= ($periode == 2) ? 'selected' : ''; ?>>Periode 2 (Jul–Des)</option>
-                            </select>
+                            <div class="form-group">
+                                <label for="periode">Periode</label>
+                                <select id="periode" name="periode" class="form-control show-tick" required>
+                                    <option value="">-- Pilih Periode --</option>
+                                    <option value="1" <?= ($periode == 1) ? 'selected' : ''; ?>>Periode 1 (Jan–Jun)</option>
+                                    <option value="2" <?= ($periode == 2) ? 'selected' : ''; ?>>Periode 2 (Jul–Des)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nama_klien">Pilih Klien</label>
+                                <select id="nama_klien" name="nama_klien" class="form-control show-tick">
+                                    <option value="">-- Pilih Klien --</option>
+                                    <?php foreach ($klien as $row): ?>
+                                        <option value="<?= $row['nama_klien']; ?>" <?= ($nama_klien == $row['nama_klien']) ? 'selected' : ''; ?>><?= $row['no_klien'] . ' - ' . $row['nama_klien']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-lg-6">
-                            <label for="tahun">Tahun</label>
-                            <select id="tahun" name="tahun" class="form-control show-tick" required>
-                                <option value="">-- Pilih Tahun --</option>
-                                <?php for ($i = date('Y'); $i >= 2019; $i--): ?>
-                                    <option value="<?= $i ?>" <?= ($tahun == $i) ? 'selected' : ''; ?>><?= $i ?></option>
-                                <?php endfor; ?>
-                            </select>
+                            <div class="form-group">
+                                <label for="tahun">Tahun</label>
+                                <select id="tahun" name="tahun" class="form-control show-tick" required>
+                                    <option value="">-- Pilih Tahun --</option>
+                                    <?php for ($i = date('Y'); $i >= 2019; $i--): ?>
+                                        <option value="<?= $i ?>" <?= ($tahun == $i) ? 'selected' : ''; ?>><?= $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="col-lg-2" style="margin-top: 25px;">
+                        <div class="col-lg-12">
                             <button type="submit" class="btn btn-info">
                                 <i class="material-icons">search</i> Tampilkan
                             </button>
@@ -122,6 +136,7 @@
             <form id="exportPdfForm" method="POST" action="<?= base_url('export/rekap_kategori_pdf'); ?>" target="_blank" style="display:none;">
                 <input type="hidden" name="periode" id="exportPeriode">
                 <input type="hidden" name="tahun" id="exportTahun">
+                <input type="hidden" name="nama_klien" id="exportNama">
             </form>
         </div>
     </div>
@@ -134,6 +149,7 @@
 
         const periode = document.getElementById('periode').value;
         const tahun = document.getElementById('tahun').value;
+        const nama_klien = document.getElementById('nama_klien').value;
 
         if (!periode || !tahun) {
             alert("Silakan pilih Periode dan Tahun terlebih dahulu.");
@@ -142,6 +158,7 @@
 
         document.getElementById('exportPeriode').value = periode;
         document.getElementById('exportTahun').value = tahun;
+        document.getElementById('exportNama').value = nama_klien;
 
         document.getElementById('exportPdfForm').submit();
     });

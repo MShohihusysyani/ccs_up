@@ -569,11 +569,12 @@ class Pelaporan_model extends CI_Model
     }
 
     // REKAP KATEGORI
-    public function get_rekap_kategori($periode, $tahun)
+    public function get_rekap_kategori($periode, $tahun, $nama_klien)
     {
         $this->db->select('kategori, MONTH(waktu_pelaporan) as bulan, COUNT(*) as jumlah');
         $this->db->from('pelaporan');
         $this->db->where('YEAR(waktu_pelaporan)', $tahun);
+        $this->db->like('nama', $nama_klien);
 
         if ($periode == 1) {
             $this->db->where('MONTH(waktu_pelaporan) >=', 1);
