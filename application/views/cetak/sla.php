@@ -93,7 +93,7 @@
     <div class="right-side">
         <p>Purwokerto, <?= tanggal_indo($now) ?></p>
         <p>PT. Mitranet Software Online</p>
-        <p><img src="assets/images/ttd.png" style="height: 100px;" alt="QR Code" loading="lazy">
+        <p><img src="assets/images/ttd.jpg" style="height: 100px;" alt="QR Code" loading="lazy">
         <p>Plt Kadiv Corebanking</p>
     </div>
 </body>

@@ -1401,10 +1401,13 @@ class Superadmin extends CI_Controller
 
         $periode = $this->input->post('periode');
         $tahun   = $this->input->post('tahun');
+        $nama_klien = $this->input->post('nama_klien');
 
-        $data['rekap']   = $this->pelaporan_model->get_rekap_progress($periode, $tahun);
+        $data['rekap']   = $this->pelaporan_model->get_rekap_progress($periode, $tahun, $nama_klien);
+        $data['klien']   = $this->client_model->getClient();
         $data['periode'] = $periode;
         $data['tahun']   = $tahun;
+        $data['nama_klien'] = $nama_klien;
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');

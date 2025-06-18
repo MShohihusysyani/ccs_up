@@ -516,7 +516,7 @@ class Pelaporan_model extends CI_Model
     }
 
     // REKAP PROGRESS
-    public function get_rekap_progress($periode, $tahun)
+    public function get_rekap_progress($periode, $tahun, $nama_klien)
     {
         $bulan_range = ($periode == 1) ? range(1, 6) : range(7, 12);
 
@@ -527,6 +527,7 @@ class Pelaporan_model extends CI_Model
         $this->db->from('pelaporan');
         $this->db->where('YEAR(waktu_pelaporan)', $tahun);
         $this->db->where_in('MONTH(waktu_pelaporan)', $bulan_range);
+        $this->db->like('nama', $nama_klien);
         $this->db->group_by('MONTH(waktu_pelaporan)');
         $this->db->order_by('MONTH(waktu_pelaporan)', 'ASC');
 

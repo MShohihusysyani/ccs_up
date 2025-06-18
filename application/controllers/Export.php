@@ -2717,6 +2717,7 @@ class Export extends CI_Controller
         // Ambil dari POST filter
         $periode = $this->input->post('periode');
         $tahun = $this->input->post('tahun');
+        $nama_klien = $this->input->post('nama_klien');
 
         // Validasi
         if (empty($periode) || empty($tahun)) {
@@ -2724,7 +2725,7 @@ class Export extends CI_Controller
         }
 
         // Ambil data rekap dari model
-        $rekap = $this->pelaporan_model->get_rekap_progress($periode, $tahun);
+        $rekap = $this->pelaporan_model->get_rekap_progress($periode, $tahun, $nama_klien);
 
         $mpdf = new \Mpdf\Mpdf([
             'format' => 'A4',
@@ -2781,7 +2782,8 @@ class Export extends CI_Controller
         $html = $this->load->view('cetak/rekap_progres', [
             'rekap' => $rekap,
             'periode' => $periode,
-            'tahun' => $tahun
+            'tahun' => $tahun,
+            'nama_klien' => $nama_klien
         ], TRUE);
 
         $mpdf->WriteHTML($html);

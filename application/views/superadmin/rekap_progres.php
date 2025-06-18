@@ -12,26 +12,41 @@
                     <?= form_open('superadmin/rekapProgres'); ?>
                     <div class="row clearfix">
 
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label for="periode">Periode</label>
-                            <select id="periode" name="periode" class="form-control show-tick" required>
-                                <option value="">-- Pilih Periode --</option>
-                                <option value="1" <?= ($periode == 1) ? 'selected' : ''; ?>>Periode 1 (Jan–Jun)</option>
-                                <option value="2" <?= ($periode == 2) ? 'selected' : ''; ?>>Periode 2 (Jul–Des)</option>
-                            </select>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label for="periode">Periode</label>
+                                <select id="periode" name="periode" class="form-control show-tick" required>
+                                    <option value="">-- Pilih Periode --</option>
+                                    <option value="1" <?= ($periode == 1) ? 'selected' : ''; ?>>Periode 1 (Jan–Jun)</option>
+                                    <option value="2" <?= ($periode == 2) ? 'selected' : ''; ?>>Periode 2 (Jul–Des)</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nama_klien">Pilih Klien</label>
+                                <select id="nama_klien" name="nama_klien" class="form-control show-tick" required>
+                                    <option value="">-- Pilih Klien --</option>
+                                    <?php foreach ($klien as $row): ?>
+                                        <option value="<?= $row['nama_klien']; ?>" <?= ($nama_klien == $row['nama_klien']) ? 'selected' : ''; ?>><?= $row['no_klien'] . ' - ' . $row['nama_klien']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label for="tahun">Tahun</label>
-                            <select id="tahun" name="tahun" class="form-control show-tick" required>
-                                <option value="">-- Pilih Tahun --</option>
-                                <?php for ($i = date('Y'); $i >= 2019; $i--): ?>
-                                    <option value="<?= $i ?>" <?= ($tahun == $i) ? 'selected' : ''; ?>><?= $i ?></option>
-                                <?php endfor; ?>
-                            </select>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label for="tahun">Tahun</label>
+                                <select id="tahun" name="tahun" class="form-control show-tick" required>
+                                    <option value="">-- Pilih Tahun --</option>
+                                    <?php for ($i = date('Y'); $i >= 2019; $i--): ?>
+                                        <option value="<?= $i ?>" <?= ($tahun == $i) ? 'selected' : ''; ?>><?= $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="margin-top: 25px;">
+                        <div class="col-lg-12">
                             <button type="submit" class="btn btn-sm btn-info">
                                 <i class="material-icons">search</i> Tampilkan
                             </button>
@@ -105,11 +120,68 @@
             <form id="exportPdfForm" method="POST" action="<?= base_url('export/rekap_progres_pdf'); ?>" target="_blank" style="display:none;">
                 <input type="hidden" name="periode" id="exportPeriode">
                 <input type="hidden" name="tahun" id="exportTahun">
+                <input type="hidden" name="nama_klien" id="exportNama">
             </form>
 
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="defaultModalNamaKlien" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cari Klien</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode Klien</th>
+                            <th>Nama Klien</th>
+                            <th class="hide">ID</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($klien as $cln) : ?>
+                            <tr>
+                                <td style="text-align:center;" scope="row"><?= $i; ?></td>
+                                <td><?= $cln['no_klien']; ?></td>
+                                <td><?= $cln['nama_klien']; ?></td>
+                                <td class="hide"><?= $cln['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>">
+                                        Pilih
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- pilih klien -->
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#pilih3', function() {
+            var nama_klas = $(this).data('nama-klien');
+            var id = $(this).data('id');
+            $('#nama_klien').val(nama_klas);
+            $('#id').val(id);
+            $('#defaultModalNamaKlien').modal('hide');
+        });
+    });
+</script>
 
 <!-- JavaScript untuk handle export -->
 <script>
@@ -118,6 +190,7 @@
 
         const periode = document.getElementById('periode').value;
         const tahun = document.getElementById('tahun').value;
+        const nama_klien = document.getElementById('nama_klien').value;
 
         if (!periode || !tahun) {
             alert("Silakan pilih Periode dan Tahun terlebih dahulu.");
@@ -126,6 +199,7 @@
 
         document.getElementById('exportPeriode').value = periode;
         document.getElementById('exportTahun').value = tahun;
+        document.getElementById('exportNama').value = nama_klien;
 
         document.getElementById('exportPdfForm').submit();
     });
