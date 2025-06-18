@@ -25,7 +25,7 @@
 
                             <div class="form-group">
                                 <label for="nama_klien">Pilih Klien</label>
-                                <select id="nama_klien" name="nama_klien" class="form-control show-tick" required>
+                                <select id="nama_klien" name="nama_klien" class="form-control show-tick">
                                     <option value="">-- Pilih Klien --</option>
                                     <?php foreach ($klien as $row): ?>
                                         <option value="<?= $row['nama_klien']; ?>" <?= ($nama_klien == $row['nama_klien']) ? 'selected' : ''; ?>><?= $row['no_klien'] . ' - ' . $row['nama_klien']; ?></option>
