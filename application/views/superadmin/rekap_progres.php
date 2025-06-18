@@ -15,7 +15,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <label for="periode">Periode</label>
-                                <select id="periode" name="periode" class="form-control show-tick" required>
+                                <select id="periode" name="periode" class="form-control show-tick">
                                     <option value="">-- Pilih Periode --</option>
                                     <option value="1" <?= ($periode == 1) ? 'selected' : ''; ?>>Periode 1 (Jan–Jun)</option>
                                     <option value="2" <?= ($periode == 2) ? 'selected' : ''; ?>>Periode 2 (Jul–Des)</option>
