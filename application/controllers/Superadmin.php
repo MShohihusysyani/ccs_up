@@ -559,13 +559,13 @@ class Superadmin extends CI_Controller
                     data-kategori="' . $dp->kategori . '" 
                     data-tags="' . $dp->tags . '" 
                     data-status_ccs="' . $dp->status_ccs . '">
-                    <i class="material-icons">edit</i> Edit Teknisi
+                    <i class="material-icons">edit</i>
                 </button>
                 <a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail_pelaporan/' . $dp->id_pelaporan) . '">
-                    <i class="material-icons">visibility</i> Detail
+                    <i class="material-icons">visibility</i>
                 </a>
                 <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $dp->no_tiket) . '">
-                    <i class="material-icons">print</i> Print Detail
+                    <i class="material-icons">print</i>
                 </a>
             </div>
             ';
