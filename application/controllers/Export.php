@@ -912,6 +912,36 @@ class Export extends CI_Controller
         $mpdf->Output('Rekap_Pelaporan.pdf', 'D');
     }
 
+    // public function rekap_pelaporan_excel()
+    // { // Ambil filter dari input
+    //     $tanggal_awal = $this->input->post('tanggal_awal');
+    //     $tanggal_akhir = $this->input->post('tanggal_akhir');
+    //     $nama_klien = $this->input->post('nama_klien');
+    //     $nama_user = $this->input->post('nama_user');
+    //     $rating = $this->input->post('rating');
+    //     $status_ccs = $this->input->post('status_ccs');
+
+    //     // Build URL query
+    //     $params = http_build_query([
+    //         'tanggal_awal' => $tanggal_awal,
+    //         'tanggal_akhir' => $tanggal_akhir,
+    //         'nama_klien' => $nama_klien,
+    //         'nama_user' => $nama_user,
+    //         'rating' => $rating,
+    //         'status_ccs' => $status_ccs
+    //     ]);
+
+    //     $this->output
+    //         ->set_content_type('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    //         ->set_header("Access-Control-Allow-Origin: *")
+    //         ->set_header("Access-Control-Expose-Headers: Content-Disposition")
+    //         ->set_header("Content-Disposition: attachment; filename=Rincian_Pelaporan.xlsx");
+
+
+    //     // Arahkan browser langsung ke API Express.js
+    //     $url = 'http://localhost:3000/export/rekap-pelaporan-excel?' . $params;
+    //     redirect($url); // Akan langsung unduh Excel dengan nama yang benar
+    // }
     public function rekap_pelaporan_excel()
     {
         $spreadsheet = new Spreadsheet();
