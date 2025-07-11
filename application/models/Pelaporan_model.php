@@ -519,10 +519,12 @@ class Pelaporan_model extends CI_Model
     public function get_rekap_progress($periode, $tahun, $nama_klien)
     {
         $bulan_range = ($periode == 1) ? range(1, 6) : range(7, 12);
+
         $this->db->select('MONTH(waktu_pelaporan) AS bulan');
-        $this->db->select('SUM(CASE WHEN status_ccs = "FINISHED" THEN 1 ELSE 0 END) AS finished', false);
+        $this->db->select('SUM(CASE WHEN status_ccs IN ("FINISHED", "CLOSED") THEN 1 ELSE 0 END) AS finished', false);
         $this->db->select('SUM(CASE WHEN status_ccs IN ("HANDLED", "HANDLED 2", "ADDED 2") THEN 1 ELSE 0 END) AS handled', false);
-        $this->db->select('SUM(CASE WHEN status_ccs = "FINISHED" OR status_ccs IN ("HANDLED", "HANDLED 2", "ADDED 2") THEN 1 ELSE 0 END) AS total', false);
+        $this->db->select('SUM(CASE WHEN status_ccs IN ("FINISHED", "CLOSED", "HANDLED", "HANDLED 2", "ADDED 2") THEN 1 ELSE 0 END) AS total', false);
+
         $this->db->from('pelaporan');
         $this->db->where('YEAR(waktu_pelaporan)', $tahun);
         $this->db->where_in('MONTH(waktu_pelaporan)', $bulan_range);
@@ -567,6 +569,7 @@ class Pelaporan_model extends CI_Model
 
         return $rekap;
     }
+
 
     // REKAP KATEGORI
     public function get_rekap_kategori($periode, $tahun, $nama_klien)
