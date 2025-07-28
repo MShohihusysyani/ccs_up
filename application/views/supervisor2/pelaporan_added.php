@@ -145,16 +145,16 @@
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-warning">
-                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= htmlspecialchars($dp['perihal']), ENT_QUOTES; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name">Edit</span></a>
+                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= htmlspecialchars($dp['perihal']), ENT_QUOTES; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">edit</i> <span class="icon-name"></span></a>
                                                         </div>
 
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor2/forward_tiket/<?= $dp['id_pelaporan']; ?>">
-                                                            <i class="material-icons"></i> Forward / Batalkan
+                                                            <i class="material-icons">forward</i>
                                                         </a>
 
                                                         <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-info">
-                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons"></i> <span class="icon-name">Forward</span></a>
+                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul='<?= $dp['judul']; ?>' data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name"></span></a>
                                                         </div> -->
                                                     </td>
                                                 </tr>

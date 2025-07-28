@@ -591,7 +591,7 @@
 <script type="text/javascript">
     table = $('#example').DataTable({
         "processing": true,
-        "responsive": true,
+        // "responsive": true,
         "serverSide": true,
         "ajax": {
             "url": "<?php echo site_url('supervisor2/fetch_onprogress') ?>",

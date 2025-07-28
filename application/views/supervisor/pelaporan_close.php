@@ -196,11 +196,11 @@
                                                         ?>
                                                         <?php if ($handle_count > 1): ?>
                                                             <button class="btn btn-sm btn-secondary" disabled>
-                                                                <i class="material-icons">block</i> <span class="icon-name"></span>Approve
+                                                                <i class="material-icons">block</i> <span class="icon-name"></span>
                                                             </button>
                                                         <?php else: ?>
                                                             <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/finish_pelaporan/<?= $dp['id_pelaporan']; ?>">
-                                                                <i class="material-icons">launch</i> <span class="icon-name"></span>Approve
+                                                                <i class="material-icons">launch</i> <span class="icon-name"></span>
                                                             </a>
                                                         <?php endif; ?>
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>

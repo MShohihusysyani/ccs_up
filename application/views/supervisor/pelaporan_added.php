@@ -133,7 +133,7 @@
                                                         <div class="btn btn-sm btn-warning edit-action">
                                                             <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tags="<?= $dp['tags']; ?>" data-toggle="modal" data-target="#editModalCP">
                                                                 <i class="material-icons">edit</i>
-                                                                <span class="icon-name">Edit</span>
+                                                                <span class="icon-name"></span>
                                                             </a>
 
                                                         </div>
@@ -142,7 +142,7 @@
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-info forward-action">
-                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name">Forward</span></a>
+                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name"></span></a>
                                                         </div>
                                                     </td>
                                                 </tr>
