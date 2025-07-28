@@ -40,7 +40,7 @@ class User_model extends CI_Model
     public function getNamaUser()
     {
 
-        $query = "SELECT id_user, nama_user FROM user WHERE divisi='Helpdesk' ORDER by nama_user ASC";
+        $query = "SELECT id_user, nama_user FROM user WHERE divisi='Helpdesk' AND active='Y' ORDER by nama_user ASC";
         return $this->db->query($query)->result_array();
     }
 
