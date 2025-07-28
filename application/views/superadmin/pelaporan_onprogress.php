@@ -231,7 +231,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Edit Teknisi</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Edit Implementator</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('superadmin/fungsi_edit_teknisi') ?>
@@ -267,7 +267,7 @@
                             </div>
                         </div>
 
-                        <label for="status_ccs">Status CCS</label>
+                        <label for="status_ccs">Status</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
@@ -298,7 +298,7 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namateknisi" id="namateknisi" class="form-control">
-                                    <option value=""> -- Pilih Teknisi -- </option>
+                                    <option value=""> -- Pilih Implementator -- </option>
                                     <?php
                                     foreach ($namateknisi as $nat) : ?>
                                         <option value="<?= $nat['id_user']; ?>"><?= $nat['nama_user']; ?></option>
