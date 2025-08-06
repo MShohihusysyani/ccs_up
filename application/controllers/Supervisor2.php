@@ -618,6 +618,7 @@ class Supervisor2 extends CI_Controller
     {
         $id_pelaporan = $this->input->post('id_pelaporan');
         $no_tiket     = $this->input->post('no_tiket');
+        $judul        = $this->input->post('judul');
         // $perihal      = $this->input->post('perihal');
         $kategori     = $this->input->post('kategori');
         $priority     = $this->input->post('priority');
@@ -625,6 +626,7 @@ class Supervisor2 extends CI_Controller
         $tags         = $this->input->post('tags');
         $ArrUpdate = array(
             'no_tiket'   => $no_tiket,
+            'judul'      => $judul,
             // 'perihal'    => $perihal,
             'priority'   => $priority,
             'kategori'   => $kategori,

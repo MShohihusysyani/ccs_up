@@ -208,7 +208,7 @@
                         <label for="nama">Judul</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
+                                <input value="" type="text" id="judul" name="judul" class="form-control">
                             </div>
                         </div>
 
@@ -230,7 +230,7 @@
 
                         <div class="form-group">
                             <div class="form-line">
-                                <select id="priority" name="priority" class="form-control">
+                                <select id="priority" name="priority" class="form-control" required>
                                     <option value="">-- Please select Priority--</option>
                                     <option value="Low">Low</option>
                                     <option value="Medium">Medium</option>
