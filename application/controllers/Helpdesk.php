@@ -169,7 +169,8 @@ class Helpdesk extends CI_Controller
         if ($_FILES['upload']['name']) {
             $config['allowed_types'] = 'jpeg|jpg|png';
             $config['max_size'] = '25600';
-            $config['upload_path'] = './assets/files/';
+            $config['file_name'] = uniqid();
+            $config['upload_path'] = FCPATH . 'assets/files/';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -192,8 +193,9 @@ class Helpdesk extends CI_Controller
                 $this->output->set_content_type('application/json');
                 echo json_encode($data);
             } else {
+                $error = $this->upload->display_errors();
                 $data = array(
-                    'message' => 'Upload failed',
+                    'message' => 'Upload failed' . $error,
                     'uploaded' => 0
                 );
                 $this->output->set_content_type('application/json');
@@ -983,6 +985,7 @@ class Helpdesk extends CI_Controller
             $config['allowed_types'] = 'jpeg|jpg|png';
             $config['max_size'] = '25600';
             $config['upload_path'] = './assets/filefinish/';
+            $config['file_name'] = uniqid();
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);

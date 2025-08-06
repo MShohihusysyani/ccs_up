@@ -345,6 +345,7 @@ class Implementator extends CI_Controller
             $config['allowed_types'] = 'jpeg|jpg|png';
             $config['max_size'] = '25600';
             $config['upload_path'] = './assets/filefinish/';
+            $config['file_name'] = uniqid();
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -786,7 +787,7 @@ class Implementator extends CI_Controller
     public function finish_subtask()
     {
         $this->load->model('Implementator_model', 'implementator_model');
-        date_default_timezone_set('Asia/Jakarta'); 
+        date_default_timezone_set('Asia/Jakarta');
 
         $id_forward = $this->input->post('id_forward');
         $judul = $this->input->post('judul');

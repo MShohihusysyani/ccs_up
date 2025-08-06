@@ -140,6 +140,7 @@ class Klien extends CI_Controller
             $config['allowed_types'] = 'jpeg|jpg|png';
             $config['max_size'] = '25600';
             $config['upload_path'] = './assets/files/';
+            $config['file_name'] = uniqid();
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
