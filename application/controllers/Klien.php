@@ -44,6 +44,8 @@ class Klien extends CI_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('perihal', 'Perihal', 'required|min_length[50]');
         $this->form_validation->set_rules('judul', 'Judul', 'required');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
 
         // Cek validasi form
         if ($this->form_validation->run() == FALSE) {
@@ -52,11 +54,15 @@ class Klien extends CI_Controller
             $error_message = 'Proses tiket baru gagal! ';
 
             if (form_error('perihal')) {
-                $error_message .= 'Perihal harus diisi minimal 50 karakter. ';
+                $error_message .= 'Perihal wajib diisi minimal 50 karakter. ';
             }
 
             if (form_error('judul')) {
-                $error_message .= 'Judul harus diisi.';
+                $error_message .= 'Judul wajib diisi.';
+            }
+
+            if (form_error('kategori')) {
+                $error_message .= 'Kategori wajib diisi.';
             }
 
             $this->session->set_flashdata('alert', $error_message);

@@ -93,75 +93,82 @@ class Helpdesk extends CI_Controller
     {
         $this->load->library('form_validation');
 
+        // Set custom error message global
+        $this->form_validation->set_message('required', '{field} wajib diisi!');
+        $this->form_validation->set_message('min_length', '{field} minimal {param} karakter!');
+
+        // Rules validasi
         $this->form_validation->set_rules('perihal', 'Perihal', 'required|min_length[50]');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
+        // Jika validasi gagal
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Perihal harus diisi minimal 50 karakter.');
+            $this->session->set_flashdata('alert', strip_tags(validation_errors()));
             redirect('helpdesk/pengajuan');
-        } else {
-            $user_id_hd = $this->input->post('user_id_hd');
-            $no_tiket = trim($this->input->post('no_tiket'));
+        }
 
-            // Cek apakah tiket dengan nomor yang sama sudah ada
-            $this->db->where('no_tiket', $no_tiket);
-            $existing_no_tiket = $this->db->get('tiket_temp')->row();
+        $user_id_hd = $this->input->post('user_id_hd');
+        $no_tiket   = trim($this->input->post('no_tiket'));
 
-            if ($existing_no_tiket) {
-                $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Nomor tiket sudah ada.');
-                redirect('helpdesk/pengajuan');
-            }
+        // Cek apakah no_tiket sudah ada
+        if ($this->db->where('no_tiket', $no_tiket)->get('tiket_temp')->row()) {
+            $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Nomor tiket sudah ada.');
+            redirect('helpdesk/pengajuan');
+        }
 
-            $this->db->where('user_id_hd', $user_id_hd);
-            $existing_ticket = $this->db->get('tiket_temp')->row();
+        // Cek apakah user sudah punya tiket temp yang belum diproses
+        if ($this->db->where('user_id_hd', $user_id_hd)->get('tiket_temp')->row()) {
+            $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Silahkan ajukan terlebih dahulu tiket yang sudah diproses!');
+            redirect('helpdesk/pengajuan');
+        }
 
-            if ($existing_ticket) {
-                $this->session->set_flashdata('alert', 'Proses tiket baru gagal! Silahkan ajukan terlebih dahulu tiket yang sudah diproses!');
-                redirect('helpdesk/pengajuan');
+        // Proses upload file jika ada
+        $photo = $_FILES['file']['name'] ?? '';
+        if (!empty($photo)) {
+            $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png|zip|rar';
+            $config['max_size']      = 25600; // KB
+            $config['upload_path']   = './assets/files/';
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('file')) {
+                $photo = $this->upload->data('file_name');
             } else {
-                $photo = $_FILES['file']['name'];
-
-                if ($photo) {
-                    $config['allowed_types'] = 'csv|xlsx|docx|pdf|txt|jpeg|jpg|png|zip|rar';
-                    $config['max_size'] = '25600';
-                    $config['upload_path'] = './assets/files/';
-
-                    $this->load->library('upload', $config);
-                    $this->upload->initialize($config);
-
-                    if ($this->upload->do_upload('file')) {
-                        $photo = $this->upload->data('file_name');
-                    } else {
-                        log_message('error', 'File upload error: ' . $this->upload->display_errors());
-                        $this->session->set_flashdata('alert', 'Upload file gagal! ' . $this->upload->display_errors());
-                        redirect('helpdesk/pengajuan');
-                    }
-                }
-
-                $data = [
-                    'no_tiket' => $no_tiket,
-                    'perihal'  => $this->input->post('perihal'),
-                    'file'     => $photo,
-                    'user_id'  => $this->input->post('klien_id'),
-                    'nama'     => $this->input->post('nama_klien'),
-                    'kategori' => $this->input->post('kategori'),
-                    'tags'     => $this->input->post('tags'),
-                    'judul'    => $this->input->post('judul'),
-                    'user_id_hd' => $this->input->post('user_id_hd')
-                ];
-
-                // Remove unwanted HTML tags from data
-                $data = array_map(function ($value) {
-                    return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
-                }, $data);
-
-                $pattern = '/<a\s+href="([^"]+)"/i';
-                $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
-
-                $this->db->insert('tiket_temp', $data);
-                $this->session->set_flashdata('pesan', 'Pelaporan Added!');
+                log_message('error', 'File upload error: ' . $this->upload->display_errors());
+                $this->session->set_flashdata('alert', 'Upload file gagal! ' . strip_tags($this->upload->display_errors()));
                 redirect('helpdesk/pengajuan');
             }
         }
+
+        // Data tiket
+        $data = [
+            'no_tiket'   => $no_tiket,
+            'perihal'    => $this->input->post('perihal'),
+            'file'       => $photo,
+            'user_id'    => $this->input->post('klien_id'),
+            'nama'       => $this->input->post('nama_klien'),
+            'kategori'   => $this->input->post('kategori'),
+            'tags'       => $this->input->post('tags'),
+            'judul'      => $this->input->post('judul'),
+            'user_id_hd' => $this->input->post('user_id_hd')
+        ];
+
+        // Bersihkan tag <p> pembuka & penutup
+        $data = array_map(function ($value) {
+            return preg_replace("/^<p.*?>/", "", preg_replace("|</p>$|", "", $value));
+        }, $data);
+
+        // Hilangkan link dari perihal
+        $pattern = '/<a\s+href="([^"]+)"/i';
+        $data['perihal'] = preg_replace($pattern, '', $data['perihal']);
+
+        // Simpan ke DB
+        $this->db->insert('tiket_temp', $data);
+
+        $this->session->set_flashdata('pesan', 'Pelaporan Added!');
+        redirect('helpdesk/pengajuan');
     }
+
 
 
     public function upload_tiket()
