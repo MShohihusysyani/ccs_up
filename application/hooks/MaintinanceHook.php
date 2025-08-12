@@ -6,11 +6,11 @@ class MaintinanceHook
     public function check_maintenance()
     {
         // Aktifkan/Nonaktifkan mode maintenance
-        $is_maintenance = FALSE;
+        $is_maintenance = TRUE;
 
         // URL yang masih diizinkan saat maintenance
         $allowed_routes = [
-            'errors/under_maintenance',
+            'hooks/under_maintenance',
         ];
 
         // Ambil URI dari request, misalnya: /ccs_up/auth
