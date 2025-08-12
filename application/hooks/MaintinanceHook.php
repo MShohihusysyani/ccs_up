@@ -30,7 +30,7 @@ class MaintinanceHook
 
         if ($is_maintenance && !in_array($uri, $allowed_routes)) {
             // Langsung tampilkan view tanpa CI loader
-            include(APPPATH . 'views/errors/under_maintinance.php');
+            include(APPPATH . 'hooks/under_maintinance.php');
             exit;
         }
     }
