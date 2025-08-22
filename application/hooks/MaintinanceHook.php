@@ -6,7 +6,7 @@ class MaintinanceHook
     public function check_maintenance()
     {
         // Aktifkan/Nonaktifkan mode maintenance
-        $is_maintenance = TRUE;
+        $is_maintenance = FALSE;
 
         // URL yang masih diizinkan saat maintenance
         $allowed_routes = [

@@ -189,6 +189,13 @@
                         </a>
                     </li>
 
+                    <li class="<?= ($this->uri->segment(1) == 'chat') ? 'active' : '' ?>">
+                        <a href="<?= site_url('chat') ?>">
+                            <i class="material-icons">comments</i>
+                            <span>Chat</span>
+                        </a>
+                    </li>
+
 
                     <!-- <li>
                         <a href="javascript:void(0);" class="menu-toggle">

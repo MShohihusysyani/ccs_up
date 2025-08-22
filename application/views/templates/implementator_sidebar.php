@@ -190,6 +190,12 @@
                         </a>
                     </li>
 
+                    <li class="<?= ($this->uri->segment(1) == 'chat' && $this->uri->segment(2) == 'inbox') ? 'active' : '' ?>">
+                        <a href="<?= site_url('chat') ?>">
+                            <i class="material-icons">comments</i><span>Chat</span>
+                        </a>
+                    </li>
+
 
                     <li class="header">LABELS</li>
                     <li>
