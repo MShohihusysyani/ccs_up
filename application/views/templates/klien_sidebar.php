@@ -189,12 +189,12 @@
                         </a>
                     </li>
 
-                    <li class="<?= ($this->uri->segment(1) == 'chat') ? 'active' : '' ?>">
+                    <!-- <li class="<?= ($this->uri->segment(1) == 'chat') ? 'active' : '' ?>">
                         <a href="<?= site_url('chat') ?>">
                             <i class="material-icons">comments</i>
                             <span>Chat</span>
                         </a>
-                    </li>
+                    </li> -->
 
 
                     <!-- <li>
