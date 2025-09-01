@@ -201,7 +201,7 @@ class Export extends CI_Controller
             <tr>
                 <th>No</th>
                 <th>No Tiket</th>
-                <th>Judul</th>
+                <th>Perihal</th>
                 <th>BPR/Klien</th>
                 <th>Kategori</th>
                 <th>Priority</th>

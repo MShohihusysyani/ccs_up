@@ -186,10 +186,12 @@
                                                     <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
                                                     <td style="display: flex; gap: 10px; justify-content: flex-end;">
+                                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>chat/room/<?= $dp['no_tiket']; ?>" target="_blank" title="Buka Room Chat">
+                                                            <i class="material-icons">chat</i>
+                                                        </a>
                                                         <a class="btn btn-sm btn-info tombol-fokus" data-type="success" href="<?= base_url() ?>implementator/mode_fokus/<?= $dp['id_pelaporan']; ?>"><i class="material-icons"></i>
                                                             Fokus
                                                         </a>
-
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>implementator/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
 
                                                         <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>

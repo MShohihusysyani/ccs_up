@@ -592,4 +592,14 @@ class Pelaporan_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    public function get_by_no_tiket($id)
+    {
+        // Asumsi nama tabel Anda adalah 'pelaporan' atau sesuaikan
+        $this->db->from('pelaporan');
+        $this->db->where('no_tiket', $id);
+
+        // PENTING: Gunakan ->row() untuk mengambil satu baris data sebagai object
+        return $this->db->get()->row();
+    }
 }

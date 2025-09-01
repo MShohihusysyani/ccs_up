@@ -139,16 +139,19 @@
                                                                 <i class="material-icons">edit</i> Edit
                                                             </div>
                                                         </div> -->
+                                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>chat/room/<?= $dp['no_tiket']; ?>" target="_blank" title="Buka Room Chat">
+                                                            <i class="material-icons">chat</i>
+                                                        </a>
                                                         <a class="btn btn-sm btn-info tombol-fokus" data-type="success" href="<?= base_url() ?>helpdesk/mode_fokus/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">done</i>
                                                             Fokus
                                                         </a>
 
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporan/<?= $dp['id_pelaporan']; ?>">
-                                                            <i class="material-icons">visibility</i> Detail
+                                                            <i class="material-icons">visibility</i>
                                                         </a>
 
                                                         <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>">
-                                                            <i class="material-icons">print</i> Print Detail
+                                                            <i class="material-icons">print</i>
                                                         </a>
 
                                                         <!-- <a class="btn btn-sm btn-info" href="<?= base_url() ?>helpdesk/forward_tiket/<?= $dp['id_pelaporan']; ?>">

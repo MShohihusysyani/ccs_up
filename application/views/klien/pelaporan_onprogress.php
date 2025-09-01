@@ -210,8 +210,11 @@
                                                 <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
                                                 <td style="display: flex; gap: 10px; justify-content: flex-end;">
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>klien/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span>Detail</a>
-                                                    <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span>Print Detail</a>
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>chat/room/<?= $dp['no_tiket']; ?>" target="_blank" title="Buka Room Chat">
+                                                        <i class="material-icons">chat</i>
+                                                    </a>
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>klien/detail_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span></a>
+                                                    <a class="btn btn-sm btn-primary" href="<?= base_url() ?>export/print_detail/<?= $dp['no_tiket']; ?>"><i class="material-icons">print</i> <span class="icon-name"></span></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

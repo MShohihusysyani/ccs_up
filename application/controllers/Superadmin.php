@@ -548,6 +548,9 @@ class Superadmin extends CI_Controller
             // Tombol Aksi
             $row[] = '
             <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <a class="btn btn-sm btn-info" href="' . base_url('chat/room/' . $dp->no_tiket) . '" target="_blank" title="Buka Room Chat">
+                <i class="material-icons">chat</i>
+            </a>
                 <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
                     data-id_pelaporan="' . $dp->id_pelaporan . '" 
                     data-no_tiket="' . $dp->no_tiket . '" 

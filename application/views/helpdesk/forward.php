@@ -154,8 +154,11 @@
                                                     <?php endif; ?>
                                                 </td>
 
-                                                <td>
-                                                    <a class="btn btn-xs btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span> Detail</a>
+                                                <td style="display: flex; gap: 10px; justify-content: flex-end;">
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>chat/room/<?= $dp['no_tiket']; ?>" target="_blank" title="Buka Room Chat">
+                                                        <i class="material-icons">chat</i>
+                                                    </a>
+                                                    <a class="btn btn-xs btn-info" href="<?= base_url() ?>helpdesk/detail_pelaporann/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i> <span class="icon-name"></span></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
