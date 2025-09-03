@@ -248,11 +248,28 @@ class Helpdesk extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Helpdesk_model', 'helpdesk_model');
         $this->load->model('User_model', 'user_model');
-        $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->helpdesk_model->getKlienPelaporanHD();
-
-        $this->load->model('User_model', 'user_model');
         $data['namaspv'] = $this->user_model->getNamaSpv();
+        // --- TAMBAHAN BARU ---
+        $this->load->model('Chat_model'); // Load Chat_model
+        $my_id = $this->session->userdata('id_user');
+        // --- AKHIR TAMBAHAN ---
+        $data['user'] = $this->user_model->getDataUser();
+        // $data['datapelaporan'] = $this->helpdesk_model->getKlienPelaporanHD();
+
+        // Ambil data pelaporan seperti biasa
+        $datapelaporan = $this->helpdesk_model->getKlienPelaporanHD();
+
+
+        // --- MODIFIKASI: Loop untuk menambahkan unread_count ---
+        if (!empty($datapelaporan)) {
+            foreach ($datapelaporan as &$dp) { // Gunakan reference (&) agar array asli termodifikasi
+                // Panggil model untuk menghitung pesan belum dibaca untuk setiap tiket
+                $dp['unread_count'] = $this->Chat_model->get_unread_ccs_messages_count($dp['id_pelaporan'], $my_id);
+            }
+        }
+        // --- AKHIR MODIFIKASI ---
+
+        $data['datapelaporan'] = $datapelaporan;
 
         $this->load->view('templates/header');
         $this->load->view('templates/helpdesk_sidebar');
@@ -299,11 +316,27 @@ class Helpdesk extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Helpdesk_model', 'helpdesk_model');
         $this->load->model('User_model', 'user_model');
+
+        // --- TAMBAHAN BARU ---
+        $this->load->model('Chat_model'); // Load Chat_model
+        $my_id = $this->session->userdata('id_user');
+        // --- AKHIR TAMBAHAN ---
+
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->helpdesk_model->getDataForward();
 
+        // Ambil data pelaporan seperti biasa
+        $datapelaporan = $this->helpdesk_model->getDataForward();
 
-        $this->load->model('User_model', 'user_model');
+        // --- MODIFIKASI: Loop untuk menambahkan unread_count ---
+        if (!empty($datapelaporan)) {
+            foreach ($datapelaporan as &$dp) { // Gunakan reference (&) agar array asli termodifikasi
+                // Panggil model untuk menghitung pesan belum dibaca untuk setiap tiket
+                $dp['unread_count'] = $this->Chat_model->get_unread_ccs_messages_count($dp['id_pelaporan'], $my_id);
+            }
+        }
+        // --- AKHIR MODIFIKASI ---
+
+        $data['datapelaporan'] = $datapelaporan; // Kirim data yang sudah dimodifikasi ke view
         $data['namaspv'] = $this->user_model->getNamaSpv();
 
         $this->load->view('templates/header');

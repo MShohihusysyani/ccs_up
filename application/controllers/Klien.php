@@ -294,7 +294,29 @@ class Klien extends CI_Controller
         $this->load->model('M_Klien', 'M_Klien');
         $this->load->model('User_model', 'user_model');
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->M_Klien->getDataHandled();
+        // --- TAMBAHAN BARU ---
+        $this->load->model('Chat_model'); // Load Chat_model
+        $my_id = $this->session->userdata('id_user');
+        // --- AKHIR TAMBAHAN ---
+
+        $data['user'] = $this->user_model->getDataUser();
+
+
+        // Ambil data pelaporan seperti biasa
+        $datapelaporan = $this->M_Klien->getDataHandled();
+        // $data['datapelaporan'] = $this->Implementator_model->getDataHandled();
+
+        // --- MODIFIKASI: Loop untuk menambahkan unread_count ---
+        if (!empty($datapelaporan)) {
+            foreach ($datapelaporan as &$dp) { // Gunakan reference (&) agar array asli termodifikasi
+                // Panggil model untuk menghitung pesan belum dibaca untuk setiap tiket
+                $dp['unread_count'] = $this->Chat_model->get_unread_ccs_messages_count($dp['id_pelaporan'], $my_id);
+            }
+        }
+        // --- AKHIR MODIFIKASI ---
+
+        $data['datapelaporan'] = $datapelaporan;
+        // $data['datapelaporan'] = $this->M_Klien->getDataHandled();
 
         $this->load->view('templates/header');
         $this->load->view('templates/klien_sidebar');

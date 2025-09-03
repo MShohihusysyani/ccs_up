@@ -22,10 +22,30 @@ class Implementator extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('Implementator_model', 'Implementator_model');
-
         $this->load->model('User_model', 'user_model');
+
+        // --- TAMBAHAN BARU ---
+        $this->load->model('Chat_model'); // Load Chat_model
+        $my_id = $this->session->userdata('id_user');
+        // --- AKHIR TAMBAHAN ---
+
         $data['user'] = $this->user_model->getDataUser();
-        $data['datapelaporan'] = $this->Implementator_model->getDataHandled();
+
+
+        // Ambil data pelaporan seperti biasa
+        $datapelaporan = $this->implementator_model->getDataHandled();
+        // $data['datapelaporan'] = $this->Implementator_model->getDataHandled();
+
+        // --- MODIFIKASI: Loop untuk menambahkan unread_count ---
+        if (!empty($datapelaporan)) {
+            foreach ($datapelaporan as &$dp) { // Gunakan reference (&) agar array asli termodifikasi
+                // Panggil model untuk menghitung pesan belum dibaca untuk setiap tiket
+                $dp['unread_count'] = $this->Chat_model->get_unread_ccs_messages_count($dp['id_pelaporan'], $my_id);
+            }
+        }
+        // --- AKHIR MODIFIKASI ---
+
+        $data['datapelaporan'] = $datapelaporan;
 
         $this->load->view('templates/header');
         $this->load->view('templates/implementator_sidebar');

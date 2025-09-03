@@ -202,4 +202,63 @@ class Chat_model extends CI_Model
 
         return $query->row(); // Mengembalikan satu baris objek
     }
+
+    public function get_unread_ccs_messages_count($tiket_id, $user_id)
+    {
+        // 1. Dapatkan daftar ID pesan di tiket ini yang tidak dikirim oleh user_id
+        $this->db->select('id');
+        $this->db->from('chat');
+        $this->db->where('tiket_id', $tiket_id);
+        $this->db->where('sender_id !=', $user_id);
+        $all_messages_query = $this->db->get();
+
+        if ($all_messages_query->num_rows() == 0) {
+            return 0; // Tidak ada pesan dari orang lain
+        }
+
+        $message_ids = array_column($all_messages_query->result_array(), 'id');
+
+        // 2. Hitung berapa banyak dari pesan di atas yang SUDAH dibaca oleh user_id
+        $this->db->from('chat_read');
+        $this->db->where('user_id', $user_id);
+        $this->db->where_in('chat_id', $message_ids);
+        $read_count = $this->db->count_all_results();
+
+        // 3. Jumlah belum dibaca = (Total pesan dari orang lain) - (yang sudah dibaca)
+        return count($message_ids) - $read_count;
+    }
+
+    /**
+     * Menandai semua pesan dalam sebuah tiket sebagai sudah dibaca oleh user tertentu.
+     * Fungsi ini akan memasukkan data ke tabel chat_read_status.
+     * @param int $tiket_id ID dari pelaporan/tiket.
+     * @param int $user_id ID dari user yang sedang login.
+     */
+    public function mark_ccs_messages_as_read($tiket_id, $user_id)
+    {
+        // Query untuk mengambil semua ID pesan di tiket ini yang BELUM ADA
+        // di tabel chat_read_status untuk user ini.
+        $subquery = "SELECT id FROM chat WHERE tiket_id = " . $this->db->escape($tiket_id) . " 
+                     AND sender_id != " . $this->db->escape($user_id) . " 
+                     AND id NOT IN (
+                        SELECT chat_id FROM chat_read WHERE user_id = " . $this->db->escape($user_id) . "
+                     )";
+
+        $messages_to_mark = $this->db->query($subquery)->result_array();
+
+        if (empty($messages_to_mark)) {
+            return; // Tidak ada pesan baru untuk ditandai
+        }
+
+        $batch_data = [];
+        foreach ($messages_to_mark as $message) {
+            $batch_data[] = [
+                'chat_id' => $message['id'],
+                'user_id' => $user_id
+            ];
+        }
+
+        // Insert data secara batch untuk efisiensi
+        $this->db->insert_batch('chat_read', $batch_data);
+    }
 }

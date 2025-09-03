@@ -135,96 +135,53 @@ class Chat extends CI_Controller
     }
 
     // Fungsi untuk menampilkan halaman room chat CCS
-    // public function room($ccs_id)
-    // {
-    //     echo "<pre style='background-color: #333; color: #eee; padding: 20px; font-family: monospace;'>";
-    //     echo "<h1>--- SESI DEBUGGING HAK AKSES ---</h1>";
-
-    //     $my_id = $this->session->userdata('id_user');
-    //     $allowed_users = $this->Chat_model->get_involved_users_by_ccs_id($ccs_id);
-
-    //     echo "<h3>ID Saya (yang sedang login):</h3>";
-    //     var_dump($my_id);
-
-    //     echo "<hr>";
-
-    //     echo "<h3>Daftar ID User yang diizinkan untuk tiket ini (dari Model):</h3>";
-    //     var_dump($allowed_users);
-
-    //     echo "<hr>";
-
-    //     // Kita lakukan pengecekan secara manual untuk melihat hasilnya
-    //     $is_allowed = in_array($my_id, $allowed_users);
-    //     echo "<h3>Apakah ID saya ada di dalam daftar di atas?</h3>";
-    //     var_dump($is_allowed);
-
-    //     echo "<hr>";
-    //     echo "<h2>--- AKHIR DEBUGGING ---</h2>";
-    //     echo "</pre>";
-
-    //     die(); // Hentikan eksekusi di sini agar kita bisa lihat hasilnya.
-    // }
-    // public function room($ccs_id)
-    // {
-    //     // Pastikan Anda punya model untuk mengambil data tiket/ccs
-    //     // Ganti 'Serversidehandle_model' sesuai dengan nama model Anda yang benar
-    //     $this->load->model('Serversidehandle_model');
-
-    //     // Ganti 'get_by_id_pelaporan' sesuai fungsi di model Anda untuk mengambil 1 tiket
-    //     $ccs_data = $this->Serversidehandle_model->get_by_id_pelaporan($ccs_id);
-
-    //     if (!$ccs_data) {
-    //         // Jika data tiket tetap tidak ditemukan, tampilkan pesan error yang lebih jelas
-    //         die("Error: Tidak dapat menemukan data tiket dengan ID: " . $ccs_id . ". Pastikan nama model dan fungsi sudah benar.");
-    //     }
-
-    //     // Data yang akan dikirim ke view baru kita
-    //     $data_to_view = [
-    //         'ccs_data' => $ccs_data
-    //     ];
-
-    //     // Pastikan nama view Anda benar (chat_room.php)
-    //     $this->load->view('chat_room', $data_to_view);
-    // }
 
     public function room($no_tiket)
     {
-        // 1. Ambil data tiket lengkap berdasarkan no_tiket
         $this->load->model('Pelaporan_model');
         $ccs_data = $this->Pelaporan_model->get_by_no_tiket($no_tiket);
 
-        // Jika tiket tidak ada di database, langsung tampilkan 404
         if (!$ccs_data) {
             show_404();
             return;
         }
 
-        // Ambil data user yang sedang login
         $my_id = $this->session->userdata('id_user');
         $my_role = $this->session->userdata('role');
-
-        // Daftar role yang memiliki akses super (Superadmin, SPV1, SPV2)
         $super_access_roles = ['3', '6', '9'];
-
-        // Cek 1: Apakah user yang login memiliki role super?
         $has_super_access = in_array($my_role, $super_access_roles);
 
         if (!$has_super_access) {
-
             $id_pelaporan = $ccs_data->id_pelaporan;
-
-            // Lakukan pemeriksaan hak akses menggunakan ID numerik
             $allowed_users = $this->Chat_model->get_allowed_users($id_pelaporan);
-            $is_allowed = in_array($my_id, $allowed_users);
-
-            if (!$is_allowed) {
+            if (!in_array($my_id, $allowed_users)) {
                 show_error('Anda tidak memiliki izin untuk mengakses ruang obrolan ini.', 403, 'Akses Ditolak');
                 return;
             }
         }
 
+        // Tandai semua pesan sebagai sudah dibaca
+        $this->Chat_model->mark_ccs_messages_as_read($ccs_data->id_pelaporan, $my_id);
 
-        // 4. Jika lolos, kirim data tiket ke view
+        // --- BAGIAN BARU: Kirim sinyal untuk menghapus badge di halaman forward ---
+        try {
+            $options = [
+                'cluster' => PUSHER_APP_CLUSTER,
+                'useTLS'  => true
+            ];
+            $pusher = new Pusher(PUSHER_APP_KEY, PUSHER_APP_SECRET, PUSHER_APP_ID, $options);
+
+            $notification_channel = 'user-notifications-' . $my_id;
+            $notification_data = [
+                'tiket_id'     => (int)$ccs_data->id_pelaporan,
+                'unread_count' => 0 // Kirim 0 untuk menghapus badge
+            ];
+            $pusher->trigger($notification_channel, 'update-badge', $notification_data);
+        } catch (Exception $e) {
+            // Abaikan jika Pusher gagal, ini bukan fungsionalitas kritis
+        }
+        // --- AKHIR BAGIAN BARU ---
+
         $data_to_view = [
             'ccs_data' => $ccs_data
         ];
@@ -242,85 +199,28 @@ class Chat extends CI_Controller
     }
 
     // API endpoint untuk mengirim pesan di room chat CCS
-    public function send_ccs_message()
-    {
-        $sender_id = $this->session->userdata('id_user');
-        $ccs_id    = $this->input->post('tiket_id');
-        $message   = $this->input->post('message');
-        // --- TAMBAHKAN: Ambil ID pesan yang dibalas ---
-        $reply_to_id = $this->input->post('reply_to_id');
-
-        // --- MODIFIKASI: Tambahkan reply_to_id ke data yang akan disimpan ---
-        $data = [
-            'sender_id' => $sender_id,
-            'message'   => $message,
-            'tiket_id'  => $ccs_id,
-            'status'    => 'read'
-        ];
-
-        // Hanya tambahkan reply_to_id jika ada (bukan pesan biasa)
-        if (!empty($reply_to_id)) {
-            $data['reply_to_id'] = $reply_to_id;
-        }
-
-        // Simpan pesan dan dapatkan ID dari pesan yang baru saja di-insert
-        $insert_id = $this->Chat_model->save_ccs_message($data);
-
-        if ($insert_id) {
-            try {
-                $options = [
-                    'cluster' => PUSHER_APP_CLUSTER,
-                    'useTLS'  => true
-                ];
-                $pusher = new Pusher(PUSHER_APP_KEY, PUSHER_APP_SECRET, PUSHER_APP_ID, $options);
-
-                $channel = 'chat-room-' . $ccs_id;
-
-                // --- MODIFIKASI: Siapkan data untuk Pusher ---
-                $push_data = [
-                    'id'          => $insert_id, // Kirim ID pesan baru agar UI bisa update
-                    'sender_id'   => $sender_id,
-                    'nama_user'   => $this->session->userdata('nama_user'),
-                    'message'     => $message,
-                    'created_at'  => date('c'), // Format ISO 8601 yang lebih baik untuk JS
-                    'reply_to'    => null // Default 'reply_to' adalah null
-                ];
-
-                // Jika ini adalah balasan, ambil detail pesan asli untuk dikirim via Pusher
-                if (!empty($reply_to_id)) {
-                    // Anda perlu fungsi baru di model untuk mengambil detail ini
-                    $original_message = $this->Chat_model->get_message_details_for_reply($reply_to_id);
-                    if ($original_message) {
-                        $push_data['reply_to'] = [
-                            'id'        => $original_message->id,
-                            'nama_user' => $original_message->nama_user,
-                            'message'   => $original_message->message
-                        ];
-                    }
-                }
-
-                $pusher->trigger($channel, 'new-message', $push_data);
-
-                echo json_encode(['status' => 'success', 'insert_id' => $insert_id]);
-            } catch (Exception $e) {
-                echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-            }
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan pesan']);
-        }
-    }
     // public function send_ccs_message()
     // {
     //     $sender_id = $this->session->userdata('id_user');
     //     $ccs_id    = $this->input->post('tiket_id');
     //     $message   = $this->input->post('message');
+    //     // --- TAMBAHKAN: Ambil ID pesan yang dibalas ---
+    //     $reply_to_id = $this->input->post('reply_to_id');
 
+    //     // --- MODIFIKASI: Tambahkan reply_to_id ke data yang akan disimpan ---
     //     $data = [
     //         'sender_id' => $sender_id,
     //         'message'   => $message,
-    //         'tiket_id'    => $ccs_id,
-    //         'status'    => 'read' // Pesan di room chat langsung dianggap 'read'
+    //         'tiket_id'  => $ccs_id,
+    //         'status'    => 'read'
     //     ];
+
+    //     // Hanya tambahkan reply_to_id jika ada (bukan pesan biasa)
+    //     if (!empty($reply_to_id)) {
+    //         $data['reply_to_id'] = $reply_to_id;
+    //     }
+
+    //     // Simpan pesan dan dapatkan ID dari pesan yang baru saja di-insert
     //     $insert_id = $this->Chat_model->save_ccs_message($data);
 
     //     if ($insert_id) {
@@ -331,18 +231,34 @@ class Chat extends CI_Controller
     //             ];
     //             $pusher = new Pusher(PUSHER_APP_KEY, PUSHER_APP_SECRET, PUSHER_APP_ID, $options);
 
-    //             // Channel Pusher unik untuk setiap room chat CCS
     //             $channel = 'chat-room-' . $ccs_id;
 
+    //             // --- MODIFIKASI: Siapkan data untuk Pusher ---
     //             $push_data = [
+    //                 'id'          => $insert_id, // Kirim ID pesan baru agar UI bisa update
     //                 'sender_id'   => $sender_id,
-    //                 'nama_user'   => $this->session->userdata('nama_user'), // Kirim juga nama pengirim
+    //                 'nama_user'   => $this->session->userdata('nama_user'),
     //                 'message'     => $message,
-    //                 'created_at'  => date('c'),
+    //                 'created_at'  => date('c'), // Format ISO 8601 yang lebih baik untuk JS
+    //                 'reply_to'    => null // Default 'reply_to' adalah null
     //             ];
+
+    //             // Jika ini adalah balasan, ambil detail pesan asli untuk dikirim via Pusher
+    //             if (!empty($reply_to_id)) {
+    //                 // Anda perlu fungsi baru di model untuk mengambil detail ini
+    //                 $original_message = $this->Chat_model->get_message_details_for_reply($reply_to_id);
+    //                 if ($original_message) {
+    //                     $push_data['reply_to'] = [
+    //                         'id'        => $original_message->id,
+    //                         'nama_user' => $original_message->nama_user,
+    //                         'message'   => $original_message->message
+    //                     ];
+    //                 }
+    //             }
+
     //             $pusher->trigger($channel, 'new-message', $push_data);
 
-    //             echo json_encode(['status' => 'success']);
+    //             echo json_encode(['status' => 'success', 'insert_id' => $insert_id]);
     //         } catch (Exception $e) {
     //             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
     //         }
@@ -350,105 +266,92 @@ class Chat extends CI_Controller
     //         echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan pesan']);
     //     }
     // }
+    // application/controllers/Chat.php
+
+    public function send_ccs_message()
+    {
+        $sender_id   = $this->session->userdata('id_user');
+        $ccs_id      = $this->input->post('tiket_id'); // Ini adalah id_pelaporan
+        $message     = $this->input->post('message');
+        $reply_to_id = $this->input->post('reply_to_id');
+
+        $data = [
+            'sender_id' => $sender_id,
+            'message'   => $message,
+            'tiket_id'  => $ccs_id,
+            'status'    => 'read' // Dianggap langsung read untuk group chat
+        ];
+
+        if (!empty($reply_to_id)) {
+            $data['reply_to_id'] = $reply_to_id;
+        }
+
+        $insert_id = $this->Chat_model->save_ccs_message($data);
+
+        if ($insert_id) {
+            try {
+                $options = [
+                    'cluster' => PUSHER_APP_CLUSTER,
+                    'useTLS'  => true
+                ];
+                $pusher = new Pusher(PUSHER_APP_KEY, PUSHER_APP_SECRET, PUSHER_APP_ID, $options);
+
+                // =======================================================================
+                // BAGIAN 1: Mengirim pesan ke Chat Room (PENTING UNTUK NOTIFIKASI DESKTOP)
+                // =======================================================================
+                $chat_room_channel = 'chat-room-' . $ccs_id;
+
+                // Siapkan data pesan lengkap untuk dikirim ke chat room
+                $original_message_details = null;
+                if (!empty($reply_to_id)) {
+                    $original_message_details = $this->Chat_model->get_message_details_for_reply($reply_to_id);
+                }
+                $push_data = [
+                    'id'          => $insert_id,
+                    'sender_id'   => $sender_id,
+                    'nama_user'   => $this->session->userdata('nama_user'),
+                    'message'     => $message,
+                    'created_at'  => date('c'),
+                    'reply_to'    => $original_message_details ? [
+                        'id'        => $original_message_details->id,
+                        'nama_user' => $original_message_details->nama_user,
+                        'message'   => $original_message_details->message
+                    ] : null
+                ];
+
+                // Trigger event 'new-message' yang akan diterima oleh chat_room.php
+                $pusher->trigger($chat_room_channel, 'new-message', $push_data);
 
 
-    // public function send_message()
-    // {
-    //     // ... (kode untuk mengambil data dan menyimpan pesan tetap sama)
-    //     $sender_id = $this->session->userdata('id_user');
-    //     $receiver_id = $this->input->post('receiver_id');
-    //     $message = $this->input->post('message');
-    //     $data = [
-    //         'sender_id'   => $sender_id,
-    //         'receiver_id' => $receiver_id,
-    //         'message'     => $message,
-    //     ];
-    //     $insert_id = $this->Chat_model->save_message($data);
+                // ===============================================================
+                // BAGIAN 2: Mengirim sinyal update badge ke halaman Forward
+                // ===============================================================
+                $involved_users = $this->Chat_model->get_allowed_users($ccs_id);
+                foreach ($involved_users as $user_id) {
+                    // Jangan kirim notif badge ke diri sendiri
+                    if ($user_id == $sender_id) {
+                        continue;
+                    }
 
-    //     if ($insert_id) {
-    //         try {
-    //             $options = [
-    //                 'cluster' => PUSHER_APP_CLUSTER,
-    //                 'useTLS' => true
-    //             ];
-    //             $pusher = new Pusher(PUSHER_APP_KEY, PUSHER_APP_SECRET, PUSHER_APP_ID, $options);
+                    $unread_count = $this->Chat_model->get_unread_ccs_messages_count($ccs_id, $user_id);
 
-    //             // 1. Trigger ke channel percakapan (untuk realtime chat yang sedang aktif)
-    //             $conversation_channel = 'new-message-' . min($sender_id, $receiver_id) . '-' . max($sender_id, $receiver_id);
-    //             date_default_timezone_set('Asia/Jakarta');
-    //             $push_data = [
-    //                 'sender_id'   => $sender_id,
-    //                 'receiver_id' => (int)$receiver_id,
-    //                 'message'     => $message,
-    //                 'created_at'  => date('Y-m-d H:i:s'),
-    //             ];
-    //             $pusher->trigger($conversation_channel, 'new-message', $push_data);
+                    $notification_channel = 'user-notifications-' . $user_id;
+                    $notification_data = [
+                        'tiket_id'     => (int)$ccs_id,
+                        'unread_count' => $unread_count
+                    ];
 
-    //             // **BAGIAN BARU**: Trigger notifikasi ke channel personal penerima
-    //             $notification_channel = 'new-message-' . $receiver_id;
-    //             $unread_count = $this->Chat_model->count_unread_messages_from_sender($receiver_id, $sender_id);
-    //             $notification_data = [
-    //                 'sender_id'    => $sender_id,
-    //                 'message'      => $message,
-    //                 'unread_count' => $unread_count
-    //             ];
-    //             $pusher->trigger($notification_channel, 'new-message', $notification_data);
+                    // Trigger event 'update-badge' yang akan diterima oleh forward.php
+                    $pusher->trigger($notification_channel, 'update-badge', $notification_data);
+                }
 
-    //             echo json_encode(['status' => 'success']);
-    //         } catch (Exception $e) {
-    //             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-    //         }
-    //     } else {
-    //         echo json_encode(['status' => 'error', 'message' => 'Failed to save message']);
-    //     }
-    // }
-    // public function mark_as_read($partner_id)
-    // {
-    //     $my_id = $this->session->userdata('id_user');
-    //     $this->Chat_model->mark_messages_as_read($my_id, $partner_id);
-    //     echo json_encode(['status' => 'success']);
-    // }
-    // public function send_message()
-    // {
-    //     // Ambil data dari POST request
-    //     $sender_id = $this->session->userdata('id_user');
-    //     $receiver_id = $this->input->post('receiver_id');
-    //     $message = $this->input->post('message');
-
-    //     // Simpan pesan ke database
-    //     $data = [
-    //         'sender_id'   => $sender_id,
-    //         'receiver_id' => $receiver_id,
-    //         'message'     => $message,
-    //     ];
-    //     $insert_id = $this->Chat_model->save_message($data);
-
-    //     if ($insert_id) {
-    //         // Jika berhasil disimpan, trigger event ke Pusher
-    //         require FCPATH . 'vendor/autoload.php';
-    //         $options = [
-    //             'cluster' => 'ap1',
-    //             'useTLS' => true
-    //         ];
-    //         $pusher = new Pusher('22626787fd399de4d80a', 'a5543e5d25fcf94b6aaa', '1988550', $options);
-
-    //         // Tentukan nama channel yang konsisten untuk 2 user
-    //         $channel_name = 'new-message-' . min($sender_id, $receiver_id) . '-' . max($sender_id, $receiver_id);
-
-    //         // Data yang akan dikirim
-    //         $push_data = [
-    //             'sender_id'   => $sender_id,
-    //             'receiver_id' => $receiver_id,
-    //             'message'     => $message,
-    //             'created_at'  => date('Y-m-d H:i:s'),
-    //         ];
-
-    //         // Kirim event 'new-message' ke channel
-    //         $pusher->trigger($channel_name, 'new-message', $push_data);
-
-    //         echo json_encode(['status' => 'success']);
-    //     } else {
-    //         echo json_encode(['status' => 'error']);
-    //     }
-    // }
+                // Kirim response sukses ke pengirim pesan
+                echo json_encode(['status' => 'success', 'insert_id' => $insert_id]);
+            } catch (Exception $e) {
+                echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan pesan']);
+        }
+    }
 }
