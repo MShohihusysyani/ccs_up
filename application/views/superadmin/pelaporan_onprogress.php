@@ -1,3 +1,23 @@
+<style>
+    /* CSS BARU UNTUK BADGE */
+    .chat-btn-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .chat-btn-wrapper .badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        padding: 4px 7px;
+        border-radius: 50%;
+        background-color: #F44336;
+        /* Warna merah */
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+    }
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -321,6 +341,50 @@
 </div>
 
 
+<!-- script pusher -->
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ambil ID user yang sedang login dari session PHP
+        const myId = <?= $this->session->userdata('id_user'); ?>;
+
+        // Inisialisasi Pusher
+        const pusher = new Pusher('<?= PUSHER_APP_KEY ?>', {
+            cluster: '<?= PUSHER_APP_CLUSTER ?>',
+            encrypted: true
+        });
+
+        // Subscribe ke channel notifikasi personal
+        const channelName = `user-notifications-${myId}`;
+        const channel = pusher.subscribe(channelName);
+
+        // Bind ke event 'update-badge'
+        channel.bind('update-badge', function(data) {
+            const tiketId = data.tiket_id;
+            const unreadCount = data.unread_count;
+
+            // Cari wrapper tombol chat yang sesuai
+            const chatWrapper = document.getElementById(`chat-wrapper-${tiketId}`);
+            if (!chatWrapper) {
+                return; // Jika baris tiket tidak ada di halaman ini, abaikan
+            }
+
+            // Hapus badge yang sudah ada
+            const existingBadge = chatWrapper.querySelector('.badge');
+            if (existingBadge) {
+                existingBadge.remove();
+            }
+
+            // Jika count > 0, buat dan tambahkan badge baru
+            if (unreadCount > 0) {
+                const newBadge = document.createElement('span');
+                newBadge.className = 'badge';
+                newBadge.textContent = unreadCount;
+                chatWrapper.appendChild(newBadge);
+            }
+        });
+    });
+</script>
 <!-- jQuery and DataTables Scripts -->
 <script type="text/javascript">
     table = $('#example').DataTable({
@@ -504,6 +568,7 @@
 
     });
 </script>
+
 
 <!-- <script type="text/javascript">
     var table = $('#example').DataTable({

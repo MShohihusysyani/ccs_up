@@ -406,84 +406,48 @@ class Superadmin extends CI_Controller
         $this->load->model('User_model', 'user_model');
         $data['namateknisi'] = $this->user_model->getNamaTeknisi();
 
-        $this->load->library('form_validation');
-        $this->load->model('Pelaporan_model', 'pelaporan_model');
-        $this->load->model('Client_model', 'client_model');
+        // Get data from the models
+        $data['klien'] = $this->client_model->getClient();
+        $data['user'] = $this->user_model->getNamaPetugas();
+        $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $tags);
 
-        // Set form validation rules (allow empty)
-        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
-        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
-        $this->form_validation->set_rules('rating', 'rating', 'trim');
-        $this->form_validation->set_rules('tags', 'Tags', 'trim');
-
-        if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
-            $data['errors'] = validation_errors();
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = [];
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/superadmin_sidebar');
-            $this->load->view('superadmin/pelaporan_onprogress', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // Validation passed, retrieve POST data
-            $tanggal_awal  = $this->input->post('tanggal_awal');
-            $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
-            $nama_klien    = $this->input->post('nama_klien');
-            $nama_user     = $this->input->post('nama_user');
-            $tags          = $this->input->post('tags');
-
-            // var data for view 
-            $data['tanggal_awal']  = $tanggal_awal;
-            $data['tanggal_akhir'] = $tanggal_akhir;
-            $data['status_ccs']    = $status_ccs;
-            $data['nama_klien']    = $nama_klien;
-            $data['nama_user']     = $nama_user;
-            $data['tags']          = $tags;
-
-            // Get data from the models
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $tags);
-
-            // Load views with data
-            $this->load->view('templates/header');
-            $this->load->view('templates/superadmin_sidebar');
-            $this->load->view('superadmin/pelaporan_onprogress', $data);
-            $this->load->view('templates/footer');
-        }
+        // Load views with data
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/pelaporan_onprogress', $data);
+        $this->load->view('templates/footer');
     }
 
     public function get_data_handle()
     {
         $this->load->model('Serversidehandle_model', 'serversidehandle_model');
+        $this->load->model('Chat_model'); // <-- pastikan dipanggil di sini juga
+
+        $my_id = $this->session->userdata('id_user');
 
         // Ambil data filter dari POST request
         $filters = array(
-            'tanggal_awal' => $this->input->post('tanggal_awal'),
-            'tanggal_akhir' => $this->input->post('tanggal_akhir'),
-            'nama_klien' => $this->input->post('nama_klien'),
-            'nama_user' => $this->input->post('nama_user'),
-            'tags' => $this->input->post('tags'),
+            'tanggal_awal'   => $this->input->post('tanggal_awal'),
+            'tanggal_akhir'  => $this->input->post('tanggal_akhir'),
+            'nama_klien'     => $this->input->post('nama_klien'),
+            'nama_user'      => $this->input->post('nama_user'),
+            'tags'           => $this->input->post('tags'),
         );
 
-        // Periksa apakah tombol "Semua Data" diklik
         if (isset($_POST['semua_data'])) {
-            // Kosongkan filter
             $filters = array();
         }
+
         $list = $this->serversidehandle_model->get_datatables($filters);
         $data = array();
         $no = isset($_POST['start']) ? $_POST['start'] : 0;
 
         foreach ($list as $dp) {
             $no++;
+
+            // 🔥 Tambahkan unread_count di sini
+            $unread_count = $this->Chat_model->get_unread_ccs_messages_count($dp->id_pelaporan, $my_id);
+
             $row = array();
             $row[] = $no;
             $row[] = $dp->no_tiket;
@@ -493,7 +457,7 @@ class Superadmin extends CI_Controller
             $row[] = $dp->kategori;
             $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
 
-            // Proses nilai prioritas di server-side
+            // priority
             if ($dp->priority == 'Low') {
                 $priority_label = '<span class="label label-info">Low</span>';
             } elseif ($dp->priority == 'Medium') {
@@ -505,7 +469,7 @@ class Superadmin extends CI_Controller
             }
             $row[] = $priority_label;
 
-            // Proses nilai maxday di server-side
+            // maxday
             if ($dp->maxday == '90') {
                 $maxday_label = '<span class="label label-info">90</span>';
             } elseif ($dp->maxday == '60') {
@@ -517,7 +481,7 @@ class Superadmin extends CI_Controller
             }
             $row[] = $maxday_label;
 
-            // Proses nilai status_ccs di server-side
+            // status_ccs
             if ($dp->status_ccs == 'ADDED') {
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
             } elseif ($dp->status_ccs == 'ADDED 2') {
@@ -535,7 +499,7 @@ class Superadmin extends CI_Controller
             }
             $row[] = $status_ccs_label;
 
-            // Proses handle_by
+            // handle_by
             $handle_combined = $dp->handle_by;
             if ($dp->handle_by2) {
                 $handle_combined .= ', ' . $dp->handle_by2;
@@ -545,50 +509,60 @@ class Superadmin extends CI_Controller
             }
             $row[] = $handle_combined;
 
-            // Tombol Aksi
-            $row[] = '
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            <a class="btn btn-sm btn-info" href="' . base_url('chat/room/' . $dp->no_tiket) . '" target="_blank" title="Buka Room Chat">
-                <i class="material-icons">chat</i>
+            // tombol chat
+            $chatBtn = '
+            <div class="chat-btn-wrapper" style="position:relative; display:inline-block;" id="chat-wrapper-' . $dp->id_pelaporan . '">
+                <a class="btn btn-sm btn-info" href="' . base_url('chat/room/' . $dp->no_tiket) . '" target="_blank" title="Buka Room Chat">
+                    <i class="material-icons">chat</i>
+                </a>';
+            if ($unread_count > 0) {
+                $chatBtn .= '<span class="badge">' . $unread_count . '</span>';
+            }
+            $chatBtn .= '</div>';
+
+            // aksi lain
+            $aksi = '
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            ' . $chatBtn . '
+            <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
+                data-id_pelaporan="' . $dp->id_pelaporan . '" 
+                data-no_tiket="' . $dp->no_tiket . '" 
+                data-waktu_pelaporan="' . $dp->waktu_pelaporan . '" 
+                data-nama="' . $dp->nama . '" 
+                data-judul="' . $dp->judul . '" 
+                data-priority="' . $dp->priority . '" 
+                data-maxday="' . $dp->maxday . '" 
+                data-kategori="' . $dp->kategori . '" 
+                data-tags="' . $dp->tags . '" 
+                data-status_ccs="' . $dp->status_ccs . '">
+                <i class="material-icons">edit</i>
+            </button>
+            <a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail_pelaporan/' . $dp->id_pelaporan) . '">
+                <i class="material-icons">visibility</i>
             </a>
-                <button class="btn btn-sm btn-warning edit-helpdesk" data-toggle="modal" data-target="#editModalCP" 
-                    data-id_pelaporan="' . $dp->id_pelaporan . '" 
-                    data-no_tiket="' . $dp->no_tiket . '" 
-                    data-waktu_pelaporan="' . $dp->waktu_pelaporan . '" 
-                    data-nama="' . $dp->nama . '" 
-                    data-judul="' . $dp->judul . '" 
-                    data-priority="' . $dp->priority . '" 
-                    data-maxday="' . $dp->maxday . '" 
-                    data-kategori="' . $dp->kategori . '" 
-                    data-tags="' . $dp->tags . '" 
-                    data-status_ccs="' . $dp->status_ccs . '">
-                    <i class="material-icons">edit</i>
-                </button>
-                <a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail_pelaporan/' . $dp->id_pelaporan) . '">
-                    <i class="material-icons">visibility</i>
-                </a>
-                <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $dp->no_tiket) . '">
-                    <i class="material-icons">print</i>
-                </a>
-            </div>
-            ';
+            <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $dp->no_tiket) . '">
+                <i class="material-icons">print</i>
+            </a>
+        </div>';
+
+            $row[] = $aksi;
 
             $row[] = $dp->mode_fokus == 1 ? 'Fokus' : '';
 
-            // Tambahkan row ke data
             $data[] = $row;
         }
 
         $output = array(
-            "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
-            "recordsTotal" => $this->serversidehandle_model->count_all(),
+            "draw"            => isset($_POST['draw']) ? $_POST['draw'] : 0,
+            "recordsTotal"    => $this->serversidehandle_model->count_all(),
             "recordsFiltered" => $this->serversidehandle_model->count_filtered($filters),
-            "data" => $data,
+            "data"            => $data,
         );
 
-        echo json_encode($output);  // Kirim JSON ke DataTables
+        echo json_encode($output);
         die();
     }
+
 
     public function close()
     {
