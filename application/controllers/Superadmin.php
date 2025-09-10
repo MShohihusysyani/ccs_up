@@ -403,13 +403,12 @@ class Superadmin extends CI_Controller
 
     public function onprogress()
     {
-        $this->load->model('User_model', 'user_model');
         $data['namateknisi'] = $this->user_model->getNamaTeknisi();
 
         // Get data from the models
         $data['klien'] = $this->client_model->getClient();
         $data['user'] = $this->user_model->getNamaPetugas();
-        $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $tags);
+        // $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $nama_klien, $nama_user);
 
         // Load views with data
         $this->load->view('templates/header');
