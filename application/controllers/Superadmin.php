@@ -420,7 +420,7 @@ class Superadmin extends CI_Controller
     public function get_data_handle()
     {
         $this->load->model('Serversidehandle_model', 'serversidehandle_model');
-        $this->load->model('Chat_model'); // <-- pastikan dipanggil di sini juga
+        $this->load->model('Chat_model');
 
         $my_id = $this->session->userdata('id_user');
 

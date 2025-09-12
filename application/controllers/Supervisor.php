@@ -373,9 +373,9 @@ class Supervisor extends CI_Controller
 
     public function fetch_onprogress()
     {
+        $this->load->model('Chat_model');
+        $my_id = $this->session->userdata('id_user');
         $this->load->model('Serversidespvop_model', 'serversidespvop_model');
-        // Ambil data filter dari POST request
-        // Ambil data filter dari POST request
         $filters = array(
             'tanggal_awal' => $this->input->post('tanggal_awal'),
             'tanggal_akhir' => $this->input->post('tanggal_akhir'),
@@ -396,6 +396,10 @@ class Supervisor extends CI_Controller
         foreach ($list as $dp) {
             $no++;
             $row = array();
+
+            // 🔥 Tambahkan unread_count di sini
+            $unread_count = $this->Chat_model->get_unread_ccs_messages_count($dp->id_pelaporan, $my_id);
+
             $row[] = $no;
             $row[] = $dp->no_tiket;
             $row[] = tanggal_indo($dp->waktu_pelaporan);
@@ -455,9 +459,35 @@ class Supervisor extends CI_Controller
                 $handle_combined .= ', ' . $dp->handle_by3;
             }
             $row[] = $handle_combined;
+            // tombol chat (Dropdown Menu)
+            $chatBtn = '
+<div class="btn-group chat-btn-wrapper" id="chat-wrapper-' . $dp->id_pelaporan . '">
+    <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opsi Chat">
+        <i class="material-icons">more_vert</i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li>
+            <a href="' . base_url('chat/room/' . $dp->no_tiket) . '" target="_blank" class="dropdown-item">
+                <i class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 5px;">chat</i> Buka Room Chat
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="dropdown-item mark-as-unread-btn" data-id="' . $dp->id_pelaporan . '">
+                <i class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 5px;">mark_chat_unread</i> Tandai Belum Dibaca
+            </a>
+        </li>
+    </ul>';
+
+            // Tampilkan badge notifikasi di atas tombol dropdown jika ada pesan belum dibaca
+            if ($unread_count > 0) {
+                $chatBtn .= '<span class="badge" style="top: -5px; right: 2px;">' . $unread_count . '</span>';
+            }
+
+            $chatBtn .= '</div>';
             // Tombol aksi dengan URL detail dan print detail
             $row[] = '
         <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            ' . $chatBtn . '
             <a class="btn btn-sm btn-info" href="' . base_url('supervisor/detail_pelaporan/' . $dp->id_pelaporan) . '">
                 <i class="material-icons">visibility</i>
             </a>
