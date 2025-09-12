@@ -261,4 +261,24 @@ class Chat_model extends CI_Model
         // Insert data secara batch untuk efisiensi
         $this->db->insert_batch('chat_read', $batch_data);
     }
+
+    public function mark_ticket_as_unread($id_pelaporan, $id_user)
+    {
+        // Langkah 1: Buat subquery untuk mendapatkan semua id_chat 
+        // yang terkait dengan id_pelaporan ini.
+        // Ini akan menghasilkan string seperti: "(SELECT `id_chat` FROM `chat` WHERE `id_pelaporan` = '12345')"
+        $subquery = $this->db->select('id')
+            ->from('chat')
+            ->where('tiket_id', $id_pelaporan)
+            ->get_compiled_select();
+
+        // Langkah 2: Jalankan query DELETE utama di tabel chat_reads
+        $this->db->where('user_id', $id_user);
+
+        // Gunakan where_in dengan subquery yang sudah kita buat
+        // Parameter ketiga (false) penting agar CodeIgniter tidak menambahkan backtick yang salah di subquery
+        $this->db->where_in('chat_id', $subquery, false);
+
+        return $this->db->delete('chat_read');
+    }
 }

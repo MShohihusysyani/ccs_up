@@ -354,4 +354,75 @@ class Chat extends CI_Controller
             echo json_encode(['status' => 'error', 'message' => 'Gagal menyimpan pesan']);
         }
     }
+
+    // Di dalam controller Chat.php
+    public function mark_as_unread()
+    {
+        // Selalu pastikan output adalah JSON
+        header('Content-Type: application/json');
+
+        try {
+            if (!$this->session->userdata('id_user')) {
+                // Gunakan throw exception untuk error validasi
+                throw new Exception('Akses ditolak. Silakan login terlebih dahulu.', 403);
+            }
+
+            $id_pelaporan = $this->input->post('id_pelaporan');
+            $my_id = $this->session->userdata('id_user');
+
+            if (empty($id_pelaporan)) {
+                throw new Exception('ID Tiket tidak valid atau tidak dikirimkan.', 400);
+            }
+
+            $this->load->model('Chat_model');
+
+            // Pastikan model berhasil di-load
+            if (!isset($this->Chat_model)) {
+                throw new Exception('Gagal memuat Chat_model.');
+            }
+
+            $success = $this->Chat_model->mark_ticket_as_unread($id_pelaporan, $my_id);
+
+            if ($success) {
+                // HITUNG ULANG JUMLAH UNREAD
+                $new_unread_count = $this->Chat_model->get_unread_ccs_messages_count($id_pelaporan, $my_id);
+
+                // KIRIM EVENT PUSHER
+                // Pastikan vendor/autoload.php ada dan konstanta Pusher sudah di-set
+                require_once FCPATH . 'vendor/autoload.php';
+                $options = array(
+                    'cluster' => PUSHER_APP_CLUSTER,
+                    'useTLS' => true
+                );
+                $pusher = new Pusher(
+                    PUSHER_APP_KEY,
+                    PUSHER_APP_SECRET,
+                    PUSHER_APP_ID,
+                    $options
+                );
+
+                $data['tiket_id'] = $id_pelaporan;
+                $data['unread_count'] = $new_unread_count;
+                $channelName = 'user-notifications-' . $my_id;
+                $pusher->trigger($channelName, 'update-badge', $data);
+
+                $response = ['status' => 'success', 'message' => 'Chat berhasil ditandai sebagai belum dibaca.'];
+                echo json_encode($response);
+            } else {
+                // Jika $this->db->delete() mengembalikan false
+                throw new Exception('Gagal menandai chat di database, mungkin data tidak ada.');
+            }
+        } catch (Exception $e) {
+            // Tangkap semua error (PHP error, Pusher error, dll) dan kirim sebagai JSON
+            // http_response_code($e->getCode() ?: 500); // Set status kode HTTP
+            $error_response = [
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ];
+            echo json_encode($error_response);
+        }
+
+        // Hentikan eksekusi setelah mengirim JSON
+        die();
+    }
 }

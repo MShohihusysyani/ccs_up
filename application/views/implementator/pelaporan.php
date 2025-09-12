@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     .table .current-task {
         background-color: #d1e7dd !important;
         /* Hijau muda */
@@ -22,7 +22,59 @@
         font-size: 10px;
         font-weight: bold;
     }
+</style> -->
+<style>
+    .table .current-task {
+        background-color: #d1e7dd !important;
+        /* Hijau muda */
+    }
+
+    /* Letakkan ini di file CSS Anda atau di dalam tag <style> di view */
+    .chat-btn-wrapper {
+        position: relative;
+        /* Wajib ada, sebagai acuan untuk badge */
+        display: inline-flex;
+        /* Agar wrapper pas dengan ukuran tombol */
+        vertical-align: middle;
+    }
+
+    .chat-btn-wrapper .badge {
+        position: absolute;
+        /* Posisi 'melayang' di atas wrapper */
+        top: -8px;
+        /* Atur posisi vertikal (sedikit ke atas dari sudut) */
+        right: -8px;
+        /* Atur posisi horizontal (sedikit ke kanan dari sudut) */
+
+        /* ===================================================================== */
+        /* PENTING: Angka ini membawa badge ke lapisan paling atas */
+        z-index: 10;
+        /* ===================================================================== */
+
+        /* Styling tambahan agar terlihat bagus seperti di WA */
+        padding: 4px;
+        font-size: 10px;
+        font-weight: bold;
+        line-height: 1;
+        color: white;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        background-color: #F44336;
+        /* Warna merah */
+        border-radius: 50%;
+        /* Membuatnya bulat sempurna */
+        min-width: 18px;
+        /* Agar tetap bulat walau 1 digit */
+        height: 18px;
+        /* Agar tetap bulat walau 1 digit */
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
+
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
@@ -205,12 +257,30 @@
                                                     <td><?= tanggal_indo($dp['tanggal']) ?></td>
 
                                                     <td style="display: flex; gap: 10px; justify-content: flex-end;">
-                                                        <div class="chat-btn-wrapper" id="chat-wrapper-<?= $dp['id_pelaporan']; ?>">
-                                                            <a class="btn btn-sm btn-info" href="<?= base_url() ?>chat/room/<?= $dp['no_tiket']; ?>" target="_blank" title="Buka Room Chat">
-                                                                <i class="material-icons">chat</i>
-                                                            </a>
-                                                            <?php if (isset($dp['unread_count']) && $dp['unread_count'] > 0) : ?>
-                                                                <span class="badge"><?= $dp['unread_count'] ?></span>
+                                                        <div class="btn-group chat-btn-wrapper" id="chat-wrapper-<?= $dp['id_pelaporan']; ?>">
+                                                            <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opsi Chat">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </button>
+
+                                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                                <li>
+                                                                    <a href="<?= base_url('chat/room/' . $dp['no_tiket']); ?>" target="_blank" class="dropdown-item">
+                                                                        <i class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 5px;">chat</i>
+                                                                        Buka Room Chat
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" class="dropdown-item mark-as-unread-btn" data-id="<?= $dp['id_pelaporan']; ?>">
+                                                                        <i class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 5px;">mark_chat_unread</i>
+                                                                        Tandai Belum Dibaca
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+
+                                                            <?php if (!empty($dp['unread_count']) && $dp['unread_count'] > 0) : ?>
+                                                                <span class="badge" style="top: -5px; right: 2px; position:absolute;">
+                                                                    <?= $dp['unread_count']; ?>
+                                                                </span>
                                                             <?php endif; ?>
                                                         </div>
                                                         <a class="btn btn-sm btn-info tombol-fokus" data-type="success" href="<?= base_url() ?>implementator/mode_fokus/<?= $dp['id_pelaporan']; ?>"><i class="material-icons"></i>
@@ -721,5 +791,47 @@
                 chatWrapper.appendChild(newBadge);
             }
         });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Event listener untuk tombol 'Tandai Belum Dibaca'
+        // Menggunakan event delegation karena tombol dibuat secara dinamis oleh DataTables
+        $('#example').on('click', '.mark-as-unread-btn', function(e) {
+            e.preventDefault(); // Mencegah aksi default link
+
+            const tiketId = $(this).data('id');
+
+            // Konfirmasi (opsional, tapi disarankan)
+            if (!confirm('Anda yakin ingin menandai chat ini sebagai belum dibaca?')) {
+                return;
+            }
+
+            $.ajax({
+                url: "<?= site_url('chat/mark_as_unread') ?>", // URL ke controller baru
+                type: 'POST',
+                data: {
+                    id_pelaporan: tiketId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message); // atau gunakan notifikasi yang lebih baik seperti SweetAlert
+
+                        // Muat ulang data tabel untuk memperbarui badge notifikasi
+                        // Parameter 'null, false' akan me-reload data tanpa kembali ke halaman pertama
+                        table.ajax.reload(null, false);
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('Terjadi kesalahan saat memproses permintaan.');
+                }
+            });
+        });
+
+        // Kode DataTables dan skrip lain Anda tetap di sini...
+
     });
 </script>

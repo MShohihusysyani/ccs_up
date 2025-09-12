@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     /* CSS BARU UNTUK BADGE */
     .chat-btn-wrapper {
         position: relative;
@@ -16,6 +16,52 @@
         color: white;
         font-size: 10px;
         font-weight: bold;
+    }
+</style> -->
+<style>
+    /* Letakkan ini di file CSS Anda atau di dalam tag <style> di view */
+    .chat-btn-wrapper {
+        position: relative;
+        /* Wajib ada, sebagai acuan untuk badge */
+        display: inline-flex;
+        /* Agar wrapper pas dengan ukuran tombol */
+        vertical-align: middle;
+    }
+
+    .chat-btn-wrapper .badge {
+        position: absolute;
+        /* Posisi 'melayang' di atas wrapper */
+        top: -8px;
+        /* Atur posisi vertikal (sedikit ke atas dari sudut) */
+        right: -8px;
+        /* Atur posisi horizontal (sedikit ke kanan dari sudut) */
+
+        /* ===================================================================== */
+        /* PENTING: Angka ini membawa badge ke lapisan paling atas */
+        z-index: 10;
+        /* ===================================================================== */
+
+        /* Styling tambahan agar terlihat bagus seperti di WA */
+        padding: 4px;
+        font-size: 10px;
+        font-weight: bold;
+        line-height: 1;
+        color: white;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        background-color: #F44336;
+        /* Warna merah */
+        border-radius: 50%;
+        /* Membuatnya bulat sempurna */
+        min-width: 18px;
+        /* Agar tetap bulat walau 1 digit */
+        height: 18px;
+        /* Agar tetap bulat walau 1 digit */
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>
 <section class="content">
@@ -569,7 +615,48 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        // Event listener untuk tombol 'Tandai Belum Dibaca'
+        // Menggunakan event delegation karena tombol dibuat secara dinamis oleh DataTables
+        $('#example').on('click', '.mark-as-unread-btn', function(e) {
+            e.preventDefault(); // Mencegah aksi default link
 
+            const tiketId = $(this).data('id');
+
+            // Konfirmasi (opsional, tapi disarankan)
+            if (!confirm('Anda yakin ingin menandai chat ini sebagai belum dibaca?')) {
+                return;
+            }
+
+            $.ajax({
+                url: "<?= site_url('chat/mark_as_unread') ?>", // URL ke controller baru
+                type: 'POST',
+                data: {
+                    id_pelaporan: tiketId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message); // atau gunakan notifikasi yang lebih baik seperti SweetAlert
+
+                        // Muat ulang data tabel untuk memperbarui badge notifikasi
+                        // Parameter 'null, false' akan me-reload data tanpa kembali ke halaman pertama
+                        table.ajax.reload(null, false);
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('Terjadi kesalahan saat memproses permintaan.');
+                }
+            });
+        });
+
+        // Kode DataTables dan skrip lain Anda tetap di sini...
+
+    });
+</script>
 <!-- <script type="text/javascript">
     var table = $('#example').DataTable({
         "processing": true,

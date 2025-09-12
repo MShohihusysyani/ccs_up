@@ -509,15 +509,40 @@ class Superadmin extends CI_Controller
             $row[] = $handle_combined;
 
             // tombol chat
+            // tombol chat (Dropdown Menu)
             $chatBtn = '
-            <div class="chat-btn-wrapper" style="position:relative; display:inline-block;" id="chat-wrapper-' . $dp->id_pelaporan . '">
-                <a class="btn btn-sm btn-info" href="' . base_url('chat/room/' . $dp->no_tiket) . '" target="_blank" title="Buka Room Chat">
-                    <i class="material-icons">chat</i>
-                </a>';
+<div class="btn-group chat-btn-wrapper" id="chat-wrapper-' . $dp->id_pelaporan . '">
+    <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opsi Chat">
+        <i class="material-icons">more_vert</i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li>
+            <a href="' . base_url('chat/room/' . $dp->no_tiket) . '" target="_blank" class="dropdown-item">
+                <i class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 5px;">chat</i> Buka Room Chat
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="dropdown-item mark-as-unread-btn" data-id="' . $dp->id_pelaporan . '">
+                <i class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 5px;">mark_chat_unread</i> Tandai Belum Dibaca
+            </a>
+        </li>
+    </ul>';
+
+            // Tampilkan badge notifikasi di atas tombol dropdown jika ada pesan belum dibaca
             if ($unread_count > 0) {
-                $chatBtn .= '<span class="badge">' . $unread_count . '</span>';
+                $chatBtn .= '<span class="badge" style="top: -5px; right: 2px;">' . $unread_count . '</span>';
             }
+
             $chatBtn .= '</div>';
+            // $chatBtn = '
+            // <div class="chat-btn-wrapper" style="position:relative; display:inline-block;" id="chat-wrapper-' . $dp->id_pelaporan . '">
+            //     <a class="btn btn-sm btn-info" href="' . base_url('chat/room/' . $dp->no_tiket) . '" target="_blank" title="Buka Room Chat">
+            //         <i class="material-icons">chat</i>
+            //     </a>';
+            // if ($unread_count > 0) {
+            //     $chatBtn .= '<span class="badge">' . $unread_count . '</span>';
+            // }
+            // $chatBtn .= '</div>';
 
             // aksi lain
             $aksi = '
