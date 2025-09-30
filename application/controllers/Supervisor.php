@@ -524,6 +524,54 @@ class Supervisor extends CI_Controller
         die();
     }
 
+    // Get unread count for specific ticket
+    public function get_unread_count()
+    {
+        $this->load->model('Chat_model');
+        $my_id = $this->session->userdata('id_user');
+        $id_pelaporan = $this->input->post('id_pelaporan');
+
+        if ($id_pelaporan) {
+            $unread_count = $this->Chat_model->get_unread_ccs_messages_count($id_pelaporan, $my_id);
+            echo json_encode(['unread_count' => $unread_count]);
+        } else {
+            echo json_encode(['unread_count' => 0]);
+        }
+    }
+
+    // Get all unread counts for onprogress tickets
+    public function get_all_unread_counts()
+    {
+        $this->load->model('Chat_model');
+        $this->load->model('Serversidespvop_model', 'serversidespvop_model');
+
+        $my_id = $this->session->userdata('id_user');
+
+        // Ambil data filter dari POST request
+        $filters = array(
+            'tanggal_awal'   => $this->input->post('tanggal_awal'),
+            'tanggal_akhir'  => $this->input->post('tanggal_akhir'),
+            'nama_klien'     => $this->input->post('nama_klien'),
+            'nama_user'      => $this->input->post('nama_user'),
+            'tags'           => $this->input->post('tags'),
+        );
+
+        if (isset($_POST['semua_data'])) {
+            $filters = array();
+        }
+
+        // Ambil semua ticket yang sedang ditampilkan
+        $list = $this->serversidespvop_model->get_datatables($filters);
+        $unread_counts = array();
+
+        foreach ($list as $dp) {
+            $unread_count = $this->Chat_model->get_unread_ccs_messages_count($dp->id_pelaporan, $my_id);
+            $unread_counts[$dp->id_pelaporan] = $unread_count;
+        }
+
+        echo json_encode($unread_counts);
+    }
+
 
 
     public function close()

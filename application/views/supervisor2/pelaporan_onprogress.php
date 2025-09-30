@@ -1029,3 +1029,83 @@
 
     });
 </script>
+
+<!-- Script untuk auto-refresh unread_count secara real-time -->
+<script>
+    $(document).ready(function() {
+        // Fungsi untuk memperbarui unread_count
+        function updateUnreadCounts() {
+            // Ambil data filter yang sedang aktif
+            var filters = {
+                tanggal_awal: $('#tanggal_awal').val(),
+                tanggal_akhir: $('#tanggal_akhir').val(),
+                nama_klien: $('#nama_klien').val(),
+                nama_user: $('#nama_user').val(),
+                tags: $('#tags').val()
+            };
+
+            // Kirim request ke endpoint get_all_unread_counts
+            $.ajax({
+                url: "<?= site_url('supervisor2/get_all_unread_counts') ?>",
+                type: 'POST',
+                data: filters,
+                dataType: 'json',
+                success: function(response) {
+                    // Update badge untuk setiap ticket yang ada di halaman
+                    $.each(response, function(tiketId, unreadCount) {
+                        const chatWrapper = document.getElementById(`chat-wrapper-${tiketId}`);
+                        if (chatWrapper) {
+                            // Hapus badge yang sudah ada
+                            const existingBadge = chatWrapper.querySelector('.badge');
+                            if (existingBadge) {
+                                existingBadge.remove();
+                            }
+
+                            // Jika count > 0, buat dan tambahkan badge baru
+                            if (unreadCount > 0) {
+                                const newBadge = document.createElement('span');
+                                newBadge.className = 'badge';
+                                newBadge.textContent = unreadCount;
+                                chatWrapper.appendChild(newBadge);
+                            }
+                        }
+                    });
+                },
+                error: function() {
+                    console.log('Error updating unread counts');
+                }
+            });
+        }
+
+        // Jalankan update setiap 5 detik
+        setInterval(updateUnreadCounts, 5000);
+
+        // Jalankan update saat DataTable selesai loading
+        $('#example').on('draw.dt', function() {
+            // Delay sedikit untuk memastikan DOM sudah ter-render
+            setTimeout(updateUnreadCounts, 100);
+        });
+
+        // Jalankan update saat filter berubah
+        $('#filterForm').on('submit', function(e) {
+            e.preventDefault();
+            table.draw();
+            // Update unread counts setelah filter diterapkan
+            setTimeout(updateUnreadCounts, 1000);
+        });
+
+        $('#resetFilterButton').on('click', function() {
+            $('#filterFormContent')[0].reset();
+            table.draw();
+            // Update unread counts setelah reset
+            setTimeout(updateUnreadCounts, 1000);
+        });
+
+        $('#semuaDataButton').on('click', function() {
+            $('#filterFormContent')[0].reset();
+            table.ajax.reload();
+            // Update unread counts setelah reload
+            setTimeout(updateUnreadCounts, 1000);
+        });
+    });
+</script>
