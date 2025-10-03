@@ -322,4 +322,42 @@ class Chat_model extends CI_Model
 
         return $this->db->get()->result();
     }
+
+    public function get_unread_ticket_counts_handle1($user_id)
+    {
+        // Subquery untuk pesan dari orang lain pada tiap tiket
+        // Left join ke chat_read agar bisa mendeteksi pesan yang sudah dibaca
+        $this->db->select('c.tiket_id, p.no_tiket, COUNT(c.id) AS unread_count');
+        $this->db->from('chat c');
+        $this->db->join('pelaporan p', 'p.id_pelaporan = c.tiket_id');
+        $this->db->join('forward f', 'f.pelaporan_id = c.tiket_id');
+        $this->db->join('chat_read cr', 'cr.chat_id = c.id AND cr.user_id = ' . (int)$user_id, 'left');
+        $this->db->where('c.sender_id !=', (int)$user_id);
+        $this->db->where('cr.chat_id IS NULL', null, false); // belum dibaca oleh user ini
+        $this->db->where('c.tiket_id IS NOT NULL', null, false);
+        $this->db->where('f.user_id', $user_id);
+        $this->db->group_by(['c.tiket_id', 'p.no_tiket']);
+        $this->db->order_by('MAX(c.created_at)', 'DESC');
+
+        return $this->db->get()->result();
+    }
+
+    public function get_unread_ticket_counts_handle2($user_id)
+    {
+        // Subquery untuk pesan dari orang lain pada tiap tiket
+        // Left join ke chat_read agar bisa mendeteksi pesan yang sudah dibaca
+        $this->db->select('c.tiket_id, p.no_tiket, COUNT(c.id) AS unread_count');
+        $this->db->from('chat c');
+        $this->db->join('pelaporan p', 'p.id_pelaporan = c.tiket_id');
+        $this->db->join('t1_forward tf', 'tf.pelaporan_id = c.tiket_id');
+        $this->db->join('chat_read cr', 'cr.chat_id = c.id AND cr.user_id = ' . (int)$user_id, 'left');
+        $this->db->where('c.sender_id !=', (int)$user_id);
+        $this->db->where('cr.chat_id IS NULL', null, false); // belum dibaca oleh user ini
+        $this->db->where('c.tiket_id IS NOT NULL', null, false);
+        $this->db->where('tf.user_id', $user_id);
+        $this->db->group_by(['c.tiket_id', 'p.no_tiket']);
+        $this->db->order_by('MAX(c.created_at)', 'DESC');
+
+        return $this->db->get()->result();
+    }
 }

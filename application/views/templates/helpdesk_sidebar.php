@@ -32,6 +32,26 @@
         overflow-y: auto;
         /* Aktifkan scroll jika konten melebihi tinggi */
     }
+
+    /* chat */
+    #chat-ticket-list {
+        max-height: 300px;
+        /* tinggi maksimal */
+        overflow-y: auto;
+        /* scroll */
+        padding: 0 5px;
+    }
+
+    .chat-ticket-item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        padding: 8px 0;
+    }
+
+    .chat-ticket-item:last-child {
+        border-bottom: none;
+    }
 </style>
 
 <body class="theme-blue">
@@ -78,6 +98,21 @@
                             <li class="footer">
                                 <a href="javascript:void(0);" id="load-more-btn">Load More</a>
                                 <!-- <a href="javascript:void(0);">View All Notifications</a> -->
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Chat per-ticket notifications -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="material-icons">chat</i>
+                            <span id="chat-notif-count" class="label-count"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">CHAT PER TICKET</li>
+                            <li class="body">
+                                <ul class="menu" id="chat-ticket-list">
+                                    <!-- Chat tiket dimasukkan lewat JS -->
+                                </ul>
                             </li>
                         </ul>
                     </li>
@@ -213,9 +248,165 @@
         </script>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var limit = 10;
+                var offset = 0;
+                var totalCount = 0;
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                // =====================
+                // Notifikasi tiket baru
+                // =====================
+                function loadNotifications(isLoadMore = false) {
+                    $.ajax({
+                        url: '<?= base_url("helpdesk/fetch_notifications") ?>',
+                        method: 'GET',
+                        data: {
+                            limit: limit,
+                            offset: offset
+                        },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            var notifications = data.notifications;
+                            var unreadCount = data.unread_count;
+                            totalCount = data.total_count;
+                            var notificationsList = '';
 
+                            // Update badge jumlah
+                            if (unreadCount > 0) {
+                                $('#notification-count').text(unreadCount);
+                            } else {
+                                $('#notification-count').text('');
+                            }
+
+                            if (!isLoadMore) {
+                                $('#notifications-list').html('');
+                            }
+
+                            if (notifications.length > 0) {
+                                $.each(notifications, function(index, notification) {
+                                    notificationsList += `
+                                <li>
+                                    <a href="<?= base_url('superadmin/added') ?>">
+                                        <div class="icon-circle bg-light-green">
+                                            <i class="material-icons">assignment</i>
+                                        </div>
+                                        <div class="menu-info">
+                                            <h4>${notification.no_tiket}</h4>
+                                            <p><i class="material-icons">access_time</i> ${notification.waktu_pelaporan}</p>
+                                            <p>Status: ${notification.status_ccs}</p>
+                                        </div>
+                                    </a>
+                                </li>`;
+                                });
+
+                                $('#notifications-list').append(notificationsList);
+
+                                // === AUTO SCROLL JIKA ADA NOTIFIKASI BARU ===
+                                var notifContainer = $('#notifications-list').parent();
+                                notifContainer.animate({
+                                    scrollTop: notifContainer.prop("scrollHeight")
+                                }, 500);
+
+                                if ($('#notifications-list li').length < totalCount) {
+                                    $('#load-more').show();
+                                } else {
+                                    $('#load-more').hide();
+                                }
+                            } else {
+                                notificationsList = '<li><p>No new notifications.</p></li>';
+                                $('#notifications-list').html(notificationsList);
+                            }
+                        }
+                    });
+                }
+
+                // Load pertama
+                loadNotifications();
+
+                // Tombol Load More
+                $('#load-more').on('click', function() {
+                    offset += limit;
+                    loadNotifications(true);
+                });
+
+                // Refresh otomatis setiap 5 detik
+                setInterval(function() {
+                    offset = 0;
+                    loadNotifications();
+                }, 1000);
+
+                // =====================
+                // Chat per-ticket notifications
+                // =====================
+                function loadChatTicketNotifications() {
+                    $.ajax({
+                        url: '<?= base_url("helpdesk/fetch_chat_ticket_notifications") ?>',
+                        method: 'GET',
+                        success: function(response) {
+                            var data = [];
+                            try {
+                                data = JSON.parse(response);
+                            } catch (e) {
+                                data = [];
+                            }
+
+                            var totalUnread = 0;
+                            var html = '';
+                            if (data && data.length > 0) {
+                                $.each(data, function(_, item) {
+                                    totalUnread += item.unread_count;
+                                    var badge = item.unread_count > 0 ?
+                                        '<span class="label label-danger" style="margin-left:6px;">' + item.unread_count + '</span>' :
+                                        '';
+                                    html += `
+                                <li>
+                                    <a href="<?= base_url('chat/room/') ?>${encodeURIComponent(item.no_tiket)}" target="_blank" class="chat-link"
+                                        data-unread="${item.unread_count}">
+                                        <div class="icon-circle bg-cyan">
+                                            <i class="material-icons">confirmation_number</i>
+                                        </div>
+                                        <div class="menu-info">
+                                            <h4>${item.no_tiket}</h4>
+                                            <p>Chat belum dibaca ${badge}</p>
+                                        </div>
+                                    </a>
+                                </li>`;
+                                });
+                            } else {
+                                html = '<li><p>Tidak ada chat baru.</p></li>';
+                            }
+
+                            $('#chat-ticket-list').html(html);
+                            $('#chat-notif-count').text(totalUnread > 0 ? totalUnread : '');
+                        }
+                    });
+                }
+
+                loadChatTicketNotifications();
+                setInterval(loadChatTicketNotifications, 1000);
+
+                // =====================
+                // Handle klik chat tiket (langsung kurangi badge)
+                // =====================
+                $(document).on("click", ".chat-link", function() {
+                    var unread = parseInt($(this).data("unread")) || 0;
+                    var current = parseInt($("#chat-notif-count").text()) || 0;
+                    var newCount = current - unread;
+                    if (newCount < 0) newCount = 0;
+
+                    // Update badge total
+                    $("#chat-notif-count").text(newCount > 0 ? newCount : "");
+
+                    // Hapus badge merah di item yang diklik
+                    $(this).find(".label.label-danger").remove();
+
+                    // Reset unread data supaya gak dikurangi lagi
+                    $(this).data("unread", 0);
+                });
+            });
+        </script>
+        <!-- 
         <script>
             $(document).ready(function() {
                 var limit = 10; // Batas notifikasi yang akan ditampilkan setiap kali load
@@ -301,4 +492,4 @@
                     loadNotifications(); // Muat ulang notifikasi
                 }, 60000); // Setiap 60 detik
             });
-        </script>
+        </script> -->

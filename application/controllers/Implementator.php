@@ -836,26 +836,26 @@ class Implementator extends CI_Controller
         redirect(base_url('implementator/subtask'));
     }
 
-    public function get_notifications()
-    {
-        $user_id = $this->session->userdata('user_id');
-        $this->load->model('Helpdesk_model', 'helpdesk_model');
-        $limit = $this->input->get('limit');
-        $offset = $this->input->get('offset');
+    // public function get_notifications()
+    // {
+    //     $user_id = $this->session->userdata('user_id');
+    //     $this->load->model('Helpdesk_model', 'helpdesk_model');
+    //     $limit = $this->input->get('limit');
+    //     $offset = $this->input->get('offset');
 
-        // Ambil notifikasi dari database dengan paginasi
-        $notifications = $this->helpdesk_model->get_notifications($limit, $offset);
+    //     // Ambil notifikasi dari database dengan paginasi
+    //     $notifications = $this->helpdesk_model->get_notifications($limit, $offset);
 
-        // Total notifikasi yang tersedia di server
-        $total_count = $this->helpdesk_model->get_total_count();
+    //     // Total notifikasi yang tersedia di server
+    //     $total_count = $this->helpdesk_model->get_total_count();
 
-        // Kirim response JSON
-        echo json_encode([
-            'notifications' => $notifications,
-            'unread_count' => $this->helpdesk_model->get_unread_count(),
-            'total_count' => $total_count
-        ]);
-    }
+    //     // Kirim response JSON
+    //     echo json_encode([
+    //         'notifications' => $notifications,
+    //         'unread_count' => $this->helpdesk_model->get_unread_count(),
+    //         'total_count' => $total_count
+    //     ]);
+    // }
     public function fetch_notifications()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -870,6 +870,30 @@ class Implementator extends CI_Controller
             'notifications' => $notifications,
             'unread_count' => $unread_count
         ]);
+    }
+
+
+    // NOTIF CHAT DI SIDEBAR
+    public function fetch_chat_ticket_notifications()
+    {
+        $this->load->model('Chat_model');
+        $my_id = $this->session->userdata('id_user');
+        if (!$my_id) {
+            echo json_encode([]);
+            return;
+        }
+
+        $rows = $this->Chat_model->get_unread_ticket_counts_handle2($my_id);
+        // Normalisasi output menjadi array sederhana
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'tiket_id' => (int)$row->tiket_id,
+                'no_tiket' => $row->no_tiket,
+                'unread_count' => (int)$row->unread_count,
+            ];
+        }
+        echo json_encode($result);
     }
 
     // MODE FOKUS

@@ -422,7 +422,7 @@ class Implementator_model extends CI_Model
         $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('t1_forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where('pelaporan.status_ccs', 'HANDLED 2');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
@@ -448,7 +448,7 @@ class Implementator_model extends CI_Model
     ');
         $this->db->from('pelaporan');
         $this->db->join('t1_forward', 'pelaporan.id_pelaporan = t1_forward.pelaporan_id'); // Sesuaikan id join jika berbeda
-        $this->db->where('pelaporan.status_ccs', 'HANDLE 2');
+        $this->db->where('pelaporan.status_ccs', 'HANDLED 2');
         $this->db->where('t1_forward.user_id', $user_id);
 
         // Menghitung jumlah notifikasi

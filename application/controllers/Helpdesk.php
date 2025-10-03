@@ -1349,6 +1349,29 @@ class Helpdesk extends CI_Controller
         ]);
     }
 
+    // NOTIF CHAT DI SIDEBAR
+    public function fetch_chat_ticket_notifications()
+    {
+        $this->load->model('Chat_model');
+        $my_id = $this->session->userdata('id_user');
+        if (!$my_id) {
+            echo json_encode([]);
+            return;
+        }
+
+        $rows = $this->Chat_model->get_unread_ticket_counts_handle1($my_id);
+        // Normalisasi output menjadi array sederhana
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'tiket_id' => (int)$row->tiket_id,
+                'no_tiket' => $row->no_tiket,
+                'unread_count' => (int)$row->unread_count,
+            ];
+        }
+        echo json_encode($result);
+    }
+
     // MODE FOKUS
     public function mode_fokus($id_pelaporan)
     {
