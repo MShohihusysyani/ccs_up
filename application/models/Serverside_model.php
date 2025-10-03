@@ -3,33 +3,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Serverside_model extends CI_Model
 {
-
-    private $table = 'pelaporan'; // Replace with your actual table name
-    private $column_order = array(null, 'waktu_pelaporan', 'no_tiket', 'nama', 'perihal', 'tags', 'kategori', 'impact', 'priority', 'maxday', 'status_ccs', 'rating'); // Set column field database for datatable orderable
-    private $column_search = array('waktu_pelaporan', 'no_tiket', 'nama', 'perihal', 'tags', 'kategori', 'impact', 'priority', 'maxday', 'status_ccs', 'rating'); // Set column field database for datatable searchable
-    private $order = array('waktu_pelaporan' => 'desc'); // Default order
+    private $table = 'pelaporan';
+    private $column_order = array(null, 'waktu_pelaporan', 'no_tiket', 'nama', 'perihal', 'tags', 'kategori', 'impact', 'priority', 'maxday', 'status_ccs', 'rating');
+    private $column_search = array('waktu_pelaporan', 'no_tiket', 'nama', 'perihal', 'tags', 'kategori', 'impact', 'priority', 'maxday', 'status_ccs', 'rating');
+    private $order = array('waktu_pelaporan' => 'desc');
 
     private function _get_datatables_query($filters)
     {
         $this->db->from($this->table);
 
-        // Apply filters
+        // Filter tanggal (pakai < tanggal_akhir +1 biar full 1 hari terakhir ikut)
         if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
-            $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal']);
-            $this->db->where('waktu_pelaporan <=', $filters['tanggal_akhir']);
+            $tanggal_akhir_plus = date('Y-m-d', strtotime($filters['tanggal_akhir'] . ' +1 day'));
+            $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal'] . ' 00:00:00');
+            $this->db->where('waktu_pelaporan <', $tanggal_akhir_plus . ' 00:00:00');
         }
 
         if (!empty($filters['nama_klien'])) {
             $this->db->like('nama', $filters['nama_klien']);
         }
 
-        // Filter nama_user di handle_by, handle_by2, handle_by3
         if (!empty($filters['nama_user'])) {
-            $this->db->group_start(); // Mulai group untuk pencarian OR
+            $this->db->group_start();
             $this->db->like('handle_by', $filters['nama_user']);
             $this->db->or_like('handle_by2', $filters['nama_user']);
             $this->db->or_like('handle_by3', $filters['nama_user']);
-            $this->db->group_end(); // Akhiri group
+            $this->db->group_end();
         }
 
         if (!empty($filters['tags'])) {
@@ -44,8 +43,7 @@ class Serverside_model extends CI_Model
             $this->db->where('rating', $filters['rating']);
         }
 
-        // Add other conditions or filters as necessary
-
+        // Pencarian global datatable
         $i = 0;
         foreach ($this->column_search as $item) {
             if ($_POST['search']['value']) {
@@ -62,9 +60,10 @@ class Serverside_model extends CI_Model
             $i++;
         }
 
+        // Order
         if (isset($_POST['order'])) {
             $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->order)) {
+        } else {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
@@ -96,24 +95,24 @@ class Serverside_model extends CI_Model
     public function get_filtered_data($filters)
     {
         $this->db->select('*');
-        $this->db->from('your_table_name');
+        $this->db->from($this->table);
 
         if (!empty($filters['tanggal_awal']) && !empty($filters['tanggal_akhir'])) {
-            $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal']);
-            $this->db->where('waktu_pelaporan <=', $filters['tanggal_akhir']);
+            $tanggal_akhir_plus = date('Y-m-d', strtotime($filters['tanggal_akhir'] . ' +1 day'));
+            $this->db->where('waktu_pelaporan >=', $filters['tanggal_awal'] . ' 00:00:00');
+            $this->db->where('waktu_pelaporan <', $tanggal_akhir_plus . ' 00:00:00');
         }
 
         if (!empty($filters['nama_klien'])) {
             $this->db->like('nama', $filters['nama_klien']);
         }
 
-        // Filter nama_user di handle_by, handle_by2, handle_by3
         if (!empty($filters['nama_user'])) {
-            $this->db->group_start(); // Mulai group untuk pencarian OR
+            $this->db->group_start();
             $this->db->like('handle_by', $filters['nama_user']);
             $this->db->or_like('handle_by2', $filters['nama_user']);
             $this->db->or_like('handle_by3', $filters['nama_user']);
-            $this->db->group_end(); // Akhiri group
+            $this->db->group_end();
         }
 
         if (!empty($filters['tags'])) {
@@ -132,39 +131,33 @@ class Serverside_model extends CI_Model
         return $query->result();
     }
 
-
-    // Model
     public function fetch_data($requestData)
     {
         $this->db->select('*');
-        $this->db->from('pelaporan');
+        $this->db->from($this->table);
 
-        // Filter berdasarkan tanggal
         if (!empty($requestData['tanggal_awal']) && !empty($requestData['tanggal_akhir'])) {
-            $this->db->where('waktu_pelaporan >=', $requestData['tanggal_awal']);
-            $this->db->where('waktu_pelaporan <=', $requestData['tanggal_akhir']);
+            $tanggal_akhir_plus = date('Y-m-d', strtotime($requestData['tanggal_akhir'] . ' +1 day'));
+            $this->db->where('waktu_pelaporan >=', $requestData['tanggal_awal'] . ' 00:00:00');
+            $this->db->where('waktu_pelaporan <', $tanggal_akhir_plus . ' 00:00:00');
         }
 
-        // Filter berdasarkan nama klien
         if (!empty($requestData['nama_klien'])) {
-            $this->db->like('nama_klien', $requestData['nama_klien']);
+            $this->db->like('nama', $requestData['nama_klien']);
         }
 
-        // Filter nama_user di handle_by, handle_by2, handle_by3
         if (!empty($requestData['nama_user'])) {
-            $this->db->group_start(); 
+            $this->db->group_start();
             $this->db->like('handle_by', $requestData['nama_user']);
             $this->db->or_like('handle_by2', $requestData['nama_user']);
             $this->db->or_like('handle_by3', $requestData['nama_user']);
-            $this->db->group_end(); 
+            $this->db->group_end();
         }
 
-        // Filter berdasarkan tags
         if (!empty($requestData['tags'])) {
             $this->db->like('tags', $requestData['tags']);
         }
 
-        // Filter berdasarkan status CCS
         if (!empty($requestData['status_ccs'])) {
             $this->db->where('status_ccs', $requestData['status_ccs']);
         }

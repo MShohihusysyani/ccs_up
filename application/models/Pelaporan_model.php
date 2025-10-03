@@ -211,25 +211,24 @@ class Pelaporan_model extends CI_Model
         return $query->result();
     }
 
-    public function getDateFiltered($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null,   $status_ccs = null, $rating = null)
+    public function getDateFiltered($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
     {
-        //$this->db->select('*')
         $this->db->select('no_tiket, waktu_pelaporan, waktu_approve, kategori, status_ccs, priority, maxday, judul, perihal, nama, handle_by, handle_by2, handle_by3, rating');
-        $this->db->from('pelaporan'); // Sesuaikan dengan nama tabel yang sesuai
+        $this->db->from('pelaporan');
 
-        // Filter berdasarkan tanggal_awal dan tanggal_akhir jika ada
+        // Filter berdasarkan tanggal
         if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
-            $this->db->where("waktu_pelaporan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'");
-            // $this->db->where('waktu_pelaporan >=', $tanggal_awal);
-            // $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
+            $tanggal_akhir_plus = date('Y-m-d', strtotime($tanggal_akhir . ' +1 day'));
+            $this->db->where('waktu_pelaporan >=', $tanggal_awal . ' 00:00:00');
+            $this->db->where('waktu_pelaporan <', $tanggal_akhir_plus . ' 00:00:00');
         }
 
-        // Filter berdasarkan nama_klien jika ada
+        // Filter nama klien
         if (!empty($nama_klien)) {
             $this->db->like('nama', $nama_klien);
         }
 
-        // Filter berdasarkan nama_user jika ada
+        // Filter nama_user
         if (!empty($nama_user)) {
             $this->db->group_start();
             $this->db->like('handle_by', $nama_user);
@@ -247,8 +246,9 @@ class Pelaporan_model extends CI_Model
         }
 
         $query = $this->db->get();
-        return $query->result(); // Mengembalikan hasil query
+        return $query->result();
     }
+
 
     public function getDateFilteredHandle($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null,   $status_ccs = null, $rating = null)
     {

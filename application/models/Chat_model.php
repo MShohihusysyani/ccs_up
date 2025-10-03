@@ -281,4 +281,45 @@ class Chat_model extends CI_Model
 
         return $this->db->delete('chat_read');
     }
+
+    /**
+     * Ambil daftar tiket beserta jumlah pesan belum dibaca per tiket untuk user tertentu.
+     * Mengelompokkan berdasarkan chat.tiket_id dan hanya menghitung pesan dari orang lain
+     * yang belum tercatat di tabel chat_read untuk user tersebut.
+     * Hasil menyertakan no_tiket dari tabel pelaporan.
+     */
+    public function get_unread_ticket_counts_for_user($user_id)
+    {
+        // Subquery untuk pesan dari orang lain pada tiap tiket
+        // Left join ke chat_read agar bisa mendeteksi pesan yang sudah dibaca
+        $this->db->select('c.tiket_id, p.no_tiket, COUNT(c.id) AS unread_count');
+        $this->db->from('chat c');
+        $this->db->join('pelaporan p', 'p.id_pelaporan = c.tiket_id');
+        $this->db->join('chat_read cr', 'cr.chat_id = c.id AND cr.user_id = ' . (int)$user_id, 'left');
+        $this->db->where('c.sender_id !=', (int)$user_id);
+        $this->db->where('cr.chat_id IS NULL', null, false); // belum dibaca oleh user ini
+        $this->db->where('c.tiket_id IS NOT NULL', null, false);
+        $this->db->group_by(['c.tiket_id', 'p.no_tiket']);
+        $this->db->order_by('MAX(c.created_at)', 'DESC');
+
+        return $this->db->get()->result();
+    }
+
+    public function get_unread_ticket_counts_for_user_spv2($user_id)
+    {
+        // Subquery untuk pesan dari orang lain pada tiap tiket
+        // Left join ke chat_read agar bisa mendeteksi pesan yang sudah dibaca
+        $this->db->select('c.tiket_id, p.no_tiket, COUNT(c.id) AS unread_count');
+        $this->db->from('chat c');
+        $this->db->join('pelaporan p', 'p.id_pelaporan = c.tiket_id');
+        $this->db->join('s_forward sf', 'sf.pelaporan_id = c.tiket_id');
+        $this->db->join('chat_read cr', 'cr.chat_id = c.id AND cr.user_id = ' . (int)$user_id, 'left');
+        $this->db->where('c.sender_id !=', (int)$user_id);
+        $this->db->where('cr.chat_id IS NULL', null, false); // belum dibaca oleh user ini
+        $this->db->where('c.tiket_id IS NOT NULL', null, false);
+        $this->db->group_by(['c.tiket_id', 'p.no_tiket']);
+        $this->db->order_by('MAX(c.created_at)', 'DESC');
+
+        return $this->db->get()->result();
+    }
 }

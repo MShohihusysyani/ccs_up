@@ -32,6 +32,26 @@
         overflow-y: auto;
         /* Aktifkan scroll jika konten melebihi tinggi */
     }
+
+    /* chat */
+    #chat-ticket-list {
+        max-height: 300px;
+        /* tinggi maksimal */
+        overflow-y: auto;
+        /* scroll */
+        padding: 0 5px;
+    }
+
+    .chat-ticket-item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        padding: 8px 0;
+    }
+
+    .chat-ticket-item:last-child {
+        border-bottom: none;
+    }
 </style>
 
 <body class="theme-blue">
@@ -82,6 +102,23 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- Chat per-ticket notifications -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="material-icons">chat</i>
+                            <span id="chat-notif-count" class="label-count"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">CHAT PER TICKET</li>
+                            <li class="body">
+                                <ul class="menu" id="chat-ticket-list">
+                                    <!-- Chat tiket dimasukkan lewat JS -->
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
                 </ul>
             </div>
         </div>
@@ -229,31 +266,9 @@
                                 <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapKategori' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('superadmin/rekapKategori') ?>">Rekap Kategori</a>
                             </li>
-                            <!-- 
-                            <li
-                                <?= $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('superadmin/rekapKategori') ?>">Rekap Kategori</a>
-                            </li>
-
-                            <li
-                                <?= $this->uri->segment(2) == 'rekapHelpdesk' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('superadmin/rekapHelpdesk') ?>">Rekap Helpdesk</a>
-                            </li> -->
-
-                            <!-- <li
-                                <?= $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == '' ? 'class="active"' : '' ?>>
-                                <a href="<?php echo base_url('superadmin/rekapProgres') ?>">Rekap Progres</a>
-                            </li> -->
 
                         </ul>
                     </li>
-
-                    <!-- <li class="<?= ($this->uri->segment(1) == 'chat') ? 'active' : '' ?>">
-                        <a href="<?= site_url('chat') ?>">
-                            <i class="material-icons">comments</i>
-                            <span>Chat</span>
-                        </a>
-                    </li> -->
 
 
                     <li class="header">LABELS</li>
@@ -286,14 +301,16 @@
 
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
             $(document).ready(function() {
-                var limit = 10; // Batas notifikasi yang akan ditampilkan setiap kali load
-                var offset = 0; // Offset awal untuk load data
-                var totalCount = 0; // Total notifikasi yang ada di server
+                var limit = 10;
+                var offset = 0;
+                var totalCount = 0;
 
+                // =====================
+                // Notifikasi tiket baru
+                // =====================
                 function loadNotifications(isLoadMore = false) {
                     $.ajax({
                         url: '<?= base_url("superadmin/fetch_notifications") ?>',
@@ -306,49 +323,49 @@
                             var data = JSON.parse(response);
                             var notifications = data.notifications;
                             var unreadCount = data.unread_count;
-                            totalCount = data.total_count; // Update total count dari server
+                            totalCount = data.total_count;
                             var notificationsList = '';
 
-                            // Menampilkan jumlah notifikasi di ikon lonceng
+                            // Update badge jumlah
                             if (unreadCount > 0) {
-                                $('#notification-count').text(unreadCount); // Update jumlah notifikasi
+                                $('#notification-count').text(unreadCount);
                             } else {
-                                $('#notification-count').text(''); // Kosongkan jika tidak ada notifikasi
+                                $('#notification-count').text('');
                             }
 
-                            // Jika ini adalah load awal, hapus semua notifikasi sebelumnya
                             if (!isLoadMore) {
-                                $('#notifications-list').html(''); // Kosongkan list notifikasi
+                                $('#notifications-list').html('');
                             }
 
-                            // Menampilkan notifikasi baru
                             if (notifications.length > 0) {
                                 $.each(notifications, function(index, notification) {
                                     notificationsList += `
-                            <li>
-                                <a href="<?= base_url('superadmin/added') ?>">
-                                    <div class="icon-circle bg-light-green">
-                                        <i class="material-icons">assignment</i>
-                                    </div>
-                                    <div class="menu-info">
-                                        <h4>${notification.no_tiket}</h4>
-                                        <p>
-                                            <i class="material-icons">access_time</i> ${notification.waktu_pelaporan}
-                                        </p>
-                                        <p>Status: ${notification.status_ccs}</p>
-                                    </div>
-                                </a>
-                            </li>`;
+                                <li>
+                                    <a href="<?= base_url('superadmin/added') ?>">
+                                        <div class="icon-circle bg-light-green">
+                                            <i class="material-icons">assignment</i>
+                                        </div>
+                                        <div class="menu-info">
+                                            <h4>${notification.no_tiket}</h4>
+                                            <p><i class="material-icons">access_time</i> ${notification.waktu_pelaporan}</p>
+                                            <p>Status: ${notification.status_ccs}</p>
+                                        </div>
+                                    </a>
+                                </li>`;
                                 });
 
-                                // Tambahkan notifikasi ke dalam list
                                 $('#notifications-list').append(notificationsList);
 
-                                // Mengecek apakah masih ada notifikasi yang belum ditampilkan
+                                // === AUTO SCROLL JIKA ADA NOTIFIKASI BARU ===
+                                var notifContainer = $('#notifications-list').parent();
+                                notifContainer.animate({
+                                    scrollTop: notifContainer.prop("scrollHeight")
+                                }, 500);
+
                                 if ($('#notifications-list li').length < totalCount) {
-                                    $('#load-more').show(); // Tampilkan tombol "Load More" jika masih ada notifikasi
+                                    $('#load-more').show();
                                 } else {
-                                    $('#load-more').hide(); // Sembunyikan tombol jika semua notifikasi sudah ditampilkan
+                                    $('#load-more').hide();
                                 }
                             } else {
                                 notificationsList = '<li><p>No new notifications.</p></li>';
@@ -358,19 +375,88 @@
                     });
                 }
 
-                // Load notifications saat page load
+                // Load pertama
                 loadNotifications();
 
-                // Event listener untuk tombol "Load More"
+                // Tombol Load More
                 $('#load-more').on('click', function() {
-                    offset += limit; // Update offset untuk mengambil data berikutnya
-                    loadNotifications(true); // Load more notifikasi
+                    offset += limit;
+                    loadNotifications(true);
                 });
 
-                // Bisa juga menambahkan interval untuk auto-refresh notifikasi
+                // Refresh otomatis setiap 5 detik
                 setInterval(function() {
-                    offset = 0; // Reset offset saat refresh otomatis
-                    loadNotifications(); // Muat ulang notifikasi
-                }, 60000); // Setiap 60 detik
+                    offset = 0;
+                    loadNotifications();
+                }, 5000);
+
+                // =====================
+                // Chat per-ticket notifications
+                // =====================
+                function loadChatTicketNotifications() {
+                    $.ajax({
+                        url: '<?= base_url("superadmin/fetch_chat_ticket_notifications") ?>',
+                        method: 'GET',
+                        success: function(response) {
+                            var data = [];
+                            try {
+                                data = JSON.parse(response);
+                            } catch (e) {
+                                data = [];
+                            }
+
+                            var totalUnread = 0;
+                            var html = '';
+                            if (data && data.length > 0) {
+                                $.each(data, function(_, item) {
+                                    totalUnread += item.unread_count;
+                                    var badge = item.unread_count > 0 ?
+                                        '<span class="label label-danger" style="margin-left:6px;">' + item.unread_count + '</span>' :
+                                        '';
+                                    html += `
+                                <li>
+                                    <a href="<?= base_url('chat/room/') ?>${encodeURIComponent(item.no_tiket)}" target="_blank" class="chat-link"
+                                        data-unread="${item.unread_count}">
+                                        <div class="icon-circle bg-cyan">
+                                            <i class="material-icons">confirmation_number</i>
+                                        </div>
+                                        <div class="menu-info">
+                                            <h4>${item.no_tiket}</h4>
+                                            <p>Chat belum dibaca ${badge}</p>
+                                        </div>
+                                    </a>
+                                </li>`;
+                                });
+                            } else {
+                                html = '<li><p>Tidak ada chat baru.</p></li>';
+                            }
+
+                            $('#chat-ticket-list').html(html);
+                            $('#chat-notif-count').text(totalUnread > 0 ? totalUnread : '');
+                        }
+                    });
+                }
+
+                loadChatTicketNotifications();
+                setInterval(loadChatTicketNotifications, 5000);
+
+                // =====================
+                // Handle klik chat tiket (langsung kurangi badge)
+                // =====================
+                $(document).on("click", ".chat-link", function() {
+                    var unread = parseInt($(this).data("unread")) || 0;
+                    var current = parseInt($("#chat-notif-count").text()) || 0;
+                    var newCount = current - unread;
+                    if (newCount < 0) newCount = 0;
+
+                    // Update badge total
+                    $("#chat-notif-count").text(newCount > 0 ? newCount : "");
+
+                    // Hapus badge merah di item yang diklik
+                    $(this).find(".label.label-danger").remove();
+
+                    // Reset unread data supaya gak dikurangi lagi
+                    $(this).data("unread", 0);
+                });
             });
         </script>

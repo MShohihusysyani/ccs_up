@@ -524,6 +524,28 @@ class Supervisor extends CI_Controller
         die();
     }
 
+    public function fetch_chat_ticket_notifications()
+    {
+        $this->load->model('Chat_model');
+        $my_id = $this->session->userdata('id_user');
+        if (!$my_id) {
+            echo json_encode([]);
+            return;
+        }
+
+        $rows = $this->Chat_model->get_unread_ticket_counts_for_user($my_id);
+        // Normalisasi output menjadi array sederhana
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'tiket_id' => (int)$row->tiket_id,
+                'no_tiket' => $row->no_tiket,
+                'unread_count' => (int)$row->unread_count,
+            ];
+        }
+        echo json_encode($result);
+    }
+
     // Get unread count for specific ticket
     public function get_unread_count()
     {
@@ -827,7 +849,7 @@ class Supervisor extends CI_Controller
         $judul      = $this->input->post('judul');
         // $perihal    = $this->input->post('perihal');
         $status_ccs = 'FINISHED';
-        $waktu      = date('Y-m-d H:i:s');
+        // $waktu      = date('Y-m-d H:i:s');
         $priority   = $this->input->post('priority');
         $maxday     = $this->input->post('maxday');
         $kategori   = $this->input->post('kategori');
@@ -836,7 +858,7 @@ class Supervisor extends CI_Controller
         $this->db->set('no_tiket', $no_tiket);
         $this->db->set('nama', $nama);
         $this->db->set('status_ccs', $status_ccs);
-        $this->db->set('waktu_approve', $waktu);
+        // $this->db->set('waktu_approve', $waktu);
         $this->db->set('priority', $priority);
         // $this->db->set('perihal', $perihal);
         $this->db->set('maxday', $maxday);

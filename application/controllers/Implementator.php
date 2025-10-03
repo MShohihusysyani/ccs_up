@@ -334,6 +334,8 @@ class Implementator extends CI_Controller
         }
 
         $id = $this->input->post('id_pelaporan');
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date('Y-m-d H:i:s');
         $data = [
             'id_pelaporan' => $id,
             'no_tiket' => $this->input->post('no_tiket'),
@@ -346,7 +348,8 @@ class Implementator extends CI_Controller
             'maxday'     => $this->input->post('maxday'),
             'catatan_finish' => $this->input->post('catatan_finish'),
             'status'     => 'Solved',
-            'status_ccs' => 'CLOSED'
+            'status_ccs' => 'CLOSED',
+            'waktu_approve' => $now
         ];
 
         // Remove tag
