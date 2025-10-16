@@ -382,7 +382,7 @@ foreach ($datapelaporan as $dp) : $no++; ?>
                         </div>
 
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
                                     <option value=""> -- Pilih Helpdesk -- </option>
@@ -392,7 +392,7 @@ foreach ($datapelaporan as $dp) : $no++; ?>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="modal-footer">

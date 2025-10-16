@@ -1467,44 +1467,54 @@ class Supervisor extends CI_Controller
     // FUNGSI REJECT
     public function fungsi_reject()
     {
-
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
-        $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
-            redirect(base_url('supervisor/onprogress'));
-        } else {
-            $id_pelaporan = $this->input->post('id_pelaporan');
-            $id_user = $this->input->post('namahd');
-            $data = [
-                'pelaporan_id' => $id_pelaporan,
-                'user_id' => $id_user
-            ];
-
-            $this->db->select('id_user, nama_user');
-            $this->db->from('user');
-            $this->db->where('id_user', $id_user);
-            $query = $this->db->get();
-
-            // Check if user exists
-            if ($query->num_rows() > 0) {
-                $user = $query->row();
-                $nama_user = $user->nama_user;
-
-                // Update the forward table
-                $this->db->where('pelaporan_id', $id_pelaporan);
-                $this->db->update('forward', $data);
-
-                $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
-                $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
-            } else {
-                $this->session->set_flashdata('error', 'User not found.');
-            }
-            redirect(base_url('supervisor/close'));
-        }
+        $id            = $this->input->post('id_pelaporan');
+        $ArrUpdate     = array(
+            'status_ccs' => 'REJECTED'
+        );
+        $this->pelaporan_model->updateReject($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Reject!');
+        Redirect(base_url('supervisor/close'));
     }
+    // public function fungsi_reject()
+    // {
+
+    //     $this->load->library('form_validation');
+    //     $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
+    //     $this->form_validation->set_rules('namahd', 'Helpdesk', 'required');
+
+    //     if ($this->form_validation->run() == FALSE) {
+    //         $this->session->set_flashdata('error', 'Form validation failed. Please fill in all required fields.');
+    //         redirect(base_url('supervisor/onprogress'));
+    //     } else {
+    //         $id_pelaporan = $this->input->post('id_pelaporan');
+    //         $id_user = $this->input->post('namahd');
+    //         $data = [
+    //             'pelaporan_id' => $id_pelaporan,
+    //             'user_id' => $id_user
+    //         ];
+
+    //         $this->db->select('id_user, nama_user');
+    //         $this->db->from('user');
+    //         $this->db->where('id_user', $id_user);
+    //         $query = $this->db->get();
+
+    //         // Check if user exists
+    //         if ($query->num_rows() > 0) {
+    //             $user = $query->row();
+    //             $nama_user = $user->nama_user;
+
+    //             // Update the forward table
+    //             $this->db->where('pelaporan_id', $id_pelaporan);
+    //             $this->db->update('forward', $data);
+
+    //             $this->supervisor_model->updateReject($id_pelaporan, $nama_user);
+    //             $this->session->set_flashdata('pesan', 'Helpdesk has been updated!');
+    //         } else {
+    //             $this->session->set_flashdata('error', 'User not found.');
+    //         }
+    //         redirect(base_url('supervisor/close'));
+    //     }
+    // }
 
     public function get_notifications()
     {

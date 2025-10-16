@@ -34,13 +34,10 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <!-- <th>Perihal</th> -->
-                                            <th>Impact</th>
-                                            <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Priority</th>
                                             <th>Max Day</th>
-                                            <th>Status CCS</th>
+                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -52,13 +49,10 @@
                                             <th>Tanggal</th>
                                             <th>Nama Klien</th>
                                             <th>Judul</th>
-                                            <!-- <th>Perihal</th> -->
-                                            <th>Impact</th>
-                                            <th>Attachment</th>
                                             <th>Category</th>
                                             <th>Priority</th>
                                             <th>Max Day</th>
-                                            <th>Status CCS</th>
+                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -74,8 +68,7 @@
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
                                                 <!-- <td><?= $dp['perihal']; ?></td> -->
-                                                <td><?= $dp['impact']; ?></td>
-                                                <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
+                                                <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a> -->
                                                 </td>
                                                 <td><?= $dp['kategori']; ?></td>
                                                 <td>
@@ -123,7 +116,15 @@
                                                     <?php else : ?>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?= $dp['handle_by']; ?></td>
+                                                <td>
+                                                    <?= $dp['handle_by']; ?>
+                                                    <?php if (!empty($dp['handle_by2'])) : ?>
+                                                        , <?= $dp['handle_by2']; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($dp['handle_by3'])) : ?>
+                                                        , <?= $dp['handle_by3']; ?>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td>
 
                                                     <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
@@ -143,10 +144,13 @@
                                                 </div>
                                                     <br>
                                                     <br> -->
-                                                    <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>implementator/finish_tiket/<?= $dp['id_pelaporan']; ?>">
+                                                        <i class="material-icons">done</i> Finish
+                                                    </a>
+                                                    <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                     <div class="btn btn-sm btn-info">
                                                         <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-judul="<?= $dp['judul']; ?>" data-toggle="modal" data-target="#finishModal"> <i class="material-icons">done</i> <span class="icon-name">Finish</span></a>
-                                                    </div>
+                                                    </div> -->
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

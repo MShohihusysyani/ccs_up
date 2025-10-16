@@ -236,7 +236,7 @@
                             </div>
                         </div>
 
-
+                        <!-- 
                         <div class="form-group">
                             <div class="form-line">
                                 <select name="namahd" id="namahd" class="form-control">
@@ -247,7 +247,7 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="modal-footer">

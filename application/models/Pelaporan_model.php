@@ -140,6 +140,13 @@ class Pelaporan_model extends CI_Model
         $this->db->update('pelaporan', $data);
     }
 
+    // REJECT TICKET
+    function updateReject($id, $data)
+    {
+        $this->db->where('id_pelaporan', $id);
+        $this->db->update('pelaporan', $data);
+    }
+
     //LAPORAN status
     public function getAll()
     {

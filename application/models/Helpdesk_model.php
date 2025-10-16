@@ -208,7 +208,7 @@ class Helpdesk_model extends CI_Model
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->where('pelaporan.status_ccs', 'REJECT');
+        $this->db->where('pelaporan.status_ccs', 'REJECTED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result

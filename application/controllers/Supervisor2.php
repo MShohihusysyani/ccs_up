@@ -741,6 +741,18 @@ class Supervisor2 extends CI_Controller
         Redirect(base_url('supervisor2/added'));
     }
 
+    // Reject Tiket
+    public function fungsi_reject()
+    {
+        $id            = $this->input->post('id_pelaporan');
+        $ArrUpdate     = array(
+            'status_ccs' => 'REJECTED'
+        );
+        $this->pelaporan_model->updateReject($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Reject!');
+        Redirect(base_url('supervisor2/close'));
+    }
+
 
     //DETAIL PELAPORAN
     public function detail_pelaporan($id)
