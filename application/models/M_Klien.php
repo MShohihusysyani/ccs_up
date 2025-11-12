@@ -55,7 +55,7 @@ class M_Klien extends CI_Model
         ');
         $this->db->from('pelaporan');
         $this->db->where('user_id', $user_id);
-        $this->db->where_in('pelaporan.status_ccs', ['ADDED', 'ADDED 2']);
+        $this->db->where('pelaporan.status_ccs', 'ADDED');
         $this->db->order_by('waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result
@@ -103,7 +103,7 @@ class M_Klien extends CI_Model
         $this->db->join('t1_forward as t1_forward2', 't1_forward2.pelaporan_id = pelaporan.id_pelaporan AND t1_forward2.id_forward != t1_forward1.id_forward', 'left');
         $this->db->join('t1_forward as t1_forward3', 't1_forward3.pelaporan_id = pelaporan.id_pelaporan AND t1_forward3.id_forward != t1_forward1.id_forward AND t1_forward3.id_forward != t1_forward2.id_forward', 'left');
         $this->db->where('pelaporan.user_id', $user_id);
-        $this->db->where_in('pelaporan.status_ccs', ['HANDLED', 'HANDLED 2']);
+        $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED', 'HANDLED 2']);
         $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('waktu_pelaporan', 'DESC');
 
@@ -113,11 +113,10 @@ class M_Klien extends CI_Model
 
     public function getDataClosed()
     {
-        // Get user data from the session
+
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        // Build the query using Query Builder
         $this->db->select('
             pelaporan.id_pelaporan,
             pelaporan.nama,
@@ -156,17 +155,14 @@ class M_Klien extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'CLOSED');
         $this->db->order_by('waktu_pelaporan', 'DESC');
 
-        // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
     public function getKlienPelaporanFinish()
     {
-        // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        // Build the query using Query Builder
         $this->db->select('
             pelaporan.id_pelaporan,
             pelaporan.nama,
@@ -196,7 +192,6 @@ class M_Klien extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'FINISHED');
         $this->db->order_by('waktu_pelaporan', 'DESC');
 
-        // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
@@ -222,11 +217,9 @@ class M_Klien extends CI_Model
     public function get_notifications()
     {
 
-        // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        // Build the query using Query Builder
         $this->db->select('
             pelaporan.id_pelaporan,
             pelaporan.waktu_pelaporan,
@@ -240,7 +233,6 @@ class M_Klien extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'FINISH');
         $this->db->where('pelaporan.rating', 0);
 
-        // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
@@ -252,7 +244,7 @@ class M_Klien extends CI_Model
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        // Lakukan join dengan tabel forward dan hitung notifikasi yang belum dibaca
+        // join dengan tabel forward dan hitung notifikasi yang belum dibaca
         $this->db->select('
         pelaporan.id_pelaporan,
         pelaporan.waktu_pelaporan,
