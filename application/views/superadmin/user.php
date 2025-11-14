@@ -63,6 +63,17 @@
                                                     <!-- <td><?= $u['id_user']; ?></td> -->
                                                     <td>
                                                         <?php if ($u['active'] == 'Y') : ?>
+                                                            <span class="label label-info">Aktif</span>
+
+                                                        <?php elseif ($u['active'] == 'N') : ?>
+                                                            <span class="label label-danger">Non Aktif</span>
+
+                                                        <?php else : ?>
+                                                        <?php endif; ?>
+
+                                                    </td>
+                                                    <!-- <td>
+                                                        <?php if ($u['active'] == 'Y') : ?>
                                                             <span><i class="material-icons">verified</i></span>
 
                                                         <?php elseif ($u['active'] == 'N') : ?>
@@ -70,7 +81,7 @@
 
                                                         <?php else : ?>
                                                         <?php endif; ?>
-                                                    </td>
+                                                    </td> -->
 
                                                     <td>
                                                         <div class="btn btn-sm btn-warning">

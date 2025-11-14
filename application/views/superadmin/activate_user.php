@@ -51,13 +51,16 @@
                                                 <td><?= $u['divisi']; ?></td>
                                                 <td><?= tanggal_indo($u['tgl_register']); ?></td>
                                                 <td><?= format_indo($u['last_login']); ?></td>
-                                                <td> <?php if ($u['active'] == 'N') : ?>
-                                                        <i class="material-icons">clear</i>
+                                                <td>
+                                                    <?php if ($u['active'] == 'Y') : ?>
+                                                        <span class="label label-info">Aktif</span>
 
-                                                    <?php elseif ($u['active'] == 'Y') : ?>
-                                                        <i class="material-icons">verified</i>
+                                                    <?php elseif ($u['active'] == 'N') : ?>
+                                                        <span class="label label-danger">Non Aktif</span>
+
                                                     <?php else : ?>
                                                     <?php endif; ?>
+
                                                 </td>
                                                 <td>
 
