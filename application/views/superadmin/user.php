@@ -36,7 +36,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Divisi</th>
+                                                <th>Role</th>
                                                 <th>Nama</th>
                                                 <!-- <th>ID User</th> -->
                                                 <th>Active</th>
@@ -45,7 +45,7 @@
                                         </thead>
                                         <tfoot>
                                             <th>No</th>
-                                            <th>Divisi</th>
+                                            <th>Role</th>
                                             <th>Nama</th>
                                             <!-- <th>ID User</th> -->
                                             <th>Active</th>

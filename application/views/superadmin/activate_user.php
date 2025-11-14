@@ -32,7 +32,7 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Username</th>
-                                            <th>Divisi</th>
+                                            <th>Role</th>
                                             <th>Tanggal Registrasi</th>
                                             <th>Last Login</th>
                                             <th>Active</th>
