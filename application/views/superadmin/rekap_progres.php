@@ -25,10 +25,10 @@
 
                             <div class="form-group">
                                 <label for="nama_klien">Pilih Klien</label>
-                                <select id="nama_klien" name="nama_klien" class="form-control show-tick">
+                                <select id="nama_klien" name="nama_klien" class="form-control show-tick" data-live-search="true">
                                     <option value="">-- Pilih Klien --</option>
                                     <?php foreach ($klien as $row): ?>
-                                        <option value="<?= $row['nama_klien']; ?>" <?= ($nama_klien == $row['nama_klien']) ? 'selected' : ''; ?>><?= $row['no_klien'] . ' - ' . $row['nama_klien']; ?></option>
+                                        <option value="<?= $row['id_user_klien']; ?>" <?= ($nama_klien == $row['id_user_klien']) ? 'selected' : ''; ?>><?= $row['no_klien'] . ' - ' . $row['nama_klien']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -72,8 +72,8 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" style="text-align:center">
-                                <thead style="background-color: #dcedc8;">
+                            <table class="table table-bordered table-hover" style="text-align:left">
+                                <thead style="background-color: #dcedc8; text-align:center">
                                     <tr>
                                         <th>No</th>
                                         <th>Bulan</th>
@@ -88,26 +88,88 @@
                                     $total_handled = 0;
                                     $total_all = 0;
                                     $no = 1;
+
+                                    // URL helper untuk parameter filter dasar
+                                    $base_detail_url = base_url('superadmin/detailProgres');
+                                    $filter_params = 'tahun=' . $tahun . '&klien=' . $nama_klien;
+
                                     foreach ($rekap as $row):
                                         $total_finished += $row['finished'];
                                         $total_handled += $row['handled'];
                                         $total_all += $row['total'];
+
+                                        // Parameter khusus bulan ini
+                                        $bulan_param = '&bulan=' . $row['bulan_num'];
                                     ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
                                             <td><?= $row['bulan']; ?></td>
-                                            <td><?= $row['finished']; ?></td>
-                                            <td><?= $row['handled']; ?></td>
-                                            <td><?= $row['total']; ?></td>
+
+                                            <td>
+                                                <?php if ($row['finished'] > 0): ?>
+                                                    <a href="<?= $base_detail_url . '?' . $filter_params . $bulan_param . '&status=finished'; ?>" target="_blank">
+                                                        <?= $row['finished']; ?>
+                                                    </a>
+                                                <?php else: ?>
+                                                    <?= $row['finished']; ?>
+                                                <?php endif; ?>
+                                            </td>
+
+                                            <td>
+                                                <?php if ($row['handled'] > 0): ?>
+                                                    <a href="<?= $base_detail_url . '?' . $filter_params . $bulan_param . '&status=handled'; ?>" target="_blank">
+                                                        <?= $row['handled']; ?>
+                                                    </a>
+                                                <?php else: ?>
+                                                    <?= $row['handled']; ?>
+                                                <?php endif; ?>
+                                            </td>
+
+                                            <td>
+                                                <?php if ($row['total'] > 0): ?>
+                                                    <a href="<?= $base_detail_url . '?' . $filter_params . $bulan_param . '&status=total'; ?>" target="_blank">
+                                                        <?= $row['total']; ?>
+                                                    </a>
+                                                <?php else: ?>
+                                                    <?= $row['total']; ?>
+                                                <?php endif; ?>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                                 <tfoot style="background-color: #dcedc8;">
                                     <tr>
                                         <th colspan="2">Total</th>
-                                        <th><?= $total_finished; ?></th>
-                                        <th><?= $total_handled; ?></th>
-                                        <th><?= $total_all; ?></th>
+
+                                        <th>
+                                            <?php if ($total_finished > 0): ?>
+                                                <a href="<?= $base_detail_url . '?' . $filter_params . '&periode=' . $periode . '&status=finished'; ?>" target="_blank">
+                                                    <?= $total_finished; ?>
+                                                </a>
+                                            <?php else: ?>
+                                                <?= $total_finished; ?>
+                                            <?php endif; ?>
+                                        </th>
+
+                                        <th>
+                                            <?php if ($total_handled > 0): ?>
+                                                <a href="<?= $base_detail_url . '?' . $filter_params . '&periode=' . $periode . '&status=handled'; ?>" target="_blank">
+                                                    <?= $total_handled; ?>
+                                                </a>
+                                            <?php else: ?>
+                                                <?= $total_handled; ?>
+                                            <?php endif; ?>
+                                        </th>
+
+                                        <th>
+                                            <?php if ($total_all > 0): ?>
+                                                <a href="<?= $base_detail_url . '?' . $filter_params . '&periode=' . $periode . '&status=total'; ?>" target="_blank">
+                                                    <?= $total_all; ?>
+                                                </a>
+                                            <?php else: ?>
+                                                <?= $total_all; ?>
+                                            <?php endif; ?>
+                                        </th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -126,62 +188,6 @@
         </div>
     </div>
 </section>
-
-<div class="modal fade" id="defaultModalNamaKlien" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Cari Klien</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Kode Klien</th>
-                            <th>Nama Klien</th>
-                            <th class="hide">ID</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($klien as $cln) : ?>
-                            <tr>
-                                <td style="text-align:center;" scope="row"><?= $i; ?></td>
-                                <td><?= $cln['no_klien']; ?></td>
-                                <td><?= $cln['nama_klien']; ?></td>
-                                <td class="hide"><?= $cln['id']; ?></td>
-                                <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>">
-                                        Pilih
-                                    </button>
-                                </td>
-                            </tr>
-                            <?php $i++; ?>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- pilih klien -->
-<script>
-    $(document).ready(function() {
-        $(document).on('click', '#pilih3', function() {
-            var nama_klas = $(this).data('nama-klien');
-            var id = $(this).data('id');
-            $('#nama_klien').val(nama_klas);
-            $('#id').val(id);
-            $('#defaultModalNamaKlien').modal('hide');
-        });
-    });
-</script>
 
 <!-- JavaScript untuk handle export -->
 <script>

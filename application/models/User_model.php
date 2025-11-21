@@ -90,7 +90,13 @@ class User_model extends CI_Model
 
     public function getNamaPetugas()
     {
-        $query = "SELECT id_user, nama_user FROM user WHERE divisi IN ('Implementator', 'Helpdesk') ORDER BY nama_user ASC";
+        $query = "SELECT id_user, nama_user FROM user WHERE divisi IN ('Implementator', 'Helpdesk') AND active='Y' ORDER BY nama_user ASC";
         return $this->db->query($query)->result_array();
+    }
+
+    public function getPetugas()
+    {
+        $query = "SELECT id_user, nama_user FROM user WHERE role IN(2, 4) AND active='Y' ORDER BY nama_user ASC";
+        return $this->db->query($query)->result();
     }
 }

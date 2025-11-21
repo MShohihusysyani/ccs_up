@@ -285,6 +285,7 @@ class Superadmin extends CI_Controller
         foreach ($list as $pelaporan) {
             $no++;
             $row = array();
+            $row['DT_RowId'] = $pelaporan->id_pelaporan;
             $row[] = $no;
             $row[] = $pelaporan->no_tiket;
             $row[] = tanggal_indo($pelaporan->waktu_pelaporan);
@@ -348,7 +349,7 @@ class Superadmin extends CI_Controller
             $row[] = $handle_combined;
 
             // Tombol Aksi
-            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail/' . $pelaporan->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
+            // $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail/' . $pelaporan->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
 
             $data[] = $row;
         }
@@ -444,7 +445,7 @@ class Superadmin extends CI_Controller
         foreach ($list as $dp) {
             $no++;
 
-            // 🔥 Tambahkan unread_count di sini
+            //Tambahkan unread_count di sini
             $unread_count = $this->Chat_model->get_unread_ccs_messages_count($dp->id_pelaporan, $my_id);
 
             $row = array();
@@ -508,8 +509,7 @@ class Superadmin extends CI_Controller
             }
             $row[] = $handle_combined;
 
-            // tombol chat
-            // tombol chat (Dropdown Menu)
+
             $chatBtn = '
 <div class="btn-group chat-btn-wrapper" id="chat-wrapper-' . $dp->id_pelaporan . '">
     <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opsi Chat">
@@ -626,7 +626,6 @@ class Superadmin extends CI_Controller
         $this->load->model('Pelaporan_model', 'pelaporan_model');
         $this->load->model('Client_model', 'client_model');
 
-        // Set form validation rules (allow empty)
         $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
         $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
         $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
@@ -636,7 +635,6 @@ class Superadmin extends CI_Controller
         $this->form_validation->set_rules('tags', 'Tags', 'trim');
 
         if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
             $data['errors'] = validation_errors();
             $data['klien'] = $this->client_model->getClient();
             $data['user'] = $this->user_model->getNamaPetugas();
@@ -647,16 +645,14 @@ class Superadmin extends CI_Controller
             $this->load->view('superadmin/pelaporan_finish', $data);
             $this->load->view('templates/footer');
         } else {
-            // Validation passed, retrieve POST data
             $tanggal_awal  = $this->input->post('tanggal_awal');
             $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
+            $status_ccs    = 'FINISHED';
             $nama_klien    = $this->input->post('nama_klien');
             $nama_user     = $this->input->post('nama_user');
             $rating        = $this->input->post('rating');
             $tags          = $this->input->post('tags');
 
-            // var data for view 
             $data['tanggal_awal']  = $tanggal_awal;
             $data['tanggal_akhir'] = $tanggal_akhir;
             $data['status_ccs']    = $status_ccs;
@@ -665,12 +661,10 @@ class Superadmin extends CI_Controller
             $data['rating']        = $rating;
             $data['tags']          = $tags;
 
-            // Get data from the models
             $data['klien'] = $this->client_model->getClient();
             $data['user'] = $this->user_model->getNamaPetugas();
             $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
 
-            // Load views with data
             $this->load->view('templates/header');
             $this->load->view('templates/superadmin_sidebar');
             $this->load->view('superadmin/pelaporan_finish', $data);
@@ -682,7 +676,6 @@ class Superadmin extends CI_Controller
     {
         $this->load->model('Datatable_model', 'datatable_model');
 
-        // Ambil data filter dari POST request
         $filters = array(
             'tanggal_awal' => $this->input->post('tanggal_awal'),
             'tanggal_akhir' => $this->input->post('tanggal_akhir'),
@@ -712,7 +705,6 @@ class Superadmin extends CI_Controller
             $row[] = $dp->kategori;
             $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
 
-            // Proses nilai prioritas di server-side
             if ($dp->priority == 'Low') {
                 $priority_label = '<span class="label label-info">Low</span>';
             } elseif ($dp->priority == 'Medium') {
@@ -724,7 +716,6 @@ class Superadmin extends CI_Controller
             }
             $row[] = $priority_label;
 
-            // Proses nilai maxday di server-side
             if ($dp->maxday == '90') {
                 $maxday_label = '<span class="label label-info">90</span>';
             } elseif ($dp->maxday == '60') {
@@ -736,7 +727,6 @@ class Superadmin extends CI_Controller
             }
             $row[] = $maxday_label;
 
-            // Proses nilai status_ccs di server-side
             if ($dp->status_ccs == 'ADDED') {
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
             } elseif ($dp->status_ccs == 'ADDED 2') {
@@ -754,7 +744,6 @@ class Superadmin extends CI_Controller
             }
             $row[] = $status_ccs_label;
 
-            // Proses handle_by
             $handle_combined = $dp->handle_by;
             if ($dp->handle_by2) {
                 $handle_combined .= ', ' . $dp->handle_by2;
@@ -767,21 +756,20 @@ class Superadmin extends CI_Controller
             // Proses rating bintang
             $star_rating = '';
             if ($dp->rating !== null) {
-                $rating = $dp->rating; // Get the rating value
+                $rating = $dp->rating; // rating value
                 for ($i = 1; $i <= 5; $i++) {
                     if ($i <= $rating) {
-                        $star_rating .= '<span class="star selected">&#9733;</span>'; // Full star for rating
+                        $star_rating .= '<span class="star selected">&#9733;</span>';
                     } else {
-                        $star_rating .= '<span class="star">&#9734;</span>'; // Empty star for remaining
+                        $star_rating .= '<span class="star">&#9734;</span>';
                     }
                 }
             }
-            $row[] = '<div class="star-rating">' . $star_rating . '</div>'; // Wrap in div for styling
+            $row[] = '<div class="star-rating">' . $star_rating . '</div>';
 
             // Tombol Aksi
             $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
 
-            // Tambahkan row ke data
             $data[] = $row;
         }
 
@@ -792,7 +780,7 @@ class Superadmin extends CI_Controller
             "data" => $data,
         );
 
-        echo json_encode($output);  // Kirim JSON ke DataTables
+        echo json_encode($output);
         die();
     }
 
@@ -885,7 +873,6 @@ class Superadmin extends CI_Controller
     // FUNGSI EDIT HELPDESK
     public function fungsi_edit()
     {
-        // Load the form validation library
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('id_pelaporan', 'Pelaporan', 'required');
@@ -903,7 +890,6 @@ class Superadmin extends CI_Controller
             $this->session->set_flashdata('alert', validation_errors());
             redirect('superadmin/onprogress');
         } else {
-            // Retrieve POST data
             $id_pelaporan = $this->input->post('id_pelaporan');
             $id_user = $this->input->post('namahd');
             $data = [
@@ -911,13 +897,13 @@ class Superadmin extends CI_Controller
                 'user_id' => $id_user
             ];
 
-            // Fetch the user name based on the user ID
+            // cari nama user berdasarkan id
             $this->db->select('id_user, nama_user');
             $this->db->from('user');
             $this->db->where('id_user', $id_user);
             $query = $this->db->get();
 
-            // Check if user exists
+            // Cek apakah user ditemukan
             if ($query->num_rows() > 0) {
                 $user = $query->row();
                 $nama_user = $user->nama_user;
@@ -951,7 +937,6 @@ class Superadmin extends CI_Controller
             'required' => 'Kolom Max Day wajib diisi.'
         ]);
 
-        // Check if the form passes validation
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('alert', validation_errors());
             redirect('superadmin/onprogress');
@@ -963,18 +948,16 @@ class Superadmin extends CI_Controller
                 'user_id' => $id_user
             ];
 
-            // Fetch the user name based on the user ID
             $this->db->select('id_user, nama_user');
             $this->db->from('user');
             $this->db->where('id_user', $id_user);
             $query = $this->db->get();
 
-            // Check if user exists
+            // Cek apakah user ditemukan
             if ($query->num_rows() > 0) {
                 $user = $query->row();
                 $nama_user = $user->nama_user;
 
-                // Update the forward table
                 $this->db->where('pelaporan_id', $id_pelaporan);
                 $this->db->update('t1_forward', $data);
 
@@ -1059,7 +1042,7 @@ class Superadmin extends CI_Controller
 
     public function fungsi_approve_pelaporan()
     {
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        date_default_timezone_set('Asia/Jakarta');
         $now = date('Y-m-d H:i:s');
 
         $id_pelaporan         = $this->input->post('id_pelaporan');
@@ -1105,12 +1088,10 @@ class Superadmin extends CI_Controller
 
     public function rekapPelaporan()
     {
-        // Load necessary models
         $this->load->model('Superadmin_model', 'superadmin_model');
         $this->load->model('Client_model', 'client_model');
         $this->load->model('User_model', 'user_model');
 
-        // Initialize empty data for view
         $data = [
             'tanggal_awal' => '',
             'tanggal_akhir' => '',
@@ -1120,12 +1101,10 @@ class Superadmin extends CI_Controller
             'tags' => '',
         ];
 
-        // Fetch data from models
         $data['klien'] = $this->client_model->getClient();
         $data['user'] = $this->user_model->getNamaPetugas();
-        $data['pencarian_data'] = $this->superadmin_model->getAllData(); // Replace with appropriate method
+        $data['pencarian_data'] = $this->superadmin_model->getAllData();
 
-        // Load views with data
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/rekap_pelaporan', $data);
@@ -1139,7 +1118,6 @@ class Superadmin extends CI_Controller
         $this->load->model('Pelaporan_model', 'pelaporan_model');
         $this->load->model('Client_model', 'client_model');
 
-        // Set form validation rules (allow empty)
         $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
         $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
         $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
@@ -1159,7 +1137,6 @@ class Superadmin extends CI_Controller
             $this->load->view('superadmin/rekap_pelaporan', $data);
             $this->load->view('templates/footer');
         } else {
-            // Validation passed, retrieve POST data
             $tanggal_awal  = $this->input->post('tanggal_awal');
             $tanggal_akhir = $this->input->post('tanggal_akhir');
             $status_ccs    = $this->input->post('status_ccs');
@@ -1168,7 +1145,6 @@ class Superadmin extends CI_Controller
             $rating        = $this->input->post('rating');
             $tags          = $this->input->post('tags');
 
-            // var data for view 
             $data['tanggal_awal']  = $tanggal_awal;
             $data['tanggal_akhir'] = $tanggal_akhir;
             $data['status_ccs']    = $status_ccs;
@@ -1177,7 +1153,6 @@ class Superadmin extends CI_Controller
             $data['rating']        = $rating;
             $data['tags']          = $tags;
 
-            // Fetch data from models
             $data['klien'] = $this->client_model->getClient();
             $data['user'] = $this->user_model->getNamaPetugas();
             $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
@@ -1194,7 +1169,6 @@ class Superadmin extends CI_Controller
     {
         $this->load->model('Serverside_model', 'serverside_model');
 
-        // Ambil data filter dari POST request
         $filters = array(
             'tanggal_awal' => $this->input->post('tanggal_awal'),
             'tanggal_akhir' => $this->input->post('tanggal_akhir'),
@@ -1211,7 +1185,6 @@ class Superadmin extends CI_Controller
             $filters = array();
         }
 
-        // Panggil model untuk mendapatkan data dengan filter
         $list = $this->serverside_model->get_datatables($filters);
         $data = array();
 
@@ -1338,7 +1311,6 @@ class Superadmin extends CI_Controller
             $row[] = $dp->kategori;
             // $row[] = $dp->tags ? '<span class="label label-info">' . $dp->tags . '</span>' : '';
 
-            // Proses nilai prioritas di server-side
             if ($dp->priority == 'Low') {
                 $priority_label = '<span class="label label-info">Low</span>';
             } elseif ($dp->priority == 'Medium') {
@@ -1350,7 +1322,6 @@ class Superadmin extends CI_Controller
             }
             $row[] = $priority_label;
 
-            // Proses nilai maxday di server-side
             if ($dp->maxday == '90') {
                 $maxday_label = '<span class="label label-info">90</span>';
             } elseif ($dp->maxday == '60') {
@@ -1362,7 +1333,6 @@ class Superadmin extends CI_Controller
             }
             $row[] = $maxday_label;
 
-            // Proses nilai status_ccs di server-side
             if ($dp->status_ccs == 'ADDED') {
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
             } elseif ($dp->status_ccs == 'ADDED 2') {
@@ -1380,7 +1350,6 @@ class Superadmin extends CI_Controller
             }
             $row[] = $status_ccs_label;
 
-            // Proses handle_by
             $handle_combined = $dp->handle_by;
             if ($dp->handle_by2) {
                 $handle_combined .= ', ' . $dp->handle_by2;
@@ -1390,7 +1359,6 @@ class Superadmin extends CI_Controller
             }
             $row[] = $handle_combined;
 
-            // Tambahkan row ke data
             $data[] = $row;
         }
 
@@ -1401,7 +1369,7 @@ class Superadmin extends CI_Controller
             "data" => $data,
         );
 
-        echo json_encode($output);  // Kirim JSON ke DataTables
+        echo json_encode($output);
         die();
     }
 
@@ -1426,6 +1394,25 @@ class Superadmin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function detailProgres()
+    {
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        // Ambil semua parameter dari URL
+        $tahun      = $this->input->get('tahun');
+        $klien      = $this->input->get('klien');
+        $status     = $this->input->get('status');
+        $bulan      = $this->input->get('bulan'); // Untuk detail per bulan
+        $periode    = $this->input->get('periode'); // Untuk detail grand total
+
+        $data['detail_laporan'] = $this->pelaporan_model->get_rekap_progress_detail($tahun, $klien, $status, $bulan, $periode);
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/detail_rekap_progres', $data);
+        $this->load->view('templates/footer');
+    }
+
     // REKAP KATEGORI
     public function rekapKategori()
     {
@@ -1446,6 +1433,82 @@ class Superadmin extends CI_Controller
         $this->load->view('superadmin/rekap_kategori', $data);
         $this->load->view('templates/footer');
     }
+
+    public function detailKategori()
+    {
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        // Ambil semua parameter dari URL
+        $tahun      = $this->input->get('tahun');
+        $klien      = $this->input->get('klien');
+        $bulan      = $this->input->get('bulan'); // Untuk detail per bulan
+        $periode    = $this->input->get('periode'); // Untuk detail grand total
+        $kategori   = $this->input->get('kategori');
+
+        $data['detail_kategori'] = $this->pelaporan_model->get_rekap_kategori_detail($tahun, $klien, $bulan, $periode, $kategori);
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/detail_rekap_kategori', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // REKAP PETUGAS
+    public function rekapPetugas()
+    {
+        $data['title'] = 'Rekap Petugas';
+
+        // Ambil Filter dari URL
+        $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
+        $user_id = $this->input->get('user_id') ? $this->input->get('user_id') : 'all';
+
+        // Ambil Data Mentah dari Model
+        $data_rekap = $this->pelaporan_model->get_rekap_gabungan($bulan, $tahun, $user_id);
+
+        // HITUNG RUMUS MATEMATIKA (Sesuai Gambar Excel)
+        foreach ($data_rekap as &$row) {
+            // Kolom I = D + G (Total Request Bulan Lalu)
+            $row['total_req_prev'] = $row['handle_prev'] + $row['finish_prev'];
+
+            // Kolom J = E + H (Total Request Bulan Ini)
+            $row['total_req_current'] = $row['handle_current'] + $row['finish_current'];
+
+            // Kolom K = C + F + I + J (Grand Total Akumulasi)
+            $row['total_grand_akumulasi'] = $row['handle_akumulasi']
+                + $row['finish_akumulasi']
+                + $row['total_req_prev']
+                + $row['total_req_current'];
+        }
+
+        $data['rekap'] = $data_rekap;
+        $data['filter_bulan'] = $bulan;
+        $data['filter_tahun'] = $tahun;
+        $data['filter_user'] = $user_id;
+
+        // Ambil list petugas
+        $data['list_petugas'] = $this->user_model->getPetugas();
+
+        // Cek apakah user minta Export Excel?
+        if ($this->input->get('action') == 'excel') {
+            $this->export_excel($data);
+        } else {
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_petugas', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    private function export_excel($data)
+    {
+        // Header untuk memaksa download file Excel
+        header("Content-type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=Rekap_Petugas_" . $data['filter_bulan'] . "-" . $data['filter_tahun'] . ".xls");
+        $this->load->view('cetak/rekap_petugas', $data);
+    }
+
 
     // REKAP HANDLE BY HELPDESK
     public function rekapHelpdesk()
@@ -1471,6 +1534,8 @@ class Superadmin extends CI_Controller
         $this->load->view('superadmin/rekap_helpdesk', $data);
         $this->load->view('templates/footer');
     }
+
+
 
 
 
@@ -1526,7 +1591,7 @@ class Superadmin extends CI_Controller
 
     public function add_comment()
     {
-        date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+        date_default_timezone_set('Asia/Jakarta');
         $now = date('Y-m-d H:i:s');
         //jika ada gambar
         $photo = $_FILES['file']['name'];
@@ -1728,7 +1793,6 @@ class Superadmin extends CI_Controller
         echo json_encode($result);
     }
 
-    // Get unread count for specific ticket
     public function get_unread_count()
     {
         $this->load->model('Chat_model');
@@ -1751,7 +1815,6 @@ class Superadmin extends CI_Controller
 
         $my_id = $this->session->userdata('id_user');
 
-        // Ambil data filter dari POST request
         $filters = array(
             'tanggal_awal'   => $this->input->post('tanggal_awal'),
             'tanggal_akhir'  => $this->input->post('tanggal_akhir'),
@@ -1764,7 +1827,7 @@ class Superadmin extends CI_Controller
             $filters = array();
         }
 
-        // Ambil semua ticket yang sedang ditampilkan
+        // Ambil semua tiket yang sedang ditampilkan
         $list = $this->serversidehandle_model->get_datatables($filters);
         $unread_counts = array();
 

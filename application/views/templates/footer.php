@@ -28,8 +28,11 @@
 <!-- Waves Effect Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/node-waves/waves.js"></script>
 
+<!-- Sweetalert Js -->
+<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/sweetalert/sweetalert.min.js""></script>
+
 <!-- Moment Plugin Js -->
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/momentjs/moment.js"></script>
+<script src=" <?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/momentjs/moment.js"></script>
 
 <!-- Bootstrap Material Datetime Picker Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
@@ -38,19 +41,9 @@
 <!-- Jquery CountTo Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-countto/jquery.countTo.js"></script>
 
-<!-- Morris Plugin Js -->
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/raphael/raphael.min.js"></script>
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/morrisjs/morris.js"></script>
 
 <!-- ChartJs -->
 <!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/chartjs/Chart.bundle.js"></script> -->
-
-<!-- Flot Charts Plugin Js -->
-<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.js"></script>
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.resize.js"></script>
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.pie.js"></script>
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.categories.js"></script>
-<script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/flot-charts/jquery.flot.time.js"></script> -->
 
 <!-- Jquery DataTable Plugin Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
@@ -89,12 +82,6 @@
 
 <!-- Demo Js -->
 <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>js/demo.js"></script>
-
-<!-- Ckeditor -->
-<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/ckeditor/ckeditor.js"></script> -->
-
-<!-- TinyMCE -->
-<!-- <script src="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/tinymce/tinymce.js"></script> -->
 
 
 </body>

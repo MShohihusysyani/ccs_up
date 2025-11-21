@@ -1,42 +1,20 @@
 <?php
 class Pelaporan_model extends CI_Model
 {
-    // public function add_pelaporan()
-    // {
-    //     $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-    //     $user_id = $this->session->userdata('id_user');
-    //     date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
-    //     $now = date('Y-m-d');
-
-
-
-    //     $query = "INSERT INTO pelaporan ( user_id,waktu_pelaporan, perihal, file, nama, no_tiket, kategori, tags, judul) select  user_id, '$now',perihal, file, nama, no_tiket, kategori, tags, judul
-    //                 from tiket_temp 
-    //                 where user_id = $user_id 
-    //                 ";
-    //     // $query2 = "DELETE FROM barang_temp where user_id = $user_id";
-
-    //     $this->db->query($query);
-    //     // $this->db->delete($query2);
-    // }
 
     public function add_pelaporan()
     {
-        // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        // Set the timezone and get the current date
         date_default_timezone_set('Asia/Jakarta');
         $now = date('Y-m-d H:i:s');
 
-        // Retrieve data from tiket_temp for the given user
         $this->db->select('user_id, perihal, file, nama, no_tiket, kategori, tags, judul');
         $this->db->from('tiket_temp');
         $this->db->where('user_id', $user_id);
         $tiket_temp_data = $this->db->get()->result_array();
 
-        // Insert the retrieved data into pelaporan
         foreach ($tiket_temp_data as $row) {
             $data_to_insert = [
                 'user_id' => $row['user_id'],
@@ -53,7 +31,6 @@ class Pelaporan_model extends CI_Model
             $this->db->insert('pelaporan', $data_to_insert);
         }
 
-        // Optionally delete the data from tiket_temp after insertion
         // $this->db->delete('tiket_temp', ['user_id' => $user_id]);
     }
 
@@ -75,7 +52,7 @@ class Pelaporan_model extends CI_Model
         $user_id = $this->session->userdata('id_user');
 
         $this->db->where('user_id', $user_id);
-        $this->db->where('status_ccs', 'FINISHED'); // Status tiket yang sudah selesai
+        $this->db->where('status_ccs', 'FINISHED');
         $this->db->group_start();
         $this->db->where('rating', '0');
         $this->db->or_where('rating IS NULL');
@@ -150,7 +127,6 @@ class Pelaporan_model extends CI_Model
     //LAPORAN status
     public function getAll()
     {
-        // Build the query using Query Builder
         $this->db->select('
             pelaporan.no_tiket,
             pelaporan.waktu_pelaporan,
@@ -173,7 +149,6 @@ class Pelaporan_model extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'FINISHED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
@@ -260,7 +235,7 @@ class Pelaporan_model extends CI_Model
     public function getDateFilteredHandle($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null,   $status_ccs = null, $rating = null)
     {
         $this->db->select('*');
-        $this->db->from('pelaporan'); // Sesuaikan dengan nama tabel yang sesuai
+        $this->db->from('pelaporan');
 
         // Filter berdasarkan tanggal_awal dan tanggal_akhir jika ada
         if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
@@ -291,7 +266,7 @@ class Pelaporan_model extends CI_Model
         }
 
         $query = $this->db->get();
-        return $query->result(); // Mengembalikan hasil query
+        return $query->result();
     }
 
     // Rekap pelaporan per user helpdesk
@@ -299,13 +274,12 @@ class Pelaporan_model extends CI_Model
     {
         $user_id = $this->session->userdata('id_user');
 
-        $this->db->select('pelaporan.*'); // Select fields from both tables
-        $this->db->from('forward'); // Specify the base table
+        $this->db->select('pelaporan.*');
+        $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Apply date filters
         if (!empty($tanggal_awal)) {
             $this->db->where('waktu_pelaporan >=', $tanggal_awal);
         }
@@ -313,12 +287,10 @@ class Pelaporan_model extends CI_Model
             $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
         }
 
-        // Apply status_ccs filter
         if (!empty($status_ccs)) {
             $this->db->where('status_ccs', $status_ccs);
         }
 
-        // Apply client name filter
         if (!empty($nama_klien)) {
             $this->db->like('nama', $nama_klien);
         }
@@ -332,30 +304,26 @@ class Pelaporan_model extends CI_Model
     {
         $user_id = $this->session->userdata('id_user');
 
-        $this->db->select('pelaporan.*'); // Select fields from both tables
-        $this->db->from('forward'); // Specify the base table
+        $this->db->select('pelaporan.*');
+        $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
         $this->db->where('pelaporan.status_ccs', 'FINISHED');
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Filter berdasarkan tanggal_awal dan tanggal_akhir jika ada
         if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
             $this->db->where('waktu_pelaporan >=', $tanggal_awal);
             $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
         }
 
-        // Apply status_ccs filter
         if (!empty($status_ccs)) {
             $this->db->where('status_ccs', $status_ccs);
         }
 
-        // Apply client name filter
         if (!empty($nama_klien)) {
             $this->db->like('nama', $nama_klien);
         }
 
-        // Apply tags filter
         if (!empty($rating)) {
             $this->db->where('rating', $rating);
         }
@@ -370,30 +338,26 @@ class Pelaporan_model extends CI_Model
     {
         $user_id = $this->session->userdata('id_user');
 
-        $this->db->select('pelaporan.*'); // Select fields from both tables
-        $this->db->from('t1_forward'); // Specify the base table
+        $this->db->select('pelaporan.*');
+        $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('t1_forward.user_id', $user_id);
         $this->db->where('pelaporan.status_ccs', 'FINISHED');
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Filter berdasarkan tanggal_awal dan tanggal_akhir jika ada
         if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
             $this->db->where('waktu_pelaporan >=', $tanggal_awal);
             $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
         }
 
-        // Apply status_ccs filter
         if (!empty($status_ccs)) {
             $this->db->where('status_ccs', $status_ccs);
         }
 
-        // Apply client name filter
         if (!empty($nama_klien)) {
             $this->db->like('nama', $nama_klien);
         }
 
-        // Apply tags filter
         if (!empty($rating)) {
             $this->db->where('rating', $rating);
         }
@@ -406,13 +370,12 @@ class Pelaporan_model extends CI_Model
     {
         $user_id = $this->session->userdata('id_user');
 
-        $this->db->select('pelaporan.*'); // Select fields from both tables
-        $this->db->from('t1_forward'); // Specify the base table
+        $this->db->select('pelaporan.*');
+        $this->db->from('t1_forward');
         $this->db->join('pelaporan', 't1_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('t1_forward.user_id', $user_id);
-        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC'); // Order by waktu_pelaporan in descending order
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Apply date filters
         if (!empty($tanggal_awal)) {
             $this->db->where('waktu_pelaporan >=', $tanggal_awal);
         }
@@ -420,12 +383,10 @@ class Pelaporan_model extends CI_Model
             $this->db->where('waktu_pelaporan <=', $tanggal_akhir);
         }
 
-        // Apply status_ccs filter
         if (!empty($status_ccs)) {
             $this->db->where('status_ccs', $status_ccs);
         }
 
-        // Apply client name filter
         if (!empty($nama_klien)) {
             $this->db->like('nama', $nama_klien);
         }
@@ -478,17 +439,14 @@ class Pelaporan_model extends CI_Model
     }
     public function count_tickets_by_status($user_id, $status)
     {
-        // Ambil data pengguna dari sesi
         $user_id = $this->session->userdata('user_id');
 
-        // Bangun query untuk menghitung jumlah tiket berdasarkan status
         $this->db->select('COUNT(*) as ticket_count');
         $this->db->from('forward');
         $this->db->join('pelaporan', 'forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('forward.user_id', $user_id);
         $this->db->where_in('pelaporan.status_ccs', $status);
 
-        // Eksekusi query
         $query = $this->db->get();
         $result = $query->row_array();
 
@@ -513,11 +471,10 @@ class Pelaporan_model extends CI_Model
 
         $result = $this->db->query($query, array($user_id))->result_array();
 
-        // Debugging: Print the result
         echo '<pre>';
         print_r($result);
         echo '</pre>';
-        exit; // Stop further execution to check the printed result
+        exit;
 
         return $result;
     }
@@ -535,7 +492,7 @@ class Pelaporan_model extends CI_Model
         $this->db->from('pelaporan');
         $this->db->where('YEAR(waktu_pelaporan)', $tahun);
         $this->db->where_in('MONTH(waktu_pelaporan)', $bulan_range);
-        $this->db->like('nama', $nama_klien);
+        if (!empty($nama_klien)) $this->db->where('user_id', $nama_klien);
         $this->db->group_by('MONTH(waktu_pelaporan)');
         $this->db->order_by('MONTH(waktu_pelaporan)', 'ASC');
 
@@ -567,6 +524,7 @@ class Pelaporan_model extends CI_Model
             $data = reset($data);
 
             $rekap[] = [
+                'bulan_num' => $b,
                 'bulan'    => $bulan_nama[$b],
                 'finished' => isset($data['finished']) ? (int)$data['finished'] : 0,
                 'handled'  => isset($data['handled']) ? (int)$data['handled'] : 0,
@@ -577,6 +535,47 @@ class Pelaporan_model extends CI_Model
         return $rekap;
     }
 
+    public function get_rekap_progress_detail($tahun, $klien, $status, $bulan, $periode)
+    {
+        // Tentukan status yang dicari
+        $status_where = [];
+        if ($status == 'finished') {
+            $status_where = ["FINISHED", "CLOSED"];
+        } elseif ($status == 'handled') {
+            $status_where = ["HANDLED", "HANDLED 2", "ADDED 2"];
+        } elseif ($status == 'total') {
+            $status_where = ["FINISHED", "CLOSED", "HANDLED", "HANDLED 2", "ADDED 2"];
+        }
+
+        // Tentukan range bulan
+        if (!empty($bulan)) {
+            // Jika parameter 'bulan' ada (klik dari baris bulanan)
+            $this->db->where('MONTH(waktu_pelaporan)', $bulan);
+        } elseif (!empty($periode)) {
+            // Jika parameter 'periode' ada (klik dari grand total)
+            $bulan_range = ($periode == 1) ? range(1, 6) : range(7, 12);
+            $this->db->where_in('MONTH(waktu_pelaporan)', $bulan_range);
+        }
+
+        $this->db->select('pelaporan.*, klien.nama_klien');
+        $this->db->from('pelaporan');
+        $this->db->join('klien', 'pelaporan.user_id = klien.id_user_klien', 'left');
+
+        $this->db->where('YEAR(waktu_pelaporan)', $tahun);
+
+        if (!empty($klien)) {
+            $this->db->where('pelaporan.user_id', $klien);
+        }
+
+        if (!empty($status_where)) {
+            $this->db->where_in('pelaporan.status_ccs', $status_where);
+        }
+
+        $this->db->order_by('pelaporan.waktu_pelaporan', 'ASC');
+
+        return $this->db->get()->result_array();
+    }
+
 
     // REKAP KATEGORI
     public function get_rekap_kategori($periode, $tahun, $nama_klien)
@@ -584,7 +583,7 @@ class Pelaporan_model extends CI_Model
         $this->db->select('kategori, MONTH(waktu_pelaporan) as bulan, COUNT(*) as jumlah');
         $this->db->from('pelaporan');
         $this->db->where('YEAR(waktu_pelaporan)', $tahun);
-        $this->db->like('nama', $nama_klien);
+        if (!empty($nama_klien)) $this->db->where('user_id', $nama_klien);
 
         if ($periode == 1) {
             $this->db->where('MONTH(waktu_pelaporan) >=', 1);
@@ -600,13 +599,136 @@ class Pelaporan_model extends CI_Model
         return $query->result_array();
     }
 
+    public function get_rekap_kategori_detail($tahun, $klien, $bulan, $periode, $kategori)
+    {
+        $this->db->select('pelaporan.*, klien.nama_klien');
+        $this->db->from('pelaporan');
+        $this->db->join('klien', 'pelaporan.user_id = klien.id_user_klien', 'left');
+
+        // Filter Tahun
+        $this->db->where('YEAR(waktu_pelaporan)', $tahun);
+
+        // Filter Klien (jika ada)
+        if (!empty($klien)) {
+            $this->db->where('user_id', $klien);
+        }
+
+        // Filter Kategori
+        if (isset($kategori) && $kategori !== '') {
+            // filter kategori tanpa kategori
+            if ($kategori == '(Tanpa Kategori)') {
+                $this->db->group_start();
+                $this->db->where('kategori', NULL);
+                $this->db->or_where('kategori', '');
+                $this->db->group_end();
+            } else {
+                // Filter kategori
+                $this->db->where('kategori', $kategori);
+            }
+        }
+
+        // Filter Bulan
+        if (!empty($bulan)) {
+            $this->db->where('MONTH(waktu_pelaporan)', $bulan);
+        }
+
+        // Filter Periode
+        if (empty($bulan) && !empty($periode)) {
+            if ($periode == 1) {
+                $this->db->where('MONTH(waktu_pelaporan) >=', 1);
+                $this->db->where('MONTH(waktu_pelaporan) <=', 6);
+            } elseif ($periode == 2) {
+                $this->db->where('MONTH(waktu_pelaporan) >=', 7);
+                $this->db->where('MONTH(waktu_pelaporan) <=', 12);
+            }
+        }
+
+        $this->db->order_by('waktu_pelaporan', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // REKAP PETUGAS
+    public function get_rekap_gabungan($bulan, $tahun, $user_id_filter = null)
+    {
+
+        // Bulan Terpilih (Current)
+        $curr_start = "$tahun-$bulan-01";
+        $curr_end   = date("Y-m-t", strtotime($curr_start));
+
+        //Bulan Sebelumnya (Previous)
+        $prev_start = date("Y-m-01", strtotime("-1 month", strtotime($curr_start)));
+        $prev_end   = date("Y-m-t", strtotime($prev_start));
+
+        $sql = "
+        SELECT 
+            u.nama_user as nama_petugas, 
+            stats.*
+        FROM user u
+        JOIN (
+            SELECT 
+                user_id,
+                
+                -- Akumulasi: Semua tiket SEBELUM bulan lalu
+                SUM(CASE WHEN status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') AND date(waktu_pelaporan) < ? THEN 1 ELSE 0 END) as handle_akumulasi,
+                -- Bulan Lalu
+                SUM(CASE WHEN status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') AND date(waktu_pelaporan) BETWEEN ? AND ? THEN 1 ELSE 0 END) as handle_prev,
+                -- Bulan Ini
+                SUM(CASE WHEN status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') AND date(waktu_pelaporan) BETWEEN ? AND ? THEN 1 ELSE 0 END) as handle_current,
+
+                -- Akumulasi: Semua tiket selesai SEBELUM bulan lalu
+                SUM(CASE WHEN status_ccs IN ('FINISHED', 'CLOSED') AND date(waktu_approve) < ? THEN 1 ELSE 0 END) as finish_akumulasi,
+                -- Bulan Lalu
+                SUM(CASE WHEN status_ccs IN ('FINISHED', 'CLOSED') AND date(waktu_approve) BETWEEN ? AND ? THEN 1 ELSE 0 END) as finish_prev,
+                -- Bulan Ini
+                SUM(CASE WHEN status_ccs IN ('FINISHED', 'CLOSED') AND date(waktu_approve) BETWEEN ? AND ? THEN 1 ELSE 0 END) as finish_current
+
+            FROM (
+                SELECT f.user_id, p.status_ccs, p.waktu_pelaporan, p.waktu_approve
+                FROM forward f
+                JOIN pelaporan p ON f.pelaporan_id = p.id_pelaporan
+                
+                UNION ALL
+                
+                SELECT t1.user_id, p.status_ccs, p.waktu_pelaporan, p.waktu_approve
+                FROM t1_forward t1
+                JOIN pelaporan p ON t1.pelaporan_id = p.id_pelaporan
+            ) as gabungan_tugas
+            
+            GROUP BY user_id
+        ) as stats ON u.id_user = stats.user_id
+
+        WHERE u.active = 'Y'";
+
+        // Filter Petugas Spesifik
+        if ($user_id_filter != 'all' && !empty($user_id_filter)) {
+            $sql .= " AND u.id_user = " . $this->db->escape($user_id_filter);
+        }
+
+        $sql    .= "ORDER BY u.nama_user ASC";
+
+        $params = [
+            $prev_start,   // Handle Akum
+            $prev_start,
+            $prev_end,     // Handle Prev
+            $curr_start,
+            $curr_end,     // Handle Curr
+
+            $prev_start,   // Finish Akum
+            $prev_start,
+            $prev_end,     // Finish Prev
+            $curr_start,
+            $curr_end      // Finish Curr
+        ];
+
+        return $this->db->query($sql, $params)->result_array();
+    }
+
     public function get_by_no_tiket($id)
     {
-        // Asumsi nama tabel Anda adalah 'pelaporan' atau sesuaikan
         $this->db->from('pelaporan');
         $this->db->where('no_tiket', $id);
 
-        // PENTING: Gunakan ->row() untuk mengambil satu baris data sebagai object
         return $this->db->get()->row();
     }
 }

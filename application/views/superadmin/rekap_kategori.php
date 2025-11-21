@@ -23,10 +23,10 @@
 
                             <div class="form-group">
                                 <label for="nama_klien">Pilih Klien</label>
-                                <select id="nama_klien" name="nama_klien" class="form-control show-tick">
+                                <select id="nama_klien" name="nama_klien" class="form-control show-tick" data-live-search="true">
                                     <option value="">-- Pilih Klien --</option>
                                     <?php foreach ($klien as $row): ?>
-                                        <option value="<?= $row['nama_klien']; ?>" <?= ($nama_klien == $row['nama_klien']) ? 'selected' : ''; ?>><?= $row['no_klien'] . ' - ' . $row['nama_klien']; ?></option>
+                                        <option value="<?= $row['id_user_klien']; ?>" <?= ($nama_klien == $row['id_user_klien']) ? 'selected' : ''; ?>><?= $row['no_klien'] . ' - ' . $row['nama_klien']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -70,11 +70,11 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" style="text-align:center;">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="example" style="text-align:center;">
                                 <thead style="background-color: #c8e6c9;">
                                     <tr>
                                         <th>No</th>
-                                        <th>Kategori</th>
+                                        <th style="text-align:center;">Kategori</th>
                                         <?php
                                         $bulan_map = ($periode == 1) ?
                                             ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'] :
@@ -101,28 +101,68 @@
                                         $grand_total += $jumlah;
                                     }
 
+                                    // parameter URL
+                                    $base_link_params = http_build_query([
+                                        'tahun' => $tahun,
+                                        'klien' => $nama_klien
+                                    ]);
 
                                     $no = 1;
                                     foreach ($data_kategori as $kategori => $bulan_data) {
                                         $total = 0;
-                                        echo "<tr><td>{$no}</td><td>{$kategori}</td>";
+                                        echo "<tr><td>{$no}</td><td style=\"text-align:left;\">{$kategori}</td>";
+
+                                        // URL Encode kategori
+                                        $kat_encoded = urlencode($kategori);
+
                                         for ($i = ($periode == 1 ? 1 : 7); $i <= ($periode == 1 ? 6 : 12); $i++) {
                                             $jml = isset($bulan_data[$i]) ? $bulan_data[$i] : 0;
                                             $total += $jml;
-                                            echo "<td>{$jml}</td>";
+
+                                            // Buat link jika jumlah > 0
+                                            if ($jml > 0) {
+                                                // Tambahkan 'kategori' ke link bulan
+                                                $link = base_url("superadmin/detailKategori?kategori={$kat_encoded}&bulan={$i}&{$base_link_params}");
+                                                echo "<td><a href='{$link}' target='_blank'>{$jml}</a></td>";
+                                            } else {
+                                                echo "<td>{$jml}</td>";
+                                            }
                                         }
-                                        echo "<td>{$total}</td></tr>";
+
+                                        // Buat link untuk Total per Kategori
+                                        if ($total > 0) {
+                                            //Tambahkan 'kategori' ke link total baris
+                                            $link = base_url("superadmin/detailKategori?kategori={$kat_encoded}&periode={$periode}&{$base_link_params}");
+                                            echo "<td><a href='{$link}' target='_blank'>{$total}</a></td></tr>";
+                                        } else {
+                                            echo "<td>{$total}</td></tr>";
+                                        }
+
                                         $no++;
                                     }
                                     ?>
+
                                     <tr style="background-color: #c8e6c9; font-weight: bold;">
                                         <td colspan="2">Total</td>
                                         <?php
                                         for ($i = ($periode == 1 ? 1 : 7); $i <= ($periode == 1 ? 6 : 12); $i++) {
                                             $tot = isset($total_per_bulan[$i]) ? $total_per_bulan[$i] : 0;
-                                            echo "<td>{$tot}</td>";
+
+                                            //link tanpa ketegori
+                                            if ($tot > 0) {
+                                                $link = base_url("superadmin/detailKategori?bulan={$i}&{$base_link_params}");
+                                                echo "<td><a href='{$link}' target='_blank'>{$tot}</a></td>";
+                                            } else {
+                                                echo "<td>{$tot}</td>";
+                                            }
                                         }
-                                        echo "<td>{$grand_total}</td>";
+
+                                        if ($grand_total > 0) {
+                                            $link = base_url("superadmin/detailKategori?periode={$periode}&{$base_link_params}");
+                                            echo "<td><a href='{$link}' target='_blank'>{$grand_total}</a></td>";
+                                        } else {
+                                            echo "<td>{$grand_total}</td>";
+                                        }
                                         ?>
                                     </tr>
 
