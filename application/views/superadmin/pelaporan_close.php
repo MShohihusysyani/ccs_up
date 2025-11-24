@@ -72,7 +72,9 @@
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $dp['no_tiket']; ?></td>
-                                                <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
+                                                <td data-order="<?= $dp['waktu_pelaporan'] ?>">
+                                                    <?= tanggal_indo($dp['waktu_pelaporan']) ?>
+                                                </td>
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
                                                 <!-- <td><?= $dp['perihal']; ?></td> -->
