@@ -186,13 +186,13 @@
                                             <th>No</th>
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
-                                            <th>Nama Klien</th>
+                                            <th>BPR/Klien</th>
                                             <th>Judul</th>
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
                                             <th>Max Day</th>
-                                            <th>Status CCS</th>
+                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -456,12 +456,26 @@
         }, ],
 
         'createdRow': function(row, data, dataIndex) {
-            if (data[12] === 'Fokus') {
+            if (data[13] === 'Fokus') {
                 $(row).css('background-color', '#d4edda');
             }
+        },
+
+        // klik by row
+        "createdRow": function(row, data, dataIndex) {
+            $(row).css('cursor', 'pointer');
         }
 
     });
+
+    $('#example tbody').on('click', 'tr', function() {
+        var id = $(this).attr('id');
+
+        if (id) {
+            window.location.href = "<?php echo site_url('superadmin/detail_pelaporan/') ?>" + id;
+        }
+    });
+
     $('#filterForm').on('submit', function(e) {
         e.preventDefault();
         table.draw();
@@ -630,7 +644,7 @@
             }
 
             $.ajax({
-                url: "<?= site_url('chat/mark_as_unread') ?>", // URL ke controller baru
+                url: "<?= site_url('chat/mark_as_unread') ?>",
                 type: 'POST',
                 data: {
                     id_pelaporan: tiketId
@@ -653,7 +667,6 @@
             });
         });
 
-        // Kode DataTables dan skrip lain Anda tetap di sini...
 
     });
 </script>

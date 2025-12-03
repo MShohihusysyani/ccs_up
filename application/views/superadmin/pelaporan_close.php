@@ -32,44 +32,21 @@
                                             <th>No</th>
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
-                                            <th>Nama Klien</th>
+                                            <th>BPR/Klien</th>
                                             <th>Judul</th>
-                                            <!-- <th>Perihal</th> -->
-                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
-                                            <!-- <th>Tags</th> -->
                                             <th>Priority</th>
-                                            <!-- <th>Impact</th> -->
                                             <th>Max Day</th>
-                                            <th>Status CCS</th>
+                                            <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <!-- <th>Perihal</th> -->
-                                            <!-- <th>Attachment</th> -->
-                                            <th>Category</th>
-                                            <!-- <th>Tags</th> -->
-                                            <th>Priority</th>
-                                            <!-- <th>Impact</th> -->
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Handle By</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                         <?php
                                         $no = 1;
                                         foreach ($datapelaporan as $dp) : ?>
-                                            <tr>
+                                            <tr class="detail-row" data-href="<?= base_url() ?>superadmin/detail_close/<?= $dp['id_pelaporan']; ?>">
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $dp['no_tiket']; ?></td>
                                                 <td data-order="<?= $dp['waktu_pelaporan'] ?>">
@@ -77,17 +54,7 @@
                                                 </td>
                                                 <td><?= $dp['nama']; ?></td>
                                                 <td><?= $dp['judul']; ?></td>
-                                                <!-- <td><?= $dp['perihal']; ?></td> -->
-                                                <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                </td> -->
                                                 <td><?= $dp['kategori']; ?></td>
-                                                <!-- <td>
-                                                    <?php if (!empty($dp['tags'])): ?>
-                                                        <span class="label label-info">
-                                                            <?= $dp['tags']; ?>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                </td> -->
                                                 <td>
                                                     <?php if ($dp['priority'] == 'Low') : ?>
                                                         <span class="label label-info">Low</span>
@@ -431,5 +398,21 @@
             $('#id').val(id);
             $('#defaultModalNamaDivisi').modal('hide');
         })
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Event delegation untuk menangani klik pada baris
+        // Menggunakan 'body' agar tetap jalan meskipun ada pagination client-side datatables
+        $('body').on('click', '.detail-row', function(e) {
+
+            // Ambil URL dari atribut data-href
+            var url = $(this).data('href');
+
+            // Redirect ke halaman detail
+            if (url) {
+                window.location.href = url;
+            }
+        });
     });
 </script>

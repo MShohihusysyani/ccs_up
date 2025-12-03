@@ -406,12 +406,10 @@ class Superadmin extends CI_Controller
     {
         $data['namateknisi'] = $this->user_model->getNamaTeknisi();
 
-        // Get data from the models
         $data['klien'] = $this->client_model->getClient();
         $data['user'] = $this->user_model->getNamaPetugas();
         // $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $nama_klien, $nama_user);
 
-        // Load views with data
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
         $this->load->view('superadmin/pelaporan_onprogress', $data);
@@ -449,6 +447,7 @@ class Superadmin extends CI_Controller
             $unread_count = $this->Chat_model->get_unread_ccs_messages_count($dp->id_pelaporan, $my_id);
 
             $row = array();
+            $row['DT_RowId'] = $dp->id_pelaporan;
             $row[] = $no;
             $row[] = $dp->no_tiket;
             $row[] = tanggal_indo($dp->waktu_pelaporan);
@@ -561,9 +560,6 @@ class Superadmin extends CI_Controller
                 data-status_ccs="' . $dp->status_ccs . '">
                 <i class="material-icons">edit</i>
             </button>
-            <a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail_pelaporan/' . $dp->id_pelaporan) . '">
-                <i class="material-icons">visibility</i>
-            </a>
             <a class="btn btn-sm btn-primary" href="' . base_url('export/print_detail/' . $dp->no_tiket) . '">
                 <i class="material-icons">print</i>
             </a>
@@ -620,56 +616,17 @@ class Superadmin extends CI_Controller
     //     $this->load->view('superadmin/pelaporan_finish', $data);
     //     $this->load->view('templates/footer');
     // }
+
     public function finish()
     {
-        $this->load->library('form_validation');
-        $this->load->model('Pelaporan_model', 'pelaporan_model');
-        $this->load->model('Client_model', 'client_model');
 
-        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
-        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
-        $this->form_validation->set_rules('rating', 'rating', 'trim');
-        $this->form_validation->set_rules('tags', 'Tags', 'trim');
+        $data['klien'] = $this->client_model->getClient();
+        $data['user'] = $this->user_model->getNamaPetugas();
 
-        if ($this->form_validation->run() == FALSE) {
-            $data['errors'] = validation_errors();
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = [];
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/superadmin_sidebar');
-            $this->load->view('superadmin/pelaporan_finish', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $tanggal_awal  = $this->input->post('tanggal_awal');
-            $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED';
-            $nama_klien    = $this->input->post('nama_klien');
-            $nama_user     = $this->input->post('nama_user');
-            $rating        = $this->input->post('rating');
-            $tags          = $this->input->post('tags');
-
-            $data['tanggal_awal']  = $tanggal_awal;
-            $data['tanggal_akhir'] = $tanggal_akhir;
-            $data['status_ccs']    = $status_ccs;
-            $data['nama_klien']    = $nama_klien;
-            $data['nama_user']     = $nama_user;
-            $data['rating']        = $rating;
-            $data['tags']          = $tags;
-
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/superadmin_sidebar');
-            $this->load->view('superadmin/pelaporan_finish', $data);
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/pelaporan_finish', $data);
+        $this->load->view('templates/footer');
     }
 
     public function get_data_finish()
@@ -697,6 +654,7 @@ class Superadmin extends CI_Controller
         foreach ($list as $dp) {
             $no++;
             $row = array();
+            $row['DT_RowId'] = $dp->id_pelaporan;
             $row[] = $no;
             $row[] = $dp->no_tiket;
             $row[] = tanggal_indo($dp->waktu_pelaporan);
@@ -716,11 +674,11 @@ class Superadmin extends CI_Controller
             }
             $row[] = $priority_label;
 
-            if ($dp->maxday == '90') {
+            if ($dp->maxday == 90) {
                 $maxday_label = '<span class="label label-info">90</span>';
-            } elseif ($dp->maxday == '60') {
+            } elseif ($dp->maxday == 60) {
                 $maxday_label = '<span class="label label-warning">60</span>';
-            } elseif ($dp->maxday == '7') {
+            } elseif ($dp->maxday == 7) {
                 $maxday_label = '<span class="label label-danger">7</span>';
             } else {
                 $maxday_label = $dp->maxday;
@@ -768,7 +726,7 @@ class Superadmin extends CI_Controller
             $row[] = '<div class="star-rating">' . $star_rating . '</div>';
 
             // Tombol Aksi
-            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
+            // $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('superadmin/detail/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
 
             $data[] = $row;
         }
@@ -1049,20 +1007,15 @@ class Superadmin extends CI_Controller
         $no_tiket   = $this->input->post('no_tiket');
         $nama       = $this->input->post('nama');
         $judul      = $this->input->post('judul');
-        // $perihal    = $this->input->post('perihal');
         $status_ccs = 'FINISHED';
-        // $waktu      = date('Y-m-d H:i:s');
         $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday');
         $kategori   = $this->input->post('kategori');
 
         $this->db->set('judul', $judul);
         $this->db->set('no_tiket', $no_tiket);
         $this->db->set('nama', $nama);
         $this->db->set('status_ccs', $status_ccs);
-        // $this->db->set('waktu_approve', $waktu);
         $this->db->set('priority', $priority);
-        // $this->db->set('perihal', $perihal);
         $this->db->set('maxday', $maxday);
         $this->db->set('kategori', $kategori);
         $this->db->where('id_pelaporan', $id_pelaporan);
@@ -1463,10 +1416,14 @@ class Superadmin extends CI_Controller
         $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
         $user_id = $this->input->get('user_id') ? $this->input->get('user_id') : 'all';
 
+        if ($bulan == '01') {
+            $data['tahun_bulan_lalu'] = $tahun - 1;
+        } else {
+            $data['tahun_bulan_lalu'] = $tahun;
+        }
         // Ambil Data Mentah dari Model
         $data_rekap = $this->pelaporan_model->get_rekap_gabungan($bulan, $tahun, $user_id);
 
-        // HITUNG RUMUS MATEMATIKA (Sesuai Gambar Excel)
         foreach ($data_rekap as &$row) {
             // Kolom I = D + G (Total Request Bulan Lalu)
             $row['total_req_prev'] = $row['handle_prev'] + $row['finish_prev'];
@@ -1499,6 +1456,40 @@ class Superadmin extends CI_Controller
             $this->load->view('superadmin/rekap_petugas', $data);
             $this->load->view('templates/footer');
         }
+    }
+    public function detailPetugas()
+    {
+        $user_id     = $this->input->get('user');
+        $status_type = $this->input->get('status');   // 'handle', 'finish', atau 'all'
+        $periode     = $this->input->get('periode');  // 'bulan', 'akumulasi', 'total_semua'
+
+        // Logika penangkapan tanggal
+        if ($periode == 'akumulasi') {
+            // Jika akumulasi, view mengirim param 'bulan_batas' & 'tahun_batas'
+            $bulan = $this->input->get('bulan_batas');
+            $tahun = $this->input->get('tahun_batas');
+        } else {
+            // Jika bulan biasa, view mengirim param 'bulan' & 'tahun'
+            $bulan = $this->input->get('bulan');
+            $tahun = $this->input->get('tahun');
+        }
+
+        $this->load->model('Pelaporan_model');
+        $data['detail'] = $this->pelaporan_model->get_detail_tugas($user_id, $status_type, $periode, $bulan, $tahun);
+
+        $data['info'] = [
+            'nama_petugas' => $this->db->get_where('user', ['id_user' => $user_id])->row()->nama_user,
+            'status'       => strtoupper($status_type),
+            'periode'      => $periode,
+            'bulan'        => $bulan,
+            'tahun'        => $tahun
+        ];
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/superadmin_sidebar');
+        $this->load->view('superadmin/detail_rekap_petugas', $data);
+        $this->load->view('templates/footer');
     }
 
     private function export_excel($data)

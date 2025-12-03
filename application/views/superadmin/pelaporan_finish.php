@@ -146,35 +146,18 @@
                                         <th>No</th>
                                         <th>No Tiket</th>
                                         <th>Tanggal</th>
-                                        <th>Nama Klien</th>
+                                        <th>BPR/Klien</th>
                                         <th>Judul</th>
                                         <th>Category</th>
                                         <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
-                                        <th>Status CCS</th>
+                                        <th>Status</th>
                                         <th>Handle By</th>
                                         <th>Rating</th>
-                                        <th>Aksi</th>
+                                        <!-- <th>Aksi</th> -->
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Klien</th>
-                                        <th>Judul</th>
-                                        <th>Category</th>
-                                        <th>Tags</th>
-                                        <th>Priority</th>
-                                        <th>Max Day</th>
-                                        <th>Status CCS</th>
-                                        <th>Handle By</th>
-                                        <th>Rating</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
 
                                 </tbody>
@@ -298,25 +281,37 @@
         "columnDefs": [{
             "targets": [0],
             "orderable": false,
-        }]
+        }],
+        // klik by row
+        "createdRow": function(row, data, dataIndex) {
+            $(row).css('cursor', 'pointer');
+        }
     });
 
-    // Handle form submission for filtering
+    $('#example tbody').on('click', 'tr', function() {
+        var id = $(this).attr('id');
+
+        if (id) {
+            window.location.href = "<?php echo site_url('superadmin/detail/') ?>" + id;
+        }
+    });
+
+    // "Filter"
     $('#filterForm').on('submit', function(e) {
         e.preventDefault();
-        table.draw(); // Redraw the DataTable based on new filters
+        table.draw();
     });
 
-    // Handle "Reset Filter" button click
+    // "Reset Filter"
     $('#resetFilterButton').on('click', function() {
         $('#filterFormContent')[0].reset();
-        table.draw(); // Redraw the DataTable to reflect reset filters
+        table.draw();
     });
 
-    // Handle "Semua Data" button click
+    //"Semua Data"
     $('#semuaDataButton').on('click', function() {
         $('#filterFormContent')[0].reset();
-        table.ajax.reload(); // Reload DataTables to show all data
+        table.ajax.reload();
     });
 
     // Handle export buttons
@@ -356,7 +351,6 @@
 
         form.submit();
 
-        // Remove the form after a slight delay to ensure the submission goes through
         setTimeout(function() {
             form.remove();
         }, 100);

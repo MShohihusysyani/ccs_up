@@ -724,6 +724,78 @@ class Pelaporan_model extends CI_Model
         return $this->db->query($sql, $params)->result_array();
     }
 
+    public function get_detail_tugas($user_id, $status_type, $periode, $bulan, $tahun)
+    {
+        $date_column = 'waktu_pelaporan';
+        $status_array = [];
+
+        if ($status_type == 'handle') {
+            $status_array = ['HANDLED', 'HANDLED 2', 'ADDED 2'];
+            $date_column  = 'waktu_pelaporan';
+        } elseif ($status_type == 'finish') {
+            $status_array = ['FINISHED', 'CLOSED'];
+            $date_column  = 'waktu_approve';
+        }
+
+        // Setup Periode Waktu
+        $where_date = "";
+        $selected_date_start = "$tahun-$bulan-01";
+        $selected_date_end   = date("Y-m-t", strtotime($selected_date_start));
+
+        if ($periode == 'bulan') {
+            $where_date = "AND date($date_column) BETWEEN '$selected_date_start' AND '$selected_date_end'";
+        } elseif ($periode == 'akumulasi') {
+            $where_date = "AND date($date_column) < '$selected_date_start'";
+        } elseif ($periode == 'total_semua') {
+            $where_date = "";
+        }
+
+        $safe_user_id = $this->db->escape($user_id);
+
+        $sql = "
+    SELECT * FROM (
+        -- Ambil dari tabel forward
+        SELECT 
+            'forward' as sumber_data,
+            f.user_id AS id_petugas_handler,
+            p.*,
+            k.nama_klien,
+            k.id_user_klien
+        FROM forward f
+        JOIN pelaporan p ON f.pelaporan_id = p.id_pelaporan
+        LEFT JOIN klien  k ON p.user_id = k.id_user_klien
+        WHERE f.user_id = $safe_user_id
+        
+        UNION ALL
+        
+        -- Ambil dari tabel t1_forward
+        SELECT 
+            't1_forward' as sumber_data,
+            t1.user_id AS id_petugas_handler,
+            p.*,
+            k.nama_klien,
+            k.id_user_klien
+        FROM t1_forward t1
+        JOIN pelaporan p ON t1.pelaporan_id = p.id_pelaporan
+        LEFT JOIN klien k ON p.user_id = k.id_user_klien
+        WHERE t1.user_id = $safe_user_id
+    ) as tabel_gabungan
+    WHERE 1=1
+    ";
+
+        //Filter Status
+        if (!empty($status_array)) {
+            $status_list = "'" . implode("','", $status_array) . "'";
+            $sql .= " AND status_ccs IN ($status_list)";
+        }
+
+        //Filter Tanggal & Sorting
+        $sql .= " $where_date";
+        $sql .= " ORDER BY waktu_pelaporan DESC";
+
+        return $this->db->query($sql)->result_array();
+    }
+
     public function get_by_no_tiket($id)
     {
         $this->db->from('pelaporan');

@@ -982,12 +982,10 @@ class Helpdesk extends CI_Controller
         $data = [
             'id_pelaporan' => $id,
             'no_tiket' => $this->input->post('no_tiket'),
-            // 'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
             'file_finish'     => $photo,
             'nama'     => $this->input->post('nama'),
             'kategori' => $this->input->post('kategori'),
             'priority'   => $this->input->post('priority'),
-            'maxday'     => $this->input->post('maxday'),
             'catatan_finish' => $catatan_finish,
             'status'     => 'Solved',
             'status_ccs' => 'CLOSED',

@@ -42,8 +42,6 @@
                                         <th>Tanggal</th>
                                         <th>Bpr/Klien</th>
                                         <th>Judul</th>
-                                        <!-- <th>Impact</th> -->
-                                        <!-- <th>Attachment</th> -->
                                         <th>Category</th>
                                         <th>Tags</th>
                                         <th>Priority</th>
@@ -53,24 +51,6 @@
                                         <!-- <th>Aksi</th> -->
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>No Tiket</th>
-                                        <th>Tanggal</th>
-                                        <th>Bpr/Klien</th>
-                                        <th>Judul</th>
-                                        <!-- <th>Impact</th> -->
-                                        <!-- <th>Attachment</th> -->
-                                        <th>Category</th>
-                                        <th>Tags</th>
-                                        <th>Priority</th>
-                                        <th>Max Day</th>
-                                        <th>Status</th>
-                                        <th>Handle By</th>
-                                        <!-- <th>Aksi</th> -->
-                                    </tr>
-                                </tfoot>
                                 <tbody>
 
                                 </tbody>

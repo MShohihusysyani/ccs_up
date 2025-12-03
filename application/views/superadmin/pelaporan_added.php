@@ -42,35 +42,16 @@
                                             <th>No</th>
                                             <th>No Tiket</th>
                                             <th>Tanggal</th>
-                                            <th>Nama Klien</th>
+                                            <th>BPR/Klien</th>
                                             <th>Judul</th>
-                                            <!-- <th>Perihal</th> -->
-                                            <!-- <th>Attachment</th> -->
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Priority</th>
                                             <th>Max Day</th>
-                                            <th>Status CCS</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Tiket</th>
-                                            <th>Tanggal</th>
-                                            <th>Nama Klien</th>
-                                            <th>Judul</th>
-                                            <!-- <th>Perihal</th> -->
-                                            <!-- <th>Attachment</th> -->
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Priority</th>
-                                            <th>Max Day</th>
-                                            <th>Status CCS</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
 
                                         <?php

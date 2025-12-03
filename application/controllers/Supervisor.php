@@ -847,21 +847,15 @@ class Supervisor extends CI_Controller
         $no_tiket   = $this->input->post('no_tiket');
         $nama       = $this->input->post('nama');
         $judul      = $this->input->post('judul');
-        // $perihal    = $this->input->post('perihal');
         $status_ccs = 'FINISHED';
-        // $waktu      = date('Y-m-d H:i:s');
         $priority   = $this->input->post('priority');
-        $maxday     = $this->input->post('maxday');
         $kategori   = $this->input->post('kategori');
 
         $this->db->set('judul', $judul);
         $this->db->set('no_tiket', $no_tiket);
         $this->db->set('nama', $nama);
         $this->db->set('status_ccs', $status_ccs);
-        // $this->db->set('waktu_approve', $waktu);
         $this->db->set('priority', $priority);
-        // $this->db->set('perihal', $perihal);
-        $this->db->set('maxday', $maxday);
         $this->db->set('kategori', $kategori);
         $this->db->where('id_pelaporan', $id_pelaporan);
         $this->db->update('pelaporan');

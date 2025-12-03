@@ -340,12 +340,10 @@ class Implementator extends CI_Controller
             'id_pelaporan' => $id,
             'no_tiket' => $this->input->post('no_tiket'),
             'waktu_pelaporan' => $this->input->post('waktu_pelaporan'),
-            // 'perihal'  => $this->input->post('perihal'),
             'file_finish'     => $photo,
             'nama'     => $this->input->post('nama'),
             'kategori' => $this->input->post('kategori'),
             'priority'   => $this->input->post('priority'),
-            'maxday'     => $this->input->post('maxday'),
             'catatan_finish' => $this->input->post('catatan_finish'),
             'status'     => 'Solved',
             'status_ccs' => 'CLOSED',
@@ -410,11 +408,9 @@ class Implementator extends CI_Controller
         $data['nama_klien'] = '';
         $data['tags'] = '';
 
-        // Get all data from the models
         $data['klien'] = $this->client_model->getClient();
-        $data['pencarian_data'] = $this->implementator_model->getAllData(); // A method that returns all data
+        $data['pencarian_data'] = $this->implementator_model->getAllData();
 
-        // Load views with data
         $this->load->view('templates/header');
         $this->load->view('templates/implementator_sidebar');
         $this->load->view('implementator/data_pelaporan', $data);

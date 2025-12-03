@@ -163,23 +163,61 @@
                                         <?php
                                         $no = 1;
                                         foreach ($rekap as $r):
+                                            $url_detail = site_url('superadmin/detailPetugas');
+                                            $id_user    = $r['user_id'];
                                         ?>
                                             <tr>
                                                 <td class="text-center"><?= $no++; ?></td>
                                                 <td style="font-weight:bold;"><?= $r['nama_petugas']; ?></td>
 
-                                                <td class="text-center"><?= $r['handle_akumulasi']; ?></td>
-                                                <td class="text-center"><?= $r['handle_prev']; ?></td>
-                                                <td class="text-center"><?= $r['handle_current']; ?></td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=akumulasi&bulan_batas=<?= $key_bulan_lalu ?>&tahun_batas=<?= $tahun_bulan_lalu ?>" target="_blank" style="font-weight:bold; color:#555;">
+                                                        <?= $r['handle_akumulasi']; ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red font-bold">
+                                                        <?= $r['handle_prev']; ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue font-bold">
+                                                        <?= $r['handle_current']; ?>
+                                                    </a>
+                                                </td>
 
-                                                <td class="text-center"><?= $r['finish_akumulasi']; ?></td>
-                                                <td class="text-center"><?= $r['finish_prev']; ?></td>
-                                                <td class="text-center"><?= $r['finish_current']; ?></td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=akumulasi&bulan_batas=<?= $key_bulan_lalu ?>&tahun_batas=<?= $tahun_bulan_lalu ?>" target="_blank" style="font-weight:bold; color:#555;">
+                                                        <?= $r['finish_akumulasi']; ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red font-bold">
+                                                        <?= $r['finish_prev']; ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue font-bold">
+                                                        <?= $r['finish_current']; ?>
+                                                    </a>
+                                                </td>
 
-                                                <td class="text-center"><?= $r['total_req_prev']; ?></td>
-                                                <td class="text-center"><?= $r['total_req_current']; ?></td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red font-bold">
+                                                        <?= $r['total_req_prev']; ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue font-bold">
+                                                        <?= $r['total_req_current']; ?>
+                                                    </a>
+                                                </td>
 
-                                                <td class="text-left font-bold"><?= $r['total_grand_akumulasi']; ?></td>
+                                                <td class="text-left font-bold">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=total_semua" target="_blank" style="color:#000;">
+                                                        <?= $r['total_grand_akumulasi']; ?>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
