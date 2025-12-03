@@ -45,7 +45,7 @@
                             </div>
                         </div>
 
-                        <label for="nama">Nama </label>
+                        <label for="nama">BPR/Klien</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="nama" name="nama" class="form-control" value="<?= $dp['nama']; ?>" readonly>
@@ -80,14 +80,14 @@
                             </div>
                         </div>
 
-                        <label for="impact">Impact</label>
+                        <label for="impact">Maxday</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="impact" name="impact" class="form-control" value="<?= $dp['impact']; ?>" readonly>
+                                <input type="text" id="maxday" name="maxday" class="form-control" value="<?= $dp['maxday']; ?>" readonly>
                             </div>
                         </div>
 
-                        <label for="status_ccs ">Status CCS </label>
+                        <label for="status_ccs ">Status</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="status_ccs" name="status_ccs" class="form-control" value="<?= $dp['status_ccs']; ?>" readonly>
