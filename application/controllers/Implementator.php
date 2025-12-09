@@ -347,7 +347,7 @@ class Implementator extends CI_Controller
             'catatan_finish' => $this->input->post('catatan_finish'),
             'status'     => 'Solved',
             'status_ccs' => 'CLOSED',
-            'waktu_approve' => $now
+            'waktu_finish' => $now
         ];
 
         // Remove tag
