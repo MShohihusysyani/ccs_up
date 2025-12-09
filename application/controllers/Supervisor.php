@@ -318,56 +318,18 @@ class Supervisor extends CI_Controller
     public function onprogress()
     {
         $this->load->model('User_model', 'user_model');
-        $data['namahd'] = $this->user_model->getNamaUser();
-
         $this->load->library('form_validation');
-        $this->load->model('Pelaporan_model', 'pelaporan_model');
         $this->load->model('Client_model', 'client_model');
 
-        // Set form validation rules (allow empty)
-        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
-        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
-
-        if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
-            $data['errors'] = validation_errors();
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = [];
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/pelaporan_onprogress', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // Validation passed, retrieve POST data
-            $tanggal_awal  = $this->input->post('tanggal_awal');
-            $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED'; // For pelaporan finish, the status is always FINISHED
-            $nama_klien    = $this->input->post('nama_klien');
-            $nama_user     = $this->input->post('nama_user');
-
-            // var data for view 
-            $data['tanggal_awal']  = $tanggal_awal;
-            $data['tanggal_akhir'] = $tanggal_akhir;
-            $data['status_ccs']    = $status_ccs;
-            $data['nama_klien']    = $nama_klien;
-            $data['nama_user']     = $nama_user;
+        $data['namahd'] = $this->user_model->getNamaUser();
+        $data['klien'] = $this->client_model->getClient();
+        $data['user'] = $this->user_model->getNamaPetugas();
 
 
-            // Get data from the models
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user);
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/pelaporan_onprogress', $data);  // <-- Mengirim data ke view
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/pelaporan_onprogress', $data);
+        $this->load->view('templates/footer');
     }
 
 
@@ -375,7 +337,7 @@ class Supervisor extends CI_Controller
     {
         $this->load->model('Chat_model');
         $my_id = $this->session->userdata('id_user');
-        $this->load->model('Serversidespvop_model', 'serversidespvop_model');
+        $this->load->model('Serversidehandle_model', 'serversidehandle_model');
         $filters = array(
             'tanggal_awal' => $this->input->post('tanggal_awal'),
             'tanggal_akhir' => $this->input->post('tanggal_akhir'),
@@ -389,7 +351,7 @@ class Supervisor extends CI_Controller
             // Kosongkan filter
             $filters = array();
         }
-        $list = $this->serversidespvop_model->get_datatables($filters);
+        $list = $this->serversidehandle_model->get_datatables($filters);
         $data = array();
         $no = isset($_POST['start']) ? $_POST['start'] : 0;
 
@@ -431,6 +393,8 @@ class Supervisor extends CI_Controller
                 $maxday_label = $dp->maxday;
             }
             $row[] = $maxday_label;
+
+            $row[] = $this->sisa_hari($dp->tgl_jatuh_tempo);
 
             // Proses nilai status_ccs di server-side
             if ($dp->status_ccs == 'ADDED') {
@@ -515,13 +479,55 @@ class Supervisor extends CI_Controller
         }
         $output = array(
             "draw" => isset($_POST['draw']) ? $_POST['draw'] : 0,
-            "recordsTotal" => $this->serversidespvop_model->count_all(),
-            "recordsFiltered" => $this->serversidespvop_model->count_filtered($filters),
+            "recordsTotal" => $this->serversidehandle_model->count_all(),
+            "recordsFiltered" => $this->serversidehandle_model->count_filtered($filters),
             "data" => $data,
         );
 
         echo json_encode($output);
         die();
+    }
+
+    private function sisa_hari($tgl_jatuh_tempo)
+    {
+        // Cek jika tanggal kosong
+        if (empty($tgl_jatuh_tempo)) {
+            return '<span class="label label-info">-</span>';
+        }
+
+        // Setup Tanggal menggunakan DateTime Native
+        try {
+            $jatuh_tempo_obj = new DateTime($tgl_jatuh_tempo);
+            $hari_ini_obj    = new DateTime();
+
+            //Reset jam ke 00:00:00 agar hitungan murni berdasarkan tanggal kalender
+            $jatuh_tempo_obj->setTime(0, 0, 0);
+            $hari_ini_obj->setTime(0, 0, 0);
+
+            // 4. Hitung selisih
+            $diff = $hari_ini_obj->diff($jatuh_tempo_obj);
+
+            // format('%r%a') akan menghasilkan angka dengan tanda minus jika lewat (contoh: -2 atau +5)
+            $sisa_hari = (int) $diff->format('%r%a');
+
+            //Logika Tampilan (Sama seperti sebelumnya)
+            if ($sisa_hari < 0) {
+                // Telat (Negatif)
+                return '<span class="label label-danger">' . abs($sisa_hari) . ' Hari</span>';
+            } elseif ($sisa_hari == 0) {
+                // Hari Ini (0)
+                return '<span class="label label-warning">Hari Ini!</span>';
+            } else {
+                // Masa depan (Positif)
+                if ($sisa_hari <= 3) {
+                    return '<span class="label label-warning">' . $sisa_hari . ' Hari</span>';
+                }
+                return '<span class="label label-primary">' . $sisa_hari . ' Hari</span>';
+            }
+        } catch (Exception $e) {
+            // Fallback jika format tanggal error
+            return '<span class="label label-danger">Error Date</span>';
+        }
     }
 
     public function fetch_chat_ticket_notifications()
@@ -619,55 +625,14 @@ class Supervisor extends CI_Controller
         $this->load->model('Pelaporan_model', 'pelaporan_model');
         $this->load->model('Client_model', 'client_model');
 
-        // Set form validation rules (allow empty)
-        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
-        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
-        $this->form_validation->set_rules('rating', 'rating', 'trim');
-        $this->form_validation->set_rules('tags', 'Tags', 'trim');
+        $data['klien'] = $this->client_model->getClient();
+        $data['user'] = $this->user_model->getNamaPetugas();
 
-        if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
-            $data['errors'] = validation_errors();
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = [];
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/pelaporan_finish', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // Validation passed, retrieve POST data
-            $tanggal_awal  = $this->input->post('tanggal_awal');
-            $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED';
-            $nama_klien    = $this->input->post('nama_klien');
-            $nama_user     = $this->input->post('nama_user');
-            $rating        = $this->input->post('rating');
-            $tags          = $this->input->post('tags');
-
-            // var data for view 
-            $data['tanggal_awal']  = $tanggal_awal;
-            $data['tanggal_akhir'] = $tanggal_akhir;
-            $data['status_ccs']    = $status_ccs;
-            $data['nama_klien']    = $nama_klien;
-            $data['nama_user']     = $nama_user;
-            $data['rating']        = $rating;
-            $data['tags']          = $tags;
-
-            // Get data from the models
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor_sidebar');
-            $this->load->view('supervisor/pelaporan_finish');
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor_sidebar');
+        $this->load->view('supervisor/pelaporan_finish');
+        $this->load->view('templates/footer');
     }
 
     public function get_data_finish()
@@ -730,7 +695,8 @@ class Supervisor extends CI_Controller
             }
             $row[] = $maxday_label;
 
-            // Proses nilai status_ccs di server-side
+            $row[] = $this->performance($dp->tgl_jatuh_tempo, $dp->waktu_approve);
+
             if ($dp->status_ccs == 'ADDED') {
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
             } elseif ($dp->status_ccs == 'ADDED 2') {
@@ -790,6 +756,43 @@ class Supervisor extends CI_Controller
         die();
     }
 
+    private function performance($tgl_jatuh_tempo, $finished_at)
+    {
+        //Cek jika tanggal kosong
+        if (empty($tgl_jatuh_tempo) || empty($finished_at)) {
+            return '<span class="label label-info">-</span>';
+        }
+
+        //Gunakan DateTime Native PHP pengganti Carbon
+        // setTime(0,0,0) fungsinya sama dengan startOfDay()
+        $deadline = new DateTime($tgl_jatuh_tempo);
+        $deadline->setTime(0, 0, 0);
+
+        $selesai = new DateTime($finished_at);
+        $selesai->setTime(0, 0, 0);
+
+        //Hitung selisih
+        // diff() mengembalikan objek DateInterval
+        $interval = $deadline->diff($selesai);
+
+        // $interval->days = Total selisih hari (selalu positif/absolut)
+        // $interval->invert = 1 jika $selesai lebih kecil dari $deadline (lebih cepat)
+        // $interval->invert = 0 jika $selesai lebih besar dari $deadline (telat)
+
+        $days = $interval->days;
+
+        if ($days == 0) {
+            // Jika selisih hari 0, berarti TEPAT WAKTU
+            return '<span class="label label-info">Tepat Waktu</span>';
+        } elseif ($interval->invert == 0) {
+            // Jika invert 0, berarti $selesai > $deadline (TELAT)
+            return '<span class="label label-danger">Telat ' . $days . ' Hari</span>';
+        } else {
+            // Jika invert 1, berarti $selesai < $deadline (LEBIH CEPAT)
+            return '<span class="label label-success">Lebih Cepat ' . $days . ' Hari</span>';
+        }
+    }
+
 
     public function edit_pelaporan()
     {
@@ -806,6 +809,7 @@ class Supervisor extends CI_Controller
             $kategori     = $this->input->post('kategori');
             $priority     = $this->input->post('priority');
             $maxday       = $this->input->post('maxday');
+            $tgl_jatuh_tempo = $this->input->post('tgl_jatuh_tempo');
             $tags         = $this->input->post('tags');
             $impact       = $this->input->post('impact');
             $ArrUpdate = array(
@@ -814,6 +818,7 @@ class Supervisor extends CI_Controller
                 'priority'   => $priority,
                 'kategori'   => $kategori,
                 'maxday'     => $maxday,
+                'tgl_jatuh_tempo' => $tgl_jatuh_tempo,
                 'tags'       => $tags,
                 'impact'     => $impact,
 

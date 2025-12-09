@@ -5,8 +5,8 @@ class Datatable_model extends CI_Model
 {
 
     private $table = 'pelaporan';
-    private $column_order = array(null, 'no_tiket', 'waktu_pelaporan', 'nama', 'perihal', 'impact', 'file', 'kategori', 'tags', 'priority', 'maxday', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3', 'rating');
-    private $column_search = array('no_tiket', 'waktu_pelaporan', 'nama', 'perihal', 'impact', 'file', 'kategori', 'tags', 'priority', 'maxday', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3', 'rating');
+    private $column_order = array(null, 'no_tiket', 'waktu_pelaporan', 'nama', 'perihal', 'impact', 'file', 'kategori', 'tags', 'priority', 'maxday', 'tgl_jatuh_tempo', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3', 'rating');
+    private $column_search = array('no_tiket', 'waktu_pelaporan', 'nama', 'perihal', 'impact', 'file', 'kategori', 'tags', 'priority', 'maxday', 'tgl_jatuh_tempo', 'status_ccs', 'handle_by', 'handle_by2', 'handle_by3', 'rating');
     private $order = array('waktu_pelaporan' => 'DESC'); // Default order
 
     public function __construct()

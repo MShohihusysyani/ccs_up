@@ -152,6 +152,7 @@
                                         <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
+                                        <th>Performa</th>
                                         <th>Status</th>
                                         <th>Handle By</th>
                                         <th>Rating</th>

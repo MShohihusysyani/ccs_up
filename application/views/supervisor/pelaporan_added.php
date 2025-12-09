@@ -37,35 +37,16 @@
                                                 <th>No</th>
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
-                                                <th>Nama Klien</th>
+                                                <th>BPR/Klien</th>
                                                 <th>Judul</th>
-                                                <!-- <th>Perihal</th> -->
-                                                <!-- <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
                                                 <th>Max Day</th>
-                                                <th>Status CCS</th>
+                                                <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>No Tiket</th>
-                                                <th>Tanggal</th>
-                                                <th>Nama Klien</th>
-                                                <th>Judul</th>
-                                                <!-- <th>Perihal</th> -->
-                                                <!-- <th>Attachment</th> -->
-                                                <th>Category</th>
-                                                <th>Tags</th>
-                                                <th>Priority</th>
-                                                <th>Max Day</th>
-                                                <th>Status CCS</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </tfoot>
                                         <tbody>
 
                                             <?php
@@ -142,7 +123,7 @@
 
                                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-info forward-action">
-                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name"></span></a>
+                                                            <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tgl_jatuh_tempo="<?= $dp['tgl_jatuh_tempo']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name"></span></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -235,10 +216,17 @@
                             </div>
                         </div>
 
+                        <label for="tgl_jatuh_tempo">Tgl Jatuh Tempo</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="date" id="tgl_jatuh_tempo" name="tgl_jatuh_tempo" class="form-control" readonly>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="form-line">
                                 <select id="impact" name="impact" class="form-control">
-                                    <option value="">-- Choose Impact--</option>
+                                    <option value="">-- Please select Impact--</option>
                                     <option value="kritikal">Kritikal</option>
                                     <option value="material">Material</option>
                                 </select>
@@ -298,7 +286,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="largeModalLabel">Pilih Helpdesk</h4>
+                <h4 class="modal-title" id="largeModalLabel">Forward</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('supervisor/fungsi_forward') ?>
@@ -320,7 +308,7 @@
                             </div>
                         </div>
 
-                        <label for="nama">Nama Klien</label>
+                        <label for="nama">BPR/Klien</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
@@ -369,7 +357,12 @@
                                 <input value="" type="text" id="maxday_forward" name="maxday" class="form-control" readonly>
                             </div>
                         </div>
-
+                        <label for="tgl_jatuh_tempo">Tgl Jatuh Tempo</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="date" id="tgl_jatuh_tempo_forward" name="tgl_jatuh_tempo" class="form-control" readonly>
+                            </div>
+                        </div>
                         <label for="kategori">Category</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -491,33 +484,50 @@
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 <script>
     $(document).ready(function() {
-        function updateMaxDay(prioritySelector, maxDaySelector) {
-            var priority = $(prioritySelector).val();
-            var maxDay = "";
+        // Fungsi perhitungan logika tanggal
+        function hitungJatuhTempo(selectorPriority, selectorMaxDay, selectorTanggal) {
+            var priority = $(selectorPriority).val();
+            var maxday = 0;
 
-            if (priority === "Low") {
-                maxDay = "90";
-            } else if (priority === "Medium") {
-                maxDay = "60";
-            } else if (priority === "High") {
-                maxDay = "7";
+            // Tentukan jumlah hari berdasarkan Priority
+            if (priority === 'High') {
+                maxday = 7;
+            } else if (priority === 'Medium') {
+                maxday = 60;
+            } else if (priority === 'Low') {
+                maxday = 90;
             }
 
-            $(maxDaySelector).val(maxDay);
+            // Masukkan angka ke kolom Maxday target
+            $(selectorMaxDay).val(maxday);
+
+            // Hitung Tanggal Jatuh Tempo (Hari ini + Maxday)
+            if (maxday > 0) {
+                var targetDate = new Date(); // Ambil tanggal hari ini
+                targetDate.setDate(targetDate.getDate() + maxday); // Tambahkan hari
+
+                // Format tanggal ke YYYY-MM-DD
+                var dd = String(targetDate.getDate()).padStart(2, '0');
+                var mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+                var yyyy = targetDate.getFullYear();
+
+                var formattedDate = yyyy + '-' + mm + '-' + dd;
+
+                // Masukkan ke kolom Tgl Jatuh Tempo target
+                $(selectorTanggal).val(formattedDate);
+            } else {
+                $(selectorTanggal).val(''); // Kosongkan jika tidak ada priority
+            }
         }
 
-        // Untuk modal edit
-        $('#editModalCP').on('shown.bs.modal', function() {
-            $('#priority').on('change', function() {
-                updateMaxDay('#priority', '#maxday');
-            }).trigger('change'); // Auto set saat modal dibuka
+        // Event Listener untuk Modal EDIT
+        $('#priority').on('change', function() {
+            hitungJatuhTempo('#priority', '#maxday', '#tgl_jatuh_tempo');
         });
 
-        // Untuk modal forward
-        $('#forwardModal').on('shown.bs.modal', function() {
-            $('#priority_forward').on('change', function() {
-                updateMaxDay('#priority_forward', '#maxday_forward');
-            }).trigger('change'); // Auto set saat modal dibuka
+        // Event Listener untuk Modal FORWARD
+        $('#priority_forward').on('change', function() {
+            hitungJatuhTempo('#priority_forward', '#maxday_forward', '#tgl_jatuh_tempo_forward');
         });
     });
 </script>
@@ -546,18 +556,6 @@
             modal.find('#maxday').attr("value", div.data('maxday'));
             modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#tags').attr("value", div.data('tags'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-            // modal.find('#tags').value = div.data('tags');
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
 
         });
 
@@ -581,15 +579,12 @@
             modal.find('#perihal_coba').html(div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
-            // modal.find('#priority option:selected').text(div.data('priority'));
-            modal.find('#maxday').attr("value", div.data('maxday'));
-            // modal.find('#kategori').attr("value", div.data('kategori'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
+            modal.find('#priority_forward').val(div.data('priority'));
+            // Masukkan Maxday & Tanggal asli dari database
+            modal.find('#maxday_forward').val(div.data('maxday'));
+            modal.find('#tgl_jatuh_tempo_forward').val(div.data('tgl_jatuh_tempo'));
             modal.find('#kategori_forward').attr("value", div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
 
         });
 

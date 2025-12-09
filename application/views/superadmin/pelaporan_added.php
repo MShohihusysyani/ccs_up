@@ -57,7 +57,7 @@
                                         <?php
                                         $no = 1;
                                         foreach ($dataAdded as $dp) : ?>
-                                            <tr>
+                                            <tr class="detail-row" data-href="<?= base_url() ?>superadmin/detail_add/<?= $dp['id_pelaporan']; ?>">
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $dp['no_tiket']; ?></td>
                                                 <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
@@ -126,10 +126,10 @@
 
                                                     <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                     <div class="btn btn-sm btn-info forward-action">
-                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name"></span></a>
+                                                        <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-judul="<?= $dp['judul']; ?>" data-perihal='<?= htmlspecialchars($dp['perihal'], ENT_QUOTES); ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-tgl_jatuh_tempo="<?= $dp['tgl_jatuh_tempo']; ?>" data-toggle="modal" data-target="#forwardModal"> <i class="material-icons">forward</i> <span class="icon-name"></span></a>
                                                     </div>
 
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_add/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i></a>
+                                                    <!-- <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_add/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i></a> -->
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -172,7 +172,7 @@
                             </div>
                         </div>
 
-                        <label for="nama">Nama Klien</label>
+                        <label for="nama">BPR/Klien</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
@@ -195,7 +195,7 @@
                         </div>
 
 
-                        <label for="status_ccs">Status CCS</label>
+                        <label for="status_ccs">Status</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="status_ccs" name="status_ccs" class="form-control" readonly>
@@ -217,6 +217,13 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="maxday" name="maxday" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <label for="tgl_jatuh_tempo">Tgl Jatuh Tempo</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="date" id="tgl_jatuh_tempo" name="tgl_jatuh_tempo" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -274,7 +281,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Select Helpdesk</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Forward</h4>
             </div>
             <div class="modal-body">
                 <?= form_open_multipart('superadmin/fungsi_forward') ?>
@@ -288,35 +295,30 @@
                                 <input value="" type="text" id="no_tiket" name="no_tiket" class="form-control" readonly>
                             </div>
                         </div>
-
                         <label for="waktu_pelaporan">Tanggal</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" readonly>
                             </div>
                         </div>
-
-                        <label for="nama">Nama Klien</label>
+                        <label for="nama">BPR/Klien</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="nama" name="nama" class="form-control" readonly>
                             </div>
                         </div>
-
                         <label for="nama">Judul</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="judul" name="judul" class="form-control" readonly>
                             </div>
                         </div>
-
                         <label for="perihal">Perihal</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <div id="perihal_coba" readonly></div>
                             </div>
                         </div>
-
                         <label for="status_ccs">Status</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -340,14 +342,18 @@
                                 </select>
                             </div>
                         </div>
-
                         <label for="maxday">Max Day</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input value="" type="text" id="maxday_forward" name="maxday" class="form-control" readonly>
                             </div>
                         </div>
-
+                        <label for="tgl_jatuh_tempo">Tgl Jatuh Tempo</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input value="" type="date" id="tgl_jatuh_tempo_forward" name="tgl_jatuh_tempo" class="form-control" readonly>
+                            </div>
+                        </div>
                         <label for="kategori">Category</label>
                         <div class="form-group">
                             <div class="form-line">
@@ -377,7 +383,6 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-link waves-effect">FORWARD</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-
                         </div>
 
                 </div>
@@ -475,6 +480,55 @@
 <!-- AUTO INPUT MAX DAY AFTER SELECT PRIORITY -->
 <script>
     $(document).ready(function() {
+        // Fungsi perhitungan logika tanggal
+        function hitungJatuhTempo(selectorPriority, selectorMaxDay, selectorTanggal) {
+            var priority = $(selectorPriority).val();
+            var maxday = 0;
+
+            // Tentukan jumlah hari berdasarkan Priority
+            if (priority === 'High') {
+                maxday = 7;
+            } else if (priority === 'Medium') {
+                maxday = 60;
+            } else if (priority === 'Low') {
+                maxday = 90;
+            }
+
+            // Masukkan angka ke kolom Maxday target
+            $(selectorMaxDay).val(maxday);
+
+            // Hitung Tanggal Jatuh Tempo (Hari ini + Maxday)
+            if (maxday > 0) {
+                var targetDate = new Date(); // Ambil tanggal hari ini
+                targetDate.setDate(targetDate.getDate() + maxday); // Tambahkan hari
+
+                // Format tanggal ke YYYY-MM-DD
+                var dd = String(targetDate.getDate()).padStart(2, '0');
+                var mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+                var yyyy = targetDate.getFullYear();
+
+                var formattedDate = yyyy + '-' + mm + '-' + dd;
+
+                // Masukkan ke kolom Tgl Jatuh Tempo target
+                $(selectorTanggal).val(formattedDate);
+            } else {
+                $(selectorTanggal).val(''); // Kosongkan jika tidak ada priority
+            }
+        }
+
+        // Event Listener untuk Modal EDIT
+        $('#priority').on('change', function() {
+            hitungJatuhTempo('#priority', '#maxday', '#tgl_jatuh_tempo');
+        });
+
+        // Event Listener untuk Modal FORWARD
+        $('#priority_forward').on('change', function() {
+            hitungJatuhTempo('#priority_forward', '#maxday_forward', '#tgl_jatuh_tempo_forward');
+        });
+    });
+</script>
+<!-- <script>
+    $(document).ready(function() {
         function updateMaxDay(prioritySelector, maxDaySelector) {
             var priority = $(prioritySelector).val();
             var maxDay = "";
@@ -504,27 +558,6 @@
             }).trigger('change'); // Auto set saat modal dibuka
         });
     });
-</script>
-<!-- <script type="text/javascript">
-    //Get references to the select and input elements
-    const select = document.getElementById('priority');
-    const input = document.getElementById('maxday');
-
-    // Add event listener to the select element
-    select.addEventListener('change', function() {
-        // Set the value of the input field to the selected option's value
-        if (select.value == "Low") {
-            input.value = "90";
-        } else if (select.value == "Medium") {
-            input.value = "60";
-        } else if (select.value == "High") {
-            input.value = "7";
-        } else {
-            input.value = "";
-
-        }
-
-    });
 </script> -->
 
 <script>
@@ -549,6 +582,7 @@
             modal.find('#priority').value = div.data('priority');
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
+            modal.find('tgl_jatuh_tempo').attr("value", div.data('tgl_jatuh_tempo'));
             modal.find('#kategori').attr("value", div.data('kategori'));
             modal.find('#tags').attr("value", div.data('tags'));
             // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
@@ -575,10 +609,10 @@
             modal.find('#perihal_coba').html(div.data('perihal'));
             modal.find('#status').attr("value", div.data('status'));
             modal.find('#status_ccs').attr("value", div.data('status_ccs'));
-            // modal.find('#priority').attr("value", div.data('priority'));
-            modal.find('#priority').value = div.data('priority');
-            // modal.find('#priority option:selected').text(div.data('priority'));
-            modal.find('#maxday').attr("value", div.data('maxday'));
+            modal.find('#priority_forward').val(div.data('priority'));
+            // Masukkan Maxday & Tanggal asli dari database
+            modal.find('#maxday_forward').val(div.data('maxday'));
+            modal.find('#tgl_jatuh_tempo_forward').val(div.data('tgl_jatuh_tempo'));
             // modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#kategori_forward').attr("value", div.data('kategori'));
@@ -599,5 +633,26 @@
             $('#id').val(id);
             $('#defaultModalNamaDivisi').modal('hide');
         })
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Event delegation untuk menangani klik pada baris
+        // Menggunakan 'body' agar tetap jalan meskipun ada pagination client-side datatables
+        $('body').on('click', '.detail-row', function(e) {
+
+            // Periksa apakah klik terjadi di dalam elemen dengan pada aksi
+            if ($(e.target).closest('.edit-action, .forward-action, a').length > 0) {
+                return;
+            }
+            // Ambil URL dari atribut data-href
+            var url = $(this).data('href');
+
+            // Redirect ke halaman detail
+            if (url) {
+                window.location.href = url;
+            }
+        });
     });
 </script>

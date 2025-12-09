@@ -480,6 +480,9 @@ class Superadmin extends CI_Controller
             }
             $row[] = $maxday_label;
 
+            // Jatuh tempo
+            $row[] = $this->sisa_hari($dp->tgl_jatuh_tempo);
+
             // status_ccs
             if ($dp->status_ccs == 'ADDED') {
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
@@ -581,6 +584,48 @@ class Superadmin extends CI_Controller
 
         echo json_encode($output);
         die();
+    }
+
+    private function sisa_hari($tgl_jatuh_tempo)
+    {
+        // Cek jika tanggal kosong
+        if (empty($tgl_jatuh_tempo)) {
+            return '<span class="label label-info">-</span>';
+        }
+
+        // Setup Tanggal menggunakan DateTime Native
+        try {
+            $jatuh_tempo_obj = new DateTime($tgl_jatuh_tempo);
+            $hari_ini_obj    = new DateTime();
+
+            //Reset jam ke 00:00:00 agar hitungan murni berdasarkan tanggal kalender
+            $jatuh_tempo_obj->setTime(0, 0, 0);
+            $hari_ini_obj->setTime(0, 0, 0);
+
+            // 4. Hitung selisih
+            $diff = $hari_ini_obj->diff($jatuh_tempo_obj);
+
+            // format('%r%a') akan menghasilkan angka dengan tanda minus jika lewat (contoh: -2 atau +5)
+            $sisa_hari = (int) $diff->format('%r%a');
+
+            //Logika Tampilan (Sama seperti sebelumnya)
+            if ($sisa_hari < 0) {
+                // Telat (Negatif)
+                return '<span class="label label-danger">' . abs($sisa_hari) . ' Hari</span>';
+            } elseif ($sisa_hari == 0) {
+                // Hari Ini (0)
+                return '<span class="label label-warning">Hari Ini!</span>';
+            } else {
+                // Masa depan (Positif)
+                if ($sisa_hari <= 3) {
+                    return '<span class="label label-warning">' . $sisa_hari . ' Hari</span>';
+                }
+                return '<span class="label label-primary">' . $sisa_hari . ' Hari</span>';
+            }
+        } catch (Exception $e) {
+            // Fallback jika format tanggal error
+            return '<span class="label label-danger">Error Date</span>';
+        }
     }
 
 
@@ -685,6 +730,8 @@ class Superadmin extends CI_Controller
             }
             $row[] = $maxday_label;
 
+            $row[] = $this->performance($dp->tgl_jatuh_tempo, $dp->waktu_approve);
+
             if ($dp->status_ccs == 'ADDED') {
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
             } elseif ($dp->status_ccs == 'ADDED 2') {
@@ -742,6 +789,43 @@ class Superadmin extends CI_Controller
         die();
     }
 
+    private function performance($tgl_jatuh_tempo, $finished_at)
+    {
+        //Cek jika tanggal kosong
+        if (empty($tgl_jatuh_tempo) || empty($finished_at)) {
+            return '<span class="label label-info">-</span>';
+        }
+
+        //Gunakan DateTime Native PHP pengganti Carbon
+        // setTime(0,0,0) fungsinya sama dengan startOfDay()
+        $deadline = new DateTime($tgl_jatuh_tempo);
+        $deadline->setTime(0, 0, 0);
+
+        $selesai = new DateTime($finished_at);
+        $selesai->setTime(0, 0, 0);
+
+        //Hitung selisih
+        // diff() mengembalikan objek DateInterval
+        $interval = $deadline->diff($selesai);
+
+        // $interval->days = Total selisih hari (selalu positif/absolut)
+        // $interval->invert = 1 jika $selesai lebih kecil dari $deadline (lebih cepat)
+        // $interval->invert = 0 jika $selesai lebih besar dari $deadline (telat)
+
+        $days = $interval->days;
+
+        if ($days == 0) {
+            // Jika selisih hari 0, berarti TEPAT WAKTU
+            return '<span class="label label-info">Tepat Waktu</span>';
+        } elseif ($interval->invert == 0) {
+            // Jika invert 0, berarti $selesai > $deadline (TELAT)
+            return '<span class="label label-danger">Telat ' . $days . ' Hari</span>';
+        } else {
+            // Jika invert 1, berarti $selesai < $deadline (LEBIH CEPAT)
+            return '<span class="label label-success">Lebih Cepat ' . $days . ' Hari</span>';
+        }
+    }
+
     // EDIT PELAPORAN
     public function edit_pelaporan()
     {
@@ -759,6 +843,7 @@ class Superadmin extends CI_Controller
             $kategori     = $this->input->post('kategori');
             $priority     = $this->input->post('priority');
             $maxday       = $this->input->post('maxday');
+            $tgl_jatuh_tempo = $this->input->post('tgl_jatuh_tempo');
             $tags         = $this->input->post('tags');
             $ArrUpdate = array(
                 'no_tiket'   => $no_tiket,
@@ -766,6 +851,7 @@ class Superadmin extends CI_Controller
                 'priority'   => $priority,
                 'kategori'   => $kategori,
                 'maxday'     => $maxday,
+                'tgl_jatuh_tempo' => $tgl_jatuh_tempo,
                 'tags'       => $tags
 
             );
@@ -815,10 +901,12 @@ class Superadmin extends CI_Controller
 
             $priority = $this->input->post('priority');
             $maxday = $this->input->post('maxday');
+            $tgl_jatuh_tempo = $this->input->post('tgl_jatuh_tempo');
             $kategori = $this->input->post('kategori');
             $ArrUpdate = array(
                 'priority'   => $priority,
                 'maxday'     => $maxday,
+                'tgl_jatuh_tempo' => $tgl_jatuh_tempo,
                 'kategori'   => $kategori
             );
             $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);

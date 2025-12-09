@@ -16,10 +16,8 @@
         right: -8px;
         /* Atur posisi horizontal (sedikit ke kanan dari sudut) */
 
-        /* ===================================================================== */
-        /* PENTING: Angka ini membawa badge ke lapisan paling atas */
+        /*Angka ini membawa badge ke lapisan paling atas */
         z-index: 10;
-        /* ===================================================================== */
 
         /* Styling tambahan agar terlihat bagus seperti di WA */
         padding: 4px;
@@ -147,13 +145,14 @@
                                         <th>No</th>
                                         <th>No Tiket</th>
                                         <th>Tanggal</th>
-                                        <th>Nama Klien</th>
+                                        <th>BPR/Klien</th>
                                         <th>Judul</th>
                                         <th>Category</th>
                                         <th>Tags</th>
                                         <th>Priority</th>
                                         <th>Max Day</th>
-                                        <th>Status CCS</th>
+                                        <th>Sisa Hari</th>
+                                        <th>Status</th>
                                         <th>Handle By</th>
                                         <th>Aksi</th>
                                     </tr>

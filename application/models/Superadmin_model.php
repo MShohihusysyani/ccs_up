@@ -142,7 +142,8 @@ class Superadmin_model extends CI_Model
                 status, 
                 no_tiket, 
                 priority, 
-                maxday, 
+                maxday,
+                tgl_jatuh_tempo,
                 handle_by, 
                 tags
             FROM 

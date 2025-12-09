@@ -79,7 +79,7 @@ class Supervisor_model extends CI_Model
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
-        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, maxday, handle_by, tags  FROM pelaporan WHERE status_ccs='ADDED' ORDER BY waktu_pelaporan DESC";
+        $query = "SELECT distinct(nama), id_pelaporan,user_id, kategori, perihal, judul, waktu_pelaporan, status_ccs, file, status, no_tiket, priority, maxday, tgl_jatuh_tempo, handle_by, tags  FROM pelaporan WHERE status_ccs='ADDED' ORDER BY waktu_pelaporan DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -152,7 +152,6 @@ class Supervisor_model extends CI_Model
         $this->db->where_in('pelaporan.status_ccs', ['ADDED 2', 'HANDLED 2', 'HANDLED']);
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
@@ -163,7 +162,7 @@ class Supervisor_model extends CI_Model
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
 
-        // Subquery to gather subtasks and their statuses
+        // Subquery
         $subquery = "
         SELECT
             pelaporan_id,
@@ -191,7 +190,6 @@ class Supervisor_model extends CI_Model
         GROUP BY pelaporan_id
     ";
 
-        // Build the main query
         $this->db->select('
         pelaporan.kategori,
         pelaporan.id_pelaporan,
@@ -226,7 +224,6 @@ class Supervisor_model extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'CLOSED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 
@@ -376,8 +373,8 @@ class Supervisor_model extends CI_Model
     {
 
         $this->db->order_by('waktu_pelaporan', 'DESC');
-        $query = $this->db->get('pelaporan'); // Assuming 'pelaporan' is the name of your table
-        return $query->result(); // Returns an array of object
+        $query = $this->db->get('pelaporan');
+        return $query->result();
     }
 
     public function get_recent_pelaporan()
@@ -393,7 +390,7 @@ class Supervisor_model extends CI_Model
     {
         $this->db->select('id_pelaporan, no_tiket, judul, nama, waktu_pelaporan, status_ccs');
         $this->db->from('pelaporan');
-        $this->db->where('status_ccs', 'ADDED'); // Contoh filter status
+        $this->db->where('status_ccs', 'ADDED');
         $this->db->order_by('waktu_pelaporan', 'DESC');
         // $this->db->limit(100); // Batasi hasil notifikasi
         $query = $this->db->get();
@@ -404,7 +401,7 @@ class Supervisor_model extends CI_Model
     // Menghitung jumlah notifikasi yang belum dibaca
     public function count_unread_notifications()
     {
-        $this->db->where('status_ccs', 'ADDED');  // Syarat untuk notifikasi belum dibaca
+        $this->db->where('status_ccs', 'ADDED');
         return $this->db->count_all_results('pelaporan');
     }
 }

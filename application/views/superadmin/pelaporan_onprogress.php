@@ -19,10 +19,9 @@
     }
 </style> -->
 <style>
-    /* Letakkan ini di file CSS Anda atau di dalam tag <style> di view */
     .chat-btn-wrapper {
         position: relative;
-        /* Wajib ada, sebagai acuan untuk badge */
+        /*sebagai acuan untuk badge */
         display: inline-flex;
         /* Agar wrapper pas dengan ukuran tombol */
         vertical-align: middle;
@@ -36,10 +35,9 @@
         right: -8px;
         /* Atur posisi horizontal (sedikit ke kanan dari sudut) */
 
-        /* ===================================================================== */
-        /* PENTING: Angka ini membawa badge ke lapisan paling atas */
+        /*Angka ini membawa badge ke lapisan paling atas */
         z-index: 10;
-        /* ===================================================================== */
+
 
         /* Styling tambahan agar terlihat bagus seperti di WA */
         padding: 4px;
@@ -192,6 +190,7 @@
                                             <th>Tags</th>
                                             <th>Priority</th>
                                             <th>Max Day</th>
+                                            <th>Sisa Hari</th>
                                             <th>Status</th>
                                             <th>Handle By</th>
                                             <th>Aksi</th>
@@ -456,7 +455,7 @@
         }, ],
 
         'createdRow': function(row, data, dataIndex) {
-            if (data[13] === 'Fokus') {
+            if (data[14] === 'Fokus') {
                 $(row).css('background-color', '#d4edda');
             }
         },
@@ -468,10 +467,27 @@
 
     });
 
-    $('#example tbody').on('click', 'tr', function() {
-        var id = $(this).attr('id');
+    $('#example tbody').on('click', 'tr', function(e) {
 
+        //Deteksi apakah user mengklik elemen interaktif (Tombol, Link, Dropdown, atau Wrapper Anda)
+        //gunakan .closest() untuk mengecek apakah elemen yang diklik berada di dalam wrapper tersebut
+        if ($(e.target).closest('.chat-btn-wrapper, button, a, input, .btn, .dropdown-toggle, .dropdown-menu').length > 0) {
+            return; // berhenti di sini.
+        }
+
+        //Deteksi apakah user mengklik area kosong (spasi putih) di kolom 'Aksi' (Kolom Terakhir)
+        // Ambil elemen <td> (sel) tempat klik terjadi
+        var clickedCell = $(e.target).closest('td');
+
+        //Cek apakah sel tersebut adalah kolom terakhir (:last-child)
+        //Kolom Aksi selalu berada di paling kanan
+        if (clickedCell.is(':last-child')) {
+            return; // berhenti di sini.
+        }
+
+        var id = $(this).attr('id');
         if (id) {
+            // Arahkan ke halaman detail
             window.location.href = "<?php echo site_url('superadmin/detail_pelaporan/') ?>" + id;
         }
     });
@@ -529,7 +545,6 @@
 
         form.submit();
 
-        // Remove the form after a slight delay to ensure the submission goes through
         setTimeout(function() {
             form.remove();
         }, 100);
