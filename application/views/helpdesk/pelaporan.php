@@ -65,35 +65,18 @@
                                                 <th>No</th>
                                                 <th>No Tiket</th>
                                                 <th>Tanggal</th>
-                                                <th>Nama Klien</th>
+                                                <th>BPR/Klien</th>
                                                 <th>Judul</th>
-                                                <!-- <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Priority</th>
                                                 <th>Max Day</th>
-                                                <!-- <th>Impact</th> -->
-                                                <th>Status CCS</th>
+                                                <th>Jatuh tempo</th>
+                                                <th>Sisa Hari</th>
+                                                <th>Status</th>
                                                 <th>Handle By</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>No Tiket</th>
-                                                <th>Tanggal</th>
-                                                <th>Nama Klien</th>
-                                                <th>Judul</th>
-                                                <!-- <th>Attachment</th> -->
-                                                <th>Category</th>
-                                                <th>Priority</th>
-                                                <th>Max Day</th>
-                                                <!-- <th>Impact</th> -->
-                                                <th>Status CCS</th>
-                                                <th>Handle By</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </tfoot>
                                         <tbody>
 
                                             <?php
@@ -134,6 +117,8 @@
                                                         <?php else : ?>
                                                         <?php endif; ?>
                                                     </td>
+                                                    <td><?= tanggal_indo($dp['tgl_jatuh_tempo']) ?></td>
+                                                    <td><?= $dp['sisa_hari']; ?></td>
                                                     <td>
                                                         <?php if ($dp['status_ccs'] == 'FINISHED') : ?>
                                                             <span class="label label-success">FINISHED</span>
@@ -479,13 +464,12 @@
 
             const tiketId = $(this).data('id');
 
-            // Konfirmasi (opsional, tapi disarankan)
             if (!confirm('Anda yakin ingin menandai chat ini sebagai belum dibaca?')) {
                 return;
             }
 
             $.ajax({
-                url: "<?= site_url('chat/mark_as_unread') ?>", // URL ke controller baru
+                url: "<?= site_url('chat/mark_as_unread') ?>",
                 type: 'POST',
                 data: {
                     id_pelaporan: tiketId
@@ -508,7 +492,6 @@
             });
         });
 
-        // Kode DataTables dan skrip lain Anda tetap di sini...
 
     });
 </script>
@@ -537,16 +520,6 @@
             modal.find('#kategori').attr("value", div.data('kategori'));
             // modal.find('#kategori option:selected').text(div.data('kategori'));
             modal.find('#namauser option:selected').text(div.data('nama'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
 
         });
 
@@ -575,17 +548,6 @@
             // modal.find('#priority option:selected').text(div.data('priority'));
             modal.find('#maxday').attr("value", div.data('maxday'));
             modal.find('#kategori').attr("value", div.data('kategori'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
-            // modal.find('#bprnama').attr("value", div.data('bprnama'));
-            // modal.find('#bprsandi').attr("value", div.data('bprsandi'));
-            // modal.find('#judul').attr("value", div.data('judul'));
-            // modal.find('#headline').attr("value", div.data('headline'));
-            // modal.find('#gbr_utama').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbr_utama'));
-            // modal.find('#gbrtmbhn1').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn1'));
-            // modal.find('#gbrtmbhn2').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn2'));
-            // modal.find('#gbrtmbhn3').attr("src", '<?= base_url() ?>assets/images/berita/' + div.data('gbrtmbhn3'));
-            // modal.find('#linkberita').val(div.data('linkberita'));
-            // modal.find('#kategori option:selected').text(div.data('kategori'));
 
         });
 

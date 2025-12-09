@@ -9,7 +9,7 @@ class Helpdesk_model extends CI_Model
     private $order = array('waktu_pelaporan' => 'desc'); // Default order
 
     //DATA PER USER HELPDESK
-    public function getKlienPelaporanHD()
+    public function getDataHandle()
     {
         // Get user data from the session
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -20,6 +20,7 @@ class Helpdesk_model extends CI_Model
             pelaporan.kategori,
             pelaporan.id_pelaporan,
             pelaporan.waktu_pelaporan,
+            pelaporan.tgl_jatuh_tempo,
             pelaporan.status_ccs,
             pelaporan.priority,
             pelaporan.maxday,
@@ -40,7 +41,6 @@ class Helpdesk_model extends CI_Model
         $this->db->where('pelaporan.status_ccs', 'HANDLED');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
-        // Execute the query and return the result
         return $this->db->get()->result_array();
     }
 

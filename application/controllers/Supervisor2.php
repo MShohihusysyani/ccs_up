@@ -697,6 +697,7 @@ class Supervisor2 extends CI_Controller
         $status_ccs = 'FINISHED';
         $priority   = $this->input->post('priority');
         $kategori   = $this->input->post('kategori');
+        $waktu_approve = $now;
 
         $this->db->set('judul', $judul);
         $this->db->set('no_tiket', $no_tiket);
@@ -704,6 +705,7 @@ class Supervisor2 extends CI_Controller
         $this->db->set('status_ccs', $status_ccs);
         $this->db->set('priority', $priority);
         $this->db->set('kategori', $kategori);
+        $this->db->set('waktu_approve', $waktu_approve);
         $this->db->where('id_pelaporan', $id_pelaporan);
         $this->db->update('pelaporan');
         $this->session->set_flashdata('pesan', 'Succesfully Approve!');

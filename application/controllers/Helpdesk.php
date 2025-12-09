@@ -249,25 +249,22 @@ class Helpdesk extends CI_Controller
         $this->load->model('Helpdesk_model', 'helpdesk_model');
         $this->load->model('User_model', 'user_model');
         $data['namaspv'] = $this->user_model->getNamaSpv();
-        // --- TAMBAHAN BARU ---
-        $this->load->model('Chat_model'); // Load Chat_model
+        $this->load->model('Chat_model');
         $my_id = $this->session->userdata('id_user');
-        // --- AKHIR TAMBAHAN ---
         $data['user'] = $this->user_model->getDataUser();
         // $data['datapelaporan'] = $this->helpdesk_model->getKlienPelaporanHD();
 
-        // Ambil data pelaporan seperti biasa
-        $datapelaporan = $this->helpdesk_model->getKlienPelaporanHD();
+        $datapelaporan = $this->helpdesk_model->getDataHandle();
 
-
-        // --- MODIFIKASI: Loop untuk menambahkan unread_count ---
         if (!empty($datapelaporan)) {
-            foreach ($datapelaporan as &$dp) { // Gunakan reference (&) agar array asli termodifikasi
-                // Panggil model untuk menghitung pesan belum dibaca untuk setiap tiket
-                $dp['unread_count'] = $this->Chat_model->get_unread_ccs_messages_count($dp['id_pelaporan'], $my_id);
+            foreach ($datapelaporan as &$row) {
+                //Hitung Sisa Hari
+                $row['sisa_hari'] = $this->sisa_hari($row['tgl_jatuh_tempo']);
+
+                //Hitung Pesan Belum Dibaca
+                $row['unread_count'] = $this->Chat_model->get_unread_ccs_messages_count($row['id_pelaporan'], $my_id);
             }
         }
-        // --- AKHIR MODIFIKASI ---
 
         $data['datapelaporan'] = $datapelaporan;
 
@@ -275,6 +272,48 @@ class Helpdesk extends CI_Controller
         $this->load->view('templates/helpdesk_sidebar');
         $this->load->view('helpdesk/pelaporan', $data);
         $this->load->view('templates/footer');
+    }
+
+    private function sisa_hari($tgl_jatuh_tempo)
+    {
+        // Cek jika tanggal kosong
+        if (empty($tgl_jatuh_tempo)) {
+            return '<span class="label label-info">-</span>';
+        }
+
+        // Setup Tanggal menggunakan DateTime Native
+        try {
+            $jatuh_tempo_obj = new DateTime($tgl_jatuh_tempo);
+            $hari_ini_obj    = new DateTime();
+
+            //Reset jam ke 00:00:00 agar hitungan murni berdasarkan tanggal kalender
+            $jatuh_tempo_obj->setTime(0, 0, 0);
+            $hari_ini_obj->setTime(0, 0, 0);
+
+            // 4. Hitung selisih
+            $diff = $hari_ini_obj->diff($jatuh_tempo_obj);
+
+            // format('%r%a') akan menghasilkan angka dengan tanda minus jika lewat (contoh: -2 atau +5)
+            $sisa_hari = (int) $diff->format('%r%a');
+
+            //Logika Tampilan (Sama seperti sebelumnya)
+            if ($sisa_hari < 0) {
+                // Telat (Negatif)
+                return '<span class="label label-danger">' . abs($sisa_hari) . ' Hari</span>';
+            } elseif ($sisa_hari == 0) {
+                // Hari Ini (0)
+                return '<span class="label label-warning">Hari Ini!</span>';
+            } else {
+                // Masa depan (Positif)
+                if ($sisa_hari <= 3) {
+                    return '<span class="label label-warning">' . $sisa_hari . ' Hari</span>';
+                }
+                return '<span class="label label-primary">' . $sisa_hari . ' Hari</span>';
+            }
+        } catch (Exception $e) {
+            // Fallback jika format tanggal error
+            return '<span class="label label-danger">Error Date</span>';
+        }
     }
 
     public function close()
@@ -317,24 +356,20 @@ class Helpdesk extends CI_Controller
         $this->load->model('Helpdesk_model', 'helpdesk_model');
         $this->load->model('User_model', 'user_model');
 
-        // --- TAMBAHAN BARU ---
-        $this->load->model('Chat_model'); // Load Chat_model
+        $this->load->model('Chat_model');
         $my_id = $this->session->userdata('id_user');
-        // --- AKHIR TAMBAHAN ---
 
         $data['user'] = $this->user_model->getDataUser();
 
         // Ambil data pelaporan seperti biasa
         $datapelaporan = $this->helpdesk_model->getDataForward();
 
-        // --- MODIFIKASI: Loop untuk menambahkan unread_count ---
         if (!empty($datapelaporan)) {
             foreach ($datapelaporan as &$dp) { // Gunakan reference (&) agar array asli termodifikasi
                 // Panggil model untuk menghitung pesan belum dibaca untuk setiap tiket
                 $dp['unread_count'] = $this->Chat_model->get_unread_ccs_messages_count($dp['id_pelaporan'], $my_id);
             }
         }
-        // --- AKHIR MODIFIKASI ---
 
         $data['datapelaporan'] = $datapelaporan; // Kirim data yang sudah dimodifikasi ke view
         $data['namaspv'] = $this->user_model->getNamaSpv();
@@ -351,46 +386,13 @@ class Helpdesk extends CI_Controller
         $this->load->model('Pelaporan_model', 'pelaporan_model');
         $this->load->model('Client_model', 'client_model');
 
-        // Set form validation rules (allow empty)
-        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-        $this->form_validation->set_rules('rating', 'rating', 'trim');
+        $data['klien'] = $this->client_model->getClient();
 
-        if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
-            $data['errors'] = validation_errors();
-            $data['klien'] = $this->client_model->getClient();
-            $data['pencarian_data'] = [];
 
-            $this->load->view('templates/header');
-            $this->load->view('templates/helpdesk_sidebar');
-            $this->load->view('helpdesk/finish', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // Validation passed, retrieve POST data
-            $tanggal_awal  = $this->input->post('tanggal_awal');
-            $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $nama_klien    = $this->input->post('nama_klien');
-            $rating        = $this->input->post('rating');
-            $status_ccs    = 'FINISHED';
-
-            // var data for view 
-            $data['tanggal_awal']  = $tanggal_awal;
-            $data['tanggal_akhir'] = $tanggal_akhir;
-            $data['nama_klien']    = $nama_klien;
-            $data['rating']        = $rating;
-            $data['status_ccs']    = $status_ccs;
-
-            // Get data from the models
-            $data['klien'] = $this->client_model->getClient();
-            $data['pencarian_data'] = $this->pelaporan_model->getDateFilteredTeknisi($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $rating);
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/helpdesk_sidebar');
-            $this->load->view('helpdesk/finish');
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/helpdesk_sidebar');
+        $this->load->view('helpdesk/finish');
+        $this->load->view('templates/footer');
     }
 
     public function get_data_finish()
@@ -450,6 +452,8 @@ class Helpdesk extends CI_Controller
             }
             $row[] = $maxday_label;
 
+            $row[] = $this->performance($dp->tgl_jatuh_tempo, $dp->waktu_finish);
+
             // Proses nilai status_ccs di server-side
             if ($dp->status_ccs == 'ADDED') {
                 $status_ccs_label = '<span class="label label-primary">ADDED</span>';
@@ -508,6 +512,43 @@ class Helpdesk extends CI_Controller
 
         echo json_encode($output);  // Kirim JSON ke DataTables
         die();
+    }
+
+    private function performance($tgl_jatuh_tempo, $finished_at)
+    {
+        //Cek jika tanggal kosong
+        if (empty($tgl_jatuh_tempo) || empty($finished_at)) {
+            return '<span class="label label-info">-</span>';
+        }
+
+        //Gunakan DateTime Native PHP pengganti Carbon
+        // setTime(0,0,0) fungsinya sama dengan startOfDay()
+        $deadline = new DateTime($tgl_jatuh_tempo);
+        $deadline->setTime(0, 0, 0);
+
+        $selesai = new DateTime($finished_at);
+        $selesai->setTime(0, 0, 0);
+
+        //Hitung selisih
+        // diff() mengembalikan objek DateInterval
+        $interval = $deadline->diff($selesai);
+
+        // $interval->days = Total selisih hari (selalu positif/absolut)
+        // $interval->invert = 1 jika $selesai lebih kecil dari $deadline (lebih cepat)
+        // $interval->invert = 0 jika $selesai lebih besar dari $deadline (telat)
+
+        $days = $interval->days;
+
+        if ($days == 0) {
+            // Jika selisih hari 0, berarti TEPAT WAKTU
+            return '<span class="label label-info">Tepat Waktu</span>';
+        } elseif ($interval->invert == 0) {
+            // Jika invert 0, berarti $selesai > $deadline (TELAT)
+            return '<span class="label label-danger">Telat ' . $days . ' Hari</span>';
+        } else {
+            // Jika invert 1, berarti $selesai < $deadline (LEBIH CEPAT)
+            return '<span class="label label-success">Lebih Cepat ' . $days . ' Hari</span>';
+        }
     }
 
 
