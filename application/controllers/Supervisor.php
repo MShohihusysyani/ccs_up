@@ -1399,10 +1399,12 @@ class Supervisor extends CI_Controller
             $priority = $this->input->post('priority');
             $maxday = $this->input->post('maxday');
             $kategori = $this->input->post('kategori');
+            $tgl_jatuh_tempo = $this->input->post('tgl_jatuh_tempo');
             $ArrUpdate = array(
                 'priority'   => $priority,
                 'maxday'     => $maxday,
-                'kategori'   => $kategori
+                'kategori'   => $kategori,
+                'tgl_jatuh_tempo' => $tgl_jatuh_tempo
             );
             $this->pelaporan_model->updateCP($id_pelaporan, $ArrUpdate);
             $this->supervisor_model->updateForward($id_pelaporan, $nama_user);
