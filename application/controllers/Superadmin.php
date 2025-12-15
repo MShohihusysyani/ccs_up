@@ -1131,7 +1131,7 @@ class Superadmin extends CI_Controller
 
     public function rekapPelaporan()
     {
-        $this->load->model('Superadmin_model', 'superadmin_model');
+        // $this->load->model('Superadmin_model', 'superadmin_model');
         $this->load->model('Client_model', 'client_model');
         $this->load->model('User_model', 'user_model');
 
@@ -1141,12 +1141,12 @@ class Superadmin extends CI_Controller
             'status_ccs' => '',
             'nama_klien' => '',
             'nama_user' => '',
-            'tags' => '',
+            'filter_jenis_tgl' => '',
         ];
 
         $data['klien'] = $this->client_model->getClient();
         $data['user'] = $this->user_model->getNamaPetugas();
-        $data['pencarian_data'] = $this->superadmin_model->getAllData();
+        // $data['pencarian_data'] = $this->superadmin_model->getAllData();
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
@@ -1213,12 +1213,12 @@ class Superadmin extends CI_Controller
         $this->load->model('Serverside_model', 'serverside_model');
 
         $filters = array(
+            'filter_jenis_tgl' => $this->input->post('filter_jenis_tgl'),
             'tanggal_awal' => $this->input->post('tanggal_awal'),
             'tanggal_akhir' => $this->input->post('tanggal_akhir'),
             'nama_klien' => $this->input->post('nama_klien'),
             'nama_user' => $this->input->post('nama_user'),
             'rating' => $this->input->post('rating'),
-            'tags' => $this->input->post('tags'),
             'status_ccs' => $this->input->post('status_ccs')
         );
 
@@ -1236,14 +1236,13 @@ class Superadmin extends CI_Controller
             $row['no'] = $key + 1;
             $row['waktu_pelaporan'] = isset($dataItem->waktu_pelaporan) ? tanggal_indo($dataItem->waktu_pelaporan) : '';
             $row['no_tiket'] = isset($dataItem->no_tiket) ? $dataItem->no_tiket : '';
-            $row['nama'] = isset($dataItem->nama) ? $dataItem->nama : '';
+            $row['nama'] = isset($dataItem->nama_klien) ? $dataItem->nama_klien : '';
             $row['judul'] = isset($dataItem->judul) ? $dataItem->judul : '';
             $row['kategori'] = isset($dataItem->kategori) ? $dataItem->kategori : '';
             // $row['tags'] = '<span class="label label-info">' . $dataItem->tags . '</span>';
             $row['priority'] = $this->get_priority_label($dataItem->priority);
             $row['maxday'] = $this->get_maxday_label($dataItem->maxday);
             $row['status_ccs'] = $this->get_status_label($dataItem->status_ccs);
-            // Proses handle_by
             // Proses handle_by
             $handle_combined = isset($dataItem->handle_by) ? $dataItem->handle_by : '';
             if (isset($dataItem->handle_by2) && !empty($dataItem->handle_by2)) {

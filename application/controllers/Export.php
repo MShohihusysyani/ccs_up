@@ -988,6 +988,7 @@ class Export extends CI_Controller
         $user_query = $this->db->get('user');
         $user = $user_query->row_array();
 
+        $filter_jenis_tgl = $this->input->post('filter_jenis_tgl');
         $tanggal_awal = $this->input->post('tanggal_awal');
         $tanggal_akhir = $this->input->post('tanggal_akhir');
         $nama_klien = $this->input->post('nama_klien');
@@ -1036,7 +1037,7 @@ class Export extends CI_Controller
         //     $query = $this->pelaporan_model->getDate();
         // }
 
-        $query = $this->pelaporan_model->getDateFiltered($tanggal_awal, $tanggal_akhir, $nama_klien,  $nama_user,  $status_ccs, $rating);
+        $query = $this->pelaporan_model->getDateFiltered($filter_jenis_tgl, $tanggal_awal, $tanggal_akhir, $nama_klien,  $nama_user,  $status_ccs, $rating);
         // var_dump($query);
         // die();
 
@@ -1048,7 +1049,7 @@ class Export extends CI_Controller
             $sheet->setCellValue('B' . $row, $data->no_tiket);
             $sheet->setCellValue('C' . $row, $data->judul);
             $sheet->setCellValue('D' . $row, $data->perihal);
-            $sheet->setCellValue('E' . $row, $data->nama);
+            $sheet->setCellValue('E' . $row, $data->nama_klien);
             $sheet->setCellValue('F' . $row, $data->kategori);
             $sheet->setCellValue('G' . $row, $data->priority);
             $sheet->setCellValue('H' . $row, $data->maxday);

@@ -455,15 +455,16 @@
         }, ],
 
         'createdRow': function(row, data, dataIndex) {
-            if (data[14] === 'Fokus') {
+            if (data[13] === 'Fokus') {
                 $(row).css('background-color', '#d4edda');
             }
+            $(row).css('cursor', 'pointer');
         },
 
         // klik by row
-        "createdRow": function(row, data, dataIndex) {
-            $(row).css('cursor', 'pointer');
-        }
+        // "createdRow": function(row, data, dataIndex) {
+        //     $(row).css('cursor', 'pointer');
+        // }
 
     });
 

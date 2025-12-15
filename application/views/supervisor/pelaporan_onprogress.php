@@ -379,7 +379,7 @@
 
         "createdRow": function(row, data, dataIndex) {
             // console.log(data); // Debug data untuk melihat isinya
-            if (data[12] === 'Fokus') {
+            if (data[13] === 'Fokus') {
                 $(row).css("background-color", "#d4edda"); // Warna hijau lembut
             }
         },

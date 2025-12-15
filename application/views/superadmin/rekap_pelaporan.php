@@ -41,6 +41,19 @@
                     <div class="body">
                         <div class="row clearfix collapse" id="filterForm">
                             <form id="filterFormContent" class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="filter_jenis_tgl">Pilih Jenis Tgl</label>
+                                        <div class="form-line">
+                                            <select id="filter_jenis_tgl" name="filter_jenis_tgl" class="form-control">
+                                                <option value="">-- Pilih --</option>
+                                                <option value="waktu_pelaporan">Created At</option>
+                                                <option value="waktu_finish">Finish At</option>
+                                                <option value="tgl_jatuh_tempo">Tgl Jatuh Tempo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Kolom pertama (6 grid) -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
@@ -54,7 +67,7 @@
                                         <label for="nama_klien">Pilih Klien</label>
                                         <div class="form-line">
                                             <input type="text" data-toggle="modal" data-target="#defaultModalNamaKlien" name="nama_klien" id="nama_klien" placeholder="Pilih Klien" class="form-control" autocomplete="off">
-                                            <input type="hidden" id="id" name="id">
+                                            <input type="hidden" id="id_user_klien" name="id_user_klien">
                                         </div>
                                     </div>
 
@@ -202,7 +215,7 @@
                                 <td><?= $cln['nama_klien']; ?></td>
                                 <td class="hide"><?= $cln['id']; ?></td>
                                 <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>">
+                                    <button class="btn btn-sm btn-info" id="pilih3" data-nama-klien="<?= $cln['nama_klien']; ?>" data-id-namaklien="<?= $cln['id']; ?>" data-id_user_klien="<?= $cln['id_user_klien']; ?>">
                                         Pilih
                                     </button>
                                 </td>
@@ -265,9 +278,11 @@
 <script>
     $(document).ready(function() {
         $(document).on('click', '#pilih3', function() {
-            var nama_klas = $(this).data('nama-klien');
+            var nama_klien = $(this).data('nama-klien');
+            var id_user_klien = $(this).data('id_user_klien');
             var id = $(this).data('id');
-            $('#nama_klien').val(nama_klas);
+            $('#nama_klien').val(nama_klien);
+            $('#id_user_klien').val(id_user_klien);
             $('#id').val(id);
             $('#defaultModalNamaKlien').modal('hide');
         });
@@ -294,9 +309,10 @@
             "url": "<?php echo base_url('superadmin/fetch_data'); ?>",
             "type": "POST",
             "data": function(data) {
+                data.filter_jenis_tgl = $('#filter_jenis_tgl').val();
                 data.tanggal_awal = $('#tanggal_awal').val();
                 data.tanggal_akhir = $('#tanggal_akhir').val();
-                data.nama_klien = $('#nama_klien').val();
+                data.nama_klien = $('#id_user_klien').val();
                 data.nama_user = $('#nama_user').val();
                 data.rating = $('#rating').val();
                 data.tags = $('#tags').val();
@@ -374,9 +390,10 @@
 
     function exportData(format, button) {
         var filters = new FormData();
+        filters.append('filter_jenis_tgl', $('#filter_jenis_tgl').val());
         filters.append('tanggal_awal', $('#tanggal_awal').val());
         filters.append('tanggal_akhir', $('#tanggal_akhir').val());
-        filters.append('nama_klien', $('#nama_klien').val());
+        filters.append('nama_klien', $('#id_user_klien').val());
         filters.append('nama_user', $('#nama_user').val());
         filters.append('status_ccs', $('#status_ccs').val());
         filters.append('rating', $('#rating').val());

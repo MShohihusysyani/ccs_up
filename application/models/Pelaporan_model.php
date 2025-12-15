@@ -193,38 +193,52 @@ class Pelaporan_model extends CI_Model
         return $query->result();
     }
 
-    public function getDateFiltered($tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
+    public function getDateFiltered($filter_jenis_tgl = null, $tanggal_awal = null, $tanggal_akhir = null, $nama_klien = null, $nama_user = null, $status_ccs = null, $rating = null)
     {
-        $this->db->select('no_tiket, waktu_pelaporan, waktu_approve, kategori, status_ccs, priority, maxday, judul, perihal, nama, handle_by, handle_by2, handle_by3, rating');
-        $this->db->from('pelaporan');
+        // $this->db->select('no_tiket, waktu_pelaporan, waktu_approve, kategori, status_ccs, priority, maxday, judul, perihal, nama, handle_by, handle_by2, handle_by3, rating');
+        // $this->db->from('pelaporan');
 
+        $this->db->select('pelaporan.*, klien.id_user_klien, klien.nama_klien');
+        $this->db->from('pelaporan');
+        $this->db->join('klien', 'pelaporan.user_id = klien.id_user_klien', 'left');
+
+        // $filter_jenis_tgl = 'pelaporan.waktu_pelaporan';
+
+        if (!empty($filter_jenis_tgl['filter_jenis_tgl'])) {
+            $filter_jenis_tgl = 'pelaporan.' . $filter_jenis_tgl['filter_jenis_tgl'];
+        }
         // Filter berdasarkan tanggal
         if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
             $tanggal_akhir_plus = date('Y-m-d', strtotime($tanggal_akhir . ' +1 day'));
-            $this->db->where('waktu_pelaporan >=', $tanggal_awal . ' 00:00:00');
-            $this->db->where('waktu_pelaporan <', $tanggal_akhir_plus . ' 00:00:00');
+            $this->db->where($filter_jenis_tgl . ' >=', $tanggal_awal . ' 00:00:00');
+            $this->db->where($filter_jenis_tgl . ' <', $tanggal_akhir_plus . ' 00:00:00');
         }
+        // if (!empty($tanggal_awal) && !empty($tanggal_akhir)) {
+        //     $tanggal_akhir_plus = date('Y-m-d', strtotime($tanggal_akhir . ' +1 day'));
+        //     $this->db->where('waktu_pelaporan >=', $tanggal_awal . ' 00:00:00');
+        //     $this->db->where('waktu_pelaporan <', $tanggal_akhir_plus . ' 00:00:00');
+        // }
 
         // Filter nama klien
         if (!empty($nama_klien)) {
-            $this->db->like('nama', $nama_klien);
+            $this->db->where('klien.id_user_klien', $nama_klien);
         }
 
         // Filter nama_user
         if (!empty($nama_user)) {
             $this->db->group_start();
-            $this->db->like('handle_by', $nama_user);
-            $this->db->or_like('handle_by2', $nama_user);
-            $this->db->or_like('handle_by3', $nama_user);
+            $this->db->like('pelaporan.handle_by', $nama_user);
+            $this->db->or_like('pelaporan.handle_by2', $nama_user);
+            $this->db->or_like('pelaporan.handle_by3', $nama_user);
             $this->db->group_end();
         }
 
         if (!empty($status_ccs)) {
-            $this->db->where('status_ccs', $status_ccs);
+            $this->db->where('pelaporan.status_ccs', $status_ccs);
         }
 
         if (!empty($rating)) {
-            $this->db->where('rating', $rating);
+            $this->db->where('pelaporan.rating', $rating);
         }
 
         $query = $this->db->get();
