@@ -858,6 +858,41 @@ class Pelaporan_model extends CI_Model
         return $this->db->query($sql, $params)->result_array();
     }
 
+    // REKAP KLIEN 20 BESAR
+    public function get_rekap_klien_20_besar($bulan, $tahun)
+    {
+
+        // Bulan Terpilih (Current)
+        $curr_start = "$tahun-$bulan-01";
+        $curr_end   = date("Y-m-t", strtotime($curr_start));
+
+        $sql = "
+        SELECT 
+            k.nama_klien, 
+            k.no_klien,
+            k.id,
+            COALESCE(stats.klien_current, 0) as klien_current
+        FROM klien k
+        LEFT JOIN (
+            SELECT 
+                user_id,
+                -- Current
+                SUM(CASE WHEN date(waktu_pelaporan) BETWEEN ? AND ? THEN 1 ELSE 0 END) as klien_current
+            FROM pelaporan 
+            GROUP BY user_id
+        ) AS stats ON k.id_user_klien = stats.user_id
+    ";
+
+        $sql    .= "ORDER BY stats.klien_current DESC LIMIT 20";
+
+        $params = [
+            $curr_start,
+            $curr_end,     // Klien Curr
+        ];
+
+        return $this->db->query($sql, $params)->result_array();
+    }
+
     public function get_by_no_tiket($id)
     {
         $this->db->from('pelaporan');

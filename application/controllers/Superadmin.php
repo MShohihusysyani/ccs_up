@@ -1679,6 +1679,48 @@ class Superadmin extends CI_Controller
         $this->load->view('cetak/rekap_klien', $data);
     }
 
+    public function rekapKlien20()
+    {
+        $data['title'] = 'Rekap Klien';
+
+        // Ambil Filter dari URL
+        $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
+
+        if ($bulan == '01') {
+            $data['tahun_bulan_lalu'] = $tahun - 1;
+        } else {
+            $data['tahun_bulan_lalu'] = $tahun;
+        }
+        // Ambil Data Mentah dari Model
+        $data_rekap = $this->pelaporan_model->get_rekap_klien_20_besar($bulan, $tahun);
+
+
+        $data['rekap'] = $data_rekap;
+        $data['filter_bulan'] = $bulan;
+        $data['filter_tahun'] = $tahun;
+
+
+        // Cek apakah user minta Export Excel?
+        if ($this->input->get('action') == 'excel') {
+            $this->export_excel_klien_20_besar($data);
+        } else {
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_klien_20_besar', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    private function export_excel_klien_20_besar($data)
+    {
+        // Header untuk memaksa download file Excel
+        header("Content-type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=Rekap_Klien_" . $data['filter_bulan'] . "-" . $data['filter_tahun'] . ".xls");
+        $this->load->view('cetak/rekap_klien_20_besar', $data);
+    }
+
 
     // REKAP HANDLE BY HELPDESK
     public function rekapHelpdesk()
