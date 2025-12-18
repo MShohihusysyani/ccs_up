@@ -1,6 +1,4 @@
 <?php
-// --- 1. LOGIKA PENENTUAN NAMA BULAN DINAMIS ---
-// Sama persis dengan logika di View Rekap Petugas
 
 $list_bulan_nama = [
     '01' => 'Januari',

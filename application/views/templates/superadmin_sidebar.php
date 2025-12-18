@@ -242,7 +242,7 @@
 
 
                     <li
-                        <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' || $this->uri->segment(2) == 'sla' ||  $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapPetugas' || $this->uri->segment(2) == 'rekapProgres'  ? 'class="active"' : '' ?>>
+                        <?= $this->uri->segment(2) == 'rekapPelaporan' || $this->uri->segment(2) == 'datepelaporan' || $this->uri->segment(2) == 'sla' ||  $this->uri->segment(2) == 'rekapProgres' || $this->uri->segment(2) == 'rekapKategori' || $this->uri->segment(2) == 'rekapPetugas' || $this->uri->segment(2) == 'rekapKlien'  ? 'class="active"' : '' ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">archive</i>
                             <span>Laporan</span>
@@ -270,6 +270,16 @@
                             <li
                                 <?= $this->uri->segment(2) == 'rekapPetugas' || $this->uri->segment(2) == 'rekapPetugas' ? 'class="active"' : '' ?>>
                                 <a href="<?php echo base_url('superadmin/rekapPetugas') ?>">Rekap Petugas</a>
+                            </li>
+                            <li <?= $this->uri->segment(2) == 'rekapKlien' ? 'class="active"' : '' ?>>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Rekap Klien</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li <?= $this->uri->segment(2) == 'rekapKlien' || $this->uri->segment(2) == 'rekapKlien' ? 'class="active"' : '' ?>>
+                                        <a href="<?php echo base_url('superadmin/rekapKlien') ?>">All</a>
+                                    </li>
+                                </ul>
                             </li>
 
                         </ul>

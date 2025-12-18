@@ -810,6 +810,54 @@ class Pelaporan_model extends CI_Model
         return $this->db->query($sql)->result_array();
     }
 
+    // REKAP ALL KLIEN
+    public function get_rekap_all_klien($bulan, $tahun)
+    {
+
+        // Bulan Terpilih (Current)
+        $curr_start = "$tahun-$bulan-01";
+        $curr_end   = date("Y-m-t", strtotime($curr_start));
+
+        //Bulan Sebelumnya (Previous)
+        $prev_start = date("Y-m-01", strtotime("-1 month", strtotime($curr_start)));
+        $prev_end   = date("Y-m-t", strtotime($prev_start));
+
+        $sql = "
+        SELECT 
+            k.nama_klien, 
+            k.no_klien,
+            k.id,
+            COALESCE(stats.klien_akumulasi, 0) as klien_akumulasi,
+            COALESCE(stats.klien_prev, 0) as klien_prev,
+            COALESCE(stats.klien_current, 0) as klien_current
+        FROM klien k
+        LEFT JOIN (
+            SELECT 
+                user_id,
+                -- Akumulasi
+                SUM(CASE WHEN date(waktu_pelaporan) < ? THEN 1 ELSE 0 END) as klien_akumulasi,
+                -- Prev
+                SUM(CASE WHEN date(waktu_pelaporan) BETWEEN ? AND ? THEN 1 ELSE 0 END) as klien_prev,
+                -- Current
+                SUM(CASE WHEN date(waktu_pelaporan) BETWEEN ? AND ? THEN 1 ELSE 0 END) as klien_current
+            FROM pelaporan 
+            GROUP BY user_id
+        ) AS stats ON k.id_user_klien = stats.user_id
+    ";
+
+        $sql    .= "ORDER BY k.no_klien ASC";
+
+        $params = [
+            $prev_start,   // Klien Akum
+            $prev_start,
+            $prev_end,     // Klien Prev
+            $curr_start,
+            $curr_end,     // Klien Curr
+        ];
+
+        return $this->db->query($sql, $params)->result_array();
+    }
+
     public function get_by_no_tiket($id)
     {
         $this->db->from('pelaporan');

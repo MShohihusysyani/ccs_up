@@ -1624,6 +1624,61 @@ class Superadmin extends CI_Controller
         $this->load->view('cetak/rekap_petugas', $data);
     }
 
+    // REKAP ALL KLIEN
+    public function rekapKlien()
+    {
+        $data['title'] = 'Rekap Klien';
+
+        // Ambil Filter dari URL
+        $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
+
+        if ($bulan == '01') {
+            $data['tahun_bulan_lalu'] = $tahun - 1;
+        } else {
+            $data['tahun_bulan_lalu'] = $tahun;
+        }
+        // Ambil Data Mentah dari Model
+        $data_rekap = $this->pelaporan_model->get_rekap_all_klien($bulan, $tahun);
+
+        $total_akumulasi_klien = 0;
+        $total_klien_prev = 0;
+        $total_klien_current = 0;
+
+        foreach ($data_rekap as $row) {
+            $total_akumulasi_klien += $row['klien_akumulasi'];
+            $total_klien_prev += $row['klien_prev'];
+            $total_klien_current += $row['klien_current'];
+        }
+
+        $data['rekap'] = $data_rekap;
+        $data['total_akumulasi_klien'] = $total_akumulasi_klien;
+        $data['total_klien_prev'] = $total_klien_prev;
+        $data['total_klien_current'] = $total_klien_current;
+        $data['filter_bulan'] = $bulan;
+        $data['filter_tahun'] = $tahun;
+
+
+        // Cek apakah user minta Export Excel?
+        if ($this->input->get('action') == 'excel') {
+            $this->export_excel_all_klien($data);
+        } else {
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/superadmin_sidebar');
+            $this->load->view('superadmin/rekap_klien', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    private function export_excel_all_klien($data)
+    {
+        // Header untuk memaksa download file Excel
+        header("Content-type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=Rekap_Klien_" . $data['filter_bulan'] . "-" . $data['filter_tahun'] . ".xls");
+        $this->load->view('cetak/rekap_klien', $data);
+    }
+
 
     // REKAP HANDLE BY HELPDESK
     public function rekapHelpdesk()
