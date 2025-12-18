@@ -125,7 +125,7 @@
 
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped" style="text-align:left">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" style="text-align:left">
 
                                 <thead style="background-color: #d6e3bc; text-align:center; vertical-align: middle;">
                                     <tr>
@@ -224,6 +224,18 @@
                                 </tbody>
 
                                 <tfoot style="font-size: 11px; color: #777;">
+                                    <tr id="row-total">
+                                        <th colspan="2">TOTAL</th>
+                                        <th style="text-align: center"><?= $total_akumulasi_handle ?></th>
+                                        <th style="text-align: center"><?= $total_handle_prev ?></th>
+                                        <th style="text-align: center"><?= $total_handle_current ?></th>
+                                        <th style="text-align: center"><?= $total_akumulasi_finish ?></th>
+                                        <th style="text-align: center"><?= $total_finish_prev ?></th>
+                                        <th style="text-align: center"><?= $total_finish_current ?></th>
+                                        <th style="text-align: center"><?= $total_request_prev ?></th>
+                                        <th style="text-align: center"><?= $total_request_current ?></th>
+                                        <th style="text-align: center"><?= $grand_total ?></th>
+                                    </tr>
                                     <tr>
                                         <td colspan="11">
                                             * <b>Akumulasi</b>: Total data dari awal waktu sampai sebelum bulan <?= $label_bulan_lalu ?>.<br>
@@ -241,3 +253,27 @@
         </div>
     </div>
 </section>
+<script>
+    $(function() {
+        // Cek apakah tabel sudah ada, jika iya hancurkan dan buat ulang dengan config baru
+        if ($.fn.DataTable.isDataTable('.js-basic-example')) {
+            $('.js-basic-example').DataTable().destroy();
+        }
+
+        $('.js-basic-example').DataTable({
+            responsive: true,
+            destroy: true, // Izinkan inisialisasi ulang
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var pageInfo = api.page.info();
+
+                // Logic menampilkan baris total hanya di halaman terakhir
+                if (pageInfo.pages > 0 && pageInfo.page === (pageInfo.pages - 1)) {
+                    $('#row-total').show();
+                } else {
+                    $('#row-total').hide();
+                }
+            }
+        });
+    });
+</script>

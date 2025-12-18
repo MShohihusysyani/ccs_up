@@ -1513,6 +1513,18 @@ class Superadmin extends CI_Controller
         // Ambil Data Mentah dari Model
         $data_rekap = $this->pelaporan_model->get_rekap_gabungan($bulan, $tahun, $user_id);
 
+        $total_akumulasi_handle = 0;
+        $total_handle_prev = 0;
+        $total_handle_current = 0;
+
+        $total_akumulasi_finish = 0;
+        $total_finish_prev = 0;
+        $total_finish_current = 0;
+
+        $total_request_prev = 0;
+        $total_request_current = 0;
+
+        $grand_total = 0;
         foreach ($data_rekap as &$row) {
             // Kolom I = D + G (Total Request Bulan Lalu)
             $row['total_req_prev'] = $row['handle_prev'] + $row['finish_prev'];
@@ -1525,9 +1537,32 @@ class Superadmin extends CI_Controller
                 + $row['finish_akumulasi']
                 + $row['total_req_prev']
                 + $row['total_req_current'];
+
+            // Tambahkan nilai handle_akumulasi ke total penampung
+            $total_akumulasi_handle += $row['handle_akumulasi'];
+            $total_handle_prev += $row['handle_prev'];
+            $total_handle_current += $row['handle_current'];
+
+            $total_akumulasi_finish += $row['finish_akumulasi'];
+            $total_finish_prev += $row['finish_prev'];
+            $total_finish_current += $row['finish_current'];
+
+            $total_request_prev += $row['total_req_prev'];
+            $total_request_current += $row['total_req_current'];
+
+            $grand_total += $row['total_grand_akumulasi'];
         }
 
         $data['rekap'] = $data_rekap;
+        $data['total_akumulasi_handle'] = $total_akumulasi_handle;
+        $data['total_handle_prev'] = $total_handle_prev;
+        $data['total_handle_current'] = $total_handle_current;
+        $data['total_akumulasi_finish'] = $total_akumulasi_finish;
+        $data['total_finish_prev'] = $total_finish_prev;
+        $data['total_finish_current'] = $total_finish_current;
+        $data['total_request_prev'] = $total_request_prev;
+        $data['total_request_current'] = $total_request_current;
+        $data['grand_total'] = $grand_total;
         $data['filter_bulan'] = $bulan;
         $data['filter_tahun'] = $tahun;
         $data['filter_user'] = $user_id;

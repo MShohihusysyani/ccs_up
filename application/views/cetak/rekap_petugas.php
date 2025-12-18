@@ -68,7 +68,7 @@ $bg_color = 'background-color: #c4d79b;';
     </style>
 
     <h3 style="text-align: center; font-family: Arial, sans-serif;">
-        PROGRES REQUEST VIA CCS DAN EMAIL (Periode: <?= $label_bulan_ini . ' ' . $filter_tahun ?>)
+        PROGRES REQUEST CCS (Periode: <?= $label_bulan_ini . ' ' . $filter_tahun ?>)
     </h3>
 
     <table>
@@ -146,6 +146,20 @@ $bg_color = 'background-color: #c4d79b;';
             }
             ?>
         </tbody>
+        <tfoot style="font-size: 11px; color: #777;">
+            <tr id="row-total">
+                <th colspan="2">TOTAL</th>
+                <th style="text-align: center"><?= $total_akumulasi_handle ?></th>
+                <th style="text-align: center"><?= $total_handle_prev ?></th>
+                <th style="text-align: center"><?= $total_handle_current ?></th>
+                <th style="text-align: center"><?= $total_akumulasi_finish ?></th>
+                <th style="text-align: center"><?= $total_finish_prev ?></th>
+                <th style="text-align: center"><?= $total_finish_current ?></th>
+                <th style="text-align: center"><?= $total_request_prev ?></th>
+                <th style="text-align: center"><?= $total_request_current ?></th>
+                <th style="text-align: center"><?= $grand_total ?></th>
+            </tr>
+        </tfoot>
     </table>
 </body>
 
