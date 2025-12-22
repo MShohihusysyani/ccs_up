@@ -161,7 +161,8 @@
         }
 
         $('.js-basic-example').DataTable({
-            "ordering": false, // Disarankan false agar urutan grouping tidak rusak saat di-sort
+            "ordering": false,
+            "pageLength": 10, // Pastikan jumlah row konsisten
             "drawCallback": function(settings) {
                 var api = this.api();
                 var rows = api.rows({
@@ -170,22 +171,25 @@
                 var last = null;
                 var startIdx = 0;
 
+                // Reset semua sel dulu sebelum manipulasi (mencegah bug saat pindah page balik)
+                $(rows).find('td').show().removeAttr('rowspan').css('vertical-align', '');
+
+                // Kolom index 3 adalah "Jumlah Request" yang menjadi acuan grouping
                 api.column(3, {
                     page: 'current'
                 }).data().each(function(group, i) {
                     if (last === group) {
                         // 1. Tambahkan Rowspan pada baris pertama di grup ini
-                        var firstRowInGroup = $(rows).eq(startIdx).find('td:nth-child(1)');
+                        var firstRowInGroup = $(rows).eq(startIdx).find('td').eq(0);
                         var currentRs = parseInt(firstRowInGroup.attr('rowspan')) || 1;
-                        firstRowInGroup.attr('rowspan', currentRs + 1).css('vertical-align', 'middle');
 
-                        // 2. Hapus TD No pada baris saat ini (baris duplikat)
-                        // Gunakan .hide() atau .remove(). 
-                        // Jika menggunakan .remove(), pastikan urutan kolom tetap terjaga.
-                        $(rows).eq(i).find('td:first-child').remove();
+                        firstRowInGroup.attr('rowspan', currentRs + 1)
+                            .css('vertical-align', 'middle');
+
+                        // 2. Sembunyikan kolom "No" di baris saat ini (jangan di-remove agar index tidak rusak)
+                        $(rows).eq(i).find('td').eq(0).hide();
 
                     } else {
-                        // Ganti grup baru
                         last = group;
                         startIdx = i;
                     }
