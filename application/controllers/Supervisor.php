@@ -1111,6 +1111,7 @@ class Supervisor extends CI_Controller
 
         // Ambil data filter dari POST request
         $filters = array(
+            'filter_jenis_tgl' => $this->input->post('filter_jenis_tgl'),
             'tanggal_awal' => $this->input->post('tanggal_awal'),
             'tanggal_akhir' => $this->input->post('tanggal_akhir'),
             'nama_klien' => $this->input->post('nama_klien'),
