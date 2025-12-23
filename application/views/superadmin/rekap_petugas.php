@@ -86,20 +86,20 @@
             <?php if (isset($rekap)): ?>
 
                 <?php
-                // Mengubah header "Bulan Lalu" jadi "Oktober" (misalnya)
+                // Mengubah header "Bulan Lalu" jadi menjadi nama bulan
                 $list_bulan_nama = [
-                    '01' => 'Januari',
-                    '02' => 'Februari',
-                    '03' => 'Maret',
-                    '04' => 'April',
+                    '01' => 'Jan',
+                    '02' => 'Feb',
+                    '03' => 'Mar',
+                    '04' => 'Apr',
                     '05' => 'Mei',
                     '06' => 'Juni',
                     '07' => 'Juli',
                     '08' => 'Agustus',
-                    '09' => 'September',
-                    '10' => 'Oktober',
-                    '11' => 'November',
-                    '12' => 'Desember'
+                    '09' => 'Sept',
+                    '10' => 'Okt',
+                    '11' => 'Nov',
+                    '12' => 'Des'
                 ];
 
                 //Tentukan Nama Bulan Ini (Bulan Berjalan)
@@ -168,54 +168,54 @@
                                         ?>
                                             <tr>
                                                 <td class="text-center"><?= $no++; ?></td>
-                                                <td style="font-weight:bold;"><?= $r['nama_petugas']; ?></td>
+                                                <td><?= $r['nama_petugas']; ?></td>
 
                                                 <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=akumulasi&bulan_batas=<?= $key_bulan_lalu ?>&tahun_batas=<?= $tahun_bulan_lalu ?>" target="_blank" style="font-weight:bold; color:#555;">
-                                                        <?= $r['handle_akumulasi']; ?>
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=akumulasi&bulan_batas=<?= $key_bulan_lalu ?>&tahun_batas=<?= $tahun_bulan_lalu ?>" target="_blank" style="color:#000;">
+                                                        <?= number_format($r['handle_akumulasi'], 0, ',', '.') ?>
                                                     </a>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red font-bold">
-                                                        <?= $r['handle_prev']; ?>
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red">
+                                                        <?= number_format($r['handle_prev'], 0, ',', '.') ?>
                                                     </a>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue font-bold">
-                                                        <?= $r['handle_current']; ?>
-                                                    </a>
-                                                </td>
-
-                                                <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=akumulasi&bulan_batas=<?= $key_bulan_lalu ?>&tahun_batas=<?= $tahun_bulan_lalu ?>" target="_blank" style="font-weight:bold; color:#555;">
-                                                        <?= $r['finish_akumulasi']; ?>
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red font-bold">
-                                                        <?= $r['finish_prev']; ?>
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue font-bold">
-                                                        <?= $r['finish_current']; ?>
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=handle&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue">
+                                                        <?= number_format($r['handle_current'], 0, ',', '.') ?>
                                                     </a>
                                                 </td>
 
                                                 <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red font-bold">
-                                                        <?= $r['total_req_prev']; ?>
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=akumulasi&bulan_batas=<?= $key_bulan_lalu ?>&tahun_batas=<?= $tahun_bulan_lalu ?>" target="_blank" style="color:#000;">
+                                                        <?= number_format($r['finish_akumulasi'], 0, ',', '.') ?>
                                                     </a>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue font-bold">
-                                                        <?= $r['total_req_current']; ?>
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red">
+                                                        <?= number_format($r['finish_prev'], 0, ',', '.') ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=finish&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue">
+                                                        <?= number_format($r['finish_current'], 0, ',', '.') ?>
                                                     </a>
                                                 </td>
 
-                                                <td class="text-left font-bold">
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=bulan&bulan=<?= $key_bulan_lalu ?>&tahun=<?= $tahun_bulan_lalu ?>" target="_blank" class="col-red">
+                                                        <?= number_format($r['total_req_prev'], 0, ',', '.') ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=bulan&bulan=<?= $filter_bulan ?>&tahun=<?= $filter_tahun ?>" target="_blank" class="col-blue">
+                                                        <?= number_format($r['total_req_current'], 0, ',', '.') ?>
+                                                    </a>
+                                                </td>
+
+                                                <td class="text-right">
                                                     <a href="<?= $url_detail ?>?user=<?= $id_user ?>&status=all&periode=total_semua" target="_blank" style="color:#000;">
-                                                        <?= $r['total_grand_akumulasi']; ?>
+                                                        <?= number_format($r['total_grand_akumulasi'], 0, ',', '.') ?>
                                                     </a>
                                                 </td>
                                             </tr>
