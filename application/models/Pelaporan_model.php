@@ -671,61 +671,96 @@ class Pelaporan_model extends CI_Model
     // REKAP PETUGAS
     public function get_rekap_gabungan($bulan, $tahun, $user_id_filter = null)
     {
-
         // Bulan Terpilih (Current)
         $curr_start = "$tahun-$bulan-01";
         $curr_end   = date("Y-m-t", strtotime($curr_start));
 
-        //Bulan Sebelumnya (Previous)
+        // Bulan Sebelumnya (Previous)
         $prev_start = date("Y-m-01", strtotime("-1 month", strtotime($curr_start)));
         $prev_end   = date("Y-m-t", strtotime($prev_start));
 
         $sql = "
+    SELECT 
+        u.nama_user as nama_petugas, 
+        stats.*
+    FROM user u
+    JOIN (
         SELECT 
-            u.nama_user as nama_petugas, 
-            stats.*
-        FROM user u
-        JOIN (
-            SELECT 
-                user_id,
-                
-                -- Akumulasi: Semua tiket SEBELUM bulan lalu
-                SUM(CASE WHEN status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') AND date(waktu_pelaporan) < ? THEN 1 ELSE 0 END) as handle_akumulasi,
-                -- Bulan Lalu
-                SUM(CASE WHEN status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') AND date(waktu_pelaporan) BETWEEN ? AND ? THEN 1 ELSE 0 END) as handle_prev,
-                -- Bulan Ini
-                SUM(CASE WHEN status_ccs IN ('HANDLED', 'HANDLED 2', 'ADDED 2') AND date(waktu_pelaporan) BETWEEN ? AND ? THEN 1 ELSE 0 END) as handle_current,
-
-                -- Akumulasi: Semua tiket selesai SEBELUM bulan lalu
-                SUM(CASE WHEN status_ccs IN ('FINISHED', 'CLOSED') AND date(waktu_approve) < ? THEN 1 ELSE 0 END) as finish_akumulasi,
-                -- Bulan Lalu
-                SUM(CASE WHEN status_ccs IN ('FINISHED', 'CLOSED') AND date(waktu_approve) BETWEEN ? AND ? THEN 1 ELSE 0 END) as finish_prev,
-                -- Bulan Ini
-                SUM(CASE WHEN status_ccs IN ('FINISHED', 'CLOSED') AND date(waktu_approve) BETWEEN ? AND ? THEN 1 ELSE 0 END) as finish_current
-
-            FROM (
-                SELECT f.user_id, p.status_ccs, p.waktu_pelaporan, p.waktu_approve
-                FROM forward f
-                JOIN pelaporan p ON f.pelaporan_id = p.id_pelaporan
-                
-                UNION ALL
-                
-                SELECT t1.user_id, p.status_ccs, p.waktu_pelaporan, p.waktu_approve
-                FROM t1_forward t1
-                JOIN pelaporan p ON t1.pelaporan_id = p.id_pelaporan
-            ) as gabungan_tugas
+            user_id,
             
-            GROUP BY user_id
-        ) as stats ON u.id_user = stats.user_id
+            -- Handle
+            -- Akumulasi: Semua tiket SEBELUM bulan lalu
+            COUNT(DISTINCT CASE 
+                WHEN UPPER(TRIM(status_ccs)) IN ('HANDLED', 'HANDLED 2', 'ADDED 2') 
+                AND date(waktu_pelaporan) < ? 
+                THEN id_pelaporan 
+            END) as handle_akumulasi,
+            
+            -- Bulan Lalu
+            COUNT(DISTINCT CASE 
+                WHEN UPPER(TRIM(status_ccs)) IN ('HANDLED', 'HANDLED 2', 'ADDED 2') 
+                AND date(waktu_pelaporan) BETWEEN ? AND ? 
+                THEN id_pelaporan 
+            END) as handle_prev,
+            
+            -- Bulan Ini
+            COUNT(DISTINCT CASE 
+                WHEN UPPER(TRIM(status_ccs)) IN ('HANDLED', 'HANDLED 2', 'ADDED 2') 
+                AND date(waktu_pelaporan) BETWEEN ? AND ? 
+                THEN id_pelaporan 
+            END) as handle_current,
 
-        WHERE u.active = 'Y'";
+
+            -- Finish
+            -- Akumulasi: Tiket lampau ATAU Data Migrasi (Tanggal Kosong/NULL)
+            COUNT(DISTINCT CASE 
+                WHEN UPPER(TRIM(status_ccs)) IN ('FINISHED', 'CLOSED') 
+                AND (
+                    date(waktu_approve) < ?                  -- Normal: Punya tanggal lampau
+                    OR waktu_approve IS NULL                 -- Migrasi: Tanggal NULL
+                    OR waktu_approve = '0000-00-00 00:00:00' -- Migrasi: Tanggal 0000
+                ) 
+                THEN id_pelaporan 
+            END) as finish_akumulasi,
+            
+            -- Bulan Lalu (Harus punya tanggal valid)
+            COUNT(DISTINCT CASE 
+                WHEN UPPER(TRIM(status_ccs)) IN ('FINISHED', 'CLOSED') 
+                AND date(waktu_approve) BETWEEN ? AND ? 
+                THEN id_pelaporan 
+            END) as finish_prev,
+            
+            -- Bulan Ini (Harus punya tanggal valid)
+            COUNT(DISTINCT CASE 
+                WHEN UPPER(TRIM(status_ccs)) IN ('FINISHED', 'CLOSED') 
+                AND date(waktu_approve) BETWEEN ? AND ? 
+                THEN id_pelaporan 
+            END) as finish_current
+
+        FROM (
+            SELECT f.user_id, p.id_pelaporan, p.status_ccs, p.waktu_pelaporan, p.waktu_approve
+            FROM forward f
+            JOIN pelaporan p ON f.pelaporan_id = p.id_pelaporan
+            
+            UNION ALL
+            
+            SELECT t1.user_id, p.id_pelaporan, p.status_ccs, p.waktu_pelaporan, p.waktu_approve
+            FROM t1_forward t1
+            JOIN pelaporan p ON t1.pelaporan_id = p.id_pelaporan
+        ) as gabungan_tugas
+        
+        GROUP BY user_id
+    ) as stats ON u.id_user = stats.user_id
+    ";
 
         // Filter Petugas Spesifik
         if ($user_id_filter != 'all' && !empty($user_id_filter)) {
+            // Gunakan AND karena sudah ada WHERE 1=1
             $sql .= " AND u.id_user = " . $this->db->escape($user_id_filter);
         }
 
-        $sql    .= "ORDER BY u.nama_user ASC";
+        // PENTING: ORDER BY ditaruh di paling akhir
+        $sql .= " ORDER BY u.nama_user ASC";
 
         $params = [
             $prev_start,   // Handle Akum
@@ -734,7 +769,7 @@ class Pelaporan_model extends CI_Model
             $curr_start,
             $curr_end,     // Handle Curr
 
-            $prev_start,   // Finish Akum
+            $prev_start,   // Finish Akum (Parameter batas tanggal)
             $prev_start,
             $prev_end,     // Finish Prev
             $curr_start,
