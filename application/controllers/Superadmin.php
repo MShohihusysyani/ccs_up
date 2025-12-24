@@ -1701,8 +1701,8 @@ class Superadmin extends CI_Controller
     public function detail_pelaporan($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Superadmin_model', 'superadmin_model');
-        $data['datapelaporan'] = $this->superadmin_model->ambil_id_pelaporan($id);
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['datapelaporan'] = $this->pelaporan_model->detail($id);
         $data['datacomment']   = $this->supervisor_model->get_latest_comments($id);
         $data['datareply']     = $this->supervisor_model->get_replies_by_pelaporan_id($id);
 
@@ -1726,8 +1726,8 @@ class Superadmin extends CI_Controller
     public function detail($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Superadmin_model', 'superadmin_model');
-        $data['datapelaporan'] = $this->superadmin_model->ambil_id_pelaporan($id);
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['datapelaporan'] = $this->pelaporan_model->detail($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');
@@ -1738,8 +1738,8 @@ class Superadmin extends CI_Controller
     public function detail_add($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Superadmin_model', 'superadmin_model');
-        $data['datapelaporan'] = $this->superadmin_model->ambil_id_pelaporan($id);
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['datapelaporan'] = $this->pelaporan_model->detail($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/superadmin_sidebar');

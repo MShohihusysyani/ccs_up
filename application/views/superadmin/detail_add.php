@@ -15,6 +15,12 @@
                 <div class="body">
                     <form>
                         <?php foreach ($datapelaporan as $dp) : ?>
+                            <label for="waktu_pelaporan">Created At</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="waktu_pelaporan" name="waktu_pelaporan" class="form-control" value="<?= tanggal_indo($dp['waktu_pelaporan']); ?>" readonly>
+                                </div>
+                            </div>
                             <label for="no_tiket">No Tiket</label>
                             <div class="form-group">
                                 <div class="form-line">

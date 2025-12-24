@@ -278,7 +278,7 @@
 <script>
     var table = $('#example').DataTable({
         "processing": true,
-        "responsive": true,
+        // "responsive": true,
         "serverSide": true,
         "ajax": {
             "url": "<?php echo site_url('supervisor2/get_data_finish') ?>",

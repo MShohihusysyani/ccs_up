@@ -113,12 +113,11 @@
                                                 </td>
 
                                                 <td style="display: flex; gap: 10px; justify-content: flex-end;">
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/finish_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">launch</i> <span class="icon-name"></span></a>
+                                                    <a class="btn btn-sm btn-info finish-action" href="<?= base_url() ?>superadmin/finish_pelaporan/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">launch</i> <span class="icon-name"></span></a>
                                                     <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                                    <div class="btn btn-sm btn-warning">
+                                                    <div class="btn btn-sm btn-warning reject-action">
                                                         <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">cancel</i> <span class="icon-name"></span></a>
                                                     </div>
-                                                    <a class="btn btn-sm btn-info" href="<?= base_url() ?>superadmin/detail_close/<?= $dp['id_pelaporan']; ?>"><i class="material-icons">visibility</i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -406,6 +405,10 @@
         // Menggunakan 'body' agar tetap jalan meskipun ada pagination client-side datatables
         $('body').on('click', '.detail-row', function(e) {
 
+            // Periksa apakah klik terjadi di dalam elemen dengan pada aksi
+            if ($(e.target).closest('.finish-action, .reject-action, a').length > 0) {
+                return;
+            }
             // Ambil URL dari atribut data-href
             var url = $(this).data('href');
 

@@ -739,7 +739,7 @@ class Supervisor extends CI_Controller
             $row[] = '<div class="star-rating">' . $star_rating . '</div>';
 
             // Tombol Aksi
-            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor/detail_finish/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
+            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor/detail/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
 
             // Tambahkan row ke data
             $data[] = $row;
@@ -897,15 +897,15 @@ class Supervisor extends CI_Controller
         $this->load->view('supervisor/detail_close', $data);
         $this->load->view('templates/footer');
     }
-    public function detail_finish($id)
+    public function detail($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Supervisor_model', 'supervisor_model');
-        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan($id);
+        $this->load->model('pelaporan_model', 'pelaporan_model');
+        $data['datapelaporan'] = $this->pelaporan_model->detail($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
-        $this->load->view('supervisor/detail_finish', $data);
+        $this->load->view('supervisor/detail', $data);
         $this->load->view('templates/footer');
     }
 

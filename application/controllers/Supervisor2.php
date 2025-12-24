@@ -491,65 +491,14 @@ class Supervisor2 extends CI_Controller
 
     public function finish()
     {
-        // $this->load->model('Klienpelaporan_model', 'klienpelaporan_model');
-        // // $data['nama_kategori'] = $this->db->get('pelaporan')->result_array();
-        // $data['category'] = $this->category_model->getNamakategori();
-        // $this->load->model('User_model', 'user_model');
-        // $data['user'] = $this->user_model->getDataUser();
-        // $data['datapelaporan'] = $this->spv2_model->getKlienPelaporanFinish();
-        $this->load->library('form_validation');
-        $this->load->model('Pelaporan_model', 'pelaporan_model');
-        $this->load->model('Client_model', 'client_model');
+        $data['klien'] = $this->client_model->getClient();
+        $data['user'] = $this->user_model->getNamaPetugas();
+        // $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
 
-        // Set form validation rules (allow empty)
-        $this->form_validation->set_rules('tanggal_awal', 'Start Date', 'trim');
-        $this->form_validation->set_rules('tanggal_akhir', 'End Date', 'trim');
-        $this->form_validation->set_rules('status_ccs', 'Status CCS', 'trim');
-        $this->form_validation->set_rules('nama_klien', 'Client Name', 'trim');
-        $this->form_validation->set_rules('nama_user', 'User Name', 'trim');
-        $this->form_validation->set_rules('rating', 'rating', 'trim');
-        $this->form_validation->set_rules('tags', 'Tags', 'trim');
-
-        if ($this->form_validation->run() == FALSE) {
-            // Validation failed, prepare data for the view with error messages
-            $data['errors'] = validation_errors();
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = [];
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor2_sidebar');
-            $this->load->view('supervisor2/pelaporan_finish', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // Validation passed, retrieve POST data
-            $tanggal_awal  = $this->input->post('tanggal_awal');
-            $tanggal_akhir = $this->input->post('tanggal_akhir');
-            $status_ccs    = 'FINISHED';
-            $nama_klien    = $this->input->post('nama_klien');
-            $nama_user     = $this->input->post('nama_user');
-            $rating        = $this->input->post('rating');
-            $tags          = $this->input->post('tags');
-
-            // var data for view 
-            $data['tanggal_awal']  = $tanggal_awal;
-            $data['tanggal_akhir'] = $tanggal_akhir;
-            $data['status_ccs']    = $status_ccs;
-            $data['nama_klien']    = $nama_klien;
-            $data['nama_user']     = $nama_user;
-            $data['rating']        = $rating;
-            $data['tags']          = $tags;
-
-            // Get data from the models
-            $data['klien'] = $this->client_model->getClient();
-            $data['user'] = $this->user_model->getNamaPetugas();
-            $data['pencarian_data'] = $this->pelaporan_model->getDate($tanggal_awal, $tanggal_akhir, $status_ccs, $nama_klien, $nama_user, $rating, $tags);
-
-            $this->load->view('templates/header');
-            $this->load->view('templates/supervisor2_sidebar');
-            $this->load->view('supervisor2/pelaporan_finish');
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('templates/supervisor2_sidebar');
+        $this->load->view('supervisor2/pelaporan_finish', $data);
+        $this->load->view('templates/footer');
     }
 
     public function get_data_finish()
@@ -654,7 +603,7 @@ class Supervisor2 extends CI_Controller
             $row[] = '<div class="star-rating">' . $star_rating . '</div>';
 
             // Tombol Aksi
-            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail_finish/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
+            $row[] = '<a class="btn btn-sm btn-info" href="' . base_url('supervisor2/detail/' . $dp->id_pelaporan) . '"><i class="material-icons">visibility</i></a>';
 
             // Tambahkan row ke data
             $data[] = $row;
@@ -776,15 +725,15 @@ class Supervisor2 extends CI_Controller
         $this->load->view('supervisor2/detail_close', $data);
         $this->load->view('templates/footer');
     }
-    public function detail_finish($id)
+    public function detail($id)
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Spv2_model', 'spv2_model');
-        $data['datapelaporan'] = $this->spv2_model->ambil_id_pelaporan($id);
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['datapelaporan'] = $this->pelaporan_model->detail($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor2_sidebar');
-        $this->load->view('supervisor2/detail_finish', $data);
+        $this->load->view('supervisor2/detail', $data);
         $this->load->view('templates/footer');
     }
 
