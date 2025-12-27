@@ -183,7 +183,7 @@ class Spv2_model extends CI_Model
 
 
 
-    public function getKlienPelaporanClose()
+    public function getDataClosed()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id_user');
@@ -198,7 +198,6 @@ class Spv2_model extends CI_Model
             pelaporan.maxday,
             pelaporan.judul,
             pelaporan.perihal,
-            pelaporan.file,
             pelaporan.nama,
             pelaporan.no_tiket,
             pelaporan.impact,
@@ -222,7 +221,6 @@ class Spv2_model extends CI_Model
         $this->db->join('s_forward', 's_forward.pelaporan_id = pelaporan.id_pelaporan', 'left');
         $this->db->where('s_forward.user_id', $user_id);
         $this->db->where('pelaporan.status_ccs', 'CLOSED');
-        $this->db->group_by('pelaporan.id_pelaporan');
         $this->db->order_by('pelaporan.waktu_pelaporan', 'DESC');
 
         // Execute the query and return the result

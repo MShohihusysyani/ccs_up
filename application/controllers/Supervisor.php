@@ -834,8 +834,8 @@ class Supervisor extends CI_Controller
     {
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->load->model('Supervisor_model', 'supervisor_model');
-        $data['datapelaporan'] = $this->supervisor_model->ambil_id_pelaporan_close($id);
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
+        $data['datapelaporan'] = $this->pelaporan_model->detail($id);
 
         $this->load->view('templates/header');
         $this->load->view('templates/supervisor_sidebar');
@@ -847,26 +847,40 @@ class Supervisor extends CI_Controller
     {
         date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
         $now = date('Y-m-d H:i:s');
+        $this->load->model('Pelaporan_model', 'pelaporan_model');
 
         $id_pelaporan         = $this->input->post('id_pelaporan');
-        $no_tiket   = $this->input->post('no_tiket');
-        $nama       = $this->input->post('nama');
-        $judul      = $this->input->post('judul');
-        $status_ccs = 'FINISHED';
-        $priority   = $this->input->post('priority');
-        $kategori   = $this->input->post('kategori');
-        $waktu_approve = $now;
 
-        $this->db->set('judul', $judul);
-        $this->db->set('no_tiket', $no_tiket);
-        $this->db->set('nama', $nama);
-        $this->db->set('status_ccs', $status_ccs);
-        $this->db->set('priority', $priority);
-        $this->db->set('kategori', $kategori);
-        $this->db->set('waktu_approve', $waktu_approve);
-        $this->db->where('id_pelaporan', $id_pelaporan);
-        $this->db->update('pelaporan');
-        $this->session->set_flashdata('pesan', 'Succesfully Approve!');
+        $data = array(
+            'status_ccs'    => 'FINISHED',
+            'waktu_approve'  => $now,
+        );
+
+
+        $update = $this->pelaporan_model->approve($id_pelaporan, $data);
+        if ($update) {
+            $this->session->set_flashdata('pesan', 'Successfully Approved!');
+            redirect('supervisor/close');
+        } else {
+            $this->session->set_flashdata('alert', 'Failed to Approve!');
+            redirect('supervisor/close');
+        }
+    }
+
+    // FUNGSI REJECT
+    public function fungsi_reject()
+    {
+        $id            = $this->input->post('id_pelaporan');
+        // alasan_tolak wajib diisi
+        $this->form_validation->set_rules('alasan_tolak', 'Alasan Tolak', 'required', [
+            'required' => 'Kolom Alasan Tolak wajib diisi.'
+        ]);
+        $ArrUpdate     = array(
+            'status_ccs'   => 'REJECTED',
+            'alasan_tolak' => $this->input->post('alasan_tolak', TRUE),
+        );
+        $this->pelaporan_model->updateReject($id, $ArrUpdate);
+        $this->session->set_flashdata('pesan', 'Successfully Reject!');
         Redirect(base_url('supervisor/close'));
     }
 
@@ -1410,18 +1424,6 @@ class Supervisor extends CI_Controller
         }
     }
 
-
-    // FUNGSI REJECT
-    public function fungsi_reject()
-    {
-        $id            = $this->input->post('id_pelaporan');
-        $ArrUpdate     = array(
-            'status_ccs' => 'REJECTED'
-        );
-        $this->pelaporan_model->updateReject($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', 'Successfully Reject!');
-        Redirect(base_url('supervisor/close'));
-    }
     // public function fungsi_reject()
     // {
 

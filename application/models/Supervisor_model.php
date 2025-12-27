@@ -198,8 +198,6 @@ class Supervisor_model extends CI_Model
         pelaporan.priority,
         pelaporan.maxday,
         pelaporan.judul,
-        pelaporan.perihal,
-        pelaporan.file,
         pelaporan.nama,
         pelaporan.no_tiket,
         pelaporan.impact,

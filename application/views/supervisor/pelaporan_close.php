@@ -39,12 +39,9 @@
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
                                                 <th>Judul</th>
-                                                <!-- <th>Perihal</th> -->
-                                                <!-- <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
-                                                <!-- <th>Impact</th> -->
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
@@ -63,12 +60,9 @@
                                                 <th>Tanggal</th>
                                                 <th>Nama Klien</th>
                                                 <th>Judul</th>
-                                                <!-- <th>Perihal</th> -->
-                                                <!-- <th>Attachment</th> -->
                                                 <th>Category</th>
                                                 <th>Tags</th>
                                                 <th>Priority</th>
-                                                <!-- <th>Impact</th> -->
                                                 <th>Max Day</th>
                                                 <th>Status CCS</th>
                                                 <th>Handle By</th>
@@ -90,9 +84,6 @@
                                                     <td><?= tanggal_indo($dp['waktu_pelaporan']) ?></td>
                                                     <td><?= $dp['nama']; ?></td>
                                                     <td><?= $dp['judul']; ?></td>
-                                                    <!-- <td><?= $dp['perihal']; ?></td> -->
-                                                    <!-- <td> <a href="<?= base_url('assets/files/' . $dp['file']); ?>"><?= $dp['file']; ?></a>
-                                                    </td> -->
                                                     <td><?= $dp['kategori']; ?></td>
                                                     <td>
                                                         <?php if (!empty($dp['tags'])): ?>
@@ -203,10 +194,10 @@
                                                                 <i class="material-icons">launch</i> <span class="icon-name"></span>
                                                             </a>
                                                         <?php endif; ?>
-                                                        <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                                        <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                         <div class="btn btn-sm btn-warning">
                                                             <a href="javascript:;" data-id_pelaporan="<?= $dp['id_pelaporan']; ?>" data-no_tiket="<?= $dp['no_tiket']; ?>" data-waktu_pelaporan="<?= $dp['waktu_pelaporan']; ?>" data-nama="<?= $dp['nama']; ?>" data-perihal='<?= $dp['perihal']; ?>' data-status="<?= $dp['status']; ?>" data-status_ccs="<?= $dp['status_ccs']; ?>" data-kategori="<?= $dp['kategori']; ?>" data-priority="<?= $dp['priority']; ?>" data-maxday="<?= $dp['maxday']; ?>" data-toggle="modal" data-target="#editModalCP"> <i class="material-icons">cancel</i> <span class="icon-name">Reject</span></a>
-                                                        </div>
+                                                        </div> -->
 
                                                         <a class="btn btn-sm btn-info" href="<?= base_url() ?>supervisor/detail_close/<?= $dp['id_pelaporan']; ?>">
                                                             <i class="material-icons">visibility</i>
