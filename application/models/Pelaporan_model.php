@@ -718,7 +718,6 @@ class Pelaporan_model extends CI_Model
                 AND (
                     date(waktu_approve) < ?                  -- Normal: Punya tanggal lampau
                     OR waktu_approve IS NULL                 -- Migrasi: Tanggal NULL
-                    OR waktu_approve = '0000-00-00 00:00:00' -- Migrasi: Tanggal 0000
                 ) 
                 THEN id_pelaporan 
             END) as finish_akumulasi,

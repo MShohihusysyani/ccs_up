@@ -144,17 +144,17 @@
                                                 <td style="text-align: left"><?= $r['nama_klien']; ?></td>
 
                                                 <td class="text-center">
-                                                    <a style="font-weight:bold; color:#555;">
+                                                    <a style="color:#555;">
                                                         <?= $r['klien_akumulasi']; ?>
                                                     </a>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a class="col-red font-bold">
+                                                    <a class="col-red">
                                                         <?= $r['klien_prev']; ?>
                                                     </a>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a class="col-blue font-bold">
+                                                    <a class="col-blue">
                                                         <?= $r['klien_current']; ?>
                                                     </a>
                                                 </td>
